@@ -46,12 +46,12 @@ function Login() {
             <img src={ loginlogo } alt="hi"></img>
             <h1>Flos</h1>
             <div>
-                <label htmlFr = 'input_id'>이메일을 입력해주세요</label>
+                <label htmlFor = 'input_id'>이메일을 입력해주세요</label>
                 <br></br>
                 <input type = 'text' name = 'input_id' placeholder = 'flos@example.com' value={ inputId } onChange = { handleInputId } />
             </div>
             <div>
-                <label htmlFr = 'input_pw'></label>
+                <label htmlFor = 'input_pw'></label>
                 <input type = 'password' name = 'input_pw' value={ inputPw } onChange = { handleInputPw } />
             </div>
             <div>
