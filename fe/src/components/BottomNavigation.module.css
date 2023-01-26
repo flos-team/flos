@@ -1,219 +1,141 @@
-image{
-    z-index: 5;
+image {
+  z-index: 5;
 }
 .FooterDiv {
-    /* footer-div */
-    position: absolute;
-    width: 100%;
-    height: 56px;
-    left: 0px;
-    /* top: 744px; */
-    bottom: 0px;
+  /* footer-div */
+  position: absolute;
+  width: 100%;
+  height: 56px;
+  left: 0px;
+  /* top: 744px; */
+  bottom: 0px;
 
-    /* white */
+  /* white */
 
-    background: #FFFFFF;
+  background: #ffffff;
 
-    /* Inside auto layout */
+  /* Inside auto layout */
 
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    z-index: 1;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  z-index: 1;
 }
 
 .FooterNavBar {
-    /* footer-navbar-1 */
+  /* footer-navbar-1 */
+  box-sizing: border-box;
 
+  /* Auto layout */
 
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 15%;
 
-    /* Auto layout */
+  position: absolute;
+  width: 100%;
+  height: 56px;
+  left: 0px;
+  top: 0px;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    gap: 15%;
+  /* background: #ffffff; */
+  background-color: red;
+  /* mono200 */
 
-    position: absolute;
-    width: 100%;
-    height: 56px;
-    left: 0px;
-    top: 0px;
+  color: black;
 
-    background: #FFFFFF;
-    /* mono200 */
-
-    color: black;
-
-    border-top: 1px solid #D3D3D3;
-    border-radius: 0px;
+  border-top: 1px solid #d3d3d3;
+  border-radius: 0px;
 }
 
 .Feed {
-    /* post-btn */
+  /* post-btn */
+  width: 30px;
+  height: 30px;
 
-    width: 30px;
-    height: 30px;
+  /* Inside auto layout */
 
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-    background-image: url('../assets/NavBar/fi-br-comment.png');
-    background-size: cover;
+  background-image: url("../assets/NavBar/fi-br-comment.png");
+  background-size: cover;
 }
 .Feed2 {
-    /* post-btn */
-
-    width: 30px;
-    height: 30px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-    background-image: url('../assets/NavBar/fi-br-comment-onclick.png');
-    background-size: cover;
+  background-image: url("../assets/NavBar/fi-br-comment-onclick.png");
 }
 
 .Global {
-    /* global-btn */
+  /* global-btn */
+  width: 30px;
+  height: 30px;
 
+  /* Inside auto layout */
 
-    width: 30px;
-    height: 30px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
 
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-
-    background-image: url('../assets/NavBar/fi-br-world.png');
-    background-size: cover;
+  background-image: url("../assets/NavBar/fi-br-world.png");
+  background-size: cover;
 }
 
-.Global2{
-        /* global-btn */
-
-
-        width: 30px;
-        height: 30px;
-    
-    
-        /* Inside auto layout */
-    
-        flex: none;
-        order: 1;
-        flex-grow: 0;
-    
-        background-image: url('../assets/NavBar/fi-br-world-onclick.png');
-        background-size: cover;
+.Global2 {
+  background-image: url("../assets/NavBar/fi-br-world-onclick.png");
 }
 
 .Home {
-    /* home-btn */
+  /* home-btn */
+  width: 30px;
+  height: 30px;
 
-    width: 30px;
-    height: 30px;
+  /* Inside auto layout */
 
-    /* Inside auto layout */
+  flex: none;
+  order: 2;
+  flex-grow: 0;
 
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-
-    background-image: url('../assets/NavBar/fi-br-home.png');
-    background-size: cover;
-    
+  background-image: url("../assets/NavBar/fi-br-home.png");
+  background-size: cover;
 }
 .Home2 {
-    /* home-btn */
-
-    width: 30px;
-    height: 30px;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-
-    background-image: url('../assets/NavBar/fi-br-home-onclick.png');
-    background-size: cover;
-    
+  background-image: url("../assets/NavBar/fi-br-home-onclick.png");
 }
 .Garden {
-    /* garden-btn */
+  /* garden-btn */
+  width: 30px;
+  height: 30px;
 
-    width: 30px;
-    height: 30px;
+  /* Inside auto layout */
 
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 3;
-    flex-grow: 0;
-    background-image: url('../assets/NavBar/fi-br-butterfly.png');
-    background-size: cover;
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+  background-image: url("../assets/NavBar/fi-br-butterfly.png");
+  background-size: cover;
 }
 .Garden2 {
-    /* garden-btn */
-
-    width: 30px;
-    height: 30px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 3;
-    flex-grow: 0;
-    background-image: url('../assets/NavBar/fi-br-butterfly-onclick.png');
-    background-size: cover;
+  background-image: url("../assets/NavBar/fi-br-butterfly-onclick.png");
 }
 
 .Profile {
-    /* profile-btn */
+  /* profile-btn */
+  width: 30px;
+  height: 30px;
 
+  /* Inside auto layout */
 
-    width: 30px;
-    height: 30px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 4;
-    flex-grow: 0;
-    background-image: url('../assets/NavBar/fi-br-portrait.png');
-    background-size: cover;
+  flex: none;
+  order: 4;
+  flex-grow: 0;
+  background-image: url("../assets/NavBar/fi-br-portrait.png");
+  background-size: cover;
 }
 
 .Profile2 {
-    /* profile-btn */
-
-
-    width: 30px;
-    height: 30px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 4;
-    flex-grow: 0;
-    background-image: url('../assets/NavBar/fi-br-portrait-onclick.png');
-    background-size: cover;
+  background-image: url("../assets/NavBar/fi-br-portrait-onclick.png");
 }
