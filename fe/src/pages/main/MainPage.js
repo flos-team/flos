@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Nav from "../../components/BottomNavigation";
 
-function Home() {
+function Main() {
     const [position, setPosition] = useState('home')
 
     const getPosition = (position) =>{
@@ -29,4 +29,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default Main;
