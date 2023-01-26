@@ -1,10 +1,14 @@
+image{
+    z-index: 5;
+}
 .FooterDiv {
     /* footer-div */
     position: absolute;
-    width: 360px;
+    width: 100%;
     height: 56px;
     left: 0px;
-    top: 744px;
+    /* top: 744px; */
+    bottom: 0px;
 
     /* white */
 
@@ -31,10 +35,10 @@
     justify-content: center;
     align-items: center;
     padding: 0px;
-    gap: 20px;
+    gap: 15%;
 
     position: absolute;
-    width: 360px;
+    width: 100%;
     height: 56px;
     left: 0px;
     top: 0px;
@@ -48,11 +52,11 @@
     border-radius: 0px;
 }
 
-.Post {
+.Feed {
     /* post-btn */
 
-    width: 56px;
-    height: 56px;
+    width: 30px;
+    height: 30px;
 
 
     /* Inside auto layout */
@@ -60,14 +64,33 @@
     flex: none;
     order: 0;
     flex-grow: 0;
+
+    background-image: url('../assets/NavBar/fi-br-comment.png');
+    background-size: cover;
+}
+.Feed2 {
+    /* post-btn */
+
+    width: 30px;
+    height: 30px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+    background-image: url('../assets/NavBar/fi-br-comment-onclick.png');
+    background-size: cover;
 }
 
 .Global {
     /* global-btn */
 
 
-    width: 56px;
-    height: 56px;
+    width: 30px;
+    height: 30px;
 
 
     /* Inside auto layout */
@@ -75,29 +98,66 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+
+    background-image: url('../assets/NavBar/fi-br-world.png');
+    background-size: cover;
+}
+
+.Global2{
+        /* global-btn */
+
+
+        width: 30px;
+        height: 30px;
+    
+    
+        /* Inside auto layout */
+    
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+    
+        background-image: url('../assets/NavBar/fi-br-world-onclick.png');
+        background-size: cover;
 }
 
 .Home {
     /* home-btn */
 
-
-    width: 56px;
-    height: 56px;
-
+    width: 30px;
+    height: 30px;
 
     /* Inside auto layout */
 
     flex: none;
     order: 2;
     flex-grow: 0;
-}
 
+    background-image: url('../assets/NavBar/fi-br-home.png');
+    background-size: cover;
+    
+}
+.Home2 {
+    /* home-btn */
+
+    width: 30px;
+    height: 30px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+
+    background-image: url('../assets/NavBar/fi-br-home-onclick.png');
+    background-size: cover;
+    
+}
 .Garden {
     /* garden-btn */
 
-
-    width: 56px;
-    height: 56px;
+    width: 30px;
+    height: 30px;
 
 
     /* Inside auto layout */
@@ -105,14 +165,31 @@
     flex: none;
     order: 3;
     flex-grow: 0;
+    background-image: url('../assets/NavBar/fi-br-butterfly.png');
+    background-size: cover;
+}
+.Garden2 {
+    /* garden-btn */
+
+    width: 30px;
+    height: 30px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 3;
+    flex-grow: 0;
+    background-image: url('../assets/NavBar/fi-br-butterfly-onclick.png');
+    background-size: cover;
 }
 
 .Profile {
     /* profile-btn */
 
 
-    width: 56px;
-    height: 56px;
+    width: 30px;
+    height: 30px;
 
 
     /* Inside auto layout */
@@ -120,4 +197,23 @@
     flex: none;
     order: 4;
     flex-grow: 0;
+    background-image: url('../assets/NavBar/fi-br-portrait.png');
+    background-size: cover;
+}
+
+.Profile2 {
+    /* profile-btn */
+
+
+    width: 30px;
+    height: 30px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+    background-image: url('../assets/NavBar/fi-br-portrait-onclick.png');
+    background-size: cover;
 }
