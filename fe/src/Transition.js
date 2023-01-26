@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import LandingPage from "./pages/LandingPage";
-import HomePage from "./pages/HomePage";
-import SettingPage from "./pages/SettingPage";
+import LandingPage from "./pages/landing/LandingPage";
+import MainPage from "./pages/main/MainPage";
 import "./Transition.css";
 
 function Transition() {
@@ -13,12 +12,7 @@ function Transition() {
         <CSSTransition key={location.key} classNames={`right`} timeout={300}>
           <Routes location={location}>
             <Route path="/" element={<LandingPage />}></Route>
-            <Route path="/home" element={<HomePage />}></Route>
-            <Route path="/setting" element={<SettingPage />}></Route>
-            {/* <Route path="/Post" element={<PostPage />}></Route>
-            <Route path="/Global" element={<GlobalPage />}></Route>
-            <Route path="/Garden" element={<GardenPage />}></Route>
-            <Route path="/Profile" element={<ProfilePage />}></Route> */}
+            <Route path="/home" element={<MainPage />}></Route>
 
 
 
