@@ -1,37 +1,23 @@
 import styles from "./BottomNavigation.module.css";
 import React from "react";
-import { Link } from "react-router-dom";
 
-export function Nav() {
-    return (
-        <div className={styles.FooterDiv}>
-            <div className={styles.FooterNavBar}>
-                <Link to="/Post">
-                    <div className={styles.Post}>
-                        Post
-                    </div>
-                </Link>
-                <Link to="/Global">
-                    <div className={styles.Global}>
-                        Global
-                    </div>
-                </Link>
-                <Link to="/Home">
-                    <div className={styles.Home}>
-                        home
-                    </div>
-                </Link>
-                <Link to="/Garden">
-                    <div className={styles.Garden}>
-                        garden
-                    </div>
-                </Link>
-                <Link to="/Profile">
-                    <div className={styles.Profile}>
-                        profile
-                    </div>
-                </Link>
-            </div>
-        </div>
-    );
-}
+const Nav = ({ getPosition }) => {
+  const onClickNav = (e) => {
+    console.log(e);
+    getPosition(e);
+  }
+
+  return (
+    <div className={styles.FooterDiv}>
+      <div className={styles.FooterNavBar}>
+          <div className={styles.Post} onClick={(e)=>onClickNav('feed')}>Feed</div>
+          <div className={styles.Global} onClick={(e)=>onClickNav('global')}>Global</div>
+          <div className={styles.Home} onClick={(e)=>onClickNav('home')}>home</div>
+          <div className={styles.Garden} onClick={(e)=>onClickNav('garden')}>garden</div>
+          <div className={styles.Profile} onClick={(e)=>onClickNav('profile')}>profile</div>
+      </div>
+    </div>
+  );
+};
+
+export default Nav;
