@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 
 function Landing() {
     return (
-        <div className={styles.FooterNavBar}> 
+        <div className={styles.landingRoot}> 
             Landing Page
             <Link to = "/home">
-                <div>22</div>
+                <div>home</div>
+            </Link>
+            <Link to = "/login">
+                <div>login</div>
             </Link>
         </div>
     );

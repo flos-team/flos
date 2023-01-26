@@ -41,7 +41,8 @@ image {
   left: 0px;
   top: 0px;
 
-  background: #ffffff;
+  /* background: #ffffff; */
+  background-color: red;
   /* mono200 */
 
   color: black;
