@@ -12,7 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     boolean existsByEmailAndProviderType(String email, ProviderType providerType);
 
-    Member findByEmailAndProviderType(String email, ProviderType providerType);
+    Optional<Member> findByEmailAndProviderType(String email, ProviderType providerType);
 
     Optional<Member> findByEmailAndPassword(String email, String password);
 

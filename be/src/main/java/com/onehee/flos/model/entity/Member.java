@@ -3,7 +3,8 @@ package com.onehee.flos.model.entity;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.entity.type.RoleType;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@DynamicInsert
+@DynamicUpdate
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +34,7 @@ public class Member {
     private RoleType roleType;
 
     @Enumerated(EnumType.STRING)
-    @ColumnDefault("'LOCAL'")
+    @Column(columnDefinition = "varchar(10) default 'LOCAL'")
     private ProviderType providerType;
 
     private String picture;
@@ -40,7 +43,7 @@ public class Member {
 
     private int light;
 
-    @ColumnDefault("now()")
+    @Column(columnDefinition = "datetime default now()")
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;

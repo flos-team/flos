@@ -10,6 +10,8 @@ import com.onehee.flos.model.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -40,10 +43,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     .providerType(oAuth2UserDTO.getProviderType())
                     .picture(oAuth2UserDTO.getPicture())
                     .roleType(RoleType.USER)
+                    .nickname(oAuth2UserDTO.getProviderType().toString() + "_" + UUID.randomUUID().toString())
+                    .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(UUID.randomUUID().toString()))
                     .build();
             memberRepository.saveAndFlush(member);
         }
-        Member loginMember = memberRepository.findByEmailAndProviderType(oAuth2UserDTO.getEmail(), oAuth2UserDTO.getProviderType());
+        Member loginMember = memberRepository.findByEmailAndProviderType(oAuth2UserDTO.getEmail(), oAuth2UserDTO.getProviderType())
+                .orElseThrow(() -> new RuntimeException("소셜 회원 등록과정중에 에러가 발생했습니다."));
 
         TokenResponse tokenResponse = jwtTokenProvider.generateTokenByMember(loginMember);
         log.info("{}", tokenResponse);

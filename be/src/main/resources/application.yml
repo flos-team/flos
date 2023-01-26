@@ -24,7 +24,7 @@ spring:
     servlet:
       cache: false
   mvc:
-    pathmatch:
+    path-match:
       matching-strategy: ant_path_matcher
   jwt:
     key: seeeeeeeeeeeecret-keeeeeeeeeeeeeeeeeeeeeey

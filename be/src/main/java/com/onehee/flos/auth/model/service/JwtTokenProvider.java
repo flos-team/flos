@@ -55,7 +55,7 @@ public class JwtTokenProvider {
 
     public TokenResponse reissueToken(ReissueRequestDTO reissueRequestDTO) throws JsonProcessingException {
         String oldAtk = reissueRequestDTO.getAtk();
-        redisRepository.setValue("black:" + getSubject(oldAtk).getId(), oldAtk, Duration.ofMillis(atkExpire));
+        redisRepository.setValue("black:" + oldAtk, "TRUE", Duration.ofMillis(atkExpire));
         Member member = memberRepository.findById(getSubject(oldAtk).getId())
                 .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
         return generateTokenByMember(member);
@@ -98,6 +98,10 @@ public class JwtTokenProvider {
     public boolean isValidatedRTK(String rtk, Subject subject) throws JsonProcessingException {
         String rtkInRedis = redisRepository.getValue("rtk:" + subject.getId());
         return rtk.equals(rtkInRedis);
+    }
+
+    public boolean isBlackATK(String atk) {
+        return redisRepository.getValue("black:" + atk) != null;
     }
 
     public String getId(String token) {
