@@ -4,8 +4,6 @@ function Home() {
     return (
         <div>
             Home Page
-            <Nav></Nav>
-            
         </div>
     );
 }
