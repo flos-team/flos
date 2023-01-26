@@ -5,6 +5,7 @@ function Home() {
         <div>
             Home Page
             <Nav></Nav>
+            
         </div>
     );
 }
