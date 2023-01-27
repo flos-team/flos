@@ -62,7 +62,7 @@ function Login() {
                         <button type='button' className={styles.loginbtn} onClick={ onClickLogin }>로그인</button>
                     </div>
                     <div className={ styles.linkdiv }>
-                        <Link to="/register" className={styles.linktext}>회원가입</Link>
+                        <Link to="/register/term" className={styles.linktext}>회원가입</Link>
                         <Link to="/pwfind" className={styles.linktext}>비밀번호 찾기</Link>
                         {/* <Link to="/main" className={styles.linktext}>홈으로</Link> */}
                     </div>
