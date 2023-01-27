@@ -25,7 +25,7 @@ function Landing() {
       <div className={styles.spacer}></div>
       <div className={styles.footer}>
         <div className={styles.copyright}>
-          <div className = {styles.copyrightText}>©CopyRight flos All Right Reserved</div>
+          <div className = {styles.copyrightText}>©CopyRight Flos All Right Reserved</div>
           
         </div>
       </div>
