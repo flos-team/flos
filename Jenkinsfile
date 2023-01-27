@@ -1,6 +1,6 @@
 def component = [
-	Nginxapp: false, // 프론트 서버 사용 여부
-	Springapp: true, // 백 서버 사용 여부
+	Nginxapp: true, // 프론트 서버 사용 여부
+	Springapp: false, // 백 서버 사용 여부
 	Pythonapp: true // 테스트 서버 사용 여부
 ]
 pipeline {
@@ -51,7 +51,14 @@ pipeline {
 		stage("publish") {
 			steps {
 				script {
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''sudo docker-compose up -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+					component.each{ entry ->
+						stage ("${entry.key} Publish"){
+							if(entry.value){
+								sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml down -d
+sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml up -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+							}
+						}
+					}
 				}
 			}
 		}
