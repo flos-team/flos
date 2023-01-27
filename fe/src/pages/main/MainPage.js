@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Nav from "../../components/BottomNavigation";
-
+import Feed from "./FeedPage";
 function Main() {
     const [position, setPosition] = useState('home')
 
@@ -9,7 +9,7 @@ function Main() {
     }
     let currentPage;
     if(position==='feed'){
-        currentPage = <div>feed</div>
+        currentPage = <Feed />
     } else if(position==='global'){
         currentPage = <div>global</div>
     } else if(position==='home'){

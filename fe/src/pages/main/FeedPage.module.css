@@ -1,0 +1,119 @@
+.feedRoot {
+  /* feed-page */
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px 0px;
+  gap: 8px;
+
+  position: relative;
+  width: 360px;
+  height: 800px;
+
+  /* white2 */
+
+  background: #fbfbfb;
+}
+
+.topBar {
+  /* top-bar */
+  box-sizing: border-box;
+
+  width: 320px;
+  height: 46px;
+
+  /* black */
+
+  border-bottom: 1px solid #151515;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+.currentPage {
+  /* 피드 */
+
+  position: absolute;
+  width: 37px;
+  height: 24px;
+  left: 40px;
+  top: 9px;
+
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  /* identical to box height, or 24px */
+
+  color: #000000;
+}
+.notificationIcon {
+  /* notificationIcon */
+
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 288px;
+  top: 6px;
+  background: url("..//../assets/FeedAsset/notification.png");
+}
+.friendListBar {
+  /* freiend-list-bar */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px 8px;
+  gap: 8px;
+
+  width: 320px;
+  height: 40px;
+
+  background: #ffffff;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+.friendThumbnail {
+  /* profile-img-one */
+
+  box-sizing: border-box;
+
+  width: 36px;
+  height: 36px;
+
+  background: url(../../assets//FeedAsset/profileSample.png);
+
+  /* Inside auto layout */
+
+  flex: none;
+  flex-grow: 0;
+}
+.a {
+  order: 0;
+}
+.b {
+  order: 0;
+}
+.c {
+  order: 0;
+}
+.d {
+  order: 0;
+}
+.e {
+  order: 0;
+}
+.main {
+}
