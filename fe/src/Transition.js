@@ -2,6 +2,14 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import LandingPage from "./pages/landing/LandingPage";
 import MainPage from "./pages/main/MainPage";
+import LoginPage from "./pages/LoginPage";
+import FillPage from "./pages/register/FillPage";
+import TermPage from "./pages/register/TermPage";
+import ResultPage from "./pages/register/ResultPage"
+import PwChangePage from "./pages/password/ChangePage"
+import PwFindPage from "./pages/password/FindPage"
+import SettingPage from "./pages/SettingPage"
+import NotificationPage from "./pages/NotificationPage"
 import "./Transition.css";
 
 function Transition() {
@@ -13,6 +21,15 @@ function Transition() {
           <Routes location={location}>
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="/home" element={<MainPage />}></Route>
+            <Route path="/login" element={<LoginPage />}></Route>            
+            <Route path="/register/fill" element={<FillPage />}></Route>
+            <Route path="/register/term" element={<TermPage />}></Route>
+            <Route path="/register/result" element={<ResultPage />}></Route>
+            <Route path="/pwchange" element={<PwChangePage />}></Route>
+            <Route path="/pwfind" element={<PwFindPage />}></Route>
+            <Route path="/settings" element={<SettingPage />}></Route>
+            <Route path="/notification" element={<NotificationPage />}></Route>
+            
 
 
 
