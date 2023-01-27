@@ -2,6 +2,7 @@ import styles from "./BottomNavigation.module.css";
 import React from "react";
 
 const Nav = ({ position, getPosition }) => {
+  /** nav바에 이동에 따라 컴포넌트를 불러오고 아이콘을 바꾸는 함수 */
   const onClickNav = (e) => {
     console.log(e);
     getPosition(e);

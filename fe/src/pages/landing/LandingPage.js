@@ -5,6 +5,14 @@ import { Link } from "react-router-dom";
 function Landing() {
   return (
     <div className={styles.landingRoot}>
+      {/* <div>
+      <Link to = "/">
+        <div>landing</div>
+      </Link>
+      <Link to = "landing1">
+        <div>landing1</div>
+      </Link>
+      </div> */}
       <div className={styles.groomsSmall2}></div>
       <div className={styles.mainLogo}>
         <div className={styles.title}>Flos</div>
