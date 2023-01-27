@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import styles from "./TermPage.module.css";
 
 function TermPage() {
   const [allCheck, setAllCheck] = useState(false); // 전체 동의
@@ -46,10 +47,21 @@ function TermPage() {
 
   return (
     <form method="post" action="">
-      <div>
-        <label>
-        	약관동의
-        </label>
+      <div className={styles.bigframe}>
+        <div className={styles.registerorderdiv}>
+          <div className={styles.registerorderelement}>
+            <span>1</span>
+            <span>약관동의</span>
+          </div>
+          <div className={styles.registerorderelement}>
+            <span>2</span>
+            <span>정보입력</span>
+          </div>
+          <div className={styles.registerorderelement}>
+            <span>3</span>
+            <span>가입완료</span>
+          </div>
+        </div>
         <div>
         	<div>
         		<input type="checkbox" id="all-check" checked={allCheck} onChange={allBtnEvent}/>
