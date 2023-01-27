@@ -11,7 +11,7 @@ function Landing() {
         <div className={styles.subTitle}>당신의 마음이 꽃 피는 곳</div>
       </div>
       <div className={styles.guideText}>
-        <Link to="/home">
+        <Link to="/login">
           <div className={`${styles.startBtn} ${styles.blinking}`}>탭하여 시작하기</div>
         </Link>
       </div>
