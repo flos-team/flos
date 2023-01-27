@@ -12,9 +12,9 @@ pipeline {
 			}
 		}
 		stage("Build") {
-			sh "echo '${BUILD_NUMBER}'"
 			steps {
-				script {
+				script {			
+					sh "echo '${BUILD_NUMBER}'"
 					component.each{ entry ->
 						stage ("${entry.key} Build"){
 							if(entry.value){
