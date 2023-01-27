@@ -1,0 +1,123 @@
+
+.bigframe {
+    display: flex;
+    justify-content: center;
+}
+
+.loginframe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 0px;
+    gap: 10px;
+    isolation: isolate;
+
+    position: relative;
+    width: 360px;
+    height: 800px;
+
+    background: ffffff;
+}
+
+.groomimg {
+    position: absolute;
+    width: 143px;
+    height: 85px;
+    /* left: -20px; */
+    /* top: 1px; */
+}
+
+.flostextlogo {
+    position: absolute;
+    width: 84px;
+    height: 58px;
+    top: 80px;
+
+    font-family: 'Kalam';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 120%;
+    /* identical to box height, or 58px */
+
+
+    color: #000000;
+}
+
+.emaillabel {
+    position: absolute;
+    width: 168px;
+    /* height: 16px; */
+    left: 30px;
+    top: 225px;
+
+    font-family: 'Kalam';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 120%;
+    /* or 19px */
+
+
+    color: #000000;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    z-index: 0;
+}
+
+.idinputdiv {
+    position: absolute;
+    width: 304px;
+    height: 32px;
+    left: calc(50% - 304px/2 + 2px);
+    top: 256px;
+
+    border: 1px solid #000000;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    z-index: 1;
+}
+
+.pwinputdiv {
+    position: absolute;
+    width: 304px;
+    height: 32px;
+    left: calc(50% - 304px/2 + 2px);
+    top: 296px;
+
+    border: 1px solid #000000;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    z-index: 1;
+}
+
+.loginbtn{
+    position: absolute;
+    width: 304px;
+    height: 40px;
+    left: calc(50% - 304px/2);
+    top: 361px;
+    background: #3BACE2;
+    border-radius: 30px;
+}
+
+
+/* Inside auto layout */
+/* 
+flex: none;
+order: 4;
+flex-grow: 0;
+z-index: 4; */
