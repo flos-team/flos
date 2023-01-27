@@ -1,6 +1,7 @@
 def component = [
-		Nginxapp: false,
-		Pythonapp: true
+	Nginxapp: false,
+	Springapp: false,
+	Pythonapp: true
 ]
 pipeline {
 	agent any
@@ -11,6 +12,7 @@ pipeline {
 			}
 		}
 		stage("Build") {
+			sh "echo '${BUILD_NUMBER}'"
 			steps {
 				script {
 					component.each{ entry ->
