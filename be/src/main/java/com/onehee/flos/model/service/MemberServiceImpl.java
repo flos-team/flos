@@ -10,6 +10,7 @@ import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,9 +45,6 @@ public class MemberServiceImpl implements MemberService {
     public TokenResponse login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         Member member = memberRepository.findByEmailAndProviderType(loginRequestDTO.getEmail(), ProviderType.LOCAL)
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다."));
-        log.info("{}", member.getPassword());
-        log.info("{}", loginRequestDTO.getPassword());
-        log.info("{}", passwordEncoder.encode(loginRequestDTO.getPassword()));
         if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
             throw new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다.");
         }
