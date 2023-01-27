@@ -13,8 +13,7 @@ pipeline {
 		}
 		stage("Build") {
 			steps {
-				script {			
-					sh "echo '${BUILD_NUMBER}'"
+				script {	
 					component.each{ entry ->
 						stage ("${entry.key} Build"){
 							if(entry.value){
@@ -29,6 +28,7 @@ pipeline {
 		stage("Tag and Push") {
 			steps {
 				script {
+					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
 					component.each{ entry ->
 						stage ("${entry.key} Push"){
 							if(entry.value){
@@ -51,8 +51,8 @@ pipeline {
 		stage("publish") {
 			steps {
 				script {
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''
-					''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/deploy', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+					sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker-compose up -d
+					''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/deploy', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 				}
 			}
 		}
