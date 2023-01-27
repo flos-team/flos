@@ -4,7 +4,8 @@
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  /* align-items: center; */
   padding: 20px 20px 0px;
   gap: 8px;
 
@@ -15,6 +16,9 @@
   /* white2 */
 
   background: #fbfbfb;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
 }
 
 .topBar {
@@ -29,7 +33,7 @@
   border-bottom: 1px solid #151515;
 
   /* Inside auto layout */
-
+  display: flex;
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -37,8 +41,8 @@
 .currentPage {
   /* 피드 */
 
-  position: absolute;
-  width: 37px;
+  position: relative;
+  width: 15%;
   height: 24px;
   left: 40px;
   top: 9px;
@@ -49,18 +53,20 @@
   font-size: 20px;
   line-height: 120%;
   /* identical to box height, or 24px */
-
+  display: inline;
   color: #000000;
 }
 .notificationIcon {
   /* notificationIcon */
 
   position: absolute;
-  width: 24px;
-  height: 24px;
-  left: 288px;
-  top: 6px;
+  width: 8%;
+  height: 3vh;
   background: url("..//../assets/FeedAsset/notification.png");
+  background-size: cover;
+  /* display: inline; */
+  z-index: 5;
+  
 }
 .friendListBar {
   /* freiend-list-bar */
@@ -94,13 +100,13 @@
   height: 36px;
 
   background: url(../../assets//FeedAsset/profileSample.png);
-
+  background-size: cover;
   /* Inside auto layout */
 
   flex: none;
   flex-grow: 0;
 }
-.a {
+/* .a {
   order: 0;
 }
 .b {
@@ -114,6 +120,19 @@
 }
 .e {
   order: 0;
-}
+} */
 .main {
+    /* feed-main */
+
+
+width: 320px;
+height: 622px;
+overflow-y: scroll;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 2;
+flex-grow: 0;
 }
