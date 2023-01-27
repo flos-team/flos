@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import Nav from "../../components/BottomNavigation";
 import Feed from "./FeedPage";
+/* 프로필 페이지 import */
+import ProfilePage from "./ProfilePage";
+
 function Main() {
     const [position, setPosition] = useState('home')
 
@@ -17,7 +20,7 @@ function Main() {
     } else if(position==='garden'){
         currentPage = <div>garden</div>
     } else if(position==='profile'){
-        currentPage = <div>profile</div>
+        currentPage = <ProfilePage></ProfilePage>
     } else{
         currentPage = <div>404</div>
     }

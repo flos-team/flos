@@ -18,8 +18,10 @@
 .groomsSmall2 {
   /* grooms-small2 */
 
-  width: 41.5%;
-  height: 12vh;
+  /* width: 41.5%;
+  height: 12vh; */
+  width: 143px;
+  height: 85px;
 
   /* Inside auto layout */
   flex: none;
@@ -27,12 +29,16 @@
   flex-grow: 0;
   background-image: url("../../assets/LoginAsset/groom-icon.png");
   background-size: cover;
+
+  /* added */
+  /* background-attachment: fixed;
+  background-position: center;  */
 }
 
 .mainLogo {
   /* main-logo */
 
-  width: 60%;
+  width: 65%;
   height: 8.6vh;
 
   /* Inside auto layout */
@@ -96,6 +102,7 @@
   align-items: center;
   padding: 10px 0px 0px;
   gap: 10px;
+  text-align: center;
 
   width: 60%;
   height: 5vh;
@@ -112,7 +119,8 @@
 .startBtn {
   /* startBtn */
 
-  width: 100%;
+  /* width: 100%; */
+  width: max-content;
   height: 23px;
 
   font-family: "Istok Web";
