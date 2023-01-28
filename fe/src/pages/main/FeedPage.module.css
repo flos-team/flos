@@ -122,11 +122,156 @@
   z-index: 3;
 }
 
-.s {
-  width: 95%;
-  margin: auto;
-  margin-bottom: 3%;
-  height: 20vh;
-  
+.post {
+  /* list-sunny */
   border: 1px solid red;
+  position: relative;
+  margin: auto;
+  width: 95%;
+  height: 20vh;
+  gap: 8px;
+
+  /* white */
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.postHeader {
+  /* post-header */
+  position: relative;
+  height: 5vh;
+}
+.bookmarkIcon {
+  /* bookmarkIcon */
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 10%;
+  top: 17px;
+  background: url("../../assets/FeedAsset/fi-br-bookmark.png");
+  background-size: cover;
+}
+.menuIcon {
+  /* menuIcon */
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 5%;
+  top: 17px;
+  background: url("../../assets/FeedAsset/fi-br-menu-dots.png");
+  background-size: cover;
+
+}
+.UserProfileDiv {
+  /* UserProfile */
+
+  position: relative;
+  width: 100%;
+  height: 5vh;
+
+  
+  flex-direction: row;
+  /* left: 2%; */
+  top: 17px;
+  display: flex;
+}
+
+.writerProfileImg {
+  position: absolute;
+  left: 2px;
+  /* top: 10%; */
+  width: 20%;
+}
+.postWeatherSunny {
+  /* postWeatherSunny */
+
+  position: relative;
+  left: 25%;
+  /* right: -17.24%; */
+  /* top: 47.22%; */
+  /* bottom: 0%; */
+
+  font-family: "Hind Mysuru";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  /* or 19px */
+
+  display: flex;
+  align-items: flex-end;
+  text-align: center;
+
+  color: #000000;
+}
+.postRegDate {
+  /* postRegDate */
+
+  position: absolute;
+  left: 30%;
+  /* right: -12.64%; */
+  top: 50%;
+  bottom: 0%;
+}
+.writerNickName {
+  /* writerNickName */
+
+  position: absolute;
+  left: 44.83%;
+  right: 0%;
+  top: 0%;
+  bottom: 47.22%;
+
+  font-family: "Hind Mysuru";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  /* or 19px */
+
+  text-align: center;
+
+  color: #000000;
+}
+
+.sunnyBar {
+  /* sunnyBar */
+  position: absolute;
+  width: 100%;
+  height: 1vh;
+  left: 0px;
+  top: 0px;
+
+  background: #ffe143;
+  border-radius: 5px;
+}
+
+.postMain {
+  /* post-main */
+
+  position: absolute;
+  width: 316px;
+  height: 80px;
+  left: 4px;
+  top: 66px;
+}
+.postContent {
+  /* post-content */
+
+  position: absolute;
+  left: 0%;
+  right: 28.48%;
+  top: 2.5%;
+  bottom: 0%;
+  overflow: scroll;
+
+}
+.postPhoto {
+  /* post-photo */
+
+  position: absolute;
+  left: 74.68%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
 }
