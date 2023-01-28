@@ -5,7 +5,7 @@ import Feed from "./FeedPage";
 import ProfilePage from "./ProfilePage";
 
 function Main() {
-    const [position, setPosition] = useState('home')
+    const [position, setPosition] = useState('feed')
 
     const getPosition = (position) =>{
         setPosition(position);
