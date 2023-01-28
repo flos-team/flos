@@ -5,7 +5,7 @@ function Feed() {
   return (
     <div className={styles.feedRoot}>
       <div className={styles.topBar}>
-        <div className={styles.currentPage}>피드</div>
+        <div className={styles.currentPageText}>피드</div>
         <div className={styles.notificationIcon}></div>
       </div>
       <div className={styles.friendListBar}>
@@ -15,9 +15,23 @@ function Feed() {
         <div className={`${styles.friendThumbnail} ${styles.c}`}></div>
         <div className={`${styles.friendThumbnail} ${styles.d}`}></div>
         <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
       </div>
-      <div className={styles.main}>{/** 친구들의 포스트를 나열한다.  */}</div>
-      Feed로 이동했습니다리우스
+      <div className={styles.main}>
+        {/** 친구들의 포스트를 나열한다.  */}
+        <div className={styles.s}>1</div>
+        <div className={styles.s}>1</div>
+        <div className={styles.s}>1</div>
+        <div className={styles.s}>1</div>
+        <div className={styles.s}>1</div>
+        <div className={styles.s}>1</div>
+        <div className={styles.s}>1</div>
+      </div>
     </div>
   );
 }

@@ -6,12 +6,12 @@
   flex-direction: column;
   align-items: flex-start;
   /* align-items: center; */
-  padding: 20px 20px 0px;
+  padding: 20 20 20 0px;
   gap: 8px;
 
   position: relative;
-  width: 360px;
-  height: 800px;
+  width: 100%;
+  height: 95vh;
 
   /* white2 */
 
@@ -25,8 +25,8 @@
   /* top-bar */
   box-sizing: border-box;
 
-  width: 320px;
-  height: 46px;
+  width: 100%;
+  height: 5vh;
 
   /* black */
 
@@ -38,14 +38,14 @@
   order: 0;
   flex-grow: 0;
 }
-.currentPage {
+.currentPageText {
   /* 피드 */
 
   position: relative;
   width: 15%;
-  height: 24px;
-  left: 40px;
-  top: 9px;
+  height: 100vh;
+  left: 10%;
+  top: 1vh;
 
   font-family: "Kalam";
   font-style: normal;
@@ -66,22 +66,22 @@
   background-size: cover;
   /* display: inline; */
   z-index: 5;
-  
 }
 .friendListBar {
   /* freiend-list-bar */
 
   /* Auto layout */
-
+  position: relative;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
+  overflow-x: scroll;
+  /* justify-content: center; */
+  /* align-items: space-around; */
   padding: 0px 8px;
   gap: 8px;
 
-  width: 320px;
-  height: 40px;
+  width: 100%;
+  height: 7vh;
 
   background: #ffffff;
 
@@ -93,46 +93,40 @@
 }
 .friendThumbnail {
   /* profile-img-one */
-
+  position: relative;
   box-sizing: border-box;
 
-  width: 36px;
-  height: 36px;
-
+  width: 14%;
+  border-radius: 10px;
   background: url(../../assets//FeedAsset/profileSample.png);
   background-size: cover;
   /* Inside auto layout */
 
   flex: none;
+  order: 2;
   flex-grow: 0;
 }
-/* .a {
-  order: 0;
-}
-.b {
-  order: 0;
-}
-.c {
-  order: 0;
-}
-.d {
-  order: 0;
-}
-.e {
-  order: 0;
-} */
 .main {
-    /* feed-main */
+  /* feed-main */
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  /* padding: 8px; */
+  /* Inside auto layout */
+  /* display: flex; */
+  /* flex-direction: row; */
+  justify-content: center;
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+  z-index: 3;
+}
 
-
-width: 320px;
-height: 622px;
-overflow-y: scroll;
-
-
-/* Inside auto layout */
-
-flex: none;
-order: 2;
-flex-grow: 0;
+.s {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 3%;
+  height: 20vh;
+  
+  border: 1px solid red;
 }
