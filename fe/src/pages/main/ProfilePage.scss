@@ -1,9 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+@import "../../styles/commons.scss";
 .profile-page {
   display: flex;
   flex-direction: column;
