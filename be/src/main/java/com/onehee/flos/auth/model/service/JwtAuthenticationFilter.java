@@ -35,8 +35,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String refresh = request.getHeader("Refresh");
         // 리프레시 토큰이 헤더에 올시 검증하는 토큰을 리프레시 토큰으로 교체
         // 토큰 재발급 요청시엔 두개의 토큰 모두 있어야 한다.
-        // 기존 엑세스 토큰을 블랙리스트에 등록시키기 위함(엑세스 토큰이 만료되지않았는데 재발급 요청시 고려)
-        authorization = refresh == null ? authorization : refresh;
+        // 기존 엑세스 토큰을 블랙리스트에 등 록시키기 위함(엑세스 토큰이 만료되지않았는데 재발급 요청시 고려)
+//        authorization = refresh == null ? authorization : refresh;
         if (!Objects.isNull(authorization) && authorization.startsWith(TokenType)) {
             log.info("{}", authorization);
             // 토큰앞부분에 있는 "Bearer "을 제거해서 토큰만 남긴다.

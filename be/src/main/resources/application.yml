@@ -29,8 +29,28 @@ spring:
   jwt:
     key: seeeeeeeeeeeecret-keeeeeeeeeeeeeeeeeeeeeey
     expire:
-      atk: 60000
-      rtk: 300000
+      atk: 600000
+      rtk: 3000000
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: joykst961@gmail.com
+    password: ebimbutyehtuznzn
+    properties:
+      transport:
+        protocol: smtp
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+        ssl:
+          trust: smtp.gmail.com
+          protocols: TLSv1.2
+    default-encoding: UTF-8
+    expire:
+      verification: 300000
+      approved: 1800000
   security:
     oauth2:
       client:
