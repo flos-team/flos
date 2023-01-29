@@ -36,3 +36,11 @@
   background-color: white;
   border: #3BACE2 0.5px solid;
 }
+
+.cannotuse {
+  color: red;
+}
+
+.canuse {
+  color: green;
+}
