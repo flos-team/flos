@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Transition from "./Transition";
 // import Main from "./pages/main/MainPage";
 
-import './App.css';
+import "./App.css";
 
 function App() {
   return (

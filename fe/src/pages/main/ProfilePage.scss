@@ -1,0 +1,379 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div {
+    width: 320px;
+  }
+  /* 프로필 페이지의 헤더를 맡을 컴포넌트 */
+  /* 향후 General Header로 대체될 예정 */
+  .profile-page-header {
+    margin-top: 0;
+    margin-bottom: 4px;
+    height: 56px;
+    display: flex;
+    div {
+      height: 100%;
+      // border: 1px solid black; /*temp */
+    }
+    .title-bar {
+      width: 80%;
+      p {
+        padding-left: 10px;
+        line-height: 56px;
+      }
+    }
+    .btn-div {
+      width: 20%;
+      align-items: center;
+      img {
+        display: block;
+        margin: 0 auto;
+        margin-top: 16px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
+  .user-info-header {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: flex;
+    height: 70px;
+    div {
+      height: 100%;
+      // border: 1px solid black; /*temp */
+    }
+    .left {
+      width: 100px;
+      img {
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 0 auto;
+        margin-top: 3px;
+      }
+    }
+    .center {
+      width: 120px;
+      .user-nickname {
+        display: block;
+        line-height: 50px; /* 상대 단위로 바꿔야함.. */
+      }
+    }
+    .right {
+      width: 100px;
+      img {
+        display: block;
+        width: 56px;
+        height: 56px;
+        margin: 0 auto;
+        margin-top: 7px;
+      }
+    }
+  }
+
+  /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
+  .user-social-info-box {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    height: 82px;
+    // border: 1px solid black; /* 추후 변수로 색상만 변경 */
+    background: #fbfbfb; /* 추후 변수로 scss 변수로 대체 예정 */
+    border-radius: 10px;
+    ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-evenly;
+      height: 50%;
+      li {
+        width: 25%;
+        text-align: center;
+        line-height: 41px;
+      }
+    }
+    .user-social-info-title {
+      li {
+      }
+    }
+    .user-social-info {
+      li {
+      }
+    }
+  }
+
+  /* 사용자의 주간, 월간의 감정 변화 추이를 확인 가능한 통계 그래프 */
+  .feed-graph-div {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    height: 84px;
+    // border: 1px solid black; /*temp */
+    .feed-graph-guide-div {
+      width: 100%;
+      height: 14px;
+      display: flex;
+      justify-content: center;
+      * {
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+      p {
+        font-size: 10px; /* 타이포 그래피에 따라 값 변수로 치환 */
+      }
+      .fi-br-interrogation {
+        width: 12px;
+        height: 12px;
+      }
+    }
+    .user-graph-container {
+      .weekend-graph-div,
+      .month-graph-div,
+      .user-week-text,
+      .user-month-text {
+        width: 100%;
+        height: 17.5px;
+      }
+
+      .weekend-graph-div,
+      .month-graph-div {
+        display: flex;
+        justify-content: center;
+        // border: 1px solid black; /* temp */
+      }
+
+      /* 그래프 속성들 */
+      .weekend-graph-div > div,
+      .month-graph-div > div {
+        width: 30%;
+        height: 100%;
+      }
+      .weekend-graph-div > .sunny,
+      .month-graph-div > .sunny {
+        background-color: #ffe143; /* 변수로 치환 예정 */
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+
+      .weekend-graph-div > .cloudy,
+      .month-graph-div > .cloudy {
+        background-color: #aaa9a9; /* 변수로 치환 예정 */
+      }
+
+      .weekend-graph-div > .rainy,
+      .month-graph-div > .rainy {
+        background-color: #76cff4; /* 변수로 치환 예정 */
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+
+      /* 그래프 가이드 텍스트 속성들 */
+      .user-week-text,
+      .user-month-text {
+        font-size: 8px; /* 타이포그래피로 대체 예정 */
+        p {
+          text-align: right;
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+
+  /* 사용자 게시글 / 북마크 글을 전환하는 nav 컴포넌트 */
+  .profile-tab-menu {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: 240px;
+    height: 50px;
+    // border: 1px solid black; /* temp */
+    .tab-menus {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 100%;
+      li {
+        width: 45%;
+        height: 60%;
+        text-align: center;
+      }
+      li:first-child {
+        color: #0d587c; /* 변수로 치환 예정 */
+        border-bottom: 1px solid #0d587c; /* 변수로 치환 예정 */
+      }
+    }
+  }
+
+  /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
+  .feed-container {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: 320px;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    // border: 1px solid black; /* temp */
+
+    /* 나중에 컴포넌트로 뺄 아이템 */
+    .post-item {
+      width: 320px;
+      height: 180px;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid black; /*색깔 조정 必 */
+      .post-header {
+        width: 100%;
+        height: 40px;
+        // border: 1px solid black; /* temp */
+        border-bottom: 1px solid black; /*색깔 조정 必 */
+        .mood-indicator {
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          width: 100%;
+          height: 8px;
+          background-color: #ffe143; /* 변수로 치환 */
+        }
+        .post-head-container {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          .post-info-div {
+            width: 60%;
+            height: 100%;
+            display: flex;
+            font-size: 8px;
+            margin-left: 10px;
+            .user-img {
+              width: 28px;
+              height: 28px;
+            }
+            .post-info {
+              .user-nickname {
+                width: max-content;
+                height: max-content;
+              }
+              .post-time-line {
+                width: max-content;
+                height: max-content;
+                display: flex;
+                .post-time {
+                  margin-right: 5px;
+                }
+                .post-status {
+                  width: 12px;
+                  height: 12px;
+                }
+              }
+            }
+          }
+          .post-btn-div {
+            display: flex;
+            width: 40%;
+            height: 32px;
+            .book-mark-btn {
+              position: absolute;
+              right: 25px;
+              width: 50px;
+              height: 100%;
+            }
+            .post-ops-btn {
+              position: absolute;
+              right: 0px;
+              width: 50px;
+              height: 100%;
+            }
+
+            .book-mark-btn > img,
+            .post-ops-btn > img {
+              width: max-content;
+              height: max-content;
+              // border: 1px solid black; /*temp*/
+            }
+          }
+        }
+      }
+      .post-main {
+        width: 100%;
+        height: 110px;
+        display: flex;
+        border-bottom: 1px solid black; /*색깔 조정 必 */
+        textarea {
+          display: block;
+          width: 220px;
+          height: 100%;
+          padding: 5px;
+          resize: none;
+          border: none;
+          overflow: hidden;
+          // border: 1px solid black; /* temp */
+        }
+        img {
+          margin-top: 5px;
+          width: 100px;
+          height: 100px;
+          // border: 1px solid black; /*temp*/
+        }
+      }
+      .post-footer {
+        width: 100%;
+        height: 30px;
+        // border: 1px solid black; /* temp */
+        display: flex;
+        justify-content: space-between;
+        font-size: 8px;
+        .tag-container {
+          width: 70%;
+          height: 100%;
+          display: flex;
+          .tag {
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 2px;
+            width: max-content;
+            padding-left: 5px;
+            padding-right: 5px;
+            text-align: center;
+            line-height: 24px;
+            height: 24px;
+            // border: 1px solid black; /*temp*/
+            border-radius: 6px;
+            background-color: #d3d3d3; /*나중에 변수로 치환..*/
+            color: #fbfbfb; /* 나중에 변수로 치환 */
+          }
+        }
+        .comment-container {
+          width: 30%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          .mood-div,
+          .comment-div {
+            // border: 1px solid black; /* temp */
+            display: flex;
+            * {
+              display: block;
+            }
+            img {
+              width: 14px;
+              height: 14px;
+              margin-top: 8px;
+            }
+            p {
+              line-height: 30px;
+              font-size: 12px;
+              margin-left: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
