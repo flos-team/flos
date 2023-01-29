@@ -102,7 +102,4 @@ public class JwtTokenProvider {
         return redisRepository.getValue("black:" + atk) != null;
     }
 
-    public String getId(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-    }
 }
