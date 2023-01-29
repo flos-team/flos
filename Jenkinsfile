@@ -54,10 +54,10 @@ pipeline {
 					component.each{ entry ->
 						if(entry.value){
 							stage ("${entry.key} Publish"){
-								var = entry.key
-								sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''echo "${var.toLowerCase()}" > checker.txt
-sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml pull
-sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml up --force-recreate --build -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+								var = entry.key.toLowerCase();
+								sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''echo "$var" > checker.txt
+sudo docker-compose -f docker-compose-$var.yml pull
+sudo docker-compose -f docker-compose-$var.yml up --force-recreate --build -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 							}
 						}
 					}
