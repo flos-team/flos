@@ -33,6 +33,7 @@ pipeline {
 						stage ("${entry.key} Push"){
 							if(entry.value){
 								var = entry.key
+								sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
 								withCredentials([[$class: 'UsernamePasswordMultiBinding',
 								credentialsId: 'docker-access-token',
 								usernameVariable: 'DOCKER_USER_ID',
@@ -57,7 +58,7 @@ pipeline {
 								var = entry.key.toLowerCase();
 								sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''echo "$var" > checker.txt
 sudo docker-compose -f docker-compose-$var.yml pull
-sudo docker-compose -f docker-compose-$var.yml up --force-recreate --build -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+sudo docker-compose -f docker-compose-$var.yml up --force-recreate --build -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true)])
 							}
 						}
 					}
