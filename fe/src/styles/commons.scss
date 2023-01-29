@@ -1,0 +1,114 @@
+/* red-tokens */
+$red900: #540000;
+$red800: #770202;
+$red700: #990c0c;
+$red600: #ba1616;
+$red500: #dd2626;
+$red400: #ff3a3a;
+$red300: #ff6666;
+$red200: #ff9393;
+$red100: #ffbfbf;
+$red50: #ffeaea;
+$red-p: #dd2626;
+
+/* sky-blue-tokens */
+$sky-blue900: #263d47;
+$sky-blue800: #355160;
+$sky-blue700: #47687a;
+$sky-blue600: #597f93;
+$sky-blue500: #6d99ad;
+$sky-blue400: #82afc6;
+$sky-blue300: #96c6e0;
+$sky-blue200: #aae0f9;
+$sky-blue100: #d3efff;
+$sky-blue50: #f7fcff;
+$sky-blue-p: #aae0f9;
+
+/* blue-tokens */
+$blue900: #053f59;
+$blue800: #0c597c;
+$blue700: #19729e;
+$blue600: #288ebf;
+$blue500: #3aaae2;
+$blue400: #4fc6ff;
+$blue300: #77d3ff;
+$blue200: #9ee0ff;
+$blue100: #c6edff;
+$blue50: #edf9ff;
+$blue-p: #3aaae2;
+
+/* gray-blue-tokens */
+$gray-blue900: #2b353d;
+$gray-blue800: #3d4c54;
+$gray-blue700: #4f606b;
+$gray-blue600: #60757f;
+$gray-blue500: #758c96;
+$gray-blue400: #89a3ad;
+$gray-blue300: #a0b7c4;
+$gray-blue200: #b5cedb;
+$gray-blue100: #cce5f2;
+$gray-blue50: #f4f7f9;
+$gray-blue-p: #a0b7c4;
+
+/* green-tokens */
+$green900: #385421;
+$green800: #4c7030;
+$green700: #638c42;
+$green600: #7aaa54;
+$green500: #93c668;
+$green400: #ade57f;
+$green300: #c4ff96;
+$green200: #d6ffb5;
+$green100: #e8ffd3;
+$green50: #f9fff4;
+$green-p: #93c668;
+
+/* apricot-tokens */
+$apricot900: #493d3a;
+$apricot800: #60514c;
+$apricot700: #776860;
+$apricot600: #8e7c75;
+$apricot500: #a3938c;
+$apricot400: #baaaa3;
+$apricot300: #d1c1ba;
+$apricot200: #e8d8d1;
+$apricot100: #ffefea;
+$apricot50: #fffcfc;
+$apricot-p: #ffefea;
+
+/* yellow-tokens */
+$yellow900: #544702;
+$yellow800: #776607;
+$yellow700: #998411;
+$yellow600: #baa31e;
+$yellow500: #ddc130;
+$yellow400: #ffe042;
+$yellow300: #ffe86d;
+$yellow200: #ffed96;
+$yellow100: #fff4c1;
+$yellow50: #fffced;
+$yellow-p: #ffe042;
+
+/* mono-tokens */
+$mono900: #443d3d;
+$mono800: #595151;
+$mono700: #6d6666;
+$mono600: #827c7c;
+$mono500: #969191;
+$mono400: #aaa8a8;
+$mono300: #bfbfbf;
+$mono200: #d3d3d3;
+$mono100: #e8e8e8;
+$mono50: #fcfcfc;
+
+/* black & white tokens */
+$black: #141414;
+$white-pure: #ffffff;
+$white: #f9f9f9;
+
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
