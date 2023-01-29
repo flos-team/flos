@@ -11,6 +11,8 @@ import postOpsBtn from "../../assets/ProfileAsset/post-ops-btn.png";
 import pha from "../../assets/ProfileAsset/pha.png";
 import speechBubble from "../../assets/ProfileAsset/speech-bubble.png";
 
+import HeaderComponent from "../../components/HeaderComponent";
+
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
 
@@ -99,15 +101,7 @@ const ProfilePage = () => {
   return (
     <>
       <div className="profile-page">
-        {/* 프로필 페이지의 헤더, 향후 General 컴포넌트로 대체될 예정 */}
-        <div className="profile-page-header">
-          <div className="title-bar">
-            <p>프로필</p>
-          </div>
-          <div className="btn-div">
-            <img className="option-btn" src={settingBtn}></img>
-          </div>
-        </div>
+        <HeaderComponent pageName={"프로필"} optType={1}></HeaderComponent>
         <div className="user-info-header">
           <div className="left">
             <img className="user-profile-img" src={userImg}></img>
