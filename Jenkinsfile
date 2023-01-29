@@ -55,8 +55,8 @@ pipeline {
 						stage ("${entry.key} Publish"){
 							if(entry.value){
 								var = entry.key
-								sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml down -d
-sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml up -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+								sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml pull
+sudo docker-compose -f docker-compose-${var.toLowerCase()}.yml up --force-recreate --build -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
 							}
 						}
 					}
