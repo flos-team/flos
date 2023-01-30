@@ -20,91 +20,42 @@
   order: 1;
   flex-grow: 0;
 }
-
-.topBar {
-  /* top-bar */
-  box-sizing: border-box;
-
-  width: 100%;
-  height: 5vh;
-
-  /* black */
-
-  border-bottom: 1px solid #151515;
-
-  /* Inside auto layout */
-  display: flex;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-.currentPageText {
-  /* 피드 */
-
-  position: relative;
-  width: 15%;
-  height: 100vh;
-  left: 10%;
-  top: 1vh;
-
-  font-family: "Kalam";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 120%;
-  /* identical to box height, or 24px */
-  display: inline;
-  color: #000000;
-}
-.notificationIcon {
-  /* notificationIcon */
-
-  position: absolute;
-  width: 8%;
-  height: 3vh;
-  background: url("..//../assets/FeedAsset/notification.png");
-  background-size: cover;
-  /* display: inline; */
-  z-index: 5;
-}
 .friendListBar {
-  /* freiend-list-bar */
+  /* friend-list-bar */
 
   /* Auto layout */
   position: relative;
   display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  /* justify-content: center; */
-  /* align-items: space-around; */
+  overflow-x: auto;
   padding: 0px 8px;
-  gap: 8px;
+  gap: 4px;
 
   width: 100%;
-  height: 7vh;
+  height: 8vh;
 
   background: #ffffff;
 
   /* Inside auto layout */
 
   flex: none;
-  order: 1;
-  flex-grow: 0;
+  flex-wrap: nowrap;
 }
 .friendThumbnail {
-  /* profile-img-one */
   position: relative;
-  box-sizing: border-box;
-
-  width: 14%;
-  border-radius: 10px;
-  background: url(../../assets//FeedAsset/profileSample.png);
-  background-size: cover;
-  /* Inside auto layout */
-
-  flex: none;
-  order: 2;
-  flex-grow: 0;
+  display: flex;
+  flex: 0 0 auto;
+  /* height: 100vh; */
+  width:18%;
+  /* border: 1px solid rebeccapurple; */
+  /* padding-bottom: 100%; */
+  overflow: hidden;
+}
+.friendProfileImg {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  border-radius: 50%;
+  border: 1px solid gray;
 }
 .main {
   /* feed-main */
@@ -160,7 +111,6 @@
   top: 17px;
   background: url("../../assets/FeedAsset/fi-br-menu-dots.png");
   background-size: cover;
-
 }
 .UserProfileDiv {
   /* UserProfile */
@@ -169,7 +119,6 @@
   width: 100%;
   height: 5vh;
 
-  
   flex-direction: row;
   /* left: 2%; */
   top: 17px;
@@ -264,7 +213,6 @@
   top: 2.5%;
   bottom: 0%;
   overflow: scroll;
-
 }
 .postPhoto {
   /* post-photo */
