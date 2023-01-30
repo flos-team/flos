@@ -46,7 +46,7 @@ const HeaderComponent = ({ backVisible, pageName, optType }) => {
       btnSelected = settingCase;
       break;
     default:
-      btnSelected = notificationCase;
+      btnSelected = '';
       break;
   }
 
