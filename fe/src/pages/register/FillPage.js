@@ -151,7 +151,7 @@ function FillPage() {
 
   return (
     <div className={styles.bigframe}>
-      <HeaderComponent backVisible={true} pageName={"회원가입"}></HeaderComponent>
+      <HeaderComponent backVisible={true} pageName={"회원가입"} optType={''}></HeaderComponent>
       <div className={styles.registerorderdiv}>
         <div className={styles.registerorderelement}>
           <div className={styles.blueCircle}>1</div>
