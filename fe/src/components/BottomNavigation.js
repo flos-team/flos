@@ -31,11 +31,11 @@ const Nav = () => {
           className={`${position === "profile" ? styles.Profile2 : ""} ${styles.Profile}`}
           onClick={() => dispatch(profile())}
         ></div>
-        <div
+        {/* <div
           className={`${position === "test" ? styles.Test2 : ""} ${styles.Test}`}
           onClick={()=> dispatch(test())}
         >
-        </div>
+        </div> */}
       </div>
     </div>
   );
