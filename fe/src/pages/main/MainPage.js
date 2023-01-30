@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Nav from "../../components/BottomNavigation";
 import Feed from "./FeedPage";
 /* 프로필 페이지 import */
-import ProfilePage from "./ProfilePage";
+import ProfilePage from "./ProfilePage/ProfilePage";
 import HomePage from "./HomePage";
 import TestPage from "./TestPage";
 import GlobalPage from "./GlobalPage";
