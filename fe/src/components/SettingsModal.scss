@@ -1,0 +1,30 @@
+@import "../styles/commons.scss";
+
+.setting-modal {
+  width: 90 * $rpx1 * 1.5;
+  height: 120 * $rpx1 * 1.5;
+  border-radius: 10 * $rpx1;
+  border: 1px solid $mono200;
+  .setting-item {
+    width: 100%;
+    height: 40 * $rpx1 * 1.5;
+    text-align: center;
+    line-height: 40 * $rpx1 * 1.5;
+    margin: 0 auto;
+  }
+  .setting-item:first-child {
+    border-top-left-radius: 10 * $rpx1;
+    border-top-right-radius: 10 * $rpx1;
+    border-bottom: 1px solid $mono100;
+  }
+
+  .setting-item:last-child {
+    border-bottom-left-radius: 10 * $rpx1;
+    border-bottom-right-radius: 10 * $rpx1;
+    border-top: 1px solid $mono100;
+  }
+
+  .setting-item:hover {
+    background-color: $mono50;
+  }
+}
