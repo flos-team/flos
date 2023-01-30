@@ -2,22 +2,22 @@
 
 /* 나중에 컴포넌트로 뺄 아이템 */
 .post-item {
-  width: 320px;
-  height: 240px;
+  width: 320*$rpx1;
+  height: 240*$rpx1;
   box-sizing: border-box;
-  border-radius: 10px;
-  border: 1px solid black; /*색깔 조정 必 */
+  border-radius: 10*$rpx1;
+  border: 1*$rpx1 solid $mono700; /*색깔 조정 必 */
   .post-header {
     width: 100%;
-    height: 60px;
+    height: 60*$rpx1;
     // border: 1px solid black; /* temp */
-    border-bottom: 1px solid black; /*색깔 조정 必 */
+    border-bottom: 1px solid $mono700; /*색깔 조정 必 */
     .mood-indicator {
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
+      border-top-left-radius: 10*$rpx1;
+      border-top-right-radius: 10*$rpx1;
       width: 100%;
-      height: 8px;
-      background-color: #ffe143; /* 변수로 치환 */
+      height: 8*$rpx1;
+      background-color: $yellow-p; /* 변수로 치환 */
     }
     .post-head-container {
       width: 100%;
@@ -28,16 +28,16 @@
         width: 60%;
         height: 100%;
         display: flex;
-        font-size: 14px;
-        margin-left: 10px;
+        font-size: 14*$rpx1;
+        margin-left: 10*$rpx1;
         .user-img {
-          margin-top: 4px;
-          width: 42px;
-          height: 42px;
-          margin-right: 15px;
+          margin-top: 4*$rpx1;
+          width: 42*$rpx1;
+          height: 42*$rpx1;
+          margin-right: 15*$rpx1;
         }
         .post-info {
-          margin-top: 5px;
+          margin-top: 5*$rpx1;
           .user-nickname {
             width: max-content;
             height: max-content;
@@ -47,11 +47,11 @@
             height: max-content;
             display: flex;
             .post-time {
-              margin-right: 5px;
+              margin-right: 5*$rpx1;
             }
             .post-status {
-              width: 20px;
-              height: 20px;
+              width: 20*$rpx1;
+              height: 20*$rpx1;
             }
           }
         }
@@ -59,79 +59,78 @@
       .post-btn-div {
         display: flex;
         width: 40%;
-        height: 32px;
-
+        height: 32*$rpx1;
         .book-mark-btn {
-          width: 50px;
+          width: 50*$rpx1;
           height: 100%;
           img{
-            left: 60px;
-            width: 18px;
-            padding-top: 2px;
+            left: 60*$rpx1;
+            width: 18*$rpx1;
+            padding-top: 2*$rpx1;
           }
         }
         .post-ops-btn {
-          width: 50px;
+          width: 50*$rpx1;
           height: 100%;
           img{
-            width: 30px;
-            left: 35px;
+            width: 30*$rpx1;
+            left: 35*$rpx1;
           }
         }
         .book-mark-btn > img,
         .post-ops-btn > img {
           position: relative;
-          margin-top: 5px;
+          margin-top: 5*$rpx1;
         }
       }
     }
   }
   .post-main {
     width: 100%;
-    height: 120px;
+    height: 120*$rpx1;
     display: flex;
     // border-bottom: 1px solid black; /*색깔 조정 必 */
     div {
-      width: 220px;
+      width: 220*$rpx1;
       height: 90%;
       margin: 3%;
-      font-size: 14px;
+      font-size: 14*$rpx1;
       resize: none;
       border: none;
       overflow: hidden;
       // border: 1px solid black; /* temp */
     }
     img {
-      margin-top: 5px;
-      width: 100px;
-      height: 100px;
+      margin-top: 5*$rpx1;
+      width: 100*$rpx1;
+      height: 100*$rpx1;
       // border: 1px solid black; /*temp*/
     }
   }
   .post-footer {
     width: 100%;
-    height: 60px;
+    height: 60*$rpx1;
     // border: 1px solid black; /* temp */
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 14*$rpx1;
     .tag-container {
       width: 70%;
       height: 100%;
       display: flex;
-      margin-top: 15px;
+      margin-top: 15*$rpx1;
       .tag {
         width: max-content;
-        height: 30px;
-        line-height: 30px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
+        height: 30*$rpx1;;
+        line-height: 30*$rpx1;
+        padding-left: 10*$rpx1;
+        padding-right: 10*$rpx1;
+        margin-left: 5*$rpx1;
+        margin-right: 5*$rpx1;
         text-align: center;
-        border-radius: 15px;
-        background-color: #d3d3d3; /*나중에 변수로 치환..*/
-        color: #fbfbfb; /* 나중에 변수로 치환 */
+        border-radius: 15*$rpx1;
+        background-color: $mono200; /*나중에 변수로 치환..*/
+        color: $white; /* 나중에 변수로 치환 */
       }
     }
     .comment-container {
@@ -146,16 +145,16 @@
         * {
           display: block;
         }
-        margin-left: 10px;
+        margin-left: 10*$rpx1;
         img {
-          width: 20px;
-          height: 20px;
-          margin-top: 20px;
+          width: 20*$rpx1;
+          height: 20*$rpx1;
+          margin-top: 20*$rpx1;
         }
         p {
-          line-height: 60px;
-          font-size: 16px;
-          margin-left: 5px;
+          line-height: 60*$rpx1;
+          font-size: 16*$rpx1;
+          margin-left: 5*$rpx1;
         }
       }
     }
