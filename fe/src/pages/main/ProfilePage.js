@@ -10,8 +10,10 @@ import questionMark from "../../assets/ProfileAsset/question-mark.png";
 import HeaderComponent from "../../components/HeaderComponent";
 import PostItem from "../../components/PostItem";
 
+
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
+
 
 const ProfilePage = () => {
   const userName = "wonny";
