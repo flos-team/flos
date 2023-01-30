@@ -1,8 +1,8 @@
-// import { useState } from "react";
+import { useState } from "react";
 
 /* component */
-// import LogoutModal from "../../components/LogoutModal";
-// import SettingsModal from "../../components/SettingsModal";
+import LogoutModal from "../../components/LogoutModal";
+import SettingsModal from "../../components/SettingsModal";
 
 /* img asset */
 import arrowLeft from "../../assets/GlobalAsset/arrow-left.png";
