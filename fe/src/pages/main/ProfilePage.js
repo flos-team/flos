@@ -44,7 +44,7 @@ const ProfilePage = () => {
   const commentCountText = <p>{commentCount >= 99 ? "99+" : commentCount}</p>;
 
   const postList = userInfos.map(({ userInfoId, userInfo }) => (
-    <PostItem mood={"RAINY"}></PostItem>
+    <PostItem mood={"RAINY"} userName={"wonny"}></PostItem>
   ));
   return (
     <>
