@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.page-header {
+  margin: 0 auto;
+  width: 320px;
+  height: 56px;
+  display: flex;
+}
+.page-header div {
+  height: 100%;
+}
+.page-header .title-bar {
+  display: flex;
+  width: 80%;
+}
+.page-header .title-bar p {
+  padding-left: 10px;
+  line-height: 56px;
+}
+.page-header .title-bar img {
+  margin-top: 16px;
+  width: max-content;
+  height: max-content;
+}
+.page-header .btn-div {
+  width: 20%;
+  align-items: center;
+}
+.page-header .btn-div img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 16px;
+  width: 24px;
+  height: 24px;
+}
+
+/*# sourceMappingURL=HeaderComponent.css.map */

@@ -1,18 +1,18 @@
 // import logo from './logo.svg';
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-// import Transition from "./Transition";
-import Main from "./pages/main/MainPage";
+import Transition from "./Transition";
+// import Main from "./pages/main/MainPage";
 
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      {/* <Router>
+      <Router>
         <Transition />
-      </Router> */}
-      <Main></Main>
+      </Router>
+      {/* <Main></Main> */}
     </div>
   );
 }

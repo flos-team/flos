@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.page-header {
+  margin: 0 auto;
+  //   position: absolute;
+  //   top: 0;
+  width: 320px;
+  height: 56px;
+  display: flex;
+  // border: 1px solid black; /*temp */
+
+  div {
+    height: 100%;
+  }
+  .title-bar {
+    display: flex;
+    width: 80%;
+    // border: 1px solid black;
+    p {
+      padding-left: 10px;
+      line-height: 56px;
+    }
+    img {
+      margin-top: 16px;
+      width: max-content;
+      height: max-content;
+    }
+  }
+  .btn-div {
+    width: 20%;
+    align-items: center;
+    img {
+      display: block;
+      margin: 0 auto;
+      margin-top: 16px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

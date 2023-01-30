@@ -1,8 +1,16 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import LandingPage from "./pages/LandingPage";
-import HomePage from "./pages/HomePage";
-import SettingPage from "./pages/SettingPage";
+import LandingPage from "./pages/landing/LandingPage";
+import LandingPage1 from "./pages/landing/LandingPage1";
+import MainPage from "./pages/main/MainPage";
+import LoginPage from "./pages/LoginPage";
+import FillPage from "./pages/register/FillPage";
+import VerifyPage from "./pages/register/VerifyPage";
+import ResultPage from "./pages/register/ResultPage"
+import PwChangePage from "./pages/password/ChangePage"
+import PwFindPage from "./pages/password/FindPage"
+import SettingPage from "./pages/SettingPage"
+import NotificationPage from "./pages/NotificationPage"
 import "./Transition.css";
 
 function Transition() {
@@ -13,12 +21,17 @@ function Transition() {
         <CSSTransition key={location.key} classNames={`right`} timeout={300}>
           <Routes location={location}>
             <Route path="/" element={<LandingPage />}></Route>
-            <Route path="/home" element={<HomePage />}></Route>
-            <Route path="/setting" element={<SettingPage />}></Route>
-            {/* <Route path="/Post" element={<PostPage />}></Route>
-            <Route path="/Global" element={<GlobalPage />}></Route>
-            <Route path="/Garden" element={<GardenPage />}></Route>
-            <Route path="/Profile" element={<ProfilePage />}></Route> */}
+            <Route path="/landing1" element={<LandingPage1 />}></Route>
+            <Route path="/main" element={<MainPage />}></Route>
+            <Route path="/login" element={<LoginPage />}></Route>            
+            <Route path="/register/fill" element={<FillPage />}></Route>
+            <Route path="/register/verify" element={<VerifyPage />}></Route>
+            <Route path="/register/result" element={<ResultPage />}></Route>
+            <Route path="/pwchange" element={<PwChangePage />}></Route>
+            <Route path="/pwfind" element={<PwFindPage />}></Route>
+            <Route path="/settings" element={<SettingPage />}></Route>
+            <Route path="/notification" element={<NotificationPage />}></Route>
+            
 
 
 
