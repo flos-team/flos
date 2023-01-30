@@ -5,14 +5,15 @@ import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    Optional<Post> findAllByWeatherOrderByRegDateDesc(WeatherType weatherType);
+    List<Post> findAllByWeatherOrderByCreatedAtDesc(WeatherType weatherType);
 
-    Optional<Post> findAllOrderByRegDateDesc();
+    List<Post> findAllByOrderByCreatedAtDesc();
 
-    void delete(Long Id);
+    List<Post> findAllByWriterOrderByCreatedAtDesc(Member writer);
 }
