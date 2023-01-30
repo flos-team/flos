@@ -1,0 +1,43 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.alarm-page {
+  width: 100vw;
+  height: 100vh;
+  background-color: beige;
+}
+.alarm-page .alarm-header {
+  width: 100%;
+  height: 3.125rem;
+  background-color: yellow;
+  display: flex;
+}
+.alarm-page .alarm-header .back-profile-btn {
+  width: 3.125rem;
+  height: 3.125rem;
+  border: 1px solid black;
+}
+.alarm-page .alarm-header .back-profile-btn img {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 auto;
+  margin-top: 0.8125rem;
+}
+
+/*# sourceMappingURL=TestPage.css.map */
