@@ -36,7 +36,11 @@ public class MemberServiceImpl implements MemberService {
         if (memberRepository.existsByEmailAndProviderType(signUpRequestDTO.getEmail(), ProviderType.LOCAL)) {
             throw new BadRequestException("이미 가입된 이메일 주소 입니다.");
         }
-        if (redisRepository.getValue("approved:" + signUpRequestDTO.getCode()).equals(signUpRequestDTO.getEmail())) {
+        log.info("Redis email: {}", redisRepository.getValue("approved:" + signUpRequestDTO.getCode()));
+        log.info("DTO email: {}", signUpRequestDTO.getEmail());
+        log.info("DTO code: {}", signUpRequestDTO.getCode());
+        log.info("{} == {}: {}", signUpRequestDTO.getEmail(), redisRepository.getValue("approved:" + signUpRequestDTO.getCode()), signUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + signUpRequestDTO.getCode())));
+        if (signUpRequestDTO.getCode() == null || !signUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + signUpRequestDTO.getCode()))) {
             throw new UnauthorizedEmailException("인증되지 않은 이메일 주소입니다.");
         }
         Member member = signUpRequestDTO.toEntity();
