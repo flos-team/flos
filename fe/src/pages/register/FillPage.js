@@ -5,7 +5,7 @@ import naverlogo from '../../assets/LoginAsset/naver-logo.png'
 
 import HeaderComponent from '../../components/HeaderComponent'
 
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 function FillPage() {
   const [inputValue, setInputValue] = useState({
@@ -35,7 +35,7 @@ function FillPage() {
   const [nicknameMsg, setNicknameMsg] = useState('')
   const [nicknameMsgColor, setNicknameMsgColor] = useState(false)
   const [useCheck, setUseCheck] = useState(false)
-  const [useCHeckMsg, setUseCheckMsg] = useState('')
+  const [useCheckMsg, setUseCheckMsg] = useState('')
   const [checkModal, setCheckModal] = useState(false)
 
   const [isMailSend, setIsMailSend] = useState(false)
@@ -117,10 +117,11 @@ function FillPage() {
   }
 
     // 3. 다음 페이지로 이동할지 확인
+    const navigate = useNavigate();
     const checkFill = () => {
       if (emailMsgColor && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck) {
         alert('입력하신 이메일로 메일을 보냈습니다. 확인해주세요.')
-        
+        navigate('/register/result');
       } else (
         alert('빈칸을 채워주세요')
       )
@@ -190,12 +191,12 @@ function FillPage() {
             onChange={ handleInput } onKeyUp={ checkId } className={styles.inputdiv}/>
           <span className={emailMsgColor ? styles.canuse : styles.cannotuse}>{emailMsg}</span>
           {/* 유효한 ID이면 메일 전송 버튼 출력 (조건부 렌더링) */}
-          {emailMsgColor & !isMailSend? <div><button onClick={ mailSend }>메일로 인증번호 받기</button></div> : null}
+          {emailMsgColor & !isMailSend ? <div><button onClick={ mailSend }>메일로 인증번호 받기</button></div> : null}
           {isMailSend ?
             <div className={styles.mailsend}>
               <span><input type="number" className={styles.mailnuminput}></input></span>
-                <button className={styles.mailsendbtn}>재전송</button>
                 <button className={styles.mailsendbtn}>인증</button>
+                <button className={styles.mailsendbtn}>재전송</button>
               <span className={styles.mailsendtext}>해당 이메일로 인증 메일을 보냈습니다.</span>
             </div> : null}
         </div>
@@ -224,7 +225,7 @@ function FillPage() {
         <div>
           <input type="checkbox" id="check1" checked={useCheck}  onChange={useBtnEvent} onClick={useBtnCheck}/>
           <label className={styles.termfont} for="check1">개인정보 수집 및 이용 동의 (필수) <span className={styles.textredcolor}>* </span></label>
-          <span className={styles.textredcolor}>{ useCHeckMsg }</span>
+          <span className={styles.textredcolor}>{ useCheckMsg }</span>
           <span onClick={ openModal } className={styles.termfont}>[보기]</span>
           { checkModal === true ? <Modal /> : null}
         </div>
