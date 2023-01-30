@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Nav from "../../components/BottomNavigation";
 import Feed from "./FeedPage";
 /* 프로필 페이지 import */
 import ProfilePage from "./ProfilePage";
 
 function Main() {
-  const [position, setPosition] = useState("feed");
-
-  const getPosition = (position) => {
-    setPosition(position);
-  };
+  const position = useSelector((state) => state.page.value);
+  // console.log(position + " in Main")
   let currentPage;
   if (position === "feed") {
     currentPage = <Feed />;
@@ -29,7 +28,7 @@ function Main() {
   return (
     <div>
       {currentPage}
-      <Nav position={position} getPosition={getPosition}></Nav>
+      <Nav></Nav>
     </div>
   );
 }
