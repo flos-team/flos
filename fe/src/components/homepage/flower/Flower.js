@@ -2,16 +2,16 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 
 // import { ReactComponent as Eye1 } from "../../assets/HomeAsset/flower/eye1.svg";
-import { ReactComponent as Head1 } from "../../assets/HomeAsset/flower/head1.svg";
+import { ReactComponent as Head1 } from "../../../assets/HomeAsset/flower/head1.svg";
 // import { ReactComponent as Leaf1 } from "../../assets/HomeAsset/flower/leaf1.svg";
 // import { ReactComponent as Mouth1 } from "../../assets/HomeAsset/flower/mouth1.svg";
 
-import { ReactComponent as Eyes1 } from "../../assets/HomeAsset/flower/eye1.svg";
-import { ReactComponent as Eyes2 } from "../../assets/HomeAsset/flower/eye2.svg";
-import { ReactComponent as Mouth1 } from "../../assets/HomeAsset/flower/mouth1.svg";
-import { ReactComponent as Mouth2 } from "../../assets/HomeAsset/flower/mouth1.svg";
-import { ReactComponent as Mouth3 } from "../../assets/HomeAsset/flower/mouth1.svg";
-import { ReactComponent as Pot1 } from "../../assets/HomeAsset/flower/pot1.svg";
+import { ReactComponent as Eyes1 } from "../../../assets/HomeAsset/flower/eye1.svg";
+import { ReactComponent as Eyes2 } from "../../../assets/HomeAsset/flower/eye2.svg";
+import { ReactComponent as Mouth1 } from "../../../assets/HomeAsset/flower/mouth1.svg";
+import { ReactComponent as Mouth2 } from "../../../assets/HomeAsset/flower/mouth1.svg";
+import { ReactComponent as Mouth3 } from "../../../assets/HomeAsset/flower/mouth1.svg";
+import { ReactComponent as Pot1 } from "../../../assets/HomeAsset/flower/pot1.svg";
 
 
 const COLORS = {
