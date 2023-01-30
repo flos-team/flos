@@ -3,9 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  div {
-    width: 320*$rpx1;
-  }
+  width: 100%;
   /* 프로필 페이지의 헤더를 맡을 컴포넌트 */
   /* 향후 General Header로 대체될 예정 */
   .profile-page-header {
@@ -13,19 +11,15 @@
     margin-bottom: 4*$rpx1;
     height: 56*$rpx1;
     display: flex;
-    div {
-      height: 100%;
-      // border: 1px solid black; /*temp */
-    }
     .title-bar {
-      width: 80%;
+      flex-grow: 4;
       p {
         padding-left: 10*$rpx1;
         line-height: 56*$rpx1;
       }
     }
     .btn-div {
-      width: 20%;
+      flex-grow: 1;
       align-items: center;
       img {
         display: block;
