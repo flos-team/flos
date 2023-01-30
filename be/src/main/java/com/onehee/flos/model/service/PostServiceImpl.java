@@ -5,6 +5,7 @@ import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,15 +51,12 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException {
-        if (postRepository.findById(postModifyRequestDTO.getId()) == null)
-            throw new BadRequestException("존재하지 않는 게시글입니다.");
-        postRepository.save(postModifyRequestDTO.toEntity()).getId();
+        postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
+        postRepository.save(postModifyRequestDTO.toEntity());
     }
 
     @Override
     public void deletePost(Long id) throws BadRequestException {
-        if (postRepository.findById(id) == null)
-            throw new BadRequestException("이미 삭제된 게시글입니다.");
-        postRepository.deleteById(id);
+        postRepository.findById(id).orElseThrow(() -> new BadRequestException("이미 삭제된 게시글입니다."));
     }
 }
