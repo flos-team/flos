@@ -22,7 +22,7 @@ function Main() {
   } else if (position === "garden") {
     currentPage = <div>garden</div>;
   } else if (position === "profile") {
-    currentPage = <ProfilePage></ProfilePage>;
+    currentPage = <ProfilePage />;
   } else {
     currentPage = <div>404</div>;
   }

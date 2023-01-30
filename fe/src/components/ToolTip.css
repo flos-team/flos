@@ -1,0 +1,74 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* TOOLTIP */
+[data-tooltip] {
+  position: relative;
+  text-align: left;
+}
+
+[data-tooltip]:before,
+[data-tooltip]:after {
+  width: max-content;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  white-space: pre-wrap;
+  transform: translateX(-50%);
+  transition: all 1s ease;
+  font-size: 0.6875rem;
+  font-family: dotum;
+  letter-spacing: -0.0625rem;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  height: max-content;
+  position: absolute;
+  bottom: -0.625rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  color: #595151;
+  background: #e8e8e8;
+  box-shadow: 0 0.1875rem 0.5rem rgba(165, 165, 165, 0.5);
+}
+
+/* 화살표 영역 속성 */
+[data-tooltip]:after {
+  content: "";
+  border-left: 0.3125rem solid transparent;
+  bottom: 0.3125rem;
+  border-right: 0.3125rem solid transparent;
+  border-bottom: 0.3125rem solid #e8e8e8;
+}
+
+/* 툴팁 표시 위치 */
+[data-tooltip]:not([data-tooltip=""]):hover:before {
+  visibility: visible;
+  opacity: 1;
+  bottom: -3rem;
+}
+
+[data-tooltip]:not([data-tooltip=""]):hover:after {
+  visibility: visible;
+  opacity: 1;
+  bottom: 0;
+}
+
+/*# sourceMappingURL=ToolTip.css.map */
