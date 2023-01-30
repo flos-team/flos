@@ -4,11 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {feed, global, home, garden, profile} from "../redux/pageComponent"
 const Nav = () => {
   /** nav바에 이동에 따라 컴포넌트를 불러오고 아이콘을 바꾸는 함수 */
-  // const onClickNav = (e) => {
-  //   // console.log(e);
-  //   console.log(position)
-  //   // getPosition(e);
-  // };
   /** store에서 현재 페이지의 상태를 가져온다. */
   const position = useSelector((state) => state.page.value);
   // console.log(position)
