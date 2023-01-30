@@ -10,11 +10,7 @@
     padding: 0px 20px;
     gap: 8px;
     isolation: isolate;
-
     position: relative;
-    width: 360px;
-    height: 800px;
-
     background: blueviolet;
 }
 
@@ -25,7 +21,8 @@
     width: 360px;
     height: 800px;
 
-
+    display: flex;
+    justify-content: center;
     /* Inside auto layout */
 
     flex: none;
@@ -43,7 +40,6 @@
     position: absolute;
     width: 235px;
     height: 171px;
-    left: 63px;
     top: 106px;
 
     background: rgba(255, 255, 255, 0.9);
@@ -62,6 +58,15 @@
     left: 26px;
     top: 24px;
     z-index: 20;
+    display: flex;
+}
+
+.HeaderHelp {
+    float: left;
+}
+
+.HeaderNoti {
+    float: right;
 }
 
 .FlowerInfo {
@@ -73,7 +78,6 @@
     position: absolute;
     width: 216px;
     height: 59px;
-    left: 72px;
     top: 647px;
 
     background: rgba(255, 255, 255, 0.8);
@@ -89,7 +93,6 @@
     position: absolute;
     width: 168px;
     height: 70px;
-    left: 95px;
     top: 556px;
     z-index: 20;
 
@@ -101,7 +104,6 @@
     position: absolute;
     width: 294px;
     height: 223px;
-    left: 31px;
     top: 331px;
 
     border-radius: 5px;
@@ -146,6 +148,11 @@
     border-radius: 10px;
 }
 
+.SunDiv:hover {
+    background:#ffec44de;
+    border: 1px solid #f0dd33de;
+}
+
 .RainDiv {
     /* rain-div */
 
@@ -161,6 +168,11 @@
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid #FFFFFF;
     border-radius: 10px;
+}
+
+.RainDiv:hover {
+    background:#458fffb3;
+    border: 1px solid #3a78d4b3;
 }
 
 .SunRainText {
