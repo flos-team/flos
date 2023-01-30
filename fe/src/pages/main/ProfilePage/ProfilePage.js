@@ -12,6 +12,7 @@ import PostItem from "../../../components/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
+import "../../../components/ToolTip.css";
 
 const ProfilePage = () => {
   const userName = "wonny";
@@ -46,6 +47,9 @@ const ProfilePage = () => {
   const postList = userInfos.map(({ userInfoId, userInfo }) => (
     <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
   ));
+
+  let tooltipMessage = "회원님의 지난 일주일, 한달 간의\n포스트의 감정평가를 기준으로 집계한\n통계 그래프입니다.";
+
   return (
     <>
       <div className="profile-page">
@@ -68,7 +72,9 @@ const ProfilePage = () => {
         <div className="feed-graph-div">
           <div className="feed-graph-guide-div">
             <p> {userName} 님의 MOOD </p>
-            <img className="fi-br-interrogation" src={questionMark}></img>
+            <span data-tooltip={tooltipMessage}>
+              <img className="fi-br-interrogation" src={questionMark} />
+            </span>
           </div>
           <div className="user-graph-container">
             <div className="weekend-graph-div">
