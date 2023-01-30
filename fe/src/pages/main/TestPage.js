@@ -1,12 +1,20 @@
 
 import { useState } from "react";
 
+
+/* component */
+import LogoutModal from "../../components/LogoutModal";
+
+/* import css */
+import "./TestPage.css";
+
 const TestPage = () => {
 
-
-    return (<>
-        <h1>TEST</h1>
-    </>)
+    return (
+        <div className="test-page">
+            <LogoutModal></LogoutModal>
+        </div>
+    )
 }
 
 export default TestPage;
