@@ -5,6 +5,7 @@ import Nav from "../../components/BottomNavigation";
 import Feed from "./FeedPage";
 /* 프로필 페이지 import */
 import ProfilePage from "./ProfilePage";
+import HomePage from "./HomePage";
 
 function Main() {
   const position = useSelector((state) => state.page.value);
@@ -15,7 +16,7 @@ function Main() {
   } else if (position === "global") {
     currentPage = <div>global</div>;
   } else if (position === "home") {
-    currentPage = <div>home</div>;
+    currentPage = <HomePage />;
   } else if (position === "garden") {
     currentPage = <div>garden</div>;
   } else if (position === "profile") {
