@@ -4,14 +4,14 @@
   flex-direction: column;
   align-items: center;
   div {
-    width: 320px;
+    width: 320*$rpx1;
   }
   /* 프로필 페이지의 헤더를 맡을 컴포넌트 */
   /* 향후 General Header로 대체될 예정 */
   .profile-page-header {
     margin-top: 0;
-    margin-bottom: 4px;
-    height: 56px;
+    margin-bottom: 4*$rpx1;
+    height: 56*$rpx1;
     display: flex;
     div {
       height: 100%;
@@ -20,8 +20,8 @@
     .title-bar {
       width: 80%;
       p {
-        padding-left: 10px;
-        line-height: 56px;
+        padding-left: 10*$rpx1;
+        line-height: 56*$rpx1;
       }
     }
     .btn-div {
@@ -30,60 +30,60 @@
       img {
         display: block;
         margin: 0 auto;
-        margin-top: 16px;
-        width: 24px;
-        height: 24px;
+        margin-top: 16*$rpx1;
+        width: 24*$rpx1;
+        height: 24*$rpx1;
       }
     }
   }
 
   /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
   .user-info-header {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 4*$rpx1;
+    margin-bottom: 4*$rpx1;
     display: flex;
-    height: 70px;
+    height: 70*$rpx1;
     div {
       height: 100%;
       // border: 1px solid black; /*temp */
     }
     .left {
-      width: 100px;
+      width: 100*$rpx1;
       img {
         display: block;
-        width: 64px;
-        height: 64px;
+        width: 64*$rpx1;
+        height: 64*$rpx1;
         margin: 0 auto;
-        margin-top: 3px;
+        margin-top: 3*$rpx1;
       }
     }
     .center {
-      width: 120px;
+      width: 120*$rpx1;
       .user-nickname {
         display: block;
         line-height: 50px; /* 상대 단위로 바꿔야함.. */
       }
     }
     .right {
-      width: 100px;
+      width: 100*$rpx1;
       img {
         display: block;
-        width: 56px;
-        height: 56px;
+        width: 56*$rpx1;
+        height: 56*$rpx1;
         margin: 0 auto;
-        margin-top: 7px;
+        margin-top: 7*$rpx1;
       }
     }
   }
 
   /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
   .user-social-info-box {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 4*$rpx1;
+    margin-bottom: 4*$rpx1;
     height: 82px;
     // border: 1px solid black; /* 추후 변수로 색상만 변경 */
     background: #fbfbfb; /* 추후 변수로 scss 변수로 대체 예정 */
-    border-radius: 10px;
+    border-radius: 10*$rpx1;
     ul {
       list-style: none;
       display: flex;
@@ -92,7 +92,7 @@
       li {
         width: 25%;
         text-align: center;
-        line-height: 41px;
+        line-height: 41*$rpx1;
       }
     }
     .user-social-info-title {
@@ -107,25 +107,25 @@
 
   /* 사용자의 주간, 월간의 감정 변화 추이를 확인 가능한 통계 그래프 */
   .feed-graph-div {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    height: 84px;
+    margin-top: 4*$rpx1;
+    margin-bottom: 4*$rpx1;
+    height: 84*$rpx1;
     // border: 1px solid black; /*temp */
     .feed-graph-guide-div {
       width: 100%;
-      height: 14px;
+      height: 14*$rpx1;
       display: flex;
       justify-content: center;
       * {
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 5*$rpx1;
+        margin-right: 5*$rpx1;
       }
       p {
-        font-size: 10px; /* 타이포 그래피에 따라 값 변수로 치환 */
+        font-size: 10*$rpx1;; /* 타이포 그래피에 따라 값 변수로 치환 */
       }
       .fi-br-interrogation {
-        width: 12px;
-        height: 12px;
+        width: 12*$rpx1;
+        height: 12*$rpx1;
       }
     }
     .user-graph-container {
@@ -134,16 +134,14 @@
       .user-week-text,
       .user-month-text {
         width: 100%;
-        height: 17.5px;
+        height: 17.5*$rpx1;
       }
 
       .weekend-graph-div,
       .month-graph-div {
         display: flex;
         justify-content: center;
-        // border: 1px solid black; /* temp */
       }
-
       /* 그래프 속성들 */
       .weekend-graph-div > div,
       .month-graph-div > div {
@@ -152,21 +150,21 @@
       }
       .weekend-graph-div > .sunny,
       .month-graph-div > .sunny {
-        background-color: #ffe143; /* 변수로 치환 예정 */
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
+        background-color: $yellow-p; /* 변수로 치환 예정 */
+        border-top-left-radius: 8*$rpx1;
+        border-bottom-left-radius: 8*$rpx1;
       }
 
       .weekend-graph-div > .cloudy,
       .month-graph-div > .cloudy {
-        background-color: #aaa9a9; /* 변수로 치환 예정 */
+        background-color: $mono400; /* 변수로 치환 예정 */
       }
 
       .weekend-graph-div > .rainy,
       .month-graph-div > .rainy {
-        background-color: #76cff4; /* 변수로 치환 예정 */
-        border-top-right-radius: 8px;
-        border-bottom-right-radius: 8px;
+        background-color: $blue300; /* 변수로 치환 예정 */
+        border-top-right-radius: 8*$rpx1;
+        border-bottom-right-radius: 8*$rpx1;
       }
 
       /* 그래프 가이드 텍스트 속성들 */
@@ -175,7 +173,7 @@
         font-size: 8px; /* 타이포그래피로 대체 예정 */
         p {
           text-align: right;
-          padding-right: 10px;
+          padding-right: 10*$rpx1;
         }
       }
     }
@@ -183,10 +181,10 @@
 
   /* 사용자 게시글 / 북마크 글을 전환하는 nav 컴포넌트 */
   .profile-tab-menu {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    width: 240px;
-    height: 50px;
+    margin-top: 4*$rpx1;
+    margin-bottom: 4*$rpx1;
+    width: 240*$rpx1;
+    height: 50*$rpx1;
     // border: 1px solid black; /* temp */
     .tab-menus {
       list-style: none;
@@ -200,24 +198,23 @@
         text-align: center;
       }
       li:first-child {
-        color: #0d587c; /* 변수로 치환 예정 */
-        border-bottom: 1px solid #0d587c; /* 변수로 치환 예정 */
+        color: $blue800; /* 변수로 치환 예정 */
+        border-bottom: 1*$rpx1 solid $blue800; /* 변수로 치환 예정 */
       }
     }
   }
 
   /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
   .feed-container {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    width: 320px;
-    height: 300px;
+    margin-top: 4*$rpx1;
+    margin-bottom: 4*$rpx1;
+    width: 320*$rpx1;
+    height: 300*$rpx1;
     overflow-y: scroll;
     overflow-x: hidden;
     // border: 1px solid black; /* temp */
-
     .post-item{
-      margin-bottom: 10px;
+      margin-bottom: 10*$rpx1;
     }
   }
 }
