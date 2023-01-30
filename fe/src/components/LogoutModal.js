@@ -8,6 +8,8 @@ import { useState } from "react";
 const LogoutModal = () => {
 
     return (<>
+        
+        <p>모달입니다...</p>
     
     </>)
 }
