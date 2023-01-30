@@ -4,11 +4,11 @@ spring:
   cache:
     type: redis
   redis:
-    host: localhost
+    host: i8b210.p.ssafy.io
     port: 6379
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/flosdev
+    url: jdbc:mariadb://i8b210.p.ssafy.io:3306/flosdev
     username: dev
     password: test1234
   jpa:

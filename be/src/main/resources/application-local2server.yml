@@ -4,7 +4,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: localhost
+    host: i8b210.p.ssafy.io
     port: 6379
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
