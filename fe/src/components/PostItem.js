@@ -53,31 +53,31 @@ const PostItem = ({ mood, userName }) => {
 
   return (
     <>
-      <Link to = "feed/123">
-        <div className="post-item">
-          <div className="post-header">
-            <div className="mood-indicator" style={indiStyles}></div>
-            <div className="post-head-container">
-              <div className="post-info-div">
-                <img className="user-img" src={userImg} />
-                <div className="post-info">
-                  <p className="user-nickname">{userName}</p>
-                  <div className="post-time-line">
-                    <p className="post-time">{postTime}</p>
-                    <img className="post-status" src={moodImg} />
-                  </div>
-                </div>
-              </div>
-              <div className="post-btn-div">
-                <div className="book-mark-btn">
-                  <img src={bookMarkBtn}></img>
-                </div>
-                <div className="post-ops-btn">
-                  <img src={postOpsBtn}></img>
+      <div className="post-item">
+        <div className="post-header">
+          <div className="mood-indicator" style={indiStyles}></div>
+          <div className="post-head-container">
+            <div className="post-info-div">
+              <img className="user-img" src={userImg} />
+              <div className="post-info">
+                <p className="user-nickname">{userName}</p>
+                <div className="post-time-line">
+                  <p className="post-time">{postTime}</p>
+                  <img className="post-status" src={moodImg} />
                 </div>
               </div>
             </div>
+            <div className="post-btn-div">
+              <div className="book-mark-btn">
+                <img src={bookMarkBtn}></img>
+              </div>
+              <div className="post-ops-btn">
+                <img src={postOpsBtn}></img>
+              </div>
+            </div>
           </div>
+        </div>
+        <Link to="/feed" state={{id : 123}}>
           <div className="post-main">
             <div>
               인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서
@@ -89,24 +89,25 @@ const PostItem = ({ mood, userName }) => {
             </div>
             <img src={pha} />
           </div>
-          <div className="post-footer">
-            <div className="tag-container">
-              <div className="tag">갬쉉적</div>
-              <div className="tag">햇살</div>
+        </Link>
+
+        <div className="post-footer">
+          <div className="tag-container">
+            <div className="tag">갬쉉적</div>
+            <div className="tag">햇살</div>
+          </div>
+          <div className="comment-container">
+            <div className="mood-div">
+              <img className="mood-img" src={moodImg} />
+              {moodCountText}
             </div>
-            <div className="comment-container">
-              <div className="mood-div">
-                <img className="mood-img" src={moodImg} />
-                {moodCountText}
-              </div>
-              <div className="comment-div">
-                <img className="comment-img" src={speechBubble} />
-                {commentCountText}
-              </div>
+            <div className="comment-div">
+              <img className="comment-img" src={speechBubble} />
+              {commentCountText}
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </>
   );
 };
