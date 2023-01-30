@@ -32,7 +32,7 @@ public class PostResponseDTO {
                 .id(post.getId())
                 .writer(post.getWriter())
                 .content(post.getContent())
-                .regDate(post.getRegDate())
+                .regDate(post.getCreatedAt())
 //                .modifyDate(post.getModifyDate())
                 .build();
     }
