@@ -6,6 +6,7 @@ import Feed from "./FeedPage";
 /* 프로필 페이지 import */
 import ProfilePage from "./ProfilePage";
 import HomePage from "./HomePage";
+import TestPage from "./TestPage";
 
 function Main() {
   const position = useSelector((state) => state.page.value);
@@ -22,7 +23,7 @@ function Main() {
   } else if (position === "profile") {
     currentPage = <ProfilePage></ProfilePage>;
   } else if (position === "test") {
-    currentPage = <div>test</div>;
+    currentPage = <TestPage></TestPage>
   } else {
     currentPage = <div>404</div>;
   }
