@@ -6,6 +6,7 @@ import Feed from "./FeedPage";
 /* 프로필 페이지 import */
 import ProfilePage from "./ProfilePage";
 import HomePage from "./HomePage";
+import TestPage from "./TestPage";
 import GlobalPage from "./GlobalPage"
 
 function Main() {
@@ -23,7 +24,7 @@ function Main() {
   } else if (position === "profile") {
     currentPage = <ProfilePage></ProfilePage>;
   } else if (position === "test") {
-    currentPage = <div>test</div>;
+    currentPage = <TestPage></TestPage>
   } else {
     currentPage = <div>404</div>;
   }

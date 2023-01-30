@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   /* 프로필 페이지의 헤더를 맡을 컴포넌트 */
   /* 향후 General Header로 대체될 예정 */
   /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
@@ -28,27 +29,21 @@
   /* 사용자 게시글 / 북마크 글을 전환하는 nav 컴포넌트 */
   /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
 }
-.profile-page div {
-  width: 20rem;
-}
 .profile-page .profile-page-header {
   margin-top: 0;
   margin-bottom: 0.25rem;
   height: 3.5rem;
   display: flex;
 }
-.profile-page .profile-page-header div {
-  height: 100%;
-}
 .profile-page .profile-page-header .title-bar {
-  width: 80%;
+  flex-grow: 4;
 }
 .profile-page .profile-page-header .title-bar p {
   padding-left: 0.625rem;
   line-height: 3.5rem;
 }
 .profile-page .profile-page-header .btn-div {
-  width: 20%;
+  flex-grow: 1;
   align-items: center;
 }
 .profile-page .profile-page-header .btn-div img {
