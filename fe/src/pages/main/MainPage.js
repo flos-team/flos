@@ -6,8 +6,8 @@ import Feed from "./FeedPage";
 /* 프로필 페이지 import */
 import ProfilePage from "./ProfilePage/ProfilePage";
 import HomePage from "./HomePage";
-import TestPage from "./TestPage";
-import GlobalPage from "./GlobalPage"
+import GlobalPage from "./GlobalPage";
+import AlarmPage from "./ProfilePage/alarmPage/AlarmPage";
 
 function Main() {
   const position = useSelector((state) => state.page.value);
@@ -22,9 +22,7 @@ function Main() {
   } else if (position === "garden") {
     currentPage = <div>garden</div>;
   } else if (position === "profile") {
-    currentPage = <ProfilePage></ProfilePage>;
-  } else if (position === "test") {
-    currentPage = <TestPage></TestPage>;
+    currentPage = <AlarmPage></AlarmPage>;
   } else {
     currentPage = <div>404</div>;
   }
