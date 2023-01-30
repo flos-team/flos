@@ -25,17 +25,17 @@ public class Post {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "members_id")
+    @JoinColumn(name = "members_id")
     private Member writer;
 
     @Column(length = 1000)
     private String content;
 
     @Column(columnDefinition = "datetime default now()", insertable = false, updatable = false)
-    private LocalDateTime regDate; // 수정 불가
+    private LocalDateTime createdAt; // 수정 불가
 
     @Column(columnDefinition = "datetime default now()")
-    private LocalDateTime modifyDate;
+    private LocalDateTime modifyAt;
 
     @Enumerated(EnumType.STRING)
     private WeatherType weather;
