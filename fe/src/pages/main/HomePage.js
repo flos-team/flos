@@ -24,32 +24,30 @@ const Home = () => {
 
 
     return (
-        <Flower></Flower>
-        // <div className={styles.HomePage}>
-        //     <div className={styles.HomeRoot}>
-        //         <div className={styles.HomeHeader}>
+        <div className={styles.HomePage}>
+            <div className={styles.HomeRoot}>
+                <div className={styles.HomeHeader}>
 
-        //         </div>
-        //         <div className={styles.FlowerMessage}>
-        //             <span className={styles.FlowerMessageText}>안녕! 나는 튤립이야!</span>
-        //         </div>
-        //         <div className={styles.FlowerInfo}>info</div>
-        //         <div className={styles.FlowerItem}>
-        //             <div className={styles.RainDiv}>
-        //                 <span className={styles.SunRainText}>999+</span>
-        //                 <img className={styles.SunRainImg} src={require('../../assets/HomeAsset/rain-img.png')} />
-        //             </div>
-        //             <div className={styles.SunDiv}>
-        //                 <span className={styles.SunRainText}>999+</span>
-        //                 <img className={styles.SunRainImg} src={require('../../assets/HomeAsset/sun-img.png')} />
-        //             </div>
-        //         </div>
-        //         <div className={styles.Flowerpot}>
-        //             <Flower></Flower>
-        //             flower
-        //         </div>
-        //     </div>
-        // </div>
+                </div>
+                <div className={styles.FlowerMessage}>
+                    <span className={styles.FlowerMessageText}>안녕! 나는 튤립이야!</span>
+                </div>
+                <div className={styles.FlowerInfo}>info</div>
+                <div className={styles.FlowerItem}>
+                    <div className={styles.RainDiv}>
+                        <span className={styles.SunRainText}>999+</span>
+                        <img className={styles.SunRainImg} src={require('../../assets/HomeAsset/rain-img.png')} />
+                    </div>
+                    <div className={styles.SunDiv}>
+                        <span className={styles.SunRainText}>999+</span>
+                        <img className={styles.SunRainImg} src={require('../../assets/HomeAsset/sun-img.png')} />
+                    </div>
+                </div>
+                <div className={styles.Flowerpot}>
+                    <Flower></Flower>
+                </div>
+            </div>
+        </div>
     );
 }
 

@@ -49,6 +49,7 @@
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid #FFFFFF;
     border-radius: 15px;
+    z-index: 20;
 }
 
 .HomeHeader {
@@ -60,6 +61,7 @@
     height: 20px;
     left: 26px;
     top: 24px;
+    z-index: 20;
 }
 
 .FlowerInfo {
@@ -77,6 +79,7 @@
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #FFFFFF;
     border-radius: 5px;
+    z-index: 20;
 }
 
 .FlowerItem {
@@ -88,19 +91,18 @@
     height: 70px;
     left: 95px;
     top: 556px;
-
+    z-index: 20;
 
 }
 
 .Flowerpot {
     /* flowerpot-div */
 
-
     position: absolute;
     width: 294px;
     height: 223px;
     left: 31px;
-    top: 499px;
+    top: 331px;
 
     border-radius: 5px;
 }
