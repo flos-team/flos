@@ -8,6 +8,7 @@
   width: 88vw;
   height: 56px;
   margin: 0 auto;
+  border-bottom: 1px solid black;
 }
 .page-header .page-div {
   width: 100%;
