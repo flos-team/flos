@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Nav from "../../components/BottomNavigation";
-import Feed from "./FeedPage";
+import Feed from "./FeedPage/FeedPage";
 /* 프로필 페이지 import */
-import ProfilePage from "./ProfilePage";
+import ProfilePage from "./ProfilePage/ProfilePage";
 import HomePage from "./HomePage";
+import TestPage from "./TestPage";
+import GlobalPage from "./GlobalPage"
 
 function Main() {
   const position = useSelector((state) => state.page.value);
@@ -14,7 +16,7 @@ function Main() {
   if (position === "feed") {
     currentPage = <Feed />;
   } else if (position === "global") {
-    currentPage = <div>global</div>;
+    currentPage = <GlobalPage></GlobalPage>;
   } else if (position === "home") {
     currentPage = <HomePage />;
   } else if (position === "garden") {
@@ -22,7 +24,7 @@ function Main() {
   } else if (position === "profile") {
     currentPage = <ProfilePage></ProfilePage>;
   } else if (position === "test") {
-    currentPage = <div>test</div>;
+    currentPage = <TestPage></TestPage>;
   } else {
     currentPage = <div>404</div>;
   }

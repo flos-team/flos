@@ -34,7 +34,7 @@ image {
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 15%;
+  gap: 12%;
 
   position: absolute;
   width: 100%;
@@ -137,4 +137,22 @@ image {
 
 .Profile2 {
   background-image: url("../assets/NavBar/fi-br-portrait-onclick.png");
+}
+
+.Test{
+  /* profile-btn */
+  width: 30px;
+  height: 30px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 4;
+  flex-grow: 0;
+  background-image: url("../assets/GlobalAsset//test-btn.png");
+  background-size: cover;
+}
+
+.Test2 {
+  background-image: url("../assets/GlobalAsset/test-btn-click.png");
 }
