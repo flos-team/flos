@@ -2,13 +2,13 @@ import { render } from "@testing-library/react";
 // import React from "react";
 import { useState } from "react";
 /* 컴포넌트에서 사용할 이미지 에셋 import */
-import userImg from "../../assets/GlobalAsset/user-img.png";
-import sunnyImg from "../../assets/ProfileAsset/sunny-img.png";
-import questionMark from "../../assets/ProfileAsset/question-mark.png";
+import userImg from "../../../assets/GlobalAsset/user-img.png";
+import sunnyImg from "../../../assets/ProfileAsset/sunny-img.png";
+import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
-import HeaderComponent from "../../components/HeaderComponent";
-import PostItem from "../../components/PostItem";
+import HeaderComponent from "../../../components/HeaderComponent";
+import PostItem from "../../../components/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
@@ -98,9 +98,7 @@ const ProfilePage = () => {
             <li className="book-menu">북마크</li>
           </ul>
         </div>
-        <div className="feed-container">
-          {postList}
-        </div>
+        <div className="feed-container">{postList}</div>
       </div>
     </>
   );
