@@ -1,0 +1,176 @@
+@charset "UTF-8";
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 나중에 컴포넌트로 뺄 아이템 */
+.post-item {
+  width: 320px;
+  height: 240px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid black; /*색깔 조정 必 */
+}
+.post-item .post-header {
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid black; /*색깔 조정 必 */
+}
+.post-item .post-header .mood-indicator {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  height: 8px;
+  background-color: #ffe143; /* 변수로 치환 */
+}
+.post-item .post-header .post-head-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.post-item .post-header .post-head-container .post-info-div {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.post-item .post-header .post-head-container .post-info-div .user-img {
+  margin-top: 4px;
+  width: 42px;
+  height: 42px;
+  margin-right: 15px;
+}
+.post-item .post-header .post-head-container .post-info-div .post-info {
+  margin-top: 5px;
+}
+.post-item .post-header .post-head-container .post-info-div .post-info .user-nickname {
+  width: max-content;
+  height: max-content;
+}
+.post-item .post-header .post-head-container .post-info-div .post-info .post-time-line {
+  width: max-content;
+  height: max-content;
+  display: flex;
+}
+.post-item .post-header .post-head-container .post-info-div .post-info .post-time-line .post-time {
+  margin-right: 5px;
+}
+.post-item .post-header .post-head-container .post-info-div .post-info .post-time-line .post-status {
+  width: 20px;
+  height: 20px;
+}
+.post-item .post-header .post-head-container .post-btn-div {
+  display: flex;
+  width: 40%;
+  height: 32px;
+}
+.post-item .post-header .post-head-container .post-btn-div .book-mark-btn {
+  width: 50px;
+  height: 100%;
+}
+.post-item .post-header .post-head-container .post-btn-div .book-mark-btn img {
+  left: 60px;
+  width: 18px;
+  padding-top: 2px;
+}
+.post-item .post-header .post-head-container .post-btn-div .post-ops-btn {
+  width: 50px;
+  height: 100%;
+}
+.post-item .post-header .post-head-container .post-btn-div .post-ops-btn img {
+  width: 30px;
+  left: 35px;
+}
+.post-item .post-header .post-head-container .post-btn-div .book-mark-btn > img,
+.post-item .post-header .post-head-container .post-btn-div .post-ops-btn > img {
+  position: relative;
+  margin-top: 5px;
+}
+.post-item .post-main {
+  width: 100%;
+  height: 120px;
+  display: flex;
+}
+.post-item .post-main div {
+  width: 220px;
+  height: 90%;
+  margin: 3%;
+  font-size: 14px;
+  resize: none;
+  border: none;
+  overflow: hidden;
+}
+.post-item .post-main img {
+  margin-top: 5px;
+  width: 100px;
+  height: 100px;
+}
+.post-item .post-footer {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.post-item .post-footer .tag-container {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  margin-top: 15px;
+}
+.post-item .post-footer .tag-container .tag {
+  width: max-content;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-align: center;
+  border-radius: 15px;
+  background-color: #d3d3d3; /*나중에 변수로 치환..*/
+  color: #fbfbfb; /* 나중에 변수로 치환 */
+}
+.post-item .post-footer .comment-container {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.post-item .post-footer .comment-container .mood-div,
+.post-item .post-footer .comment-container .comment-div {
+  display: flex;
+  margin-left: 10px;
+}
+.post-item .post-footer .comment-container .mood-div *,
+.post-item .post-footer .comment-container .comment-div * {
+  display: block;
+}
+.post-item .post-footer .comment-container .mood-div img,
+.post-item .post-footer .comment-container .comment-div img {
+  width: 20px;
+  height: 20px;
+  margin-top: 20px;
+}
+.post-item .post-footer .comment-container .mood-div p,
+.post-item .post-footer .comment-container .comment-div p {
+  line-height: 60px;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+/*# sourceMappingURL=PostItem.css.map */
