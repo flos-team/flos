@@ -18,8 +18,7 @@ import {COLORS} from "../styles/colors";
 /* css import */
 import "./PostItem.css";
 
-const PostItem = ({mood, }) => {
-  let userName = "김지환";
+const PostItem = ({mood, userName}) => {
   let postTime = "1시간 전";
   // 감정 아이템 채택 수?
   const moodCount = 123;
