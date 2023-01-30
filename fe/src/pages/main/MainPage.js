@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import Nav from "../../components/BottomNavigation";
+import Home from "./HomePage"
 
-function Home() {
+function Main() {
     const [position, setPosition] = useState('home')
 
     const getPosition = (position) =>{
@@ -13,7 +14,7 @@ function Home() {
     } else if(position==='global'){
         currentPage = <div>global</div>
     } else if(position==='home'){
-        currentPage = <div>home</div>
+        currentPage = <Home></Home>;
     } else if(position==='garden'){
         currentPage = <div>garden</div>
     } else if(position==='profile'){
@@ -29,4 +30,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default Main;
