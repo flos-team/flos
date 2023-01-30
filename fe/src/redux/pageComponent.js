@@ -28,10 +28,13 @@ export const counterSlice = createSlice({
       state.value = "profile";
       console.log(state.value);
     },
+    test: (state) => {
+      state.value = "test";      
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { feed, global, home, garden, profile } = counterSlice.actions;
+export const { feed, global, home, garden, profile, test } = counterSlice.actions;
 
 export default counterSlice.reducer;
