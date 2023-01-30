@@ -49,7 +49,7 @@ function Login() {
                 <img src={ loginlogo } alt="hi" className={styles.groomimg}></img>
                 <h1>Flos</h1>
                 <div className={styles.logindiv}>
-                    <h2 className={styles.emaillabel}>이메일을 입력해주세요</h2>
+                    <h2 className={styles.emaillabel}>로그인 정보를 입력하세요.</h2>
                     <div className={styles.fullsize}>
                         <input type='text' name='input_id' placeholder='flos@example.com'
                         value={ inputId } className={styles.inputdiv} onChange={ handleInputId } />
