@@ -1,4 +1,3 @@
-spring:
   redis:
     host: i8b210.p.ssafy.io
     port: 6379

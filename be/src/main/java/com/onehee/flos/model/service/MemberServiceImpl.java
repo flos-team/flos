@@ -2,15 +2,15 @@ package com.onehee.flos.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.request.LoginRequestDTO;
 import com.onehee.flos.model.dto.request.SignUpRequestDTO;
-import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
-import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RedisRepository redisRepository;
 
     @Override
     @Transactional
@@ -35,9 +36,18 @@ public class MemberServiceImpl implements MemberService {
         if (memberRepository.existsByEmailAndProviderType(signUpRequestDTO.getEmail(), ProviderType.LOCAL)) {
             throw new BadRequestException("이미 가입된 이메일 주소 입니다.");
         }
+        log.info("Redis email: {}", redisRepository.getValue("approved:" + signUpRequestDTO.getCode()));
+        log.info("DTO email: {}", signUpRequestDTO.getEmail());
+        log.info("DTO code: {}", signUpRequestDTO.getCode());
+        log.info("{} == {}: {}", signUpRequestDTO.getEmail(), redisRepository.getValue("approved:" + signUpRequestDTO.getCode()), signUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + signUpRequestDTO.getCode())));
+        if (signUpRequestDTO.getCode() == null || !signUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + signUpRequestDTO.getCode()))) {
+            throw new UnauthorizedEmailException("인증되지 않은 이메일 주소입니다.");
+        }
         Member member = signUpRequestDTO.toEntity();
         member.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
         memberRepository.save(member);
+        redisRepository.deleteValue("approved:" + signUpRequestDTO.getCode());
+        redisRepository.deleteValue("verification:" + signUpRequestDTO.getCode());
     }
 
     @Override

@@ -3,17 +3,7 @@ server:
 spring:
   cache:
     type: redis
-  redis:
-    host: localhost
-    port: 6379
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/flosdev
-    username: dev
-    password: test1234
   jpa:
-    hibernate:
-      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MariaDB103Dialect
@@ -29,8 +19,28 @@ spring:
   jwt:
     key: seeeeeeeeeeeecret-keeeeeeeeeeeeeeeeeeeeeey
     expire:
-      atk: 60000
-      rtk: 300000
+      atk: 600000
+      rtk: 3000000
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: joykst961@gmail.com
+    password: ebimbutyehtuznzn
+    properties:
+      transport:
+        protocol: smtp
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+        ssl:
+          trust: smtp.gmail.com
+          protocols: TLSv1.2
+    default-encoding: UTF-8
+    expire:
+      verification: 300000
+      approved: 1800000
   security:
     oauth2:
       client:
@@ -40,7 +50,6 @@ spring:
             clientSecret: 'gHn2Y4fRMn'
             clientAuthenticationMethod: post
             authorizationGrantType: authorization_code
-            redirectUri: "http://localhost:8080/login/oauth2/code/naver"
             scope:
               - nickname
               - email
@@ -51,7 +60,6 @@ spring:
             clientSecret: 'InzVyphLE29GIEBrGkEN71Cn5C6CxzMr'
             clientAuthenticationMethod: post
             authorizationGrantType: authorization_code
-            redirectUri: "http://localhost:8080/login/oauth2/code/kakao"
             scope:
               - profile_nickname
               - profile_image
@@ -68,4 +76,12 @@ spring:
             tokenUri: https://kauth.kakao.com/oauth/token
             userInfoUri: https://kapi.kakao.com/v2/user/me
             userNameAttribute: id
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+---
 
+spring:
+  profiles:
+    active: server

@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import LandingPage from "./pages/landing/LandingPage";
+import LandingPage1 from "./pages/landing/LandingPage1";
 import MainPage from "./pages/main/MainPage";
 import LoginPage from "./pages/LoginPage";
 import FillPage from "./pages/register/FillPage";
-import TermPage from "./pages/register/TermPage";
+import VerifyPage from "./pages/register/VerifyPage";
 import ResultPage from "./pages/register/ResultPage"
 import PwChangePage from "./pages/password/ChangePage"
 import PwFindPage from "./pages/password/FindPage"
@@ -20,10 +21,11 @@ function Transition() {
         <CSSTransition key={location.key} classNames={`right`} timeout={300}>
           <Routes location={location}>
             <Route path="/" element={<LandingPage />}></Route>
-            <Route path="/home" element={<MainPage />}></Route>
+            <Route path="/landing1" element={<LandingPage1 />}></Route>
+            <Route path="/main" element={<MainPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>            
             <Route path="/register/fill" element={<FillPage />}></Route>
-            <Route path="/register/term" element={<TermPage />}></Route>
+            <Route path="/register/verify" element={<VerifyPage />}></Route>
             <Route path="/register/result" element={<ResultPage />}></Route>
             <Route path="/pwchange" element={<PwChangePage />}></Route>
             <Route path="/pwfind" element={<PwFindPage />}></Route>

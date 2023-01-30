@@ -1,7 +1,7 @@
 def component = [
-	Nginxapp: false,
-	Springapp: false,
-	Pythonapp: true
+	Nginxapp: true, // 프론트 서버 사용 여부
+	Springapp: false, // 백 서버 사용 여부
+	Pythonapp: false // 테스트 서버 사용 여부
 ]
 pipeline {
 	agent any
@@ -33,6 +33,7 @@ pipeline {
 						stage ("${entry.key} Push"){
 							if(entry.value){
 								var = entry.key
+								sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
 								withCredentials([[$class: 'UsernamePasswordMultiBinding',
 								credentialsId: 'docker-access-token',
 								usernameVariable: 'DOCKER_USER_ID',
@@ -51,8 +52,33 @@ pipeline {
 		stage("publish") {
 			steps {
 				script {
-					sshPublisher(publishers: [sshPublisherDesc(configName: 'ubuntu', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker-compose up -d
-					''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/deploy', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+					sshPublisher(
+						publishers: [
+							sshPublisherDesc(
+								configName: 'ubuntu', 
+								transfers: [
+									sshTransfer(
+										cleanRemote: false, 
+										excludes: '', 
+										execCommand: '''sudo docker-compose pull
+	sudo docker-compose up --force-recreate --build -d''', 
+										execTimeout: 120000, 
+										flatten: false, 
+										makeEmptyDirs: false, 
+										noDefaultExcludes: false, 
+										patternSeparator: '[, ]+', 
+										remoteDirectory: '', 
+										remoteDirectorySDF: false, 
+										removePrefix: '', 
+										sourceFiles: '.env'
+									)
+								], 
+								usePromotionTimestamp: false, 
+								useWorkspaceInPromotion: false, 
+								verbose: true
+							)
+						]
+					)
 				}
 			}
 		}

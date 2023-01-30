@@ -8,6 +8,7 @@ import com.onehee.flos.model.dto.request.ReissueRequestDTO;
 import com.onehee.flos.model.dto.request.SignUpRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.service.MailServiceImpl;
 import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.util.SecurityManager;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 
 @Tag(name = "멤버API", description = "멤버, 토큰 관련 처리를 담당합니다.")
 @RestController

@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/member/sign-up", "/member/login", "oauth2/**", "login/**", "/v3/api-docs/**",
+                .antMatchers("/member/sign-up", "/member/login", "/email", "/v3/api-docs/**",
                         "/swagger-ui/**", "/swagger-resources/**")
                 .permitAll()
                 .anyRequest()
@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .userInfoEndpoint()
                 .userService(oAuth2UserService)
                 .and()
+                .permitAll()
                 .and()
                 .addFilterAfter(new JwtAuthenticationFilter(jwtTokenProvider, memberDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .build();
