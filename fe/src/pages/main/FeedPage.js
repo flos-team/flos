@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./FeedPage.module.css";
-
+import HeaderComponent from "../../components/HeaderComponent";
 /** 게시글 리스트
  * writerProfileImg 작성자 프로필 사진
  * writerNickname 작성자 별명
@@ -14,7 +14,7 @@ import styles from "./FeedPage.module.css";
  * postTag 해시태그
  *
  */
-const DataInfo = [
+const dataInfo = [
   {
     writerProfileImg: "../../assets/DummyData/writerProfileSample.png",
     writerNickname: "jh",
@@ -72,30 +72,107 @@ const DataInfo = [
 function Feed() {
   const rendering = () => {
     const result = [];
-    for (let i = 0; i < DataInfo.length; i++) {
+    for (let i = 0; i < dataInfo.length; i++) {
       result.push(<div className={styles}></div>);
     }
   };
 
   return (
     <div className={styles.feedRoot}>
-      <div className={styles.topBar}>
-        <div className={styles.currentPageText}>피드</div>
-        <div className={styles.notificationIcon}></div>
-      </div>
+      <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
       <div className={styles.friendListBar}>
         {/** 친구 프로필을 나열한다.  */}
-        <div className={`${styles.friendThumbnail} ${styles.a}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.b}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.c}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.d}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
-        <div className={`${styles.friendThumbnail} ${styles.e}`}></div>
+        <div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div>
+        <div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div>
+        <div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div>
+        <div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div>
+        <div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div>
+        <div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div><div className={`${styles.friendThumbnail} ${styles.a}`}>
+          <img
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
+        </div>
       </div>
       <div className={styles.main}>
         {/** 친구들의 포스트를 나열한다.  */}
@@ -128,6 +205,7 @@ function Feed() {
           </div>
           <div className={styles.postFooter}></div>
         </div>
+
         <div className={styles.s}>1</div>
         <div className={styles.s}>1</div>
         <div className={styles.s}>1</div>

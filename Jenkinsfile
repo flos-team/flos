@@ -1,7 +1,7 @@
 def component = [
 	Nginxapp: true, // 프론트 서버 사용 여부
 	Springapp: false, // 백 서버 사용 여부
-	Pythonapp: true // 테스트 서버 사용 여부
+	Pythonapp: false // 테스트 서버 사용 여부
 ]
 pipeline {
 	agent any

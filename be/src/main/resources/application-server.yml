@@ -1,0 +1,91 @@
+server:
+  port: 8080
+spring:
+  cache:
+    type: redis
+  redis:
+    host: i8b210.p.ssafy.io
+    port: 6379
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://i8b210.p.ssafy.io:3306/flosdev
+    username: dev
+    password: test1234
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+  mustache:
+    servlet:
+      cache: false
+  mvc:
+    path-match:
+      matching-strategy: ant_path_matcher
+  jwt:
+    key: seeeeeeeeeeeecret-keeeeeeeeeeeeeeeeeeeeeey
+    expire:
+      atk: 600000
+      rtk: 3000000
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: joykst961@gmail.com
+    password: ebimbutyehtuznzn
+    properties:
+      transport:
+        protocol: smtp
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+        ssl:
+          trust: smtp.gmail.com
+          protocols: TLSv1.2
+    default-encoding: UTF-8
+    expire:
+      verification: 300000
+      approved: 1800000
+  security:
+    oauth2:
+      client:
+        registration:
+          naver:
+            clientId: 'ei1n8STCPJrrxI3UNgGr'
+            clientSecret: 'gHn2Y4fRMn'
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: "http://i8b210.p.ssafy.io:8080/login/oauth2/code/naver"
+            scope:
+              - nickname
+              - email
+              - profile_image
+            clientName: Naver
+          kakao:
+            clientId: 'cb5da587b3f7d9088117f3d2047ab046'
+            clientSecret: 'InzVyphLE29GIEBrGkEN71Cn5C6CxzMr'
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: "http://i8b210.p.ssafy.io:8080/login/oauth2/code/kakao"
+            scope:
+              - profile_nickname
+              - profile_image
+              - account_email
+            clientName: Kakao
+        provider:
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+
