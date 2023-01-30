@@ -36,6 +36,9 @@ function FillPage() {
   const [nicknameMsgColor, setNicknameMsgColor] = useState(false)
   const [useCheck, setUseCheck] = useState(false)
   const [useCHeckMsg, setUseCheckMsg] = useState('')
+  const [checkModal, setCheckModal] = useState(false)
+
+  const [isMailSend, setIsMailSend] = useState(false)
 
   // 이메일 - 문자열에 특수문자, 영어, 숫자만 있는지 확인
   // 비밀번호 - 문자열에 특수문자, 영어, 숫자만 있는지 확인
@@ -117,6 +120,7 @@ function FillPage() {
     const checkFill = () => {
       if (emailMsgColor && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck) {
         alert('입력하신 이메일로 메일을 보냈습니다. 확인해주세요.')
+        
       } else (
         alert('빈칸을 채워주세요')
       )
@@ -149,31 +153,51 @@ function FillPage() {
       )
     }
 
+    // 이용약관 모달 띄우기
+    const openModal = () => {
+      if (checkModal === false) {
+        setCheckModal(true)
+      } else if (checkModal === true) {
+        setCheckModal(false)
+      }
+    }
+    // 모달
+    function Modal() {
+      return (
+        <div className= {styles.modal}>
+          <span>약관 모달띄우기</span>
+        </div>
+      )
+    }
+
+    const mailSend = () => {
+      console.log('메일 전송')
+      setIsMailSend(true)
+    }
+
   return (
     <div className={styles.bigframe}>
       <HeaderComponent backVisible={true} pageName={"회원가입"} optType={''}></HeaderComponent>
-      <div className={styles.registerorderdiv}>
-        <div className={styles.registerorderelement}>
-          <div className={styles.blueCircle}>1</div>
-          <span>정보입력</span>
-        </div>
-        <div className={styles.registerorderelement}>
-          <div className={styles.whiteCircle}>2</div>
-          <span>메일인증</span>
-        </div>
-        <div className={styles.registerorderelement}>
-          <div className={styles.whiteCircle}>3</div>
-          <span>가입완료</span>
-        </div>
+      <div className={styles.headertextframe}>
+        <h3 className={styles.headertext}>편안한 감정공유 공간</h3>
+        <h3 className={styles.headertext}>Flos</h3>
+        <br></br>
       </div>
-
-                    
       <div className={styles.mainframe}>
         <div className={styles.mainframeitem}>
           <p>이메일(아이디)</p>
           <input type='text' name='inputId' placeholder='flos@example.com'
             onChange={ handleInput } onKeyUp={ checkId } className={styles.inputdiv}/>
           <span className={emailMsgColor ? styles.canuse : styles.cannotuse}>{emailMsg}</span>
+          {/* 유효한 ID이면 메일 전송 버튼 출력 (조건부 렌더링) */}
+          {emailMsgColor & !isMailSend? <div><button onClick={ mailSend }>메일로 인증번호 받기</button></div> : null}
+          {isMailSend ?
+            <div className={styles.mailsend}>
+              <span><input type="number" className={styles.mailnuminput}></input></span>
+                <button className={styles.mailsendbtn}>재전송</button>
+                <button className={styles.mailsendbtn}>인증</button>
+              <span className={styles.mailsendtext}>해당 이메일로 인증 메일을 보냈습니다.</span>
+            </div> : null}
         </div>
         <div className={styles.mainframeitem}>
           <p>비밀번호</p> 
@@ -194,14 +218,15 @@ function FillPage() {
           <span className={nicknameMsgColor ? styles.canuse : styles.cannotuse}>{ nicknameMsg }</span>
         </div>
         <div className={styles.mainframeitem}>
-          <button onClick={ checkFill } className={styles.nextBtn }>가입하기</button>
+          <button onClick={ checkFill } className={styles.nextBtn}>가입하기</button>
           <span className={styles.gologintext}>이미 계정이 있으신가요?<Link to="/login" className={styles.linktext}>로그인하러 가기</Link></span>
         </div>
         <div>
           <input type="checkbox" id="check1" checked={useCheck}  onChange={useBtnEvent} onClick={useBtnCheck}/>
-          <label className={styles.termfont} for="check1">개인정보 수집 및 이용 동의 (필수) <span className={styles.textredcolor}>*</span></label>
-          <p className={styles.textredcolor}>{ useCHeckMsg }</p>
-          <span>[보기]</span>
+          <label className={styles.termfont} for="check1">개인정보 수집 및 이용 동의 (필수) <span className={styles.textredcolor}>* </span></label>
+          <span className={styles.textredcolor}>{ useCHeckMsg }</span>
+          <span onClick={ openModal } className={styles.termfont}>[보기]</span>
+          { checkModal === true ? <Modal /> : null}
         </div>
       </div>
 
