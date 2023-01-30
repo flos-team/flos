@@ -2,6 +2,7 @@ package com.onehee.flos.model.service;
 
 import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.model.dto.request.EmailVerificationRequestDTO;
+import com.onehee.flos.model.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,11 +29,14 @@ public class MailServiceImpl implements MailService {
 
     private final JavaMailSender emailSender;
     private final RedisRepository redisRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public void sendEmail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
         String email = emailVerificationRequestDTO.getEmail();
         String code = getCode();
+
+        // 이메일 중복체크 해야함
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
