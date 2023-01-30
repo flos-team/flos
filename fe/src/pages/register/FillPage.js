@@ -35,7 +35,7 @@ function FillPage() {
   const [nicknameMsg, setNicknameMsg] = useState("");
   const [nicknameMsgColor, setNicknameMsgColor] = useState(false);
   const [useCheck, setUseCheck] = useState(false);
-  const [useCheckMsg, setUseCheckMsg] = useState("");
+  const [useCHeckMsg, setUseCheckMsg] = useState("");
   const [checkModal, setCheckModal] = useState(false);
 
   const [isMailSend, setIsMailSend] = useState(false);
@@ -121,7 +121,6 @@ function FillPage() {
   const checkFill = () => {
     if (emailMsgColor && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck) {
       alert("입력하신 이메일로 메일을 보냈습니다. 확인해주세요.");
-      navigate("/register/result");
     } else alert("빈칸을 채워주세요");
   };
 
@@ -203,8 +202,8 @@ function FillPage() {
               <span>
                 <input type="number" className={styles.mailnuminput}></input>
               </span>
-              <button className={styles.mailsendbtn}>인증</button>
               <button className={styles.mailsendbtn}>재전송</button>
+              <button className={styles.mailsendbtn}>인증</button>
               <span className={styles.mailsendtext}>해당 이메일로 인증 메일을 보냈습니다.</span>
             </div>
           ) : null}
@@ -261,7 +260,7 @@ function FillPage() {
           <label className={styles.termfont} for="check1">
             개인정보 수집 및 이용 동의 (필수) <span className={styles.textredcolor}>* </span>
           </label>
-          <span className={styles.textredcolor}>{useCheckMsg}</span>
+          <span className={styles.textredcolor}>{useCHeckMsg}</span>
           <span onClick={openModal} className={styles.termfont}>
             [보기]
           </span>
