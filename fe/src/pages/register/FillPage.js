@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import styles from "./FillPage.module.css";
 import kakaologo from "../../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../../assets/LoginAsset/naver-logo.png";
-
 import HeaderComponent from "../../components/HeaderComponent";
-
+import TextLogoComponent from "../../components/TextLogoComponent";
 import { useNavigate, Link } from "react-router-dom";
 
 function FillPage() {
@@ -174,11 +173,7 @@ function FillPage() {
   return (
     <div className={styles.bigframe}>
       <HeaderComponent backVisible={true} pageName={"회원가입"} optType={""}></HeaderComponent>
-      <div className={styles.headertextframe}>
-        <h3 className={styles.headertext}>편안한 감정공유 공간</h3>
-        <h3 className={styles.headertext}>Flos</h3>
-        <br></br>
-      </div>
+      <TextLogoComponent></TextLogoComponent>
       <div className={styles.mainframe}>
         <div className={styles.mainframeitem}>
           <p>이메일(아이디)</p>
@@ -260,10 +255,10 @@ function FillPage() {
           <label className={styles.termfont} for="check1">
             개인정보 수집 및 이용 동의 (필수) <span className={styles.textredcolor}>* </span>
           </label>
-          <span className={styles.textredcolor}>{useCHeckMsg}</span>
           <span onClick={openModal} className={styles.termfont}>
             [보기]
           </span>
+          <p className={styles.textredcolor}>{useCHeckMsg}</p>
           {checkModal === true ? <Modal /> : null}
         </div>
       </div>
