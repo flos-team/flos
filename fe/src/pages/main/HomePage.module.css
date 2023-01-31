@@ -11,15 +11,17 @@
     gap: 8px;
     isolation: isolate;
     position: relative;
-    background: blueviolet;
+    background-image:url("../../assets/HomeAsset/home-sample-background-img.jpg");
+    background-repeat:no-repeat;
+    background-size: cover;
 }
 
 .HomeRoot {
     /* home-root */
 
 
-    width: 360px;
-    height: 800px;
+    width: 100%;
+    height: 100vh;
 
     display: flex;
     justify-content: center;
@@ -77,13 +79,28 @@
 
     position: absolute;
     width: 216px;
-    height: 59px;
-    top: 647px;
+    height: 100px;
+    bottom: 45px;
 
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #FFFFFF;
     border-radius: 5px;
     z-index: 20;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.FlowerName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.FlowerNameText {
+    margin-right: 20px;
 }
 
 .FlowerItem {
@@ -93,7 +110,7 @@
     position: absolute;
     width: 168px;
     height: 70px;
-    top: 556px;
+    bottom: 150px;
     z-index: 20;
 
 }
@@ -104,7 +121,7 @@
     position: absolute;
     width: 294px;
     height: 223px;
-    top: 331px;
+    bottom: 250px;
 
     border-radius: 5px;
 }
@@ -127,8 +144,9 @@
     display: flex;
     align-items: center;
     text-align: center;
-
+    justify-content: center;
     color: #000000;
+    padding: 20px;
 }
 
 .SunDiv {
