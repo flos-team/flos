@@ -1,14 +1,13 @@
 package com.onehee.flos.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.request.LoginRequestDTO;
-import com.onehee.flos.model.dto.request.ReissueRequestDTO;
-import com.onehee.flos.model.dto.request.SignUpRequestDTO;
+import com.onehee.flos.model.dto.request.MemberSignUpRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.service.MailServiceImpl;
 import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.util.SecurityManager;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,10 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
 
 @Tag(name = "멤버API", description = "멤버, 토큰 관련 처리를 담당합니다.")
 @RestController
@@ -42,8 +39,8 @@ public class MemberController {
     @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.")
     @PostMapping("/sign-up")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
-        memberService.signUp(signUpRequestDTO);
+    public ResponseEntity<?> signUp(@RequestBody MemberSignUpRequestDTO memberSignUpRequestDTO) {
+        memberService.createMember(memberSignUpRequestDTO);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -63,4 +60,16 @@ public class MemberController {
         return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<?> test(@AuthenticationPrincipal MemberDetails memberDetails) {
+        Member member = memberDetails.getMember();
+        return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
+    }
+
+    @GetMapping("/test2")
+    public ResponseEntity<?> test2(Authentication authentication) {
+        MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
+        Member member = memberDetails.getMember();
+        return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
+    }
 }
