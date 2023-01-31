@@ -1,0 +1,169 @@
+.emptyDiv {
+  display: inline;
+}
+.feedRoot {
+  /* feed-page */
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  align-items: center;
+  padding: 20 20 20 0px;
+  gap: 8px;
+
+  position: relative;
+  width: 100%;
+  height: 85vh;
+
+  /* white2 */
+
+  background: #fbfbfb;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+.main {
+  margin-top: 0.25rem;
+  /* margin-bottom: 0.25rem; */
+  width: 20rem;
+  height: 70rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.commentFrame {
+  /* comment-frame */
+  position: relative;
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 10px 0px;
+  gap: 10%;
+  isolation: isolate;
+
+  width: 320px;
+  height: 225px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+}
+
+.comment {
+  /* comment */
+  position: relative;
+
+  width: 320px;
+  height: 9vh;
+  left: 0px;
+  top: 1px;
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  z-index: 1;
+  border-bottom: 1px solid rgb(128, 128, 128);
+}
+.left{
+    float: left;
+    width: 20%;
+}
+.right{
+    float: left;
+
+    width: 80%;
+}
+
+.emotion {
+  /* emotion */
+
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 0px;
+  top: 10px;
+
+  line-height: 120%;
+  /* or 29px */
+
+  text-align: center;
+
+  color: #000000;
+  z-index: 110;
+}
+.profile {
+  /* profile */
+
+  box-sizing: border-box;
+
+  position: relative;
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  left: 0px;
+  top: 0px;
+
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+.content {
+  /* content */
+  display: inline-block;
+  position: absolute;
+  width: 70%;
+  height: 19px;
+  left: calc(50% - 136px / 2 - 44px);
+  top: 22px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  /* or 19px */
+
+  color: #000000;
+}
+.time {
+  /* time */
+
+  position: relative;
+  width: 12px;
+  height: 14px;
+  left: 20px;
+  /* top: 4px; */
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 120%;
+  /* or 14px */
+  display: inline;
+  color: rgba(114, 114, 114, 0.8);
+}
+.nickname {
+  /* nickname */
+  position: relative;
+  width: 79px;
+  height: 19px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  /* or 19px */
+
+  color: #000000;
+}
+.line {
+  width: 80%;
+  /* border-top: 1px solid black; */
+}
