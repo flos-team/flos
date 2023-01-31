@@ -21,68 +21,38 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  /* 프로필 페이지의 헤더를 맡을 컴포넌트 */
-  /* 향후 General Header로 대체될 예정 */
   /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
   /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
   /* 사용자의 주간, 월간의 감정 변화 추이를 확인 가능한 통계 그래프 */
   /* 사용자 게시글 / 북마크 글을 전환하는 nav 컴포넌트 */
   /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
 }
-.profile-page .profile-page-header {
-  margin-top: 0;
-  margin-bottom: 0.25rem;
-  height: 3.5rem;
-  display: flex;
-}
-.profile-page .profile-page-header .title-bar {
-  flex-grow: 4;
-}
-.profile-page .profile-page-header .title-bar p {
-  padding-left: 0.625rem;
-  line-height: 3.5rem;
-}
-.profile-page .profile-page-header .btn-div {
-  flex-grow: 1;
-  align-items: center;
-}
-.profile-page .profile-page-header .btn-div img {
-  display: block;
-  margin: 0 auto;
-  margin-top: 1rem;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-.profile-page .user-info-header {
+.profile-page .user-info-container {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
   display: flex;
+  width: 100%;
   height: 4.375rem;
+  align-items: center;
 }
-.profile-page .user-info-header div {
-  height: 100%;
+.profile-page .user-info-container .user-info {
+  flex-grow: 1;
 }
-.profile-page .user-info-header .left {
-  width: 6.25rem;
-}
-.profile-page .user-info-header .left img {
+.profile-page .user-info-container .user-info img {
   display: block;
   width: 4rem;
   height: 4rem;
   margin: 0 auto;
   margin-top: 0.1875rem;
 }
-.profile-page .user-info-header .center {
-  width: 7.5rem;
-}
-.profile-page .user-info-header .center .user-nickname {
+.profile-page .user-info-container .user-info .user-nickname {
   display: block;
   line-height: 50px; /* 상대 단위로 바꿔야함.. */
 }
-.profile-page .user-info-header .right {
-  width: 6.25rem;
+.profile-page .user-info-container .right {
+  flex-grow: 1;
 }
-.profile-page .user-info-header .right img {
+.profile-page .user-info-container .right img {
   display: block;
   width: 3.5rem;
   height: 3.5rem;
