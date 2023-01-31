@@ -4,7 +4,6 @@ WORKDIR /home/flos
 COPY . .
 RUN mkdir -p build
 RUN npm install -- silent
-#RUN npx create-react-app flos-app
 RUN npm run build
 
 FROM nginx

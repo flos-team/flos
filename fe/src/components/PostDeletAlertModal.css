@@ -1,0 +1,56 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.post-delete-modal {
+  width: 15rem;
+  height: 7.5rem;
+  background-color: #ffffff;
+  border-radius: 0.625rem;
+  border: 1px solid #d3d3d3;
+  font-size: 0.875rem;
+}
+.post-delete-modal .post-delete-modal-header {
+  width: 80%;
+  height: 50%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 3.75rem;
+  border-bottom: 1px solid #aaa8a8;
+}
+.post-delete-modal .post-delete-modal-footer {
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.post-delete-modal .post-delete-modal-footer div {
+  width: 50%;
+  height: 100%;
+  line-height: 3.75rem;
+  text-align: center;
+}
+.post-delete-modal .post-delete-modal-footer div:first-child {
+  border-bottom-left-radius: 10px;
+}
+.post-delete-modal .post-delete-modal-footer div:last-child {
+  border-bottom-right-radius: 10px;
+}
+.post-delete-modal .post-delete-modal-footer div:hover {
+  background-color: #e8e8e8;
+}
+
+/*# sourceMappingURL=PostDeletAlertModal.css.map */

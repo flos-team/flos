@@ -1,0 +1,27 @@
+.bigframe{
+  width: 100%;
+  height: 100vh;
+}
+
+.headertextframe{
+  margin: 2vh auto 0 auto;
+}
+
+.headertext{
+  display: flex;
+  justify-content: center;
+}
+
+.videodiv{
+  position: absolute;
+  width: 70%;
+  height: 50vh;
+  left: 15%;
+  top: calc(50% - 50vh/2);
+}
+
+.test {
+  display: 'block';
+  max-width: 360px;
+  max-height: 740px;
+}

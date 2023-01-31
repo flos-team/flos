@@ -1,7 +1,7 @@
 import styles from "./BottomNavigation.module.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {feed, global, home, garden, profile} from "../redux/pageComponent"
+import {feed, global, home, garden, profile, test} from "../redux/pageComponent"
 const Nav = () => {
   /** nav바에 이동에 따라 컴포넌트를 불러오고 아이콘을 바꾸는 함수 */
   /** store에서 현재 페이지의 상태를 가져온다. */
@@ -31,6 +31,11 @@ const Nav = () => {
           className={`${position === "profile" ? styles.Profile2 : ""} ${styles.Profile}`}
           onClick={() => dispatch(profile())}
         ></div>
+        {/* <div
+          className={`${position === "test" ? styles.Test2 : ""} ${styles.Test}`}
+          onClick={()=> dispatch(test())}
+        >
+        </div> */}
       </div>
     </div>
   );
