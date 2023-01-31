@@ -11,10 +11,12 @@ import java.util.List;
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    // 포스트 기준 탐색
-    List<Bookmark> findByPost(Member member);
+    // 게시글별 북마크 상태 리스트
+    List<Bookmark> findAllByPost(Post post);
 
-    // 작성자 기준 탐색
-    List<Bookmark> findByMember(Post post);
+    // 회원별 북마크 상태 리스트
+    List<Bookmark> findAllByMember(Member member);
 
+    // 회원이 게시글을 북마크 했는지
+    Bookmark findByPostAndMember(Post post, Member member);
 }
