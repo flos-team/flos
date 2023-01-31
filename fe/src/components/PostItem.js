@@ -88,11 +88,14 @@ const PostItem = ({ mood, userName }) => {
             <img src={pha} />
           </div>
         </Link>
-
         <div className="post-footer">
           <div className="tag-container">
-            <div className="tag">갬쉉적</div>
-            <div className="tag">햇살</div>
+            <div className="tag">
+              <p>감성적</p>
+            </div>
+            <div className="tag">
+              <p>햇살</p>
+            </div>
           </div>
           <div className="comment-container">
             <div className="mood-div">
