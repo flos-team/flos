@@ -57,16 +57,18 @@ function FeedDetailPage() {
         {/* props로 넘어온 id : {value} */}
         <div className={styles.commentFrame}>{commentRendering()}</div>
       </div>
-      <div className={styles.commentInput}>
+      <div className={styles.commentInputFrame}>
         <div className={styles.inputLeft}>
           <img className={styles.currentProfile} src={userImg}></img>
         </div>
         <div className={styles.commentInputDiv}>
-          <form>
-            <input type="text" placeholder="댓글달기..."></input>
-            <div className={styles.test}>
-              <img src={sendImg}></img>
-            </div>
+          <form className={styles.commentForm}>
+            <input
+              className={styles.commentInput}
+              type="text"
+              placeholder="댓글달기...."
+            ></input>
+            <img className={styles.sendBtn} src={sendImg}></img>
           </form>
         </div>
       </div>

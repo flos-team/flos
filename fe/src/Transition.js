@@ -34,6 +34,7 @@ function Transition() {
             <Route path="/settings" element={<SettingPage />}></Route>
             <Route path="/notification" element={<NotificationPage />}></Route>
             <Route path="/guide" element={<GuidePage />}></Route>
+            <Route path="/feed" element={<FeedDetailPage />}></Route>
 
 
 
