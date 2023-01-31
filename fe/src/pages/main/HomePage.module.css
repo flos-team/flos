@@ -11,8 +11,9 @@
     gap: 8px;
     isolation: isolate;
     position: relative;
-    background-image:url("http://dasima.xyz/wp-content/uploads/2018/10/css-background-image-ex-3.png");
+    background-image:url("../../assets/HomeAsset/home-sample-background-img.jpg");
     background-repeat:no-repeat;
+    background-size: cover;
 }
 
 .HomeRoot {
@@ -78,8 +79,8 @@
 
     position: absolute;
     width: 216px;
-    height: 98px;
-    top: 600px;
+    height: 100px;
+    bottom: 45px;
 
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #FFFFFF;
@@ -109,7 +110,7 @@
     position: absolute;
     width: 168px;
     height: 70px;
-    top: 524px;
+    bottom: 150px;
     z-index: 20;
 
 }
@@ -120,7 +121,7 @@
     position: absolute;
     width: 294px;
     height: 223px;
-    top: 300px;
+    bottom: 250px;
 
     border-radius: 5px;
 }

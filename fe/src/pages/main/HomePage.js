@@ -2,10 +2,35 @@ import React, { useEffect } from "react";
 import Flower from "../../components/homepage/flower/Flower";
 import Info from "../../components/homepage/Info";
 import Noti from "../../components/homepage/Noti";
+import { ReactComponent as EditIcon } from "../../assets/HomeAsset/edit.svg"
 import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+import { css, keyframes } from '@emotion/react'
+import GrowProgressBar from "../../components/homepage/GrowProgressBar"
 
 let flower_state = true;
+
+const floating = keyframes`
+    0 {
+        transform: translateY(0);    
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+`
+
+const boxStyle = css`
+    width: 50px; 
+    height: 50px; 
+    border-radius: 100%;
+    background: #a951bf;
+    animation: ${floating} 2s ease infinite;
+`
+
 
 
 const Home = () => {
@@ -26,10 +51,12 @@ const Home = () => {
 
     const sunClick = () => {    // 해 버튼을 클릭 했을 경우,
         console.log("clicked - sun");
+
     };
 
     const rainClick = () => {   // 비 버튼을 클릭 했을 경우,
         console.log("clicked - rain");
+
     };
 
     const guideClick = () => {   // info 버튼을 클릭 했을 경우,
@@ -41,13 +68,18 @@ const Home = () => {
         // 알림 페이지로 라우팅
         console.log("clicked - noti");
 
+    }
 
+    const flowerNameClick = () => {
+        console.log("clicked - name")
     }
 
     const rainCount = 1;    // 빗물 count 값
     const sunCount = 1; // 햇빛 count 값
     const FlowerMessage = "안녕! 나는 튤립이야! 리리리리라아아런머어ㅏㄶ암ㅇ러ㅏㅁㅇㄴㅁㅇ허히ㅏㄶㅁㅇㄶㅇㅁㄴㅇㅎ";
-    const FlowerName = "꽃 이름";
+    const FlowerName = "사랑이";
+    const growPercentValue = 0; // percent value
+    const growProgressBackgroundColor = "black";    // 프로그래스바 색상 string
 
 
     return (
@@ -65,13 +97,11 @@ const Home = () => {
                     <div className={styles.FlowerMessageText}>{FlowerMessage}</div>
                 </div>
                 <div className={styles.FlowerInfo}>
-                    <div className={styles.FlowerName}>
+                    <div className={styles.FlowerName} onClick={flowerNameClick}>
                         <span className={styles.FlowerNameText}>{FlowerName}</span>
-                        <img src={require("../../assets/HomeAsset/flower-name-edit-img.png")} />
+                        <EditIcon />
                     </div>
-                    <div>
-                        상태 게이지
-                    </div>
+                    <GrowProgressBar growPercent={growPercentValue}></GrowProgressBar>
                 </div>
                 <div className={styles.FlowerItem}>
                     <div className={styles.RainDiv} onClick={rainClick}>
