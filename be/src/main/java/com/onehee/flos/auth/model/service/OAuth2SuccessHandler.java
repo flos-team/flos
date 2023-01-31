@@ -7,6 +7,7 @@ import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.RoleType;
 import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.util.FilesHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtTokenProvider jwtTokenProvider;
     private final ObjectMapper objectMapper;
     private final MemberRepository memberRepository;
+    private final FilesHandler filesHandler;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -40,8 +42,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             Member member = Member.builder()
                     .email(oAuth2UserDTO.getEmail())
                     .providerType(oAuth2UserDTO.getProviderType())
-                    .picture(oAuth2UserDTO.getPicture())
-                    .roleType(RoleType.USER)
+                    .profileImage(filesHandler.saveUrlImage(oAuth2UserDTO))
                     .nickname(oAuth2UserDTO.getProviderType().toString() + "_" + UUID.randomUUID().toString())
                     .password(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(UUID.randomUUID().toString()))
                     .build();

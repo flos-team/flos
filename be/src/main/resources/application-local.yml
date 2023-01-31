@@ -19,4 +19,4 @@ spring:
           kakao:
             redirectUri: "http://localhost:8080/login/oauth2/code/kakao"
 file:
-  dir: C:/flos/
+  dir: C:\flos\
