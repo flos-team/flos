@@ -1,0 +1,43 @@
+.bigframe{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.fontsize16{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.fontsize14{
+    font-size: 14px;
+    font-weight: 600;
+}
+.fontsize12{
+    font-size: 12px;
+}
+
+.fontblue{
+    color: #336FD6;
+    text-decoration: underline;
+}
+
+.fontyellow{
+    color: #FFB364;
+}
+
+.inputnowpw{
+    height: 40px;
+    width: 100%;
+    margin: 12px 0 4px 0;
+    padding: 8px;
+} ::placeholder {
+    opacity: 50%;
+}
+
+.inputbox{
+    height: 40px;
+    width: 100%;
+    padding: 8px;
+} ::placeholder {
+    opacity: 50%;
+}
