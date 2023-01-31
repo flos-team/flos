@@ -13,6 +13,7 @@ import PwChangePage from "./pages/password/ChangePage"
 import PwFindPage from "./pages/password/FindPage"
 import SettingPage from "./pages/SettingPage"
 import NotificationPage from "./pages/NotificationPage"
+import GuidePage from "./pages/GuidePage"
 import "./Transition.css";
 
 function Transition() {
@@ -32,7 +33,7 @@ function Transition() {
             <Route path="/pwfind" element={<PwFindPage />}></Route>
             <Route path="/settings" element={<SettingPage />}></Route>
             <Route path="/notification" element={<NotificationPage />}></Route>
-            <Route path="/feed" element={<FeedDetailPage />}></Route>
+            <Route path="/guide" element={<GuidePage />}></Route>
 
 
 
