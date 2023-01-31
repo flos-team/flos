@@ -7,6 +7,7 @@ import PostItem from "../../../components/PostItem";
 import userImg from "../../../assets/GlobalAsset/user-img.png";
 import moodImg from "../../../assets/GlobalAsset/sunny.png";
 import emptySunny from "../../../assets/GlobalAsset/empty-sunny.png";
+import sendImg from "../../../assets/FeedAsset/fi-br-paper-plane.png";
 
 function FeedDetailPage() {
   const location = useLocation();
@@ -53,10 +54,20 @@ function FeedDetailPage() {
       ></HeaderComponent>
       <div className={styles.main}>
         <PostItem mood={"RAINY"} userName={"wonnny"} postId={value}></PostItem>
-        props로 넘어온 id : {value}
-        <div className={styles.commentFrame}>
-          {commentRendering()}
-          <div className={styles.commentInput}></div>
+        {/* props로 넘어온 id : {value} */}
+        <div className={styles.commentFrame}>{commentRendering()}</div>
+      </div>
+      <div className={styles.commentInput}>
+        <div className={styles.inputLeft}>
+          <img className={styles.currentProfile} src={userImg}></img>
+        </div>
+        <div className={styles.commentInputDiv}>
+          <form>
+            <input type="text" placeholder="댓글달기..."></input>
+            <div className={styles.test}>
+              <img src={sendImg}></img>
+            </div>
+          </form>
         </div>
       </div>
     </div>
