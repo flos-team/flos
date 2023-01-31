@@ -44,9 +44,8 @@ const ProfilePage = () => {
   const commentCount = 123;
   const commentCountText = <p>{commentCount >= 99 ? "99+" : commentCount}</p>;
 
-  const postList = userInfos.map(({ userInfoId, userInfo }) => (
-    <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
-  ));
+  const n = 8; // Or something else
+  const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>)  
 
   let tooltipMessage = "회원님의 지난 일주일, 한달 간의\n포스트의 감정평가를 기준으로 집계한\n통계 그래프입니다.";
 
@@ -55,14 +54,16 @@ const ProfilePage = () => {
       <HeaderComponent pageName={"프로필"} optType={1}></HeaderComponent>
       <div className="profile-page">
         <div className="user-info-container">
-          <div className="user-info">
-            <img className="user-profile-img" src={userImg}></img>
-            <p className="user-nickname">wonny</p>
+          <div className="flex-box">
+            <div className="user-info">
+              <img className="user-profile-img" src={userImg}></img>
+              <p className="user-nickname">wonny</p>
+            </div>
+            <div className="user-social-info-box">
+              <ul className="user-social-info-title">{userInfoNameList}</ul>
+              <ul className="user-social-info">{userInfoList}</ul>
+            </div>
           </div>
-          <div className="user-social-info-box">
-          <ul className="user-social-info-title">{userInfoNameList}</ul>
-          <ul className="user-social-info">{userInfoList}</ul>
-        </div>
         </div>
         <div className="feed-graph-div">
           <div className="feed-graph-guide-div">
