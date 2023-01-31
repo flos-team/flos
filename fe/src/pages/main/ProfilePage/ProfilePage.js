@@ -98,7 +98,6 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="profile-tab-menu">
-          {/* 임시로 텍스트로 대체함, 추후 nav 태그로 교체 */}
           <ul className="tab-menus">
             <li className="post-menu">포스트</li>
             <li className="book-menu">북마크</li>
@@ -106,6 +105,7 @@ const ProfilePage = () => {
         </div>
         <div className="feed-container">{postList}</div>
       </div>
+      {/* <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem> */}
     </>
   );
 };
