@@ -7,77 +7,56 @@
   width: 100%;
   /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
   .user-info-container {
-    margin-top: 4 * $rpx1;
-    margin-bottom: 4 * $rpx1;
-    display: flex;
-    width: 100%;
+    width: 90%;
     height: 70 * $rpx1;
-    align-items: center;
-    div {
-      // border: 1px solid black; /*temp */
-    }
-    .user-info{
-      flex-grow: 1;
-      img {
-        display: block;
-        width: 64 * $rpx1;
-        height: 64 * $rpx1;
-        margin: 0 auto;
-        margin-top: 3 * $rpx1;
+    margin: 10*$rpx1 auto;    
+    .flex-box{
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      .user-info{
+        width: 30%;
+        height: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        img {
+          display: block;
+          width: 40 * $rpx1;
+          height: 40 * $rpx1;
+          margin: 0 auto;
+        }
+        .user-nickname {
+          display: block;
+          margin: 0 auto;
+          text-align: center;
+        }
       }
-      .user-nickname {
-        display: block;
-        line-height: 50px; /* 상대 단위로 바꿔야함.. */
-      }
-    }
-    .right {
-      // width: 100 * $rpx1;
-      flex-grow: 1;
-      img {
-        display: block;
-        width: 56 * $rpx1;
-        height: 56 * $rpx1;
-        margin: 0 auto;
-        margin-top: 7 * $rpx1;
-      }
-    }
-  }
-
-  /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
-  .user-social-info-box {
-    margin-top: 4 * $rpx1;
-    margin-bottom: 4 * $rpx1;
-    width: 320 * $rpx1;
-    height: 82 * $rpx1;
-    // border: 1px solid black; /* 추후 변수로 색상만 변경 */
-    background: $white; /* 추후 변수로 scss 변수로 대체 예정 */
-    border-radius: 10 * $rpx1;
-    ul {
-      list-style: none;
-      display: flex;
-      justify-content: space-evenly;
-      height: 50%;
-      li {
-        width: 25%;
-        text-align: center;
-        line-height: 41 * $rpx1;
-      }
-    }
-    .user-social-info-title {
-      li {
-      }
-    }
-    .user-social-info {
-      li {
+      /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
+      .user-social-info-box {
+        width: 70%;
+        height: 100%;
+        background: $white;
+        border-radius: 10 * $rpx1;
+        font-size: 12px;
+        ul {
+          list-style: none;
+          display: flex;
+          height: 50%;
+          li {
+            width: 25%;
+            text-align: center;
+            line-height: 250%;
+          }
+        }        
       }
     }
   }
-
   /* 사용자의 주간, 월간의 감정 변화 추이를 확인 가능한 통계 그래프 */
   .feed-graph-div {
     margin-top: 4 * $rpx1;
     margin-bottom: 4 * $rpx1;
-    width: 320 * $rpx1;
+    width: 90vw;
     height: 84 * $rpx1;
     // border: 1px solid black; /*temp */
     .feed-graph-guide-div {
@@ -151,7 +130,7 @@
   .profile-tab-menu {
     margin-top: 4 * $rpx1;
     margin-bottom: 4 * $rpx1;
-    width: 240 * $rpx1;
+    width: 66.7vw;
     height: 50 * $rpx1;
     // border: 1px solid black; /* temp */
     .tab-menus {
@@ -174,15 +153,44 @@
 
   /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
   .feed-container {
-    margin-top: 4 * $rpx1;
-    margin-bottom: 4 * $rpx1;
-    width: 320 * $rpx1;
-    height: 300 * $rpx1;
+    width: 88.8vw;
+    height: 65vh;
     overflow-y: scroll;
-    overflow-x: hidden;
+    // overflow-x: hidden;
+    display: grid;
+    row-gap:10*$rpx1;
+    column-gap: 10*$rpx1;
     // border: 1px solid black; /* temp */
     .post-item {
+      margin: 0 auto;
       margin-bottom: 10 * $rpx1;
+    }    
+  }
+}
+@media(min-height:850px){
+  .profile-page {
+    .feed-container {
+      height: 80vh;      
     }
   }
 }
+
+@media(min-width:480px){
+  .profile-page {    
+    .feed-container {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(1, 1fr);
+    }
+  }
+}
+@media(min-width:800px){
+  .profile-page {    
+    .feed-container {
+      height: 80vh;      
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    }
+  }
+}
+
+
