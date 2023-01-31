@@ -73,21 +73,16 @@ const dataInfo = [
 
 function Feed() {
   const [userInfos, setUserInfos] = useState([
-    { userInfoId: 1, userInfo: 999 },
-    { userInfoId: 2, userInfo: 999 },
-    { userInfoId: 3, userInfo: 999 },
-    { userInfoId: 4, userInfo: 999 },
-    { userInfoId: 5, userInfo: 999 },
+    { userInfoId: 1, userInfo: 999, postId: 1 },
+    { userInfoId: 2, userInfo: 999, postId: 2 },
+    { userInfoId: 3, userInfo: 999, postId: 3 },
+    { userInfoId: 4, userInfo: 999, postId: 4 },
+    { userInfoId: 5, userInfo: 999, postId: 5 },
   ]);
-  const postList = userInfos.map(({ userInfoId, userInfo }) => (
-    <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
+  const postList = userInfos.map(({ userInfoId, userInfo, postId }) => (
+    <PostItem mood={"RAINY"} userName={"wonnny"} postId={postId}></PostItem>
   ));
-  const rendering = () => {
-    const result = [];
-    for (let i = 0; i < dataInfo.length; i++) {
-      result.push(<div className={styles}></div>);
-    }
-  };
+
 
   return (
     <div className={styles.feedRoot}>

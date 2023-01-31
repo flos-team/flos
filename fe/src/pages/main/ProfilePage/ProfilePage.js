@@ -52,22 +52,17 @@ const ProfilePage = () => {
 
   return (
     <>
+      <HeaderComponent pageName={"프로필"} optType={1}></HeaderComponent>
       <div className="profile-page">
-        <HeaderComponent pageName={"프로필"} optType={1}></HeaderComponent>
-        <div className="user-info-header">
-          <div className="left">
+        <div className="user-info-container">
+          <div className="user-info">
             <img className="user-profile-img" src={userImg}></img>
-          </div>
-          <div className="center">
             <p className="user-nickname">wonny</p>
           </div>
-          <div className="right">
-            <img className="user-today-mood" src={sunnyImg}></img>
-          </div>
-        </div>
-        <div className="user-social-info-box">
+          <div className="user-social-info-box">
           <ul className="user-social-info-title">{userInfoNameList}</ul>
           <ul className="user-social-info">{userInfoList}</ul>
+        </div>
         </div>
         <div className="feed-graph-div">
           <div className="feed-graph-guide-div">
@@ -98,7 +93,6 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="profile-tab-menu">
-          {/* 임시로 텍스트로 대체함, 추후 nav 태그로 교체 */}
           <ul className="tab-menus">
             <li className="post-menu">포스트</li>
             <li className="book-menu">북마크</li>
@@ -106,6 +100,7 @@ const ProfilePage = () => {
         </div>
         <div className="feed-container">{postList}</div>
       </div>
+      {/* <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem> */}
     </>
   );
 };

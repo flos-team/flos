@@ -1,0 +1,53 @@
+.labeltext{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.preventlabel{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fontsize12{
+    font-size: 12px;
+}
+
+.preventbox{
+    width: 80%;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.preventitem{
+    display: flex;
+}
+
+.textbox{
+    height: 80px;
+    width: 65%;
+    background-color: lightgray;
+}
+
+.retrybox{
+    height: 40px; 
+    background-color: #f0f0f0;
+    border: 0;
+}                                                                                                                                                                                                                                                                                                                                                                  
+
+.voicebox{
+    height: 40px;
+    background-color: #f5f5f5;
+    border: 0;
+}
+
+.rightbtnbox{
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.inputprevent{
+    width: 100%;
+    margin-top: 8px;
+    height: 32px;
+}

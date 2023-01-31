@@ -17,7 +17,7 @@ import { COLORS } from "../styles/colors";
 import "./PostItem.css";
 
 /** */
-const PostItem = ({ mood, userName }) => {
+const PostItem = ({ mood, userName, postId }) => {
   let postTime = "1시간 전";
   // 감정 아이템 채택 수?
   const moodCount = 123;
@@ -77,9 +77,10 @@ const PostItem = ({ mood, userName }) => {
             </div>
           </div>
         </div>
-        <Link to="/feed" state={{ id: 123 }}>
+        <Link to="/feed" state={{ postId: postId }}>
           <div className="post-main">
             <div>
+              post : {postId} <br></br>
               인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에
               만천하의 것이다. 인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 인간이 너의 대중을 밥을 이것이다.
               새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다.인간이 너의 대중을
@@ -88,11 +89,14 @@ const PostItem = ({ mood, userName }) => {
             <img src={pha} />
           </div>
         </Link>
-
         <div className="post-footer">
           <div className="tag-container">
-            <div className="tag">갬쉉적</div>
-            <div className="tag">햇살</div>
+            <div className="tag">
+              <p>감성적</p>
+            </div>
+            <div className="tag">
+              <p>햇살</p>
+            </div>
           </div>
           <div className="comment-container">
             <div className="mood-div">

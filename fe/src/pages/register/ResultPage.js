@@ -1,5 +1,6 @@
 import React from 'react'
-import HeaderComponent from '../../components/HeaderComponent'
+import HeaderComponent from '../../components/HeaderComponent';
+import TextLogoComponent from "../../components/TextLogoComponent";
 import styles from './ResultPage.module.css'
 
 
@@ -7,11 +8,7 @@ function ResultPage() {
   return (
     <>      
       <HeaderComponent backVisible={true} pageName={"회원가입"} optType={''}></HeaderComponent>
-      <div className={styles.headertextframe}>
-        <h3 className={styles.headertext}>편안한 감정공유 공간</h3>
-        <h3 className={styles.headertext}>Flos</h3>
-        <br></br>
-      </div>
+      <TextLogoComponent></TextLogoComponent>
 
       <p>회원가입 완료</p>
       <video className={styles.videodiv}
