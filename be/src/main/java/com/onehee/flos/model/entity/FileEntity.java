@@ -1,6 +1,7 @@
 package com.onehee.flos.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,5 +27,6 @@ public class FileEntity {
 
     private String savedPath;
 
+    @ColumnDefault("now()")
     private LocalDateTime createdAt;
 }

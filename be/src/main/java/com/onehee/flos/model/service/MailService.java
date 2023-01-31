@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 public interface MailService {
-    void sendEmail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException;
-    boolean verifyEmail(EmailVerificationRequestDTO emailVerificationRequestDTO);
+    void sendSignUpEmail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException;
+    void sendPasswordResetEmail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException;
+    boolean verifySignUpEmail(EmailVerificationRequestDTO emailVerificationRequestDTO);
+    boolean verifyPasswordResetEmail(EmailVerificationRequestDTO emailVerificationRequestDTO);
 }

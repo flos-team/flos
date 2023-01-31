@@ -2,10 +2,7 @@ package com.onehee.flos.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.TokenResponse;
-import com.onehee.flos.model.dto.request.LoginRequestDTO;
-import com.onehee.flos.model.dto.request.MemberFindPasswordDTO;
-import com.onehee.flos.model.dto.request.MemberSignUpRequestDTO;
-import com.onehee.flos.model.dto.request.MemberUpdateRequestDTO;
+import com.onehee.flos.model.dto.request.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +17,9 @@ public interface MemberService {
     void deleteMember();
 
     void resetPassword(MemberFindPasswordDTO memberFindPasswordDTO);
+
+    boolean isExistEmail(MemberEmailCheckRequestDTO memberEmailCheckRequestDTO);
+
+    boolean isExistNickname(MemberNicknameCheckRequestDTO memberNicknameCheckRequestDTO);
 
 }

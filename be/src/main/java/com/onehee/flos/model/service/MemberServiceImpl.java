@@ -6,10 +6,7 @@ import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
-import com.onehee.flos.model.dto.request.LoginRequestDTO;
-import com.onehee.flos.model.dto.request.MemberFindPasswordDTO;
-import com.onehee.flos.model.dto.request.MemberSignUpRequestDTO;
-import com.onehee.flos.model.dto.request.MemberUpdateRequestDTO;
+import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
@@ -38,17 +35,13 @@ public class MemberServiceImpl implements MemberService {
         if (memberRepository.existsByEmailAndProviderType(memberSignUpRequestDTO.getEmail(), ProviderType.LOCAL)) {
             throw new BadRequestException("이미 가입된 이메일 주소 입니다.");
         }
-        log.info("Redis email: {}", redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode()));
-        log.info("DTO email: {}", memberSignUpRequestDTO.getEmail());
-        log.info("DTO code: {}", memberSignUpRequestDTO.getCode());
-        log.info("{} == {}: {}", memberSignUpRequestDTO.getEmail(), redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode()), memberSignUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode())));
-        if (memberSignUpRequestDTO.getCode() == null || !memberSignUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode()))) {
+        if (memberSignUpRequestDTO.getCode() == null || !memberSignUpRequestDTO.getEmail().equals(redisRepository.getValue("approved_verification:" + memberSignUpRequestDTO.getCode()))) {
             throw new UnauthorizedEmailException("인증되지 않은 이메일 주소입니다.");
         }
         Member member = memberSignUpRequestDTO.toEntity();
         member.setPassword(passwordEncoder.encode(memberSignUpRequestDTO.getPassword()));
         memberRepository.save(member);
-        redisRepository.deleteValue("approved:" + memberSignUpRequestDTO.getCode());
+        redisRepository.deleteValue("approved_verification:" + memberSignUpRequestDTO.getCode());
         redisRepository.deleteValue("verification:" + memberSignUpRequestDTO.getCode());
     }
 
@@ -76,5 +69,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void resetPassword(MemberFindPasswordDTO memberFindPasswordDTO) {
 
+    }
+
+    @Override
+    public boolean isExistEmail(MemberEmailCheckRequestDTO memberEmailCheckRequestDTO) {
+        return memberRepository.existsByEmailAndProviderType(memberEmailCheckRequestDTO.getEmail(), ProviderType.LOCAL);
+    }
+
+    @Override
+    public boolean isExistNickname(MemberNicknameCheckRequestDTO memberNicknameCheckRequestDTO) {
+        return memberRepository.existsByNickname(memberNicknameCheckRequestDTO.getNickname());
     }
 }
