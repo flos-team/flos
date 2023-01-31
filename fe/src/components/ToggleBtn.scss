@@ -1,0 +1,61 @@
+@import "../styles/commons.scss";
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 65 * $rpx1;
+  height: 28 * $rpx1;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $mono100;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22 * $rpx1;
+  width: 22 * $rpx1;
+  left: 3.5 * $rpx1;
+  bottom: 3.5 * $rpx1;
+  background-color: $white-pure;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: $blue500;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $blue500;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(35 * $rpx1);
+  -ms-transform: translateX(35 * $rpx1);
+  transform: translateX(35 * $rpx1);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 28 * $rpx1;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

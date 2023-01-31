@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import Flower from "../../components/flower/Flower"
-import styles from "./HomePage.module.css"
+import Flower from "../../components/homepage/flower/Flower";
+import Info from "../../components/homepage/Info";
+import Noti from "../../components/homepage/Noti";
+import styles from "./HomePage.module.css";
 
 let flower_state = true;
 
@@ -22,12 +24,22 @@ const Home = () => {
     }, []);
 
     const sunClick = () => {    // 해 버튼을 클릭 했을 경우,
-        // alert("성태님은.. 신드라 장인~~");
+        console.log("clicked - sun");
     };
 
     const rainClick = () => {   // 비 버튼을 클릭 했을 경우,
-        // alert("나는.. 럭스 장인~~");
+        console.log("clicked - rain");
     };
+
+    const infoClick = () => {   // info 버튼을 클릭 했을 경우,
+        // 도움말 페이지로 라우팅
+        console.log("clicked - info");
+    }
+
+    const notiClick = () => {   // noti 버튼을 클릭 했을 경우,
+        // 알림 페이지로 라우팅
+        console.log("clicked - noti");
+    }
 
     const rainCount = 1;    // 빗물 count 값
     const sunCount = 1; // 햇빛 count 값
@@ -37,12 +49,8 @@ const Home = () => {
         <div className={styles.HomePage}>
             <div className={styles.HomeRoot}>
                 <div className={styles.HomeHeader}>
-                    <div className={styles.HeaderHelp}>
-                        help
-                    </div>
-                    <div className={styles.HeaderNoti}>
-                        notification
-                    </div>
+                    <Info onClick={infoClick}/>
+                    <Noti onClick={notiClick}/>
                 </div>
                 <div className={styles.FlowerMessage}>
                     <span className={styles.FlowerMessageText}>안녕! 나는 튤립이야!</span>

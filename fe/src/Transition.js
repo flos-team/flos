@@ -5,7 +5,6 @@ import LandingPage1 from "./pages/landing/LandingPage1";
 import MainPage from "./pages/main/MainPage";
 import LoginPage from "./pages/LoginPage";
 import FillPage from "./pages/register/FillPage";
-import VerifyPage from "./pages/register/VerifyPage";
 import ResultPage from "./pages/register/ResultPage"
 import PwChangePage from "./pages/password/ChangePage"
 import PwFindPage from "./pages/password/FindPage"
@@ -25,7 +24,6 @@ function Transition() {
             <Route path="/main" element={<MainPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>            
             <Route path="/register/fill" element={<FillPage />}></Route>
-            <Route path="/register/verify" element={<VerifyPage />}></Route>
             <Route path="/register/result" element={<ResultPage />}></Route>
             <Route path="/pwchange" element={<PwChangePage />}></Route>
             <Route path="/pwfind" element={<PwFindPage />}></Route>

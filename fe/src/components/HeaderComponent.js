@@ -54,11 +54,13 @@ const HeaderComponent = ({ backVisible, pageName, optType }) => {
   return (
     <>
       <div className="page-header">
-        <div className="title-bar">
-          {backImg}
-          <p>{pageName}</p>
-        </div>
-        {btnSelected}
+        <div className="page-div">
+          <div className="title-bar">
+            {backImg}
+            <p>{pageName}</p>
+          </div>
+          {btnSelected}
+        </div>          
       </div>
     </>
   );

@@ -1,0 +1,45 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.post-edit-modal {
+  width: 90px;
+  height: 80px;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+.post-edit-modal .post-edit-item {
+  width: 100%;
+  height: 50%;
+  line-height: 40px;
+}
+.post-edit-modal .post-edit-item:first-child {
+  border-bottom: 1px solid black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.post-edit-modal .post-edit-item:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.post-edit-modal .post-edit-item:hover {
+  background: #e8e8e8;
+}
+
+/*# sourceMappingURL=PostEditModal.css.map */

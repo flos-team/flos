@@ -29,6 +29,12 @@
     font-size: 14px;
     padding: 0px;
     height: 5vh;
+    border: 0px;
+    border-bottom: 1px solid black;
+}
+.inputdiv:focus {
+    outline: none;
+    border-bottom: 2px solid black;
 }
 
 .emaillabel {

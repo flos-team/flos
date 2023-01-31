@@ -23,6 +23,7 @@
   box-sizing: border-box;
   border-radius: 0.625rem;
   border: 0.0625rem solid #6d6666; /*색깔 조정 必 */
+  margin-bottom: 0.625rem;
 }
 .post-item .post-header {
   width: 100%;
