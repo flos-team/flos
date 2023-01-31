@@ -2,7 +2,10 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import LandingPage from "./pages/landing/LandingPage";
 import LandingPage1 from "./pages/landing/LandingPage1";
+
 import MainPage from "./pages/main/MainPage";
+import FeedDetailPage from "./pages/main/FeedPage/FeedDetailPage";
+
 import LoginPage from "./pages/LoginPage";
 import FillPage from "./pages/register/FillPage";
 import ResultPage from "./pages/register/ResultPage"
@@ -29,7 +32,7 @@ function Transition() {
             <Route path="/pwfind" element={<PwFindPage />}></Route>
             <Route path="/settings" element={<SettingPage />}></Route>
             <Route path="/notification" element={<NotificationPage />}></Route>
-            
+            <Route path="/feed" element={<FeedDetailPage />}></Route>
 
 
 
