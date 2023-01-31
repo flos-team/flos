@@ -15,3 +15,8 @@
 예시 )
 git commit -m "refactor : 로그인 서버 통신 코드 리펙토링"
 
+## `develop` 브랜치 라이브 빌드
+
+### http://i8b210.p.ssafy.io
+
+- 젠킨스 포트 2080
