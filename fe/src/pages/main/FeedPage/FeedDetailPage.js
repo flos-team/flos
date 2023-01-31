@@ -62,6 +62,13 @@ function FeedDetailPage() {
           <img className={styles.currentProfile} src={userImg}></img>
         </div>
         <div className={styles.commentInputDiv}>
+          <form className={styles.commentForm}>
+            <input
+              className={styles.commentInput}
+              type="text"
+              placeholder="댓글달기...."
+            ></input>
+            <img className={styles.sendBtn} src={sendImg}></img>
           <form>
             <input type="text" placeholder="댓글달기..."></input>
             <div className={styles.test}>
