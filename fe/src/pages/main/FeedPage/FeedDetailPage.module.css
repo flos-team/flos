@@ -162,7 +162,7 @@
   color: #000000;
 }
 
-.commentInput {
+.commentInputFrame {
   /* comment-input */
 
   position: relative;
@@ -190,24 +190,19 @@
   /* align-items: center; */
 }
 
-form {
+.commentForm {
   position: relative;
   align-items: center;
   display: flex;
   flex-direction: row;
   left: 3%;
 }
-.test {
-  position: relative;
-  left: 3%;
-
-  /* display: flex; */
-  /* left: 95px; */
-  width: 10%;
+.sendBtn {
+  position: inherit;
+  left: 2%;
   order: 2;
 }
-input {
-  /* display: flex; */
+.commentInput {
   width: 90%;
 
   height: 32px;
