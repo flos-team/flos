@@ -1,6 +1,5 @@
 package com.onehee.flos.model.entity;
 
-import com.onehee.flos.model.entity.type.WeatherType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -8,8 +7,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -19,28 +16,37 @@ import java.util.List;
 @Builder
 @DynamicInsert
 @DynamicUpdate
-public class Post {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "comment_id")
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "par_comment_id")
+    private Comment parent;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pri_comment_id")
+    private Comment primitive;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "members_id")
     private Member writer;
 
-    @Column(length = 1000)
+    @Column(length = 200)
     private String content;
 
     @ColumnDefault("now()")
-    private LocalDateTime createdAt; // 수정 불가
+    private LocalDateTime createdAt;
 
     private LocalDateTime modifyAt;
 
-    @Enumerated(EnumType.STRING)
-    private WeatherType weather;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
+    @ColumnDefault("0")
+    private Boolean isApprove;
 }
