@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
+import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.LoginRequestDTO;
 import com.onehee.flos.model.dto.request.MemberEmailCheckRequestDTO;
 import com.onehee.flos.model.dto.request.MemberNicknameCheckRequestDTO;
@@ -50,6 +51,19 @@ public class MemberController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         TokenResponse tokenResponse = memberService.login(loginRequestDTO);
         return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "로그아웃 메서드", description = "요청사용자의 리프레시토큰을 만료시키고 사용된 엑세스 토큰을 사용할 수 없게 만듭니다.")
+    @GetMapping("/logout")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> logout(@AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization") String atk) {
+        memberService.logout(
+                LogoutDTO.builder()
+                        .atk(atk.substring("Bearer ".length()))
+                        .email(memberDetails.getMember().getEmail())
+                        .build()
+        );
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")

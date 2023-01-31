@@ -2,6 +2,7 @@ package com.onehee.flos.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,7 @@ public interface MemberService {
     boolean isExistEmail(MemberEmailCheckRequestDTO memberEmailCheckRequestDTO);
 
     boolean isExistNickname(MemberNicknameCheckRequestDTO memberNicknameCheckRequestDTO);
+
+    void logout(LogoutDTO logoutDTO);
 
 }

@@ -6,6 +6,7 @@ import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
+import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
@@ -43,6 +44,11 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
         redisRepository.deleteValue("approved_verification:" + memberSignUpRequestDTO.getCode());
         redisRepository.deleteValue("verification:" + memberSignUpRequestDTO.getCode());
+    }
+
+    @Override
+    public void logout(LogoutDTO logoutDTO) {
+        jwtTokenProvider.abandonTokens(logoutDTO);
     }
 
     @Override
