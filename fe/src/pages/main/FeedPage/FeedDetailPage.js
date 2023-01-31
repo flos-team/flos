@@ -66,7 +66,7 @@ function FeedDetailPage() {
             <input
               className={styles.commentInput}
               type="text"
-              placeholder="댓글달기..."
+              placeholder="댓글달기...."
             ></input>
             <img className={styles.sendBtn} src={sendImg}></img>
           </form>
