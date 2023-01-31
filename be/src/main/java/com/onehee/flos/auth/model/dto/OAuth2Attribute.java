@@ -23,7 +23,7 @@ public class OAuth2Attribute {
 
     private String nickname;
 
-    private String picture;
+    private String profileImage;
 
     private ProviderType providerType;
 
@@ -42,7 +42,7 @@ public class OAuth2Attribute {
         return OAuth2Attribute.builder()
                 .email((String) kakaoAccount.get("email"))
                 .nickname((String) kakaoProfile.get("name"))
-                .picture((String) kakaoProfile.get("picture"))
+                .profileImage((String) kakaoProfile.get("picture"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .providerType(ProviderType.KAKAO)
@@ -55,7 +55,7 @@ public class OAuth2Attribute {
         return OAuth2Attribute.builder()
                 .email((String) response.get("email"))
                 .nickname((String) response.get("name"))
-                .picture((String) response.get("profile_image"))
+                .profileImage((String) response.get("profile_image"))
                 .attributes(response)
                 .attributeKey(attributeKey)
                 .providerType(ProviderType.NAVER)
@@ -68,7 +68,7 @@ public class OAuth2Attribute {
         map.put("key", attributeKey);
         map.put("nickname", nickname);
         map.put("email", email);
-        map.put("picture", picture);
+        map.put("picture", profileImage);
         map.put("providerType", providerType);
 
         return map;

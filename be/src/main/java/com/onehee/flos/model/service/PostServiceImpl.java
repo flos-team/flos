@@ -9,6 +9,7 @@ import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.*;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.*;
+import com.onehee.flos.util.FilesHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +24,7 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
-    private final FileService fileService;
+    private final FilesHandler filesHandler;
     private final PostTagRepository postTagRepository;
     private final TagRepository tagRepository;
     private final BookmarkRepository bookmarkRepository;
@@ -66,7 +67,7 @@ public class PostServiceImpl implements PostService{
         Post tempPost = postRepository.save(postCreateRequestDTO.toEntity());
 
         for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
-            FileEntity tempFile = fileService.saveFile(e);
+            FileEntity tempFile = filesHandler.saveFile(e);
             postFileRepository.save(
                     PostFile.builder()
                             .post(tempPost)
@@ -103,7 +104,7 @@ public class PostServiceImpl implements PostService{
         );
 
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
-            FileEntity tempFile = fileService.saveFile(e);
+            FileEntity tempFile = filesHandler.saveFile(e);
             postFileRepository.save(
                     PostFile.builder()
                             .post(tempPost)

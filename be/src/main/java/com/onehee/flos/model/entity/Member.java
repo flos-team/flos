@@ -40,7 +40,9 @@ public class Member {
     @ColumnDefault("'LOCAL'")
     private ProviderType providerType;
 
-    private String picture;
+    @OneToOne
+    @JoinColumn(name = "files_id")
+    private FileEntity profileImage;
 
     @ColumnDefault("0")
     private int water;
