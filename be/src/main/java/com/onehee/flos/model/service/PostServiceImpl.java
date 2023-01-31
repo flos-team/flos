@@ -88,19 +88,19 @@ public class PostServiceImpl implements PostService{
     @Override
     public void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
 
+        Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
+
         postFileRepository.deleteAll(
             postFileRepository.findAllByPost(
-                postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."))
+                tempPost
             )
         );
 
         postTagRepository.deleteAll(
             postTagRepository.findAllByPost(
-                postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."))
+                tempPost
             )
         );
-
-        Post tempPost = postRepository.save(postModifyRequestDTO.toEntity());
 
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
             FileEntity tempFile = fileService.saveFile(e);
@@ -136,6 +136,12 @@ public class PostServiceImpl implements PostService{
 
         postTagRepository.deleteAll(
             postTagRepository.findAllByPost(
+                tempPost
+            )
+        );
+
+        bookmarkRepository.deleteAll(
+            bookmarkRepository.findAllByPost(
                 tempPost
             )
         );
