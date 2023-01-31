@@ -7,7 +7,6 @@ import Feed from "./FeedPage/FeedPage";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import HomePage from "./HomePage";
 import GlobalPage from "./GlobalPage";
-import AlarmPage from "./ProfilePage/alarmPage/AlarmPage";
 
 function Main() {
   const position = useSelector((state) => state.page.value);
