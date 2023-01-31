@@ -22,66 +22,60 @@
   align-items: center;
   width: 100%;
   /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
-  /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
   /* 사용자의 주간, 월간의 감정 변화 추이를 확인 가능한 통계 그래프 */
   /* 사용자 게시글 / 북마크 글을 전환하는 nav 컴포넌트 */
   /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
 }
 .profile-page .user-info-container {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  display: flex;
-  width: 100%;
+  width: 90%;
   height: 4.375rem;
+  margin: 0.625rem auto;
+}
+.profile-page .user-info-container .flex-box {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
 }
-.profile-page .user-info-container .user-info {
-  flex-grow: 1;
+.profile-page .user-info-container .flex-box .user-info {
+  width: 30%;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
-.profile-page .user-info-container .user-info img {
+.profile-page .user-info-container .flex-box .user-info img {
   display: block;
-  width: 4rem;
-  height: 4rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin: 0 auto;
-  margin-top: 0.1875rem;
 }
-.profile-page .user-info-container .user-info .user-nickname {
+.profile-page .user-info-container .flex-box .user-info .user-nickname {
   display: block;
-  line-height: 50px; /* 상대 단위로 바꿔야함.. */
-}
-.profile-page .user-info-container .right {
-  flex-grow: 1;
-}
-.profile-page .user-info-container .right img {
-  display: block;
-  width: 3.5rem;
-  height: 3.5rem;
   margin: 0 auto;
-  margin-top: 0.4375rem;
+  text-align: center;
 }
-.profile-page .user-social-info-box {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  width: 20rem;
-  height: 5.125rem;
-  background: #f9f9f9; /* 추후 변수로 scss 변수로 대체 예정 */
+.profile-page .user-info-container .flex-box .user-social-info-box {
+  width: 70%;
+  height: 100%;
+  background: #f9f9f9;
   border-radius: 0.625rem;
+  font-size: 12px;
 }
-.profile-page .user-social-info-box ul {
+.profile-page .user-info-container .flex-box .user-social-info-box ul {
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
   height: 50%;
 }
-.profile-page .user-social-info-box ul li {
+.profile-page .user-info-container .flex-box .user-social-info-box ul li {
   width: 25%;
   text-align: center;
-  line-height: 2.5625rem;
+  line-height: 250%;
 }
 .profile-page .feed-graph-div {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
-  width: 20rem;
+  width: 90vw;
   height: 5.25rem;
 }
 .profile-page .feed-graph-div .feed-graph-guide-div {
@@ -149,7 +143,7 @@
 .profile-page .profile-tab-menu {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
-  width: 15rem;
+  width: 66.7vw;
   height: 3.125rem;
 }
 .profile-page .profile-tab-menu .tab-menus {
@@ -169,15 +163,35 @@
   border-bottom: 0.0625rem solid #0c597c; /* 변수로 치환 예정 */
 }
 .profile-page .feed-container {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-  width: 20rem;
-  height: 18.75rem;
+  width: 88.8vw;
+  height: 65vh;
   overflow-y: scroll;
-  overflow-x: hidden;
+  display: grid;
+  row-gap: 0.625rem;
+  column-gap: 0.625rem;
 }
 .profile-page .feed-container .post-item {
+  margin: 0 auto;
   margin-bottom: 0.625rem;
+}
+
+@media (min-height: 850px) {
+  .profile-page .feed-container {
+    height: 80vh;
+  }
+}
+@media (min-width: 480px) {
+  .profile-page .feed-container {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+  }
+}
+@media (min-width: 800px) {
+  .profile-page .feed-container {
+    height: 80vh;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
 }
 
 /*# sourceMappingURL=ProfilePage.css.map */
