@@ -26,6 +26,7 @@ spring:
     port: 587
     username: joykst961@gmail.com
     password: ebimbutyehtuznzn
+    description: Flos 운영팀
     properties:
       transport:
         protocol: smtp
@@ -85,4 +86,4 @@ spring:
 
 spring:
   profiles:
-    active: server
+    active: local

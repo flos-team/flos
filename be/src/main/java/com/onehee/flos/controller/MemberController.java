@@ -5,17 +5,17 @@ import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.request.LoginRequestDTO;
+import com.onehee.flos.model.dto.request.MemberEmailCheckRequestDTO;
+import com.onehee.flos.model.dto.request.MemberNicknameCheckRequestDTO;
 import com.onehee.flos.model.dto.request.MemberSignUpRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
-import com.onehee.flos.util.SecurityManager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,21 +55,25 @@ public class MemberController {
     @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
     @GetMapping("/info")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> getInfo(Authentication auth) {
-        Member member = SecurityManager.getCurrentMember();
-        return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<?> test(@AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
         Member member = memberDetails.getMember();
         return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
     }
 
-    @GetMapping("/test2")
-    public ResponseEntity<?> test2(Authentication authentication) {
-        MemberDetails memberDetails = (MemberDetails) authentication.getPrincipal();
-        Member member = memberDetails.getMember();
-        return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
+    @Operation(summary = "중복이메일 체크 메서드", description = "이메일의 중복 여부를 확인합니다. 회원가입시 keyUp 이벤트에 사용합니다.")
+    @GetMapping("/check/email")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> checkEmail(MemberEmailCheckRequestDTO memberEmailCheckRequestDTO) {
+        if (memberService.isExistEmail(memberEmailCheckRequestDTO)) {
+            return new ResponseEntity<String>("이미 해당 이메일이 존재합니다.", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>("사용 가능한 이메일 입니다.", HttpStatus.OK);
+    }
+
+    @Operation(summary = "중복닉네임 체크 메서드", description = "닉네임의 중복 여부를 확인합니다.")
+    @GetMapping("/check/nickname")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> checkNickname(MemberNicknameCheckRequestDTO memberEmailCheckRequestDTO) {
+        return new ResponseEntity<Boolean>(memberService.isExistNickname(memberEmailCheckRequestDTO), HttpStatus.OK);
     }
 }
