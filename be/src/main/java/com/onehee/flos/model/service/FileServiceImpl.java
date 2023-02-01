@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @Transactional
-    public void saveFile(MultipartFile file) throws IOException {
+    public FileEntity saveFile(MultipartFile file) throws IOException {
         // 파일이 없으면 Bad Request 발생
         if (file.isEmpty()) throw new BadRequestException("파일이 없습니다");
         
@@ -59,6 +59,7 @@ public class FileServiceImpl implements FileService {
         file.transferTo(new File(savedPath));
         
         // DB에 등록
-        FileEntity savedFile = fileRepository.save(fileEntity);
+        return fileRepository.save(fileEntity);
+
     }
 }

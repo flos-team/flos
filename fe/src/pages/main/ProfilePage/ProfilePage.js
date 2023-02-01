@@ -3,16 +3,16 @@ import { render } from "@testing-library/react";
 import { useState } from "react";
 /* 컴포넌트에서 사용할 이미지 에셋 import */
 import userImg from "../../../assets/GlobalAsset/user-img.png";
-import sunnyImg from "../../../assets/ProfileAsset/sunny-img.png";
+import sunnyImg from "../../../assets/GlobalAsset/sunny.png";
 import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
-import HeaderComponent from "../../../components/HeaderComponent";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
-import "../../../components/ToolTip.css";
+import "../../../components/ToolTip/ToolTip.css";
 
 const ProfilePage = () => {
   const userName = "wonny";
@@ -44,25 +44,26 @@ const ProfilePage = () => {
   const commentCount = 123;
   const commentCountText = <p>{commentCount >= 99 ? "99+" : commentCount}</p>;
 
-  const postList = userInfos.map(({ userInfoId, userInfo }) => (
-    <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
-  ));
+  const n = 8; // Or something else
+  const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>)  
 
   let tooltipMessage = "회원님의 지난 일주일, 한달 간의\n포스트의 감정평가를 기준으로 집계한\n통계 그래프입니다.";
 
   return (
     <>
-      <HeaderComponent pageName={"프로필"} optType={1}></HeaderComponent>
+      <HeaderComponent backVisible={false} pageName={"프로필"} optType={1}></HeaderComponent>
       <div className="profile-page">
         <div className="user-info-container">
-          <div className="user-info">
-            <img className="user-profile-img" src={userImg}></img>
-            <p className="user-nickname">wonny</p>
+          <div className="flex-box">
+            <div className="user-info">
+              <img className="user-profile-img" src={userImg}></img>
+              <p className="user-nickname">wonny</p>
+            </div>
+            <div className="user-social-info-box">
+              <ul className="user-social-info-title">{userInfoNameList}</ul>
+              <ul className="user-social-info">{userInfoList}</ul>
+            </div>
           </div>
-          <div className="user-social-info-box">
-          <ul className="user-social-info-title">{userInfoNameList}</ul>
-          <ul className="user-social-info">{userInfoList}</ul>
-        </div>
         </div>
         <div className="feed-graph-div">
           <div className="feed-graph-guide-div">

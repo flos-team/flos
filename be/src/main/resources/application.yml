@@ -85,4 +85,4 @@ spring:
 
 spring:
   profiles:
-    active: local
+    active: server

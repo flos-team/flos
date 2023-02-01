@@ -1,12 +1,13 @@
 // import HeaderComponent from "../../components/HeaderComponent";
 import { useLocation } from "react-router-dom";
 import styles from "./FeedDetailPage.module.css";
-import HeaderComponent from "../../../components/HeaderComponent";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem";
 
 import userImg from "../../../assets/GlobalAsset/user-img.png";
 import moodImg from "../../../assets/GlobalAsset/sunny.png";
 import emptySunny from "../../../assets/GlobalAsset/empty-sunny.png";
+import sendImg from "../../../assets/FeedAsset/fi-br-paper-plane.png";
 
 function FeedDetailPage() {
   const location = useLocation();
@@ -53,10 +54,22 @@ function FeedDetailPage() {
       ></HeaderComponent>
       <div className={styles.main}>
         <PostItem mood={"RAINY"} userName={"wonnny"} postId={value}></PostItem>
-        props로 넘어온 id : {value}
-        <div className={styles.commentFrame}>
-          {commentRendering()}
-          <div className={styles.commentInput}></div>
+        {/* props로 넘어온 id : {value} */}
+        <div className={styles.commentFrame}>{commentRendering()}</div>
+      </div>
+      <div className={styles.commentInputFrame}>
+        <div className={styles.inputLeft}>
+          <img className={styles.currentProfile} src={userImg}></img>
+        </div>
+        <div className={styles.commentInputDiv}>
+          <form className={styles.commentForm}>
+            <input
+              className={styles.commentInput}
+              type="text"
+              placeholder="댓글달기...."
+            ></input>
+            <img className={styles.sendBtn} src={sendImg}></img>
+          </form>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ $pad-ratio:1.2;
 /* 나중에 컴포넌트로 뺄 아이템 */
 .post-item {
   width: 320*$rpx1; /* responsive */
-  height: 240*$rpx1; /* responsive */
+  height: 260*$rpx1; /* responsive */
   box-sizing: border-box;
   border-radius: 10*$rpx1;
   border: 1*$rpx1 solid $mono100;
@@ -130,8 +130,8 @@ $pad-ratio:1.2;
         line-height: 30*$rpx1; /* responsive */
         padding-left: 10*$rpx1;
         padding-right: 10*$rpx1;
-        margin-left: 5*$rpx1; /* responsive */
-        margin-right: 5*$rpx1; /* responsive */
+        margin-left: 3*$rpx1; /* responsive */
+        margin-right: 3*$rpx1; /* responsive */
         text-align: center;
         border-radius: 15*$rpx1; /* responsive */
         background-color: $mono200;
@@ -164,98 +164,98 @@ $pad-ratio:1.2;
 }
 
 
-@media (min-width: 480px) {
-  .post-item {
-    width: 320*$rpx1* $pad-ratio; /* responsive */
-    height: 240*$rpx1* $pad-ratio; /* responsive */
-    .post-header {
-      // height: 60*$rpx1* $pad-ratio; /* responsive */
-      .mood-indicator {
-        border-top-left-radius: 10*$rpx1 * $pad-ratio; /* responsive */
-        border-top-right-radius: 10*$rpx1 * $pad-ratio; /* responsive */
-        height: 8*$rpx1* $pad-ratio; /* responsive */  
-      }
-      .post-head-container {
-        .post-info-div {
-          font-size: 14*$rpx1 *$pad-ratio; /* responsive */
-          margin-left: 10*$rpx1*$pad-ratio; /* responsive */
-          .user-img {
-            width: 42*$rpx1*$pad-ratio; /* responsive */
-            height: 42*$rpx1*$pad-ratio; /* responsive */
-            margin-right: 10*$rpx1*$pad-ratio; /* responsive */
-          }
-          .post-info {
-            .post-time-line {
-              .post-time {
-                margin-right: 5*$rpx1 *$pad-ratio; /* responsive */
-              }
-              .post-status {
-                width: 20*$rpx1 *$pad-ratio; /* responsive */
-                height: 20*$rpx1 *$pad-ratio; /* responsive */
-              }
-            }            
-          }
-        }
-        .post-btn-div{
-          .book-mark-btn {
-            width: 30*$rpx1*$pad-ratio; /* responsive */
-            img{
-              width: 18*$rpx1*$pad-ratio; /* responsive */
-            }
-          }
-          .post-ops-btn {
-            width: 30*$rpx1*$pad-ratio; /* responsive */
-            img{
-              width: 30*$rpx1*$pad-ratio; /* responsive */
-            }
-          }
-        }
+// @media (min-width: 480px) {
+//   .post-item {
+//     width: 320*$rpx1* $pad-ratio; /* responsive */
+//     height: 260*$rpx1* $pad-ratio; /* responsive */
+//     .post-header {
+//       // height: 60*$rpx1* $pad-ratio; /* responsive */
+//       .mood-indicator {
+//         border-top-left-radius: 10*$rpx1 * $pad-ratio; /* responsive */
+//         border-top-right-radius: 10*$rpx1 * $pad-ratio; /* responsive */
+//         height: 8*$rpx1* $pad-ratio; /* responsive */  
+//       }
+//       .post-head-container {
+//         .post-info-div {
+//           font-size: 14*$rpx1 *$pad-ratio; /* responsive */
+//           margin-left: 10*$rpx1*$pad-ratio; /* responsive */
+//           .user-img {
+//             width: 42*$rpx1*$pad-ratio; /* responsive */
+//             height: 42*$rpx1*$pad-ratio; /* responsive */
+//             margin-right: 10*$rpx1*$pad-ratio; /* responsive */
+//           }
+//           .post-info {
+//             .post-time-line {
+//               .post-time {
+//                 margin-right: 5*$rpx1 *$pad-ratio; /* responsive */
+//               }
+//               .post-status {
+//                 width: 20*$rpx1 *$pad-ratio; /* responsive */
+//                 height: 20*$rpx1 *$pad-ratio; /* responsive */
+//               }
+//             }            
+//           }
+//         }
+//         .post-btn-div{
+//           .book-mark-btn {
+//             width: 30*$rpx1*$pad-ratio; /* responsive */
+//             img{
+//               width: 18*$rpx1*$pad-ratio; /* responsive */
+//             }
+//           }
+//           .post-ops-btn {
+//             width: 30*$rpx1*$pad-ratio; /* responsive */
+//             img{
+//               width: 30*$rpx1*$pad-ratio; /* responsive */
+//             }
+//           }
+//         }
   
-      }
-    }
-    .post-main {
-      height: 120*$rpx1 *$pad-ratio; /* responsive */
-      div {
-        width: 220*$rpx1*$pad-ratio; /* responsive */
-        font-size: 14*$rpx1*$pad-ratio; /* responsive */
-      }
-      img {
-        width: 100*$rpx1*$pad-ratio; /* responsive */
-        height: 100*$rpx1*$pad-ratio; /* responsive */
-      }
-    }    
-  }
-  .post-footer {
-    // height: 60*$rpx1*$pad-ratio; /* responsive */
-    .tag-container {
-      font-size: 16*$rpx1*$pad-ratio; /* responsive */
-      .tag {
-        font-size: 18*$rpx1*$pad-ratio;
-        height: 50*$rpx1*$pad-ratio; /* responsive */
-        line-height: 30*$rpx1; /* responsive */
-        padding-left: 10*$rpx1*$pad-ratio;
-        padding-right: 10*$rpx1*$pad-ratio;                
-        margin-left: 5*$rpx1*$pad-ratio; /* responsive */
-        margin-right: 5*$rpx1*$pad-ratio; /* responsive */
-        border-radius: 15*$rpx1*$pad-ratio; /* responsive */
-      }
-    }
-    .comment-container {
-      .mood-div,
-      .comment-div {
-        margin-left: 10*$rpx1*$pad-ratio; /* responsive */
-        img {
-          display: block;
-          width: 20*$rpx1*$pad-ratio; /* responsive */
-          height: 20*$rpx1*$pad-ratio; /* responsive */
-        }
-        p {
-          line-height: 60*$rpx1*$pad-ratio; /* responsive */
-          font-size: 18*$rpx1*$pad-ratio; /* responsive */
-          margin-left: 5*$rpx1*$pad-ratio; /* responsive */
-        }
-      }
-    }
-  }
+//       }
+//     }
+//     .post-main {
+//       height: 120*$rpx1 *$pad-ratio; /* responsive */
+//       div {
+//         width: 220*$rpx1*$pad-ratio; /* responsive */
+//         font-size: 14*$rpx1*$pad-ratio; /* responsive */
+//       }
+//       img {
+//         width: 100*$rpx1*$pad-ratio; /* responsive */
+//         height: 100*$rpx1*$pad-ratio; /* responsive */
+//       }
+//     }    
+//   }
+//   .post-footer {
+//     // height: 60*$rpx1*$pad-ratio; /* responsive */
+//     .tag-container {
+//       font-size: 16*$rpx1*$pad-ratio; /* responsive */
+//       .tag {
+//         font-size: 18*$rpx1*$pad-ratio;
+//         height: 50*$rpx1*$pad-ratio; /* responsive */
+//         line-height: 30*$rpx1; /* responsive */
+//         padding-left: 10*$rpx1*$pad-ratio;
+//         padding-right: 10*$rpx1*$pad-ratio;                
+//         margin-left: 5*$rpx1*$pad-ratio; /* responsive */
+//         margin-right: 5*$rpx1*$pad-ratio; /* responsive */
+//         border-radius: 15*$rpx1*$pad-ratio; /* responsive */
+//       }
+//     }
+//     .comment-container {
+//       .mood-div,
+//       .comment-div {
+//         margin-left: 10*$rpx1*$pad-ratio; /* responsive */
+//         img {
+//           display: block;
+//           width: 20*$rpx1*$pad-ratio; /* responsive */
+//           height: 20*$rpx1*$pad-ratio; /* responsive */
+//         }
+//         p {
+//           line-height: 60*$rpx1*$pad-ratio; /* responsive */
+//           font-size: 18*$rpx1*$pad-ratio; /* responsive */
+//           margin-left: 5*$rpx1*$pad-ratio; /* responsive */
+//         }
+//       }
+//     }
+//   }
 
-}
+// }

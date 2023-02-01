@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HeaderComponent from '../../components/HeaderComponent'
+import HeaderComponent from '../../components/HeaderComponent/HeaderComponent'
 import TextLogoComponent from "../../components/TextLogoComponent";
 import styles from './FindPage.module.css'
 
