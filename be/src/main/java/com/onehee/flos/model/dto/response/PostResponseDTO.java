@@ -1,8 +1,8 @@
 package com.onehee.flos.model.dto.response;
 
+import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
-import com.onehee.flos.model.entity.Tag;
 import com.onehee.flos.model.entity.type.WeatherType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor

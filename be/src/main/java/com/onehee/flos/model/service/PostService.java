@@ -21,11 +21,11 @@ import java.util.List;
 public interface PostService {
 
     // 게시글 날씨별 검색
-    List<PostResponseDTO> getPostListByWeather(WeatherType weatherType, Member member);
+    List<PostResponseDTO> getPostListByWeather(WeatherType weatherType);
     // 게시글 최신순 검색
-    List<PostResponseDTO> getLatestPostList(Member member);
+    List<PostResponseDTO> getLatestPostList();
     // 게시글 사람별 검색
-    List<PostResponseDTO> getPostListByWriter(Member writer, Member member);
+    List<PostResponseDTO> getPostListByWriter(Member writer);
     // 북마크한 게시글 검색
     List<PostResponseDTO> getBookmarkedListByMember(Member member);
     // 게시글 인기순 검색
