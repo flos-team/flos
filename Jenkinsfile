@@ -60,7 +60,8 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''sudo mv ~/.env ~/springapp/.env
+										execCommand: '''sudo cd springapp
+sudo mv ~/.env ~/springapp/.env
 sudo docker-compose pull
 	sudo docker-compose up --force-recreate --build -d''', 
 										execTimeout: 120000, 
@@ -68,7 +69,7 @@ sudo docker-compose pull
 										makeEmptyDirs: false, 
 										noDefaultExcludes: false, 
 										patternSeparator: '[, ]+', 
-										remoteDirectory: 'springapp', 
+										remoteDirectory: '', 
 										remoteDirectorySDF: false, 
 										removePrefix: '', 
 										sourceFiles: '.env'
