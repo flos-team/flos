@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class MemberFindPasswordDTO {
+public class MemberResetPasswordDTO {
     private final String email;
     private final String code;
+    private final String password;
 }
