@@ -7,6 +7,7 @@ import Feed from "./FeedPage/FeedPage";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import HomePage from "./HomePage";
 import GlobalPage from "./GlobalPage";
+import GardenPage from "./GardenPage";
 
 function Main() {
   const position = useSelector((state) => state.page.value);
@@ -19,7 +20,7 @@ function Main() {
   } else if (position === "home") {
     currentPage = <HomePage />;
   } else if (position === "garden") {
-    currentPage = <div>garden</div>;
+    currentPage = <GardenPage />;
   } else if (position === "profile") {
     currentPage = <ProfilePage />;
   } else {
