@@ -4,7 +4,7 @@ import kakaologo from "../../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../../assets/LoginAsset/naver-logo.png";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Router, useRevalidator } from "react-router-dom";
 import axios from 'axios';
 
 function FillPage() {
@@ -13,9 +13,10 @@ function FillPage() {
     inputPw: "",
     inputCheckPw: "",
     inputNickname: "",
+    inputCode: "",
   });
 
-  const { inputId, inputPw, inputCheckPw, inputNickname } = inputValue;
+  const { inputId, inputPw, inputCheckPw, inputNickname, inputCode} = inputValue;
 
   // Input tag handling
   const handleInput = (e) => {
@@ -35,10 +36,14 @@ function FillPage() {
   const [nicknameMsg, setNicknameMsg] = useState("");
   const [nicknameMsgColor, setNicknameMsgColor] = useState(false);
   const [useCheck, setUseCheck] = useState(false);
-  const [useCHeckMsg, setUseCheckMsg] = useState("");
+  const [useCheckMsg, setUseCheckMsg] = useState("");
   const [checkModal, setCheckModal] = useState(false);
-
+  const [emailInputMsg, setEmailInputMsg] = useState('해당 이메일로 인증 메일을 보냈습니다.');
   const [isMailSend, setIsMailSend] = useState(false);
+  const [canUseId, setCanUseId] = useState(false);
+  const [canUseNickname, setCanUseNickname] = useState(false);
+
+  const [verifyedId, setVerifyedId] = useState(false); // 이메일인증까지 마친 이메일인가?
 
   // 이메일 - 문자열에 특수문자, 영어, 숫자만 있는지 확인
   // 비밀번호 - 문자열에 특수문자, 영어, 숫자만 있는지 확인
@@ -119,8 +124,8 @@ function FillPage() {
   // 3. 다음 페이지로 이동할지 확인
   const navigate = useNavigate();
   const checkFill = () => {
-    if (emailMsgColor && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck) {
-      alert("입력하신 이메일로 메일을 보냈습니다. 확인해주세요.");
+    if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
+      alert("회원가입 API");
     } else alert("빈칸을 채워주세요");
   };
 
@@ -166,10 +171,123 @@ function FillPage() {
     );
   }
 
+
+  // API
+  axios.defaults.baseURL = 'http://i8b210.p.ssafy.io:8080'                                                                                                                                                                                                                                                           
+
+  // 아이디 중복 확인 API
+  const isSameId = () => {
+    if (isValidId) {
+      axios.get('/member/check/email?email=' + inputId, {withCredentials : false})
+        .then((res) => {
+          const { accessToken } = res.data;
+          // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${accessToken}`;
+          // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+          console.log("input id: ", inputId)
+          console.log(res)
+          setCanUseId(true)
+        })
+        .catch((err) => {
+          if(err.response.status === false){
+            console.log('axios catch');
+          }
+          console.log("Error occurred : " + err);
+        })
+      } else {alert('아이디 유효성 확인ㄱㄱ')}
+  }
+
+  // 메일 전송 API
   const mailSend = () => {
-    console.log("메일 전송");
-    setIsMailSend(true);
-  };
+    // if (canUseId) {
+      axios.get('/email/sign-up?email=' + inputId, {withCredentials : false})
+      .then((res) => {
+        console.log(res)
+        alert('메일 발송되었습니다.')
+        setIsMailSend(true);
+        setEmailMsg('');
+      })
+      .catch((err) => {
+        console.log(err)
+        alert('중복이메일 / 서버쪽 문제로 메일 발송 실패')
+      })
+  // } else console.log('cannotuseid')
+};
+
+  // 메일 재전송 API -> 전송이랑 똑같아서 안 해도 될듯?
+  // const mailReSend = () => {
+  //   if (canUseId) {
+  //     axios.get('/email/sign-up?email=' + inputId, {withCredentials : false})
+  //     .then((res) => {
+  //       console.log(res)
+  //       alert('메일 발송되었습니다.')
+  //       setIsMailSend(true);
+  //       setEmailMsg('');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //       alert('중복이메일 / 서버쪽 문제로 메일 발송 실패')
+  //     })
+  //   }
+  // }
+
+  // 메일 인증번호 확인 API
+  const checkNumber = () => {
+    const axiosInfo = {
+      "code" : inputCode,
+      "email" : inputId
+    }
+    if (isMailSend) {
+      axios.post('/email/sign-up', axiosInfo, {withCredentials: false})
+      .then ((res) => {
+        console.log(res)
+        console.log('성공')
+        setVerifyedId(true)
+        setEmailMsg('')
+        setEmailInputMsg('인증이 완료되었습니다.')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  }
+
+  // 닉네임 중복 확인 API
+  const isSameNickname = () => {
+    if (isValidNicknameLength === false || isValidNicknameForm === false) {
+      setNicknameMsg("사용할 수 없는 닉네임입니다");
+      setNicknameMsgColor(false);
+    } else {
+      axios.get('/member/check/nickname?nickname=' + inputNickname, {withCredentials : false})
+        .then((res) => {
+          const { accessToken } = res.data;
+          // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${accessToken}`;
+          // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+          console.log("input Nickname: ", inputNickname)
+          console.log(res.data)
+          if (res.data === true) {
+            setCanUseNickname(false)
+            setNicknameMsg("사용할 수 없는 닉네임입니다");
+            setNicknameMsgColor(false);
+          } else {
+            setCanUseNickname(true);
+            setNicknameMsg('사용 가능한 닉네임입니다.');
+            setNicknameMsgColor(true);
+          }
+        })
+        .catch((err) => {
+          if(err.response.status === false){
+            console.log('axios catch');
+          }
+          console.log("Error occurred : " + err);
+        })
+      }
+  }
 
   return (
     <div className={styles.bigframe}>
@@ -185,22 +303,28 @@ function FillPage() {
             onChange={handleInput}
             onKeyUp={checkId}
             className={styles.inputdiv}
+            disabled={verifyedId}
           />
           <span className={emailMsgColor ? styles.canuse : styles.cannotuse}>{emailMsg}</span>
           {/* 유효한 ID이면 메일 전송 버튼 출력 (조건부 렌더링) */}
           {emailMsgColor & !isMailSend ? (
             <div>
-              <button onClick={mailSend}>메일로 인증번호 받기</button>
+              <button onClick={mailSend} onKeyUp={isSameId}>메일로 인증번호 받기</button>
             </div>
           ) : null}
           {isMailSend ? (
             <div className={styles.mailsend}>
-              <span>
-                <input type="number" className={styles.mailnuminput}></input>
-              </span>
-              <button className={styles.mailsendbtn}>재전송</button>
-              <button className={styles.mailsendbtn}>인증</button>
-              <span className={styles.mailsendtext}>해당 이메일로 인증 메일을 보냈습니다.</span>
+              <div>
+                <input 
+                  type="text" 
+                  name="inputCode" 
+                  onChange={handleInput} 
+                  className={styles.mailnuminput} 
+                  disabled={verifyedId}></input>
+                <button className={styles.mailsendbtn} onClick={mailSend}>재전송</button>
+                <button className={styles.mailsendbtn} onClick={checkNumber}>인증</button>
+                <span className={verifyedId ? styles.checkedcode : styles.checkingcode}>{emailInputMsg}</span>
+              </div>
             </div>
           ) : null}
         </div>
@@ -235,7 +359,7 @@ function FillPage() {
             name="inputNickname"
             placeholder="한글, 영문, 숫자 2~10자"
             onChange={handleInput}
-            onKeyUp={checkNickname}
+            onKeyUp={isSameNickname}
             className={styles.inputdiv}
           />
           <span className={nicknameMsgColor ? styles.canuse : styles.cannotuse}>{nicknameMsg}</span>
@@ -259,7 +383,7 @@ function FillPage() {
           <span onClick={openModal} className={styles.termfont}>
             [보기]
           </span>
-          <p className={styles.textredcolor}>{useCHeckMsg}</p>
+          <p className={styles.textredcolor}>{useCheckMsg}</p>
           {checkModal === true ? <Modal /> : null}
         </div>
       </div>
