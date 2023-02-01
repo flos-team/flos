@@ -1,261 +1,50 @@
 @import "../styles/commons.scss";
 
-$pad-ratio:1.2;
+$rrpx:0.8*$rpx1;
 
-/* 나중에 컴포넌트로 뺄 아이템 */
-.post-item {
-  width: 320*$rpx1; /* responsive */
-  height: 260*$rpx1; /* responsive */
-  box-sizing: border-box;
-  border-radius: 10*$rpx1;
-  border: 1*$rpx1 solid $mono100;
-  margin-bottom:  10 * $rpx1;
-    /*header css area */
-    display: flex;
-    flex-direction: column;
-  .post-header {
-    width: 100%;
-    // height: 60*$rpx1; /* responsive */
-    flex-grow: 1;
-    // border-bottom: 1*$rpx1 solid $mono700;
-    .mood-indicator {
-      border-top-left-radius: 10*$rpx1; /* responsive */
-      border-top-right-radius: 10*$rpx1; /* responsive */
-      width: 100%;
-      height: 8*$rpx1; /* responsive */
-      background-color: $yellow-p;
-    }
-    .post-head-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .post-info-div {
-        flex-grow: 3;
-        height: 80%;
-        display: flex;
-        font-size: 14*$rpx1; /* responsive */
-        margin-left: 10*$rpx1; /* responsive */
-        .user-img {
-          width: 42*$rpx1; /* responsive */
-          height: 42*$rpx1; /* responsive */
-          margin-right: 10*$rpx1; /* responsive */
-        }
-        .post-info {
-          .user-nickname {
-            width: max-content;
-            height: max-content;
-          }
-          .post-time-line {
-            width: max-content;
-            height: max-content;
-            display: flex;
-            .post-time {
-              margin-right: 5*$rpx1; /* responsive */
-            }
-            .post-status {
-              width: 20*$rpx1; /* responsive */
-              height: 20*$rpx1; /* responsive */
-            }
-          }
-        }
-      }
-      .post-btn-div {
-        display: flex;
-        flex-grow: 2;
-        height: 80%;
-        justify-content: right;
-        margin-right: 5*$rpx1;
-        .book-mark-btn {
-          width: 30*$rpx1; /* responsive */
-          height: 100%; 
-          img{
-            display:  block;
-            margin: 0 auto;
-            width: 18*$rpx1; /* responsive */
-          }
-        }
-        .post-ops-btn {
-          width: 30*$rpx1; /* responsive */
-          height: 100%;
-          img{
-            width: 30*$rpx1; /* responsive */
-            margin: 0 auto;
-          }
-        }
-      }
-    }
-  }
-  /*header css area */
-
-  .post-main {
-    flex-grow: 1;
-    width: 100%;
-    height: 120*$rpx1; /* responsive */
-    display: flex;
-    align-items: center;
-    div {
-      flex-grow: 1;
-      // width: 220*$rpx1; /* responsive */
-      height: 90%;
-      margin: 3%;
-      font-size: 14*$rpx1; /* responsive */
-      overflow: hidden;
-      color: $mono900;
-    }
-    img {
-      flex-grow: 1;
-      display: block;
-      width: 100*$rpx1; /* responsive */
-      height: 100*$rpx1; /* responsive */
-    }
-  }
-
-  /* footer */
-  .post-footer {
-    width: 100%;
-    // height: 60*$rpx1; /* responsive */
-    flex-grow: 1;
-    display: flex;
-    font-size: 14*$rpx1; /* responsive */
-    .tag-container {
-      flex-grow: 3;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      .tag {
-        width: max-content;
-        height: 30*$rpx1;; /* responsive */
-        line-height: 30*$rpx1; /* responsive */
-        padding-left: 10*$rpx1;
-        padding-right: 10*$rpx1;
-        margin-left: 3*$rpx1; /* responsive */
-        margin-right: 3*$rpx1; /* responsive */
-        text-align: center;
-        border-radius: 15*$rpx1; /* responsive */
-        background-color: $mono200;
-        color: $white;
-      }
-    }
-    .comment-container {
-      flex-grow: 2;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      .mood-div,
-      .comment-div {
-        display: flex;
-        align-items: center;
-        margin-left: 10*$rpx1; /* responsive */
-        font-size: 16*$rpx1; /* responsive */
-        img {
-          display: block;
-          width: 20*$rpx1; /* responsive */
-          height: 20*$rpx1; /* responsive */
-        }
-        p {
-          line-height: 60*$rpx1;
-          margin-left: 5*$rpx1; /* responsive */
-        }
-      }
-    }
-  }
-}
-
-
-// @media (min-width: 480px) {
-//   .post-item {
-//     width: 320*$rpx1* $pad-ratio; /* responsive */
-//     height: 260*$rpx1* $pad-ratio; /* responsive */
-//     .post-header {
-//       // height: 60*$rpx1* $pad-ratio; /* responsive */
-//       .mood-indicator {
-//         border-top-left-radius: 10*$rpx1 * $pad-ratio; /* responsive */
-//         border-top-right-radius: 10*$rpx1 * $pad-ratio; /* responsive */
-//         height: 8*$rpx1* $pad-ratio; /* responsive */  
-//       }
-//       .post-head-container {
-//         .post-info-div {
-//           font-size: 14*$rpx1 *$pad-ratio; /* responsive */
-//           margin-left: 10*$rpx1*$pad-ratio; /* responsive */
-//           .user-img {
-//             width: 42*$rpx1*$pad-ratio; /* responsive */
-//             height: 42*$rpx1*$pad-ratio; /* responsive */
-//             margin-right: 10*$rpx1*$pad-ratio; /* responsive */
-//           }
-//           .post-info {
-//             .post-time-line {
-//               .post-time {
-//                 margin-right: 5*$rpx1 *$pad-ratio; /* responsive */
-//               }
-//               .post-status {
-//                 width: 20*$rpx1 *$pad-ratio; /* responsive */
-//                 height: 20*$rpx1 *$pad-ratio; /* responsive */
-//               }
-//             }            
-//           }
-//         }
-//         .post-btn-div{
-//           .book-mark-btn {
-//             width: 30*$rpx1*$pad-ratio; /* responsive */
-//             img{
-//               width: 18*$rpx1*$pad-ratio; /* responsive */
-//             }
-//           }
-//           .post-ops-btn {
-//             width: 30*$rpx1*$pad-ratio; /* responsive */
-//             img{
-//               width: 30*$rpx1*$pad-ratio; /* responsive */
-//             }
-//           }
-//         }
+.post-item{
+  // width: 330px;
+  // height: 440px;
+  // width: 255px;
+  // height: 330px;
+  width: 330*$rrpx;
+  height: 440*$rrpx;
+  margin-bottom: 10px;
   
-//       }
-//     }
-//     .post-main {
-//       height: 120*$rpx1 *$pad-ratio; /* responsive */
-//       div {
-//         width: 220*$rpx1*$pad-ratio; /* responsive */
-//         font-size: 14*$rpx1*$pad-ratio; /* responsive */
-//       }
-//       img {
-//         width: 100*$rpx1*$pad-ratio; /* responsive */
-//         height: 100*$rpx1*$pad-ratio; /* responsive */
-//       }
-//     }    
-//   }
-//   .post-footer {
-//     // height: 60*$rpx1*$pad-ratio; /* responsive */
-//     .tag-container {
-//       font-size: 16*$rpx1*$pad-ratio; /* responsive */
-//       .tag {
-//         font-size: 18*$rpx1*$pad-ratio;
-//         height: 50*$rpx1*$pad-ratio; /* responsive */
-//         line-height: 30*$rpx1; /* responsive */
-//         padding-left: 10*$rpx1*$pad-ratio;
-//         padding-right: 10*$rpx1*$pad-ratio;                
-//         margin-left: 5*$rpx1*$pad-ratio; /* responsive */
-//         margin-right: 5*$rpx1*$pad-ratio; /* responsive */
-//         border-radius: 15*$rpx1*$pad-ratio; /* responsive */
-//       }
-//     }
-//     .comment-container {
-//       .mood-div,
-//       .comment-div {
-//         margin-left: 10*$rpx1*$pad-ratio; /* responsive */
-//         img {
-//           display: block;
-//           width: 20*$rpx1*$pad-ratio; /* responsive */
-//           height: 20*$rpx1*$pad-ratio; /* responsive */
-//         }
-//         p {
-//           line-height: 60*$rpx1*$pad-ratio; /* responsive */
-//           font-size: 18*$rpx1*$pad-ratio; /* responsive */
-//           margin-left: 5*$rpx1*$pad-ratio; /* responsive */
-//         }
-//       }
-//     }
-//   }
+  /* mono50 */
+  background: #FBFBFB;
+  border-radius: 12*$rpx1;
+  .img-container{
+    width: 340*$rrpx;
+    height: 300*$rrpx;
+    .img-filter{
+      width: 340*$rrpx;
+      height: 300*$rrpx;
+    }
+    img{
+      display: block;
+      box-sizing: border-box;
+      border-top-left-radius: 12*$rpx1;
+      border-top-right-radius: 12*$rpx1;
+      display: block;
+      width: 340*$rrpx;
+      height: 300*$rrpx;
+    }
+  }
 
-// }
+ .bottom-text-container{
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px 24*$rpx1;
+  gap: 8*$rpx1;
+  width: 340*$rrpx;
+  height: 150*$rrpx;
+  /* mono50 */
+  border-radius: 0px 0px 12*$rpx1 12*$rpx1;
+  background-color: black;
+
+ } 
+}
