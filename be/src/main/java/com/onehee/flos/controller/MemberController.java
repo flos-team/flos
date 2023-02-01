@@ -88,10 +88,10 @@ public class MemberController {
         return new ResponseEntity<Boolean>(memberService.isExistNickname(memberEmailCheckRequestDTO), HttpStatus.OK);
     }
 
-//    @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
-//    @PutMapping("/info")
-//    @Tag(name = "멤버API")
-//    public ResponseEntity<?> updateMember(@AuthenticationPrincipal MemberDetails memberDetails, @RequestBody MemberUpdateRequestDTO memberUpdateRequestDTO) {
-//
-//    }
+    @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
+    @PutMapping("/info")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> updateMember(@RequestBody MemberUpdateRequestDTO memberUpdateRequestDTO) {
+        return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.OK);
+    }
 }

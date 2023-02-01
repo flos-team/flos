@@ -19,6 +19,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +27,9 @@ import java.util.UUID;
 public class FilesHandler {
     @Value("${file.dir}")
     private String fileDir;
+
+    @Value("${file.extension-regex}")
+    private String regex;
 
     private final FileRepository fileRepository;
 
@@ -36,22 +40,19 @@ public class FilesHandler {
 
         // 업로드 시 파일 이름
         String oriName = file.getOriginalFilename();
-
         // 저장시 사용할 파일 이름(UUID)
         String uuid = UUID.randomUUID().toString();
-
         // 확장자 추출
         String extension = oriName.substring(oriName.lastIndexOf("."));
-
+        if (!Pattern.matches(regex, extension)) {
+            throw new BadRequestException("지원하지 않는 파일 확장자 입니다.");
+        }
         // 저장시 사용할 파일 이름에 확장자 붙이기
         String savedName = uuid + extension;
-
         // 중복을 피하고 관리를 편하게 하기위해서 /날짜/UUID.확장자 포맷으로 저장하기 위해서 현재 년월일 가져옴
         String uploadDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-
         // 최상위경로/날짜/UUID.확장자
         String savedPath = fileDir + uploadDate + File.separator + savedName;
-
         // 업로더
         MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Member uploader = memberDetails.getMember();
@@ -119,4 +120,5 @@ public class FilesHandler {
         }
 
     }
+
 }
