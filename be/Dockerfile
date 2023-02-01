@@ -6,6 +6,5 @@ RUN ls -l build/libs
 
 FROM openjdk:17-alpine
 WORKDIR /
-RUN ls -l
-COPY --from=build /build/libs/*.jar /app.jar 
-CMD ["java", "-jar", "app.jar"]
+COPY --from=build /build/libs /
+CMD ["java", "-jar", "flos-0.0.1-SNAPSHOT.jar"]
