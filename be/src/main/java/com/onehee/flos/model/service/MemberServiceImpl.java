@@ -102,8 +102,23 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void resetPassword(MemberFindPasswordDTO memberFindPasswordDTO) {
+    @Transactional
+    public void resetPassword(MemberResetPasswordDTO memberResetPasswordDTO) {
+        // 비밀번호 패턴검사 (Validated 어노테이션을 사용해도 괜찮을 것 같음) 필요함 추가할것
 
+        // 이메일 유효검사
+        log.info("{}", memberResetPasswordDTO.getEmail());
+        Member member = memberRepository.findByEmailAndProviderType(memberResetPasswordDTO.getEmail(), ProviderType.LOCAL)
+                        .orElseThrow(() -> new BadRequestException("해당 이메일 주소로 가입된 계정이 존재하지 않습니다."));
+
+
+        if (memberResetPasswordDTO.getCode() == null || !memberResetPasswordDTO.getEmail().equals(redisRepository.getValue("approved_resetPassword:" + memberResetPasswordDTO.getCode()))) {
+            throw new UnauthorizedEmailException("인증되지 않은 이메일 주소입니다.");
+        }
+
+        member.setPassword(passwordEncoder.encode(memberResetPasswordDTO.getPassword()));
+        redisRepository.deleteValue("approved_resetPassword:" + memberResetPasswordDTO.getCode());
+        redisRepository.deleteValue("resetPassword:" + memberResetPasswordDTO.getCode());
     }
 
     @Override

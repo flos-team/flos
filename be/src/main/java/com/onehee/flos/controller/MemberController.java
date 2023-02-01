@@ -41,7 +41,7 @@ public class MemberController {
     @Tag(name = "멤버API")
     public ResponseEntity<?> signUp(@RequestBody MemberSignUpRequestDTO memberSignUpRequestDTO) {
         memberService.createMember(memberSignUpRequestDTO);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.")
@@ -56,13 +56,8 @@ public class MemberController {
     @GetMapping("/logout")
     @Tag(name = "멤버API")
     public ResponseEntity<?> logout(@AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization") String atk) {
-        memberService.logout(
-                LogoutDTO.builder()
-                        .atk(atk.substring("Bearer ".length()))
-                        .email(memberDetails.getMember().getEmail())
-                        .build()
-        );
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        memberService.logout(LogoutDTO.builder().atk(atk.substring("Bearer ".length())).email(memberDetails.getMember().getEmail()).build());
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
@@ -87,10 +82,30 @@ public class MemberController {
         return new ResponseEntity<Boolean>(memberService.isExistNickname(memberEmailCheckRequestDTO), HttpStatus.OK);
     }
 
-    @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
+    @Operation(summary = "회원정보 수정 메서드", description = "회원정보(이메일, 프로필사진)을 업데이트 합니다.")
     @PutMapping("/info")
     @Tag(name = "멤버API")
     public ResponseEntity<?> updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
-        return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.OK);
+        return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "비밀번호 재설정 메서드", description = "비밀번호를 재설정합니다. 승인된 이메일 인증번호를 함께 보내야 합니다.")
+    @PutMapping("/reset-password")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> resetPassword(@RequestBody MemberResetPasswordDTO memberResetPasswordDTO, @AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization", required = false) String atk) {
+        log.info("{}", memberDetails);
+        memberService.resetPassword(memberResetPasswordDTO);
+        if (memberDetails != null) {
+            memberService.logout(LogoutDTO.builder().atk(atk.substring("Bearer ".length())).email(memberDetails.getMember().getEmail()).build());
+        }
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @Operation(summary = "회원 탈퇴 메서드", description = "회원을 비활성화 상태로 만듭니다.")
+    @DeleteMapping("/quit")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> quitMember() {
+        memberService.deleteMember();
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 }

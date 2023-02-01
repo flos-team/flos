@@ -20,7 +20,7 @@ public class EmailController {
     @GetMapping("/sign-up")
     public ResponseEntity<?> sendSignUpMail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
         mailService.sendSignUpEmail(emailVerificationRequestDTO);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/sign-up")
@@ -34,7 +34,7 @@ public class EmailController {
     @GetMapping("/reset-password")
     public ResponseEntity<?> sendResetPasswordMail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
         mailService.sendPasswordResetEmail(emailVerificationRequestDTO);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/reset-password")
