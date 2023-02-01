@@ -47,7 +47,7 @@ public class MemberController {
     @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.")
     @PostMapping("/login")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
+    public ResponseEntity<?> login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         TokenResponse tokenResponse = memberService.login(loginRequestDTO);
         return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
     }
@@ -93,7 +93,7 @@ public class MemberController {
     @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
     @PutMapping("/info")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> updateMember(@RequestParam MemberUpdateRequestDTO memberUpdateRequestDTO) {
+    public ResponseEntity<?> updateMember(@RequestPart MemberUpdateRequestDTO memberUpdateRequestDTO) {
         log.info("{}", memberUpdateRequestDTO.getProfileImage());
         return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.OK);
     }
