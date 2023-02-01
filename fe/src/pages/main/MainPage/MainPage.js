@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Nav from "../../components/BottomNavigation";
-import Feed from "./FeedPage/FeedPage";
-/* 프로필 페이지 import */
-import ProfilePage from "./ProfilePage/ProfilePage";
-import HomePage from "./HomePage";
-import GlobalPage from "./GlobalPage";
+/* import css */
+import "./MainPage.css";
+
+/* immport compoent */
+import Nav from "../../../components/BottomNavigation";
+import Feed from "../FeedPage/FeedPage";
+
+/* import Page */
+import ProfilePage from "../ProfilePage/ProfilePage";
+import HomePage from "../HomePage";
+import GlobalPage from "../GlobalPage";
 
 function Main() {
   const position = useSelector((state) => state.page.value);
@@ -26,9 +31,13 @@ function Main() {
     currentPage = <div>404</div>;
   }
   return (
-    <div>
-      {currentPage}
-      <Nav></Nav>
+    <div className="main-page">
+      <div className="main">
+        {currentPage}
+      </div>
+      <div className="footer">
+        <Nav></Nav>
+      </div>
     </div>
   );
 }
