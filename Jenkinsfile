@@ -60,7 +60,7 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''sudo cd springapp
+										execCommand: '''cd springapp
 sudo mv ~/.env ~/springapp/.env
 sudo docker-compose pull
 	sudo docker-compose up --force-recreate --build -d''', 
