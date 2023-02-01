@@ -11,6 +11,8 @@ import com.onehee.flos.model.entity.Tag;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,19 +23,27 @@ import java.util.List;
 public interface PostService {
 
     // 게시글 날씨별 검색
-    List<PostResponseDTO> getPostListByWeather(WeatherType weatherType);
+    Slice<PostResponseDTO> getPostListByWeather(WeatherType weatherType, Pageable pageable);
+
     // 게시글 최신순 검색
-    List<PostResponseDTO> getLatestPostList();
+    Slice<PostResponseDTO> getLatestPostList(Pageable pageable);
+
     // 게시글 사람별 검색
-    List<PostResponseDTO> getPostListByWriter(Member writer);
+    Slice<PostResponseDTO> getPostListByWriter(Member writer, Pageable pageable);
+
     // 북마크한 게시글 검색
-    List<PostResponseDTO> getBookmarkedListByMember(Member member);
+    Slice<PostResponseDTO> getBookmarkedListByMember(Pageable pageable);
     // 게시글 인기순 검색
+
+    // 단일 게시글 정보 검색
+    PostResponseDTO getPost(Long id) throws BadRequestException;
 
     // 게시글 등록
     void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException;
+
     // 게시글 수정
     void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException;
+
     // 게시글 삭제
     void deletePost(Long id) throws BadRequestException;
 

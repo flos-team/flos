@@ -22,7 +22,7 @@ public class CommentResponseDTO {
     private Member writer;
     private String content;
     private LocalDateTime createdAt;
-//    private LocalDateTime modifyAt;
+    //    private LocalDateTime modifiedAt;
     private Boolean isApprove;
 
     public static CommentResponseDTO toDto(Comment comment) {
@@ -34,7 +34,7 @@ public class CommentResponseDTO {
                 .writer(comment.getWriter())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
-//                .modifyAt(comment.getModifyAt())
+//                .modifyAt(comment.getModifiedAt())
                 .isApprove(comment.getIsApprove())
                 .build();
     }

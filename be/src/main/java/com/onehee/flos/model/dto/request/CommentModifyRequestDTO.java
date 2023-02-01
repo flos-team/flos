@@ -13,15 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CommentModifyRequestDTO {
+    private Long id;
     private Post post;
-    private Member writer;
     private String content;
 
-    public static CommentModifyRequestDTO toDto(Comment comment) {
-        return CommentModifyRequestDTO.builder()
-                .post(comment.getPost())
-                .writer(comment.getWriter())
-                .content(comment.getContent())
-                .build();
+    public Comment toAccept(Comment comment) {
+        comment.setPost(this.getPost());
+        comment.setContent(this.getContent());
+        return comment;
     }
 }

@@ -24,14 +24,6 @@ public class PostCreateRequestDTO {
     private List<MultipartFile> attachFiles;
     private List<Tag> tagList;
 
-    public static PostCreateRequestDTO toDTO(Post post) {
-        return PostCreateRequestDTO.builder()
-                .writer(post.getWriter())
-                .content(post.getContent())
-                .weather(post.getWeather())
-                .build();
-    }
-
     public Post toEntity() {
         return Post.builder()
                 .writer(this.getWriter())

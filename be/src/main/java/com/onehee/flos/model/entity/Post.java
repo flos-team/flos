@@ -36,7 +36,7 @@ public class Post {
     @ColumnDefault("now()")
     private LocalDateTime createdAt; // 수정 불가
 
-    private LocalDateTime modifyAt;
+    private LocalDateTime modifiedAt;
 
     @Enumerated(EnumType.STRING)
     private WeatherType weather;

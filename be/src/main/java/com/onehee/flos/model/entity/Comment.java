@@ -45,7 +45,7 @@ public class Comment {
     @ColumnDefault("now()")
     private LocalDateTime createdAt;
 
-    private LocalDateTime modifyAt;
+    private LocalDateTime modifiedAt;
 
     @ColumnDefault("0")
     private Boolean isApprove;

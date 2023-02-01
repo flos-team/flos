@@ -1,6 +1,5 @@
 package com.onehee.flos.model.service;
 
-import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
@@ -13,17 +12,19 @@ import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
@@ -33,38 +34,37 @@ public class PostServiceImpl implements PostService{
     private final BookmarkRepository bookmarkRepository;
 
     @Override
-    public List<PostResponseDTO> getPostListByWriter(Member writer) {
-        return postRepository.findAllByWriterOrderByCreatedAtDesc(writer)
-                .stream()
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)))
-                .collect(Collectors.toList());
+    public Slice<PostResponseDTO> getPostListByWriter(Member writer, Pageable pageable) {
+        return postRepository.findSliceByWriter(writer, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
     }
 
     @Override
-    public List<PostResponseDTO> getPostListByWeather(WeatherType weatherType) {
-        return postRepository.findAllByWeatherOrderByCreatedAtDesc(weatherType)
-                .stream()
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)))
-                .collect(Collectors.toList());
+    public Slice<PostResponseDTO> getPostListByWeather(WeatherType weatherType, Pageable pageable) {
+        return postRepository.findSliceByWeather(weatherType, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
     }
 
     @Override
-    public List<PostResponseDTO> getLatestPostList() {
-        return postRepository.findAllByOrderByCreatedAtDesc()
-                .stream()
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)))
-                .collect(Collectors.toList());
+    public Slice<PostResponseDTO> getLatestPostList(Pageable pageable) {
+        return postRepository.findSliceBy(pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
     }
 
     @Override
-    public List<PostResponseDTO> getBookmarkedListByMember(Member member) {
-        return bookmarkRepository.findAllByMember(member)
-                .stream()
-                .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost())))
-                .collect(Collectors.toList());
+    public Slice<PostResponseDTO> getBookmarkedListByMember(Pageable pageable) {
+        return bookmarkRepository.findSliceAllByMember(SecurityManager.getCurrentMember(), pageable)
+                .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost())));
     }
 
     @Override
+    public PostResponseDTO getPost(Long id) throws BadRequestException {
+        Post post = postRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
+        return PostResponseDTO.toDto(post, getPostRelation(post));
+    }
+
+    @Override
+    @Transactional
     public void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
 
         Post tempPost = postRepository.save(postCreateRequestDTO.toEntity());
@@ -83,27 +83,28 @@ public class PostServiceImpl implements PostService{
             postTagRepository.save(
                     PostTag.builder()
                             .post(tempPost)
-                            .tag(tagRepository.save(e))
+                            .tag(tagRepository.saveAndFlush(e))
                             .build()
             );
         }
     }
 
     @Override
+    @Transactional
     public void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
 
         Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
 
         postFileRepository.deleteAll(
-            postFileRepository.findAllByPost(
-                tempPost
-            )
+                postFileRepository.findAllByPost(
+                        tempPost
+                )
         );
 
         postTagRepository.deleteAll(
-            postTagRepository.findAllByPost(
-                tempPost
-            )
+                postTagRepository.findAllByPost(
+                        tempPost
+                )
         );
 
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
@@ -120,10 +121,12 @@ public class PostServiceImpl implements PostService{
             postTagRepository.save(
                     PostTag.builder()
                             .post(tempPost)
-                            .tag(tagRepository.save(e))
+                            .tag(tagRepository.saveAndFlush(e))
                             .build()
             );
         }
+
+        postRepository.save(postModifyRequestDTO.toAccept(tempPost));
 
     }
 
@@ -133,21 +136,21 @@ public class PostServiceImpl implements PostService{
         Post tempPost = postRepository.findById(id).orElseThrow(() -> new BadRequestException("이미 삭제된 게시글입니다."));
 
         postFileRepository.deleteAll(
-            postFileRepository.findAllByPost(
-                tempPost
-            )
+                postFileRepository.findAllByPost(
+                        tempPost
+                )
         );
 
         postTagRepository.deleteAll(
-            postTagRepository.findAllByPost(
-                tempPost
-            )
+                postTagRepository.findAllByPost(
+                        tempPost
+                )
         );
 
         bookmarkRepository.deleteAll(
-            bookmarkRepository.findAllByPost(
-                tempPost
-            )
+                bookmarkRepository.findAllByPost(
+                        tempPost
+                )
         );
 
         postRepository.delete(tempPost);

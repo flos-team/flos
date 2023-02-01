@@ -19,25 +19,14 @@ public class PostModifyRequestDTO {
     private Long id;
     private Member writer;
     private String content;
-    private LocalDateTime modifyAt;
+    private LocalDateTime modifiedAt;
     private List<MultipartFile> attachFiles;
     private List<Tag> tagList;
 
-    public static PostModifyRequestDTO toDto(Post post) {
-        return PostModifyRequestDTO.builder()
-                .id(post.getId())
-                .writer(post.getWriter())
-                .content(post.getContent())
-                .modifyAt(post.getModifyAt())
-                .build();
-    }
-
-    public Post toEntity() {
-        return Post.builder()
-                .id(this.getId())
-                .writer(this.getWriter())
-                .content(this.getContent())
-                .modifyAt(this.getModifyAt())
-                .build();
+    public Post toAccept(Post post) {
+        post.setWriter(this.getWriter());
+        post.setContent(this.getContent());
+        post.setModifiedAt(this.getModifiedAt());
+        return post;
     }
 }
