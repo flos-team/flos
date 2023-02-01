@@ -60,7 +60,8 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''sudo docker-compose pull
+										execCommand: '''cd springapp
+sudo docker-compose pull
 	sudo docker-compose up --force-recreate --build -d''', 
 										execTimeout: 120000, 
 										flatten: false, 
