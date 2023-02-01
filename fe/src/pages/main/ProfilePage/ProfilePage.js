@@ -12,7 +12,6 @@ import PostItem from "../../../components/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
-import "../../../components/ToolTip/ToolTip.css";
 
 const ProfilePage = () => {
   const userName = "wonny";
@@ -51,7 +50,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent backVisible={false} pageName={"프로필"} optType={1}></HeaderComponent>
+      {/* <HeaderComponent backVisible={false} pageName={"프로필"} optType={1}></HeaderComponent>
       <div className="profile-page">
         <div className="user-info-container">
           <div className="flex-box">
@@ -100,8 +99,12 @@ const ProfilePage = () => {
           </ul>
         </div>
         <div className="feed-container">{postList}</div>
-      </div>
-      {/* <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem> */}
+      </div> */}
+      <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
+      <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
+      <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
+      <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
+
     </>
   );
 };
