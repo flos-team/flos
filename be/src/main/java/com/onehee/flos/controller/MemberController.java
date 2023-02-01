@@ -12,6 +12,7 @@ import com.onehee.flos.model.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
+@Log4j2
 public class MemberController {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -76,9 +78,9 @@ public class MemberController {
     @Tag(name = "멤버API")
     public ResponseEntity<?> checkEmail(MemberEmailCheckRequestDTO memberEmailCheckRequestDTO) {
         if (memberService.isExistEmail(memberEmailCheckRequestDTO)) {
-            return new ResponseEntity<String>("이미 해당 이메일이 존재합니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
-        return new ResponseEntity<String>("사용 가능한 이메일 입니다.", HttpStatus.OK);
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
     }
 
     @Operation(summary = "중복닉네임 체크 메서드", description = "닉네임의 중복 여부를 확인합니다.")
@@ -91,7 +93,8 @@ public class MemberController {
     @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
     @PutMapping("/info")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> updateMember(@RequestBody MemberUpdateRequestDTO memberUpdateRequestDTO) {
+    public ResponseEntity<?> updateMember(@RequestParam MemberUpdateRequestDTO memberUpdateRequestDTO) {
+        log.info("{}", memberUpdateRequestDTO.getProfileImage());
         return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.OK);
     }
 }
