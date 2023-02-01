@@ -61,7 +61,6 @@ pipeline {
 										cleanRemote: false, 
 										excludes: '', 
 										execCommand: '''cd springapp
-sudo mv ~/.env ~/springapp/.env
 sudo docker-compose pull
 sudo docker-compose up --force-recreate --build -d''', 
 										execTimeout: 120000, 
