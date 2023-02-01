@@ -2,10 +2,11 @@ FROM gradle:7.4-jdk17-alpine as build
 WORKDIR /
 COPY . .
 RUN gradle clean build --no-daemon
+RUN cd build/libs
 RUN ls -l
 
 FROM openjdk:17-alpine
 WORKDIR /
 RUN ls -l
-COPY --from=build build/libs/*.jar app.jar 
+COPY --from=build /build/libs/*.jar /app.jar 
 CMD ["java", "-jar", "app.jar"]
