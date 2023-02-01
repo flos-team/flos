@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { useState } from "react";
 /* 컴포넌트에서 사용할 이미지 에셋 import */
 import userImg from "../../../assets/GlobalAsset/user-img.png";
-import sunnyImg from "../../../assets/ProfileAsset/sunny-img.png";
+import sunnyImg from "../../../assets/GlobalAsset/sunny.png";
 import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
