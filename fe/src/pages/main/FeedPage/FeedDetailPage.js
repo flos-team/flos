@@ -1,7 +1,7 @@
 // import HeaderComponent from "../../components/HeaderComponent";
 import { useLocation } from "react-router-dom";
 import styles from "./FeedDetailPage.module.css";
-import HeaderComponent from "../../../components/HeaderComponent";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem";
 
 import userImg from "../../../assets/GlobalAsset/user-img.png";

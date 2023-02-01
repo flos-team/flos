@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import PostItem from "../../components/PostItem";
 import styles from "./GlobalPage.module.css";
-import HeaderComponent from "../../components/HeaderComponent";
+import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 
 function Feed() {
   const [userInfos, setUserInfos] = useState([

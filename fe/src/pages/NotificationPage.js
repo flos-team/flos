@@ -1,4 +1,4 @@
-import HeaderComponent from "../components/HeaderComponent";
+import HeaderComponent from "../components/HeaderComponent/HeaderComponent";
 
 function Setting() {
     return (

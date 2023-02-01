@@ -1,5 +1,5 @@
 import React from 'react'
-import HeaderComponent from '../../components/HeaderComponent';
+import HeaderComponent from '../../components/HeaderComponent/HeaderComponent';
 import TextLogoComponent from "../../components/TextLogoComponent";
 import styles from './ResultPage.module.css'
 

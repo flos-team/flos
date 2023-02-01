@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import PostItem from "../../../components/PostItem";
 import styles from "./FeedPage.module.css";
-import HeaderComponent from "../../../components/HeaderComponent";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 // import * as axios from "axios";

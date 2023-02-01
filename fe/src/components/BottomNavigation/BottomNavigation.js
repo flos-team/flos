@@ -1,19 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { feed, global, home, garden, profile, test } from "../redux/pageComponent"
+import { feed, global, home, garden, profile, test } from "../../redux/pageComponent"
 
 /* img assets import */
-import feedIcon from "../assets/NavBar/feed-icon.png";
-import feedIconClick from "../assets/NavBar/feed-icon-click.png";
-import globalIcon from "../assets/NavBar/global-icon.png";
-import globalIconClick from "../assets/NavBar/global-icon-click.png";
-import homeIcon from "../assets/NavBar/home-icon.png";
-import homeIconPlus from "../assets/NavBar/home-icon-plus.png";
-import gardenIcon from "../assets/NavBar/garden-icon.png";
-import gardenIconClick from "../assets/NavBar/garden-icon-click.png";
-import profileIcon from "../assets/NavBar/profile-icon.png";
-import profileIconClick from "../assets/NavBar/profile-icon-click.png";
+import feedIcon from "../../assets/NavBar/feed-icon.png";
+import feedIconClick from "../../assets/NavBar/feed-icon-click.png";
+import globalIcon from "../../assets/NavBar/global-icon.png";
+import globalIconClick from "../../assets/NavBar/global-icon-click.png";
+import homeIcon from "../../assets/NavBar/home-icon.png";
+import homeIconPlus from "../../assets/NavBar/home-icon-plus.png";
+import gardenIcon from "../../assets/NavBar/garden-icon.png";
+import gardenIconClick from "../../assets/NavBar/garden-icon-click.png";
+import profileIcon from "../../assets/NavBar/profile-icon.png";
+import profileIconClick from "../../assets/NavBar/profile-icon-click.png";
 
 /* CSS Import */
 import "./BottomNavigation.css";
