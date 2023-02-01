@@ -5,6 +5,7 @@ import naverlogo from "../../assets/LoginAsset/naver-logo.png";
 import HeaderComponent from "../../components/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 import { useNavigate, Link } from "react-router-dom";
+import axios from 'axios';
 
 function FillPage() {
   const [inputValue, setInputValue] = useState({
@@ -51,7 +52,7 @@ function FillPage() {
   const check_nickname = /^[가-힣|a-z|A-Z|0-9|]+$/; // 한글, 영어, 숫자만 사용 가능
 
   // 1. ID 유효성 검사
-  const isValidId = check_id.test(inputId);
+  const isValidId = check_id.test(inputId) && inputId.includes('@') && inputId.includes('.');
 
   // 1. PW 유효성 검사
   const isValidPwLength = inputPw.length >= 8 && inputPw.length <= 12;
