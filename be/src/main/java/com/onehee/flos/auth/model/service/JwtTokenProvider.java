@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.Subject;
 import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.auth.model.repository.RedisRepository;
-import com.onehee.flos.model.dto.request.ReissueRequestDTO;
+import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.repository.MemberRepository;
 import io.jsonwebtoken.*;
@@ -54,7 +54,7 @@ public class JwtTokenProvider {
     }
 
     public TokenResponse reissueToken(String oldAtk) throws JsonProcessingException {
-        redisRepository.setValue("black:" + oldAtk, "TRUE", Duration.ofMillis(atkExpire));
+        redisRepository.setValue("black:" + oldAtk, "true", Duration.ofMillis(atkExpire));
         Member member = memberRepository.findById(getSubject(oldAtk).getId())
                 .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
         return generateTokenByMember(member);
@@ -94,12 +94,17 @@ public class JwtTokenProvider {
         return objectMapper.readValue(subjectStr, Subject.class);
     }
 
-    public boolean isValidatedRTK(String rtk, Subject subject) throws JsonProcessingException {
+    public boolean isValidatedRTK(String rtk, Subject subject) {
         String rtkInRedis = redisRepository.getValue("rtk:" + subject.getId());
         return rtk.equals(rtkInRedis);
     }
     public boolean isBlackATK(String atk) {
         return redisRepository.getValue("black:" + atk) != null;
+    }
+
+    public void abandonTokens(LogoutDTO logoutDTO) {
+        redisRepository.setValue("black:" + logoutDTO.getAtk(), "true", Duration.ofMillis(atkExpire));
+        redisRepository.deleteValue("rtk:" + logoutDTO.getEmail());
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Getter
 @ToString
 @Builder(access = AccessLevel.PRIVATE)
+@Log4j2
 public class OAuth2Attribute {
 
     private Map<String, Object> attributes;
@@ -38,11 +40,13 @@ public class OAuth2Attribute {
     private static OAuth2Attribute ofKakao(String attributeKey, Map<String, Object> attributes) {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
+        log.info("account: {}", kakaoAccount);
+        log.info("profile: {}", kakaoProfile);
 
         return OAuth2Attribute.builder()
                 .email((String) kakaoAccount.get("email"))
                 .nickname((String) kakaoProfile.get("name"))
-                .profileImage((String) kakaoProfile.get("picture"))
+                .profileImage((String) kakaoProfile.get("profile_image_url"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .providerType(ProviderType.KAKAO)
