@@ -3,6 +3,9 @@ import { useState } from "react";
 import PostItem from "../../../components/PostItem";
 import styles from "./FeedPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent";
+import { Link } from "react-router-dom";
+import Axios from "axios";
+// import * as axios from "axios";
 /** 게시글 리스트
  * writerProfileImg 작성자 프로필 사진
  * writerNickname 작성자 별명
@@ -16,62 +19,11 @@ import HeaderComponent from "../../../components/HeaderComponent";
  * postTag 해시태그
  *
  */
-const dataInfo = [
-  {
-    writerProfileImg: "../../assets/DummyData/writerProfileSample.png",
-    writerNickname: "jh",
-    postRegDate: "2022.12.20",
-    postWeather: "sunny",
-    postContent:
-      "인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의",
-    postPhoto: "../../assets/DummyData/postPhotoSample.PNG",
-    isBookMarked: "true",
-    postWeatherCount: "99",
-    postCommentCount: "32",
-    postTag: "해시태그",
-  },
-  {
-    writerProfileImg: "../../assets/DummyData/writerProfileSample.png",
-    writerNickname: "jh",
-    postRegDate: "2022.12.20",
-    postWeather: "sunny",
-    postContent:
-      "인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의",
-    postPhoto: "",
-    isBookMarked: "true",
-    postWeatherCount: "99",
-    postCommentCount: "32",
-    postTag: "해시태그",
-  },
-  {
-    writerProfileImg: "../../assets/DummyData/writerProfileSample.png",
-    writerNickname: "jh",
-    postRegDate: "2022.12.20",
-    postWeather: "sunny",
-    postContent:
-      "인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의",
-    postPhoto: "../../assets/DummyData/postPhotoSample.PNG",
-    isBookMarked: "true",
-    postWeatherCount: "99",
-    postCommentCount: "32",
-    postTag: "해시태그",
-  },
-  {
-    writerProfileImg: "../../assets/DummyData/writerProfileSample.png",
-    writerNickname: "jh",
-    postRegDate: "2022.12.20",
-    postWeather: "sunny",
-    postContent:
-      "인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의 대중을 밥을 이것이다. 새가 있는 충분히 온갖 광야에서 보이는 끓는 이것을 칼이다. 보이는 얼음에 만천하의 것이다. 인간이 너의",
-    postPhoto: "",
-    isBookMarked: "true",
-    postWeatherCount: "99",
-    postCommentCount: "32",
-    postTag: "해시태그",
-  },
-];
 
 function Feed() {
+  Axios.get("http://i8b210.p.ssafy.io:8080/post/list").then(function (response) {
+    console.log(response);
+  });
   const [userInfos, setUserInfos] = useState([
     { userInfoId: 1, userInfo: 999, postId: 1 },
     { userInfoId: 2, userInfo: 999, postId: 2 },
@@ -79,10 +31,10 @@ function Feed() {
     { userInfoId: 4, userInfo: 999, postId: 4 },
     { userInfoId: 5, userInfo: 999, postId: 5 },
   ]);
+
   const postList = userInfos.map(({ userInfoId, userInfo, postId }) => (
     <PostItem mood={"RAINY"} userName={"wonnny"} postId={postId}></PostItem>
   ));
-
 
   return (
     <div className={styles.feedRoot}>
@@ -209,6 +161,9 @@ function Feed() {
           ></img>
         </div>
       </div>
+      <Link to="write">
+        <div>write로 가기</div>
+      </Link>
       <div className={styles.main}>
         {/** 친구들의 포스트를 나열한다.  */}
         {postList}
