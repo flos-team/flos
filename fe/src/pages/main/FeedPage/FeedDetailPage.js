@@ -57,7 +57,7 @@ function FeedDetailPage() {
         {/* props로 넘어온 id : {value} */}
         <div className={styles.commentFrame}>{commentRendering()}</div>
       </div>
-      <div className={styles.commentInput}>
+      <div className={styles.commentInputFrame}>
         <div className={styles.inputLeft}>
           <img className={styles.currentProfile} src={userImg}></img>
         </div>
@@ -69,12 +69,6 @@ function FeedDetailPage() {
               placeholder="댓글달기...."
             ></input>
             <img className={styles.sendBtn} src={sendImg}></img>
-          </form>
-          <form>
-            <input type="text" placeholder="댓글달기..."></input>
-            <div className={styles.test}>
-              <img src={sendImg}></img>
-            </div>
           </form>
         </div>
       </div>
