@@ -47,7 +47,7 @@ public class MemberController {
     @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.")
     @PostMapping("/login")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         TokenResponse tokenResponse = memberService.login(loginRequestDTO);
         return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
     }
