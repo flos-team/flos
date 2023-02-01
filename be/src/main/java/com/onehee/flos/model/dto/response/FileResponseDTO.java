@@ -17,6 +17,7 @@ public class FileResponseDTO {
     }
 
     public static FileResponseDTO toDTO(FileEntity fileEntity) {
+        if (fileEntity == null) return null;
         return FileResponseDTO.builder()
                 .originalName(fileEntity.getOriginalName())
                 .savePath(fileEntity.getSavedPath())

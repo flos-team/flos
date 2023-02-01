@@ -14,11 +14,14 @@ import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.FilesHandler;
+import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -69,7 +72,18 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public MemberResponseDTO updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
+        Member member = memberRepository.findById(SecurityManager.getCurrentMember().getId())
+                .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
         String newNickname = memberUpdateRequestDTO.getNickname();
+        if (newNickname != null) {
+            if (memberRepository.existsByNickname(newNickname)) {
+                throw new BadRequestException("이미 해당 닉네임이 존재합니다.");
+            }
+            member.setNickname(newNickname);
+        }
+//        if (memberUpdateRequestDTO.getProfileImage() != null) {
+//
+//        }
 //        FileEntity newProfileImage = filesHandler.saveFile();
         return null;
     }
