@@ -22,10 +22,10 @@ public class FileController {
     @Value("${file.dir}")
     private String fileDir;
 
-    @GetMapping("/{imageUrl}")
-    public ResponseEntity<?> showImage(@PathVariable String imageUrl) throws MalformedURLException {
-        log.info("{}", imageUrl);
-        return new ResponseEntity<Resource>(new UrlResource("file:" + fileDir + "20230201" + File.separator + imageUrl), HttpStatus.OK);
+    @GetMapping("/{date}/{savedName}")
+    public ResponseEntity<?> showImage(@PathVariable String savedName, @PathVariable String date) throws MalformedURLException {
+        log.info("date: {}, savedName: {}", date, savedName);
+        return new ResponseEntity<Resource>(new UrlResource("file:" + fileDir + date + File.separator + savedName), HttpStatus.OK);
     }
 
 }
