@@ -28,8 +28,7 @@ pipeline {
 		stage("Tag and Push") {
 			steps {
 				script {
-					sh "mkdir -p springapp"
-					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > springapp/.env"
+					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
 					component.each{ entry ->
 						stage ("${entry.key} Push"){
 							if(entry.value){
@@ -61,7 +60,7 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''cd springapp
+										execCommand: '''sudo mv ~/.env ~/springapp/.env
 sudo docker-compose pull
 	sudo docker-compose up --force-recreate --build -d''', 
 										execTimeout: 120000, 
@@ -69,7 +68,7 @@ sudo docker-compose pull
 										makeEmptyDirs: false, 
 										noDefaultExcludes: false, 
 										patternSeparator: '[, ]+', 
-										remoteDirectory: '', 
+										remoteDirectory: 'springapp', 
 										remoteDirectorySDF: false, 
 										removePrefix: '', 
 										sourceFiles: '.env'
