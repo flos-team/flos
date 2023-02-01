@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @Service
@@ -74,18 +75,23 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDTO updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
         Member member = memberRepository.findById(SecurityManager.getCurrentMember().getId())
                 .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
-        String newNickname = memberUpdateRequestDTO.getNickname();
-        if (newNickname != null) {
-            if (memberRepository.existsByNickname(newNickname)) {
+        if (memberUpdateRequestDTO.getNickname() != null) {
+            if (memberRepository.existsByNickname(memberUpdateRequestDTO.getNickname())) {
                 throw new BadRequestException("이미 해당 닉네임이 존재합니다.");
             }
-            member.setNickname(newNickname);
+            member.setNickname(memberUpdateRequestDTO.getNickname());
         }
-//        if (memberUpdateRequestDTO.getProfileImage() != null) {
-//
-//        }
-//        FileEntity newProfileImage = filesHandler.saveFile();
-        return null;
+        if (memberUpdateRequestDTO.getProfileImage() != null) {
+            try {
+                FileEntity profileImage = filesHandler.saveFile(memberUpdateRequestDTO.getProfileImage());
+                profileImage.setMember(member);
+                member.setProfileImage(profileImage);
+            } catch (IOException e) {
+                throw new BadRequestException("프로필 사진 등록 중에 문제가 발생했습니다.");
+            }
+        }
+        member = memberRepository.saveAndFlush(member);
+        return MemberResponseDTO.toDto(member);
     }
 
     @Override
