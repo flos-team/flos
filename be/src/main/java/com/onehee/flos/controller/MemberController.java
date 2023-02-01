@@ -77,10 +77,7 @@ public class MemberController {
     @GetMapping("/check/email")
     @Tag(name = "멤버API")
     public ResponseEntity<?> checkEmail(MemberEmailCheckRequestDTO memberEmailCheckRequestDTO) {
-        if (memberService.isExistEmail(memberEmailCheckRequestDTO)) {
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-        }
-        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(memberService.isExistEmail(memberEmailCheckRequestDTO), HttpStatus.OK);
     }
 
     @Operation(summary = "중복닉네임 체크 메서드", description = "닉네임의 중복 여부를 확인합니다.")
@@ -93,8 +90,7 @@ public class MemberController {
     @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
     @PutMapping("/info")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> updateMember(@RequestPart MemberUpdateRequestDTO memberUpdateRequestDTO) {
-        log.info("{}", memberUpdateRequestDTO.getProfileImage());
+    public ResponseEntity<?> updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
         return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.OK);
     }
 }
