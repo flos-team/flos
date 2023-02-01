@@ -28,13 +28,12 @@ pipeline {
 		stage("Tag and Push") {
 			steps {
 				script {
-					sh "mkdir springapp"
+					sh "mkdir -p springapp"
 					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > springapp/.env"
 					component.each{ entry ->
 						stage ("${entry.key} Push"){
 							if(entry.value){
 								var = entry.key
-								sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
 								withCredentials([[$class: 'UsernamePasswordMultiBinding',
 								credentialsId: 'docker-access-token',
 								usernameVariable: 'DOCKER_USER_ID',
@@ -62,7 +61,6 @@ pipeline {
 										cleanRemote: false, 
 										excludes: '', 
 										execCommand: '''cd springapp
-sudo mv ~/.env ~/springapp/.env
 sudo docker-compose pull
 sudo docker-compose up --force-recreate --build -d''', 
 										execTimeout: 120000, 
