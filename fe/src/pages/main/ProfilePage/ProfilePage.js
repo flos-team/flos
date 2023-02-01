@@ -7,12 +7,12 @@ import sunnyImg from "../../../assets/GlobalAsset/sunny.png";
 import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
-import HeaderComponent from "../../../components/HeaderComponent";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
-import "../../../components/ToolTip.css";
+import "../../../components/ToolTip/ToolTip.css";
 
 const ProfilePage = () => {
   const userName = "wonny";

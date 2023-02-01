@@ -4,7 +4,7 @@ import { useState } from "react";
 import arrowLeft from "../../../../assets/GlobalAsset/arrow-left.png";
 
 /* import component */
-import ToggleBtn from "../../../../components/ToggleBtn";
+import ToggleBtn from "../../../../components/ToggleBtn/ToggleBtn";
 
 /* css */
 import "./ThemePage.css";

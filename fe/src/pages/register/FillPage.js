@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./FillPage.module.css";
 import kakaologo from "../../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../../assets/LoginAsset/naver-logo.png";
-import HeaderComponent from "../../components/HeaderComponent";
+import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';

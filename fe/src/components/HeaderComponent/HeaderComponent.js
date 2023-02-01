@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 /* import image assets */
-import arrowLeft from "../assets/GlobalAsset/arrow-left.png";
-import notifyIcon from "../assets/GlobalAsset/notification.png";
-import settingIcon from "../assets/GlobalAsset/setting-btn.png";
-import checkIcon from "../assets/GlobalAsset/check-icon.png";
+import arrowLeft from "../../assets/GlobalAsset/arrow-left.png";
+import notifyIcon from "../../assets/GlobalAsset/notification.png";
+import settingIcon from "../../assets/GlobalAsset/setting-btn.png";
+import checkIcon from "../../assets/GlobalAsset/check-icon.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 

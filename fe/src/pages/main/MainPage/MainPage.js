@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./MainPage.css";
 
 /* immport compoent */
-import Nav from "../../../components/BottomNavigation";
+import Nav from "../../../components/BottomNavigation/BottomNavigation";
 import Feed from "../FeedPage/FeedPage";
 
 /* import Page */
