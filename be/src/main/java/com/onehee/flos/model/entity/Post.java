@@ -40,7 +40,4 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     private WeatherType weather;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
 }
