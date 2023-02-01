@@ -11,6 +11,7 @@ import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.FilesHandler;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -76,7 +76,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(SecurityManager.getCurrentMember().getId())
                 .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
         if (memberUpdateRequestDTO.getNickname() != null) {
-            if (memberRepository.existsByNickname(memberUpdateRequestDTO.getNickname())) {
+            if (!memberUpdateRequestDTO.getNickname().equals(member.getNickname()) && memberRepository.existsByNickname(memberUpdateRequestDTO.getNickname())) {
                 throw new BadRequestException("이미 해당 닉네임이 존재합니다.");
             }
             member.setNickname(memberUpdateRequestDTO.getNickname());
@@ -96,7 +96,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteMember() {
-
+        Member member = SecurityManager.getCurrentMember();
+        member.setStatus(MemberStatus.INACTIVE);
+        memberRepository.save(member);
     }
 
     @Override

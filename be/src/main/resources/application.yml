@@ -83,7 +83,7 @@ spring:
       max-request-size: 100MB
 
 file:
-  extension-regex: \\.(jpg|png|bmp|gif)
+  extension-regex: \.(jpg|png|bmp|gif)
 
 ---
 

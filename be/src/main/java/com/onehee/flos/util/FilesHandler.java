@@ -43,6 +43,9 @@ public class FilesHandler {
         String uuid = UUID.randomUUID().toString();
         // 확장자 추출
         String extension = oriName.substring(oriName.lastIndexOf("."));
+        log.info("extension: {}", extension);
+        log.info("regex: {}", regex);
+        log.info("result: {}", Pattern.matches(regex, extension));
         if (!Pattern.matches(regex, extension)) {
             throw new BadRequestException("지원하지 않는 파일 확장자 입니다.");
         }
