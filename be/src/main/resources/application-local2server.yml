@@ -9,7 +9,7 @@ spring:
     password: test1234
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   security:
     oauth2:
       client:

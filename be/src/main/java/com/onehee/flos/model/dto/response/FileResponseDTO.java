@@ -24,7 +24,7 @@ public class FileResponseDTO {
         String createDate = fileEntity.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         return FileResponseDTO.builder()
                 .originalName(fileEntity.getOriginalName())
-                .saveName(createDate + File.separator + fileEntity.getSavedName())
+                .saveName(createDate + "/" + fileEntity.getSavedName())
                 .build();
     }
 }
