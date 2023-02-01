@@ -29,42 +29,33 @@ function Login() {
     // console.log(loginInfo)
     axios
       .post("/member/login", loginInfo)
-      .then(({ data }) => {
-        const accessToken = data.atk;
-        // console.log("atk : " + response.data.atk)
-        // console.log("rtk : " + response.data.rtk)
-
+      .then((response) => {
+        const accessToken = response.data.atk;
         // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        // console.log(data.atk)
-        console.log(accessToken);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        console.dir(axios.defaults)
-        // accessToken을 localStorage, cookie 등에 저장하지 않는다!
+        axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
+
+      })
+      .then(() => {
+        axios
+          .get("../member/info",)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log("error : " + error);
+            console.dir(axios.defaults);
+          });
       })
       .catch((error) => {
-        // if(error.response.status === 400){
-        //   console.log(123);
-        // }
-        console.log("Error occurred : " + error);
-        // console.log(error.response)
-        // if()
+        console.log(error)
+        console.dir(axios.defaults);
       });
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    // console.log(accessToken)
-    // console.log("카카오 로그인");
-    axios
-      .get("/member/info")
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.dir(axios.defaults)
-
-        console.log(123);
-      });
+    // console.log(axios.defaults.headers)
+    console.log("카카오 로그인");
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
