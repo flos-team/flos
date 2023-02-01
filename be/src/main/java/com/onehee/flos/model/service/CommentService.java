@@ -29,8 +29,8 @@ public interface CommentService {
     void deleteComment(Long id) throws BadRequestException;
 
     // 댓글 채택됨
-    void approveComment() throws BadRequestException;
+    void approveComment(Long id) throws BadRequestException;
 
     // 댓글 채택취소됨
-    void cancelComment() throws BadRequestException;
+    void cancelComment(Long id) throws BadRequestException;
 }

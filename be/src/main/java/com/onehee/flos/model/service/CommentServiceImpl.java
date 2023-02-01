@@ -5,6 +5,7 @@ import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
 import com.onehee.flos.model.entity.Comment;
+import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.repository.CommentMemberRepository;
 import com.onehee.flos.model.repository.CommentRepository;
@@ -42,21 +43,27 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void modifyComment(CommentModifyRequestDTO commentModifyRequestDTO) throws BadRequestException {
-        commentRepository.findById(commentModifyRequestDTO.getId());
+        Comment tempComment = commentRepository.findById(commentModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        commentRepository.save(commentModifyRequestDTO.toAccept(tempComment));
     }
 
     @Override
     public void deleteComment(Long id) throws BadRequestException {
+        Comment tempComment = commentRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        commentMemberRepository.deleteAll(
+                commentMemberRepository.findAllByComment(
+                        tempComment
+                )
+        );
+    }
+
+    @Override
+    public void approveComment(Long id) throws BadRequestException {
 
     }
 
     @Override
-    public void approveComment() {
-
-    }
-
-    @Override
-    public void cancelComment() {
+    public void cancelComment(Long id) throws BadRequestException {
 
     }
 }
