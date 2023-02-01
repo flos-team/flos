@@ -37,7 +37,6 @@ public class FilesHandler {
     public FileEntity saveFile(MultipartFile file) throws IOException {
         // 파일이 없으면 Bad Request 발생
         if (file.isEmpty()) throw new BadRequestException("파일이 없습니다");
-
         // 업로드 시 파일 이름
         String oriName = file.getOriginalFilename();
         // 저장시 사용할 파일 이름(UUID)
