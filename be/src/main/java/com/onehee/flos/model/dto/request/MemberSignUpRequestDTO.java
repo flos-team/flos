@@ -10,15 +10,13 @@ public class MemberSignUpRequestDTO {
     private final String email;
     private final String nickname;
     private final String password;
-    private final MultipartFile picture;
     private final String code;
 
     @Builder
-    public MemberSignUpRequestDTO(String email, String nickname, String password, MultipartFile picture, String code) {
+    public MemberSignUpRequestDTO(String email, String nickname, String password, String code) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
-        this.picture = picture;
         this.code = code;
     }
 
@@ -26,7 +24,6 @@ public class MemberSignUpRequestDTO {
         return Member.builder()
                 .email(email)
                 .nickname(nickname)
-//                .picture(picture.getName())
                 .build();
     }
 }

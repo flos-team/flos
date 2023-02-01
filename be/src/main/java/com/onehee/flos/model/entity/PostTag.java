@@ -14,13 +14,18 @@ import javax.persistence.*;
 @Builder
 @DynamicInsert
 @DynamicUpdate
-public class Tag {
+public class PostTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
+    @Column(name = "post_tag_id")
     private Long id;
 
-    @Column(unique = true)
-    private String tagName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

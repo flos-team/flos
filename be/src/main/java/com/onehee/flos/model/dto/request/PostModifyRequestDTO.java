@@ -4,6 +4,7 @@ import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
+import com.onehee.flos.model.entity.Tag;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +21,7 @@ public class PostModifyRequestDTO {
     private String content;
     private LocalDateTime modifyAt;
     private List<MultipartFile> attachFiles;
-    // List<Tag>
+    private List<Tag> tagList;
 
     public static PostModifyRequestDTO toDto(Post post) {
         return PostModifyRequestDTO.builder()
