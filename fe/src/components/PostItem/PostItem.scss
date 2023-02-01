@@ -121,9 +121,9 @@ $rrpx: 0.8 * $rpx1;
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 4 * $rpx1 4 * $rpx1;
-        gap: 10 * $rpx1;
-        width: 68 * $rpx1;
+        padding: 0 10 * $rpx1;
+        gap: 5 * $rpx1;
+        width: 70 * $rpx1;
         height: 24 * $rpx1;
         /* mono100 */
         background: $mono100;
