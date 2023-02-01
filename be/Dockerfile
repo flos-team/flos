@@ -7,5 +7,5 @@ RUN ls -l
 FROM openjdk:17-alpine
 WORKDIR /
 RUN ls -l
-COPY --from=build /build/libs/*.jar /app.jar 
+COPY --from=build build/libs/*.jar app.jar 
 CMD ["java", "-jar", "app.jar"]
