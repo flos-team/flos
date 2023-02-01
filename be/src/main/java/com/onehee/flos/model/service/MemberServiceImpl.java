@@ -7,7 +7,9 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.request.LoginRequestDTO;
-import com.onehee.flos.model.dto.request.SignUpRequestDTO;
+import com.onehee.flos.model.dto.request.MemberFindPasswordDTO;
+import com.onehee.flos.model.dto.request.MemberSignUpRequestDTO;
+import com.onehee.flos.model.dto.request.MemberUpdateRequestDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
@@ -29,25 +31,25 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void signUp(SignUpRequestDTO signUpRequestDTO) {
+    public void createMember(MemberSignUpRequestDTO memberSignUpRequestDTO) {
         // 아이디 패턴검사 (Validated 어노테이션을 사용해도 괜찮을 것 같음) 필요함 추가할것
 
         // 아이디 중복검사
-        if (memberRepository.existsByEmailAndProviderType(signUpRequestDTO.getEmail(), ProviderType.LOCAL)) {
+        if (memberRepository.existsByEmailAndProviderType(memberSignUpRequestDTO.getEmail(), ProviderType.LOCAL)) {
             throw new BadRequestException("이미 가입된 이메일 주소 입니다.");
         }
-        log.info("Redis email: {}", redisRepository.getValue("approved:" + signUpRequestDTO.getCode()));
-        log.info("DTO email: {}", signUpRequestDTO.getEmail());
-        log.info("DTO code: {}", signUpRequestDTO.getCode());
-        log.info("{} == {}: {}", signUpRequestDTO.getEmail(), redisRepository.getValue("approved:" + signUpRequestDTO.getCode()), signUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + signUpRequestDTO.getCode())));
-        if (signUpRequestDTO.getCode() == null || !signUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + signUpRequestDTO.getCode()))) {
+        log.info("Redis email: {}", redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode()));
+        log.info("DTO email: {}", memberSignUpRequestDTO.getEmail());
+        log.info("DTO code: {}", memberSignUpRequestDTO.getCode());
+        log.info("{} == {}: {}", memberSignUpRequestDTO.getEmail(), redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode()), memberSignUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode())));
+        if (memberSignUpRequestDTO.getCode() == null || !memberSignUpRequestDTO.getEmail().equals(redisRepository.getValue("approved:" + memberSignUpRequestDTO.getCode()))) {
             throw new UnauthorizedEmailException("인증되지 않은 이메일 주소입니다.");
         }
-        Member member = signUpRequestDTO.toEntity();
-        member.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
+        Member member = memberSignUpRequestDTO.toEntity();
+        member.setPassword(passwordEncoder.encode(memberSignUpRequestDTO.getPassword()));
         memberRepository.save(member);
-        redisRepository.deleteValue("approved:" + signUpRequestDTO.getCode());
-        redisRepository.deleteValue("verification:" + signUpRequestDTO.getCode());
+        redisRepository.deleteValue("approved:" + memberSignUpRequestDTO.getCode());
+        redisRepository.deleteValue("verification:" + memberSignUpRequestDTO.getCode());
     }
 
     @Override
@@ -59,5 +61,20 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다.");
         }
         return jwtTokenProvider.generateTokenByMember(member);
+    }
+
+    @Override
+    public void updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
+
+    }
+
+    @Override
+    public void deleteMember() {
+
+    }
+
+    @Override
+    public void resetPassword(MemberFindPasswordDTO memberFindPasswordDTO) {
+
     }
 }

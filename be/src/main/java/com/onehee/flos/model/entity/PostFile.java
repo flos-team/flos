@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.File;
 
 @Entity
 @Getter
@@ -14,16 +15,17 @@ import javax.persistence.*;
 @Builder
 @DynamicInsert
 @DynamicUpdate
-public class Bookmark {
+public class PostFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bookmark_id")
+    @Column(name = "post_file_id")
     private Long id;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "members_id")
-    private Member member;
+    @JoinColumn(name = "files_id")
+    private FileEntity file;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")

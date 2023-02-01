@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "게시글API", description = "게시글 CRUD를 담당합니다.")
@@ -48,7 +49,7 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping("/list/create")
-    public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) {
+    public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws IOException {
         postService.createPost(postCreateRequestDTO);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
@@ -56,7 +57,7 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 수정", description = "게시글 내용을 수정합니다.")
     @PostMapping("/list/modify")
-    public ResponseEntity<?> modifyPost(@RequestBody PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException {
+    public ResponseEntity<?> modifyPost(@RequestBody PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
         postService.modifyPost(postModifyRequestDTO);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

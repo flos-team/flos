@@ -6,7 +6,7 @@ import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
-public class SignUpRequestDTO {
+public class MemberSignUpRequestDTO {
     private final String email;
     private final String nickname;
     private final String password;
@@ -14,7 +14,7 @@ public class SignUpRequestDTO {
     private final String code;
 
     @Builder
-    public SignUpRequestDTO(String email, String nickname, String password, MultipartFile picture, String code) {
+    public MemberSignUpRequestDTO(String email, String nickname, String password, MultipartFile picture, String code) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
