@@ -5,10 +5,7 @@ import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
-import com.onehee.flos.model.dto.request.LoginRequestDTO;
-import com.onehee.flos.model.dto.request.MemberEmailCheckRequestDTO;
-import com.onehee.flos.model.dto.request.MemberNicknameCheckRequestDTO;
-import com.onehee.flos.model.dto.request.MemberSignUpRequestDTO;
+import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
@@ -90,4 +87,11 @@ public class MemberController {
     public ResponseEntity<?> checkNickname(MemberNicknameCheckRequestDTO memberEmailCheckRequestDTO) {
         return new ResponseEntity<Boolean>(memberService.isExistNickname(memberEmailCheckRequestDTO), HttpStatus.OK);
     }
+
+//    @Operation(summary = "멤버정보 수정 메서드", description = "멤버정보(이메일, 프로필사진)을 업데이트 합니다.")
+//    @PutMapping("/info")
+//    @Tag(name = "멤버API")
+//    public ResponseEntity<?> updateMember(@AuthenticationPrincipal MemberDetails memberDetails, @RequestBody MemberUpdateRequestDTO memberUpdateRequestDTO) {
+//
+//    }
 }
