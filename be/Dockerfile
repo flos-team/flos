@@ -2,7 +2,7 @@ FROM gradle:7.4-jdk17-alpine as build
 RUN mkdir -p /be
 WORKDIR /be
 COPY . .
-RUN gradle build --no-daemon
+RUN gradle clean build --no-daemon
 
 FROM openjdk:17-alpine
 RUN mkdir -p /home/be
