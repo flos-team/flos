@@ -9,12 +9,10 @@ import naverlogo from "../assets/LoginAsset/naver-logo.png";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-axios.defaults.withCredentials = false;
 
 function Login() {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
-
   const handleInputId = (e) => {
     setInputId(e.target.value);
   };
@@ -25,25 +23,28 @@ function Login() {
   // 로그인 버튼 클릭 이벤트
   const onClickLogin = () => {
     const loginInfo = {
-      "email": inputId,
-      "password" : inputPw,
+      email: inputId,
+      password: inputPw,
     };
-    console.log(loginInfo)
+    // console.log(loginInfo)
     axios
-      .post("/member/login", loginInfo, {withCredentials : false})
-      .then((response) => {
-        const { accessToken } = response.data;
-        console.log(response.data)
+      .post("/member/login", loginInfo)
+      .then(({ data }) => {
+        const accessToken = data.atk;
+        // console.log("atk : " + response.data.atk)
+        // console.log("rtk : " + response.data.rtk)
+
         // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${accessToken}`;
+        // console.log(data.atk)
+        console.log(accessToken);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+        console.dir(axios.defaults)
         // accessToken을 localStorage, cookie 등에 저장하지 않는다!
       })
       .catch((error) => {
-        if(error.response.status === 400){
-          console.log(123);
-        }
+        // if(error.response.status === 400){
+        //   console.log(123);
+        // }
         console.log("Error occurred : " + error);
         // console.log(error.response)
         // if()
@@ -52,7 +53,18 @@ function Login() {
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    console.log("카카오 로그인");
+    // console.log(accessToken)
+    // console.log("카카오 로그인");
+    axios
+      .get("/member/info")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.dir(axios.defaults)
+
+        console.log(123);
+      });
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
@@ -70,6 +82,7 @@ function Login() {
 
   return (
     <div className={styles.bigframe}>
+      <div></div>
       <div className={styles.loginframe}>
         <img src={loginlogo} alt="hi" className={styles.groomimg}></img>
         <h1>Flos</h1>

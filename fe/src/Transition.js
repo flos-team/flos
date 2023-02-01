@@ -6,10 +6,6 @@ import LandingPage1 from "./pages/landing/LandingPage1";
 import MainPage from "./pages/main/MainPage/MainPage";
 import LoginPage from "./pages/LoginPage";
 import FeedDetailPage from "./pages/main/FeedPage/FeedDetailPage";
-
-import MainPage from "./pages/main/MainPage";
-import LoginPage from "./pages/LoginPage";
-import FeedDetailPage from "./pages/main/FeedPage/FeedDetailPage";
 import WritePostPage from "./pages/main/WritePostPage/WritePostPage"
 
 import FillPage from "./pages/register/FillPage";
