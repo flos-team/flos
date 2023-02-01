@@ -51,7 +51,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent pageName={"프로필"} optType={1}></HeaderComponent>
+      <HeaderComponent backVisible={false} pageName={"프로필"} optType={1}></HeaderComponent>
       <div className="profile-page">
         <div className="user-info-container">
           <div className="flex-box">
