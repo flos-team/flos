@@ -2,7 +2,7 @@
 import { useLocation } from "react-router-dom";
 import styles from "./FeedDetailPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
-import PostItem from "../../../components/PostItem";
+import PostItem from "../../../components/PostItem/PostItem";
 
 import userImg from "../../../assets/GlobalAsset/user-img.png";
 import moodImg from "../../../assets/GlobalAsset/sunny.png";
@@ -35,9 +35,7 @@ function FeedDetailPage() {
             <div className={styles.emptyDiv}>
               <img className={styles.emotion} src={emptySunny}></img>
             </div>
-            <div className={styles.content}>
-              이 분은 철학자인가.이 분은 철학자인가.이 분은 철학자인가..
-            </div>
+            <div className={styles.content}>이 분은 철학자인가.이 분은 철학자인가.이 분은 철학자인가..</div>
           </div>
         </div>
       );
@@ -47,11 +45,7 @@ function FeedDetailPage() {
 
   return (
     <div className={styles.feedRoot}>
-      <HeaderComponent
-        backVisible={true}
-        pageName={"돌아가기"}
-        optType={0}
-      ></HeaderComponent>
+      <HeaderComponent backVisible={true} pageName={"돌아가기"} optType={0}></HeaderComponent>
       <div className={styles.main}>
         <PostItem mood={"RAINY"} userName={"wonnny"} postId={value}></PostItem>
         {/* props로 넘어온 id : {value} */}
@@ -63,11 +57,7 @@ function FeedDetailPage() {
         </div>
         <div className={styles.commentInputDiv}>
           <form className={styles.commentForm}>
-            <input
-              className={styles.commentInput}
-              type="text"
-              placeholder="댓글달기...."
-            ></input>
+            <input className={styles.commentInput} type="text" placeholder="댓글달기...."></input>
             <img className={styles.sendBtn} src={sendImg}></img>
           </form>
         </div>

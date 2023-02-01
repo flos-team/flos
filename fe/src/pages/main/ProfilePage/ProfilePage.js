@@ -8,7 +8,7 @@ import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
-import PostItem from "../../../components/PostItem";
+import PostItem from "../../../components/PostItem/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
@@ -44,7 +44,7 @@ const ProfilePage = () => {
   const commentCountText = <p>{commentCount >= 99 ? "99+" : commentCount}</p>;
 
   const n = 8; // Or something else
-  const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>)  
+  const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>);
 
   let tooltipMessage = "회원님의 지난 일주일, 한달 간의\n포스트의 감정평가를 기준으로 집계한\n통계 그래프입니다.";
 
@@ -104,7 +104,6 @@ const ProfilePage = () => {
       <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
       <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
       <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
-
     </>
   );
 };
