@@ -1,0 +1,30 @@
+.bottom-nav-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 24px;
+  position: relative;
+  width: 360px;
+  height: 80px;
+  background: #FFFFFF;
+}
+.bottom-nav-bar .bottom-nav-item {
+  width: 48px;
+  height: 48px;
+  /* Inside auto layout */
+}
+.bottom-nav-bar .bottom-nav-item img {
+  display: block;
+  width: 24px;
+  margin: 12px auto;
+  height: fit-content;
+  align-items: center;
+}
+
+/*# sourceMappingURL=BottomNavigation.css.map */
