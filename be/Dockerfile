@@ -2,8 +2,7 @@ FROM gradle:7.4-jdk17-alpine as build
 WORKDIR /
 COPY . .
 RUN gradle clean build --no-daemon
-RUN cd build/libs
-RUN ls -l
+RUN ls -l build/libs
 
 FROM openjdk:17-alpine
 WORKDIR /
