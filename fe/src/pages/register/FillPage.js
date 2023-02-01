@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./FillPage.module.css";
 import kakaologo from "../../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../../assets/LoginAsset/naver-logo.png";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
-import { useNavigate, Link, Router, useRevalidator } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 
 function FillPage() {
@@ -107,27 +107,53 @@ function FillPage() {
   };
 
   // 2. 닉네임 유효성 검사 로직
-  const checkNickname = () => {
-    if (isValidNicknameLength === false || isValidNicknameForm === false) {
-      setNicknameMsg("사용할 수 없는 닉네임입니다");
-      setNicknameMsgColor(false);
-    }
-    // else if (DB에 같은 닉네임이 존재하면){
-    // setNicknameMsg('이미 사용중인 닉네임입니다.')
-    // setNicknameMsgColor(false)
-    else {
-      setNicknameMsg("사용 가능한 닉네임입니다");
-      setNicknameMsgColor(true);
-    }
-  };
+  // const checkNickname = () => {
+  //   if (isValidNicknameLength === false || isValidNicknameForm === false) {
+  //     setNicknameMsg("사용할 수 없는 닉네임입니다");
+  //     setNicknameMsgColor(false);
+  //   }
+  //   else if (DB에 같은 닉네임이 존재하면){
+  //   setNicknameMsg('이미 사용중인 닉네임입니다.')
+  //   setNicknameMsgColor(false)
+  //   else {
+  //     setNicknameMsg("사용 가능한 닉네임입니다");
+  //     setNicknameMsgColor(true);
+  //   }
+  // };
 
   // 3. 다음 페이지로 이동할지 확인
   const navigate = useNavigate();
   const checkFill = () => {
-    if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
-      alert("회원가입 API");
-    } else alert("빈칸을 채워주세요");
-  };
+    const axiosInfo = {
+      "code": inputCode,
+      "email": inputId,
+      "nickname": inputNickname,
+      "password": inputPw
+    }
+    if (!verifyedId) {
+      alert('아이디 확인')
+    } else if (!pwMsgColor) {
+      alert('비밀번호 확인')
+    } else if (!pwCheckMsgColor) {
+      alert('비밀번호 확인 확인')
+    } else if (!nicknameMsgColor) {
+      alert('닉네임 유효 확인?')
+    } else if (!useCheck) {
+      alert('약관동의 확인')
+    } else if (!canUseNickname) {
+      alert('닉네임 중복 확인?')
+    } else if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
+      axios.post('/member/sign-up', axiosInfo, {withCredentials: false})
+      .then ((res) => {
+        console.log(res)
+        alert('회원가입 성공')
+        navigate('/main', { state: res.data })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+}
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
@@ -169,6 +195,32 @@ function FillPage() {
         <span>약관 모달띄우기</span>
       </div>
     );
+  }
+  
+  // 타이머
+  function Timer() {
+    const [minutes, setMinutes] = useState(4);
+    const [seconds, setSeconds] = useState(59);
+    useEffect(() => {
+      const countdown = setInterval(() => {
+        if (parseInt(seconds) > 0) {
+          setSeconds(parseInt(seconds) - 1);
+        }
+        if (parseInt(seconds) === 0) {
+          if(parseInt(minutes) === 0) {
+            console.log('end')
+            clearInterval(countdown);
+          } else {
+            setMinutes(parseInt(minutes) - 1)
+            setSeconds(59)
+          }
+        }
+      }, 1000)
+      return () => clearInterval(countdown)
+    }, [minutes, seconds])
+    return (
+      <span>{minutes}:{seconds < 10 ? `0${seconds}` : seconds}</span>
+    )
   }
 
 
@@ -272,12 +324,12 @@ function FillPage() {
           console.log(res.data)
           if (res.data === true) {
             setCanUseNickname(false)
-            setNicknameMsg("사용할 수 없는 닉네임입니다");
             setNicknameMsgColor(false);
+            setNicknameMsg("사용할 수 없는 닉네임입니다");
           } else {
             setCanUseNickname(true);
+            setNicknameMsgColor(true); 
             setNicknameMsg('사용 가능한 닉네임입니다.');
-            setNicknameMsgColor(true);
           }
         })
         .catch((err) => {
@@ -288,6 +340,7 @@ function FillPage() {
         })
       }
   }
+
 
   return (
     <div className={styles.bigframe}>
@@ -312,6 +365,7 @@ function FillPage() {
               <button onClick={mailSend} onKeyUp={isSameId}>메일로 인증번호 받기</button>
             </div>
           ) : null}
+          {/* 메일을 보냈으면 입력 폼, 타이머 출력 (조건부 렌더링) */}
           {isMailSend ? (
             <div className={styles.mailsend}>
               <div>
@@ -321,9 +375,10 @@ function FillPage() {
                   onChange={handleInput} 
                   className={styles.mailnuminput} 
                   disabled={verifyedId}></input>
-                <button className={styles.mailsendbtn} onClick={mailSend}>재전송</button>
-                <button className={styles.mailsendbtn} onClick={checkNumber}>인증</button>
+                <button className={styles.mailsendbtn} onClick={mailSend} disabled={verifyedId}>재전송</button>
+                <button className={styles.mailsendbtn} onClick={checkNumber} disabled={verifyedId}>인증</button>
                 <span className={verifyedId ? styles.checkedcode : styles.checkingcode}>{emailInputMsg}</span>
+                <Timer></Timer>
               </div>
             </div>
           ) : null}
