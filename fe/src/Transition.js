@@ -13,6 +13,8 @@ import ResultPage from "./pages/register/ResultPage"
 import PwChangePage from "./pages/password/ChangePage"
 import PwFindPage from "./pages/password/FindPage"
 
+import UserStatisticsPage from "./pages/main/ProfilePage/UserStatisticsPage/UserStatisticsPage";
+
 import SettingPage from "./pages/SettingPage"
 import NotificationPage from "./pages/NotificationPage"
 import GuidePage from "./pages/GuidePage"
@@ -38,10 +40,13 @@ function Transition() {
             <Route path="/pwchange" element={<PwChangePage />}></Route>
             <Route path="/pwfind" element={<PwFindPage />}></Route>
             
+            <Route path="/dashboard" element={<UserStatisticsPage />}></Route>
+
+
             <Route path="/settings" element={<SettingPage />}></Route>
             <Route path="/notification" element={<NotificationPage />}></Route>
             <Route path="/guide" element={<GuidePage />}></Route>
-
+            
 
 
             {/* <Route path="/product/*" element={<Product />}></Route> */}

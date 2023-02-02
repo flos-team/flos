@@ -87,7 +87,9 @@ function Login() {
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
         <img src={loginlogo} alt="hi" className={styles.groomimg}></img>
+        <br></br>
         <h1>Flos</h1>
+        <br></br>
         <br></br>
         <div className={styles.logindiv}>
           <h2 className={styles.emaillabel}>로그인 정보를 입력하세요.</h2>
