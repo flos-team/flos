@@ -13,6 +13,7 @@ spring:
     defer-datasource-initialization: true
   sql:
     init:
+      mode: always
       data-locations: classpath:import.sql
   security:
     oauth2:
