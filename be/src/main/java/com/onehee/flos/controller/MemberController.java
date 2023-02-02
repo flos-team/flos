@@ -6,7 +6,7 @@ import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
-import com.onehee.flos.model.dto.response.MemberResponseDTO;
+import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.util.CookieUtil;
@@ -68,7 +68,7 @@ public class MemberController {
     @Tag(name = "멤버API")
     public ResponseEntity<?> getInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
         Member member = memberDetails.getMember();
-        return new ResponseEntity<MemberResponseDTO>(MemberResponseDTO.toDto(member), HttpStatus.OK);
+        return new ResponseEntity<MemberInfoResponseDTO>(MemberInfoResponseDTO.toDto(member), HttpStatus.OK);
     }
 
     @Operation(summary = "중복이메일 체크 메서드", description = "이메일의 중복 여부를 확인합니다. 회원가입시 keyUp 이벤트에 사용합니다.")
@@ -89,7 +89,7 @@ public class MemberController {
     @PutMapping("/info")
     @Tag(name = "멤버API")
     public ResponseEntity<?> updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
-        return new ResponseEntity<MemberResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.CREATED);
+        return new ResponseEntity<MemberInfoResponseDTO>(memberService.updateMember(memberUpdateRequestDTO), HttpStatus.CREATED);
     }
 
     @Operation(summary = "비밀번호 재설정 메서드", description = "비밀번호를 재설정합니다. 승인된 이메일 인증번호를 함께 보내야 합니다.")

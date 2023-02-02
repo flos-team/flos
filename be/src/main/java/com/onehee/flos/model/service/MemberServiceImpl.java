@@ -8,7 +8,7 @@ import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
-import com.onehee.flos.model.dto.response.MemberResponseDTO;
+import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.MemberStatus;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberResponseDTO updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
+    public MemberInfoResponseDTO updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
         Member member = memberRepository.findById(SecurityManager.getCurrentMember().getId())
                 .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
         if (memberUpdateRequestDTO.getNickname() != null) {
@@ -92,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
             }
         }
         member = memberRepository.saveAndFlush(member);
-        return MemberResponseDTO.toDto(member);
+        return MemberInfoResponseDTO.toDto(member);
     }
 
     @Override

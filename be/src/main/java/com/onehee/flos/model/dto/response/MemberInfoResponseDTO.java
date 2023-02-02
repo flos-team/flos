@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberResponseDTO {
+public class MemberInfoResponseDTO {
     private Long id;
     private String email;
     private String nickname;
@@ -18,8 +18,8 @@ public class MemberResponseDTO {
     private int water;
     private int light;
 
-    public static MemberResponseDTO toDto(Member member) {
-        return MemberResponseDTO.builder()
+    public static MemberInfoResponseDTO toDto(Member member) {
+        return MemberInfoResponseDTO.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
