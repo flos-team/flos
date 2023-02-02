@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import PostItem from "../../components/PostItem";
+import PostItem from "../../components/PostItem/PostItem";
 import styles from "./GlobalPage.module.css";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 
@@ -15,7 +15,6 @@ function Feed() {
   const postList = userInfos.map(({ userInfoId, userInfo }) => (
     <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
   ));
-
 
   return (
     <div className={styles.feedRoot}>

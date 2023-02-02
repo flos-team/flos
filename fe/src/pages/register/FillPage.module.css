@@ -190,14 +190,20 @@
 }
 .mailnuminput{
   width: 60%;
-  height: 70%;
+  height: 32px;
+  padding: 4px;
+  font-size: 14px;
 }
 .mailsendbtn {
-  width: 18%;
-  height: 70%;
-  margin: 2px;
+  width: 20%;
+  height: 30px;
   padding: 0;
 }
-.mailsendtext{
-  font-size: 12px;
+.checkingcode{
+  font-size: 10px;
+  color:red;
+}
+.checkedcode{
+  font-size: 10px;
+  color: green;
 }

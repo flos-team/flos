@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import PostItem from "../../../components/PostItem";
+import PostItem from "../../../components/PostItem/PostItem";
 import styles from "./FeedPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import { Link } from "react-router-dom";
@@ -33,7 +33,7 @@ function Feed() {
   // Axios.get("http://i8b210.p.ssafy.io:8080/post/list").then(function (response) {
   //   console.log(response);
   // });
-  
+
   const [userInfos, setUserInfos] = useState([
     { userInfoId: 1, userInfo: 999, postId: 1 },
     { userInfoId: 2, userInfo: 999, postId: 2 },
@@ -52,123 +52,55 @@ function Feed() {
       <div className={styles.friendListBar}>
         {/** 친구 프로필을 나열한다.  */}
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
+          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
         </div>
       </div>
       <Link to="write">

@@ -8,11 +8,10 @@ import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
-import PostItem from "../../../components/PostItem";
+import PostItem from "../../../components/PostItem/PostItem";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
-import "../../../components/ToolTip/ToolTip.css";
 
 const ProfilePage = () => {
   const userName = "wonny";
@@ -45,52 +44,17 @@ const ProfilePage = () => {
   const commentCountText = <p>{commentCount >= 99 ? "99+" : commentCount}</p>;
 
   const n = 8; // Or something else
-  const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>)  
-
-  let tooltipMessage = "회원님의 지난 일주일, 한달 간의\n포스트의 감정평가를 기준으로 집계한\n통계 그래프입니다.";
+  const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>);
 
   return (
     <>
       <HeaderComponent backVisible={false} pageName={"프로필"} optType={1}></HeaderComponent>
       <div className="profile-page">
+        <img className="user-profile-img" src={userImg}></img>
         <div className="user-info-container">
-          <div className="flex-box">
-            <div className="user-info">
-              <img className="user-profile-img" src={userImg}></img>
-              <p className="user-nickname">wonny</p>
-            </div>
-            <div className="user-social-info-box">
-              <ul className="user-social-info-title">{userInfoNameList}</ul>
-              <ul className="user-social-info">{userInfoList}</ul>
-            </div>
-          </div>
-        </div>
-        <div className="feed-graph-div">
-          <div className="feed-graph-guide-div">
-            <p> {userName} 님의 MOOD </p>
-            <span data-tooltip={tooltipMessage}>
-              <img className="fi-br-interrogation" src={questionMark} />
-            </span>
-          </div>
-          <div className="user-graph-container">
-            <div className="weekend-graph-div">
-              <div className="w-sunny sunny"></div>
-              <div className="w-cloudy cloudy"></div>
-              <div className="w-rainy rainy"></div>
-            </div>
-            <div className="user-week-text">
-              <p>일주일</p>
-            </div>
-          </div>
-          <div className="user-graph-container">
-            <div className="month-graph-div">
-              <div className="m-sunny sunny"></div>
-              <div className="m-cloudy cloudy"></div>
-              <div className="m-rainy rainy"></div>
-            </div>
-            <div className="user-month-text">
-              <p>한달</p>
-            </div>
+          <div className="user-social-info-box">
+            <ul className="user-social-info-title">{userInfoNameList}</ul>
+            <ul className="user-social-info">{userInfoList}</ul>
           </div>
         </div>
         <div className="profile-tab-menu">
@@ -101,7 +65,6 @@ const ProfilePage = () => {
         </div>
         <div className="feed-container">{postList}</div>
       </div>
-      {/* <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem> */}
     </>
   );
 };
