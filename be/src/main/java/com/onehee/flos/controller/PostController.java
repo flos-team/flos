@@ -11,8 +11,10 @@ import com.onehee.flos.model.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,29 +39,33 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "날씨별 게시글 리스트", description = "날씨에 해당하는 게시글을 시간순으로 나타냅니다.")
     @GetMapping("/list/weather")
-    public ResponseEntity<?> getListByWeather(@RequestParam WeatherType weather, Pageable pageable){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getPostListByWeather(weather, pageable).getContent(), HttpStatus.OK);
+    public ResponseEntity<?> getListByWeather(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam WeatherType weather){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return new ResponseEntity<Slice<PostResponseDTO>>(postService.getPostListByWeather(weather, pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
-    @Operation(summary = "최신순 게시글 리스트", description = "게시글을 시간순으로 나타냅니다.")
+    @Operation(summary = "게시글 리스트", description = "게시글 리스트를 반환합니다.")
     @GetMapping("/list")
-    public ResponseEntity<?> getList(Pageable pageable){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getLatestPostList(pageable).getContent(), HttpStatus.OK);
+    public ResponseEntity<?> getList(@RequestParam("page") Integer page, @RequestParam("size") Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return new ResponseEntity<Slice<PostResponseDTO>>(postService.getLatestPostList(pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "사람별 게시글 리스트", description = "특정 회원의 게시글 리스트를 나타냅니다.")
     @GetMapping("/list/writer")
-    public ResponseEntity<?> getListByWriter(@RequestParam Member writer, Pageable pageable){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getPostListByWriter(writer, pageable).getContent(), HttpStatus.OK);
+    public ResponseEntity<?> getListByWriter(@RequestParam("page") Integer page, @RequestParam("size") Integer size, @RequestParam Member writer){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return new ResponseEntity<Slice<PostResponseDTO>>(postService.getPostListByWriter(writer, pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "사람별 게시글 리스트", description = "회원의 북마크한 게시글 리스트를 나타냅니다.")
     @GetMapping("/list/bookmark")
-    public ResponseEntity<?> getListByBookmark(Pageable pageable){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getBookmarkedListByMember(pageable).getContent(), HttpStatus.OK);
+    public ResponseEntity<?> getListByBookmark(@RequestParam("page") Integer page, @RequestParam("size") Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return new ResponseEntity<Slice<PostResponseDTO>>(postService.getBookmarkedListByMember(pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
