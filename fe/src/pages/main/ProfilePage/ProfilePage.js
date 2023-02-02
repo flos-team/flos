@@ -89,8 +89,7 @@ const ProfilePage = () => {
           </ul>
         </div>
         <div className="feed-container">{postList}</div>
-      </div> */}
-      <UserStatisticsPage></UserStatisticsPage>
+      </div>
     </>
   );
 };
