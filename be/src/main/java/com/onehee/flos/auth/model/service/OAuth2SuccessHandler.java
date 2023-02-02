@@ -6,11 +6,12 @@ import com.onehee.flos.auth.model.dto.OAuth2UserDTO;
 import com.onehee.flos.auth.model.dto.TokenResponse;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.type.RoleType;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.FilesHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -23,12 +24,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
+
+    @Value("${spring.jwt.expire.rtk}")
+    private Long rtkExpire;
+
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ObjectMapper objectMapper;
@@ -64,9 +71,12 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private void writeTokenResponse(HttpServletResponse response, TokenResponse tokenResponse) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
-        response.addHeader("Authorization", "Bearer " + tokenResponse.getAtk());
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
+        response.setHeader("Set-Cookie", cookie.toString());
         PrintWriter writer = response.getWriter();
-        writer.println(objectMapper.writeValueAsString(tokenResponse));
+        Map<String, String> atk = new HashMap<>();
+        atk.put("atk", tokenResponse.getAtk());
+        writer.println(objectMapper.writeValueAsString(atk));
         writer.flush();
     }
 }

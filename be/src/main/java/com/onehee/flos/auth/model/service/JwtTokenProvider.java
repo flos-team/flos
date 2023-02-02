@@ -12,6 +12,7 @@ import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -53,13 +54,6 @@ public class JwtTokenProvider {
         return new TokenResponse(atk, rtk);
     }
 
-    public TokenResponse reissueToken(String oldAtk) throws JsonProcessingException {
-        redisRepository.setValue("black:" + oldAtk, "true", Duration.ofMillis(atkExpire));
-        Member member = memberRepository.findById(getSubject(oldAtk).getId())
-                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
-        return generateTokenByMember(member);
-    }
-
     public String generateToken(Subject subject, Long expire) throws JsonProcessingException {
         String subjectStr = objectMapper.writeValueAsString(subject);
         Claims claims = Jwts.claims().setSubject(subjectStr);
@@ -73,20 +67,18 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public void checkToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return true;
         } catch (MalformedJwtException e) {
-            log.info("유효하지 않은 JWT 토큰입니다.", e);
+            log.info("유효하지 않은 JWT 토큰입니다.");
         } catch (ExpiredJwtException e) {
-            log.info("유효기간이 만료된 JWT 토큰입니다.", e);
+            log.info("유효기간이 만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
-            log.info("지원하지 않는 JWT 토큰입니다.", e);
+            log.info("지원하지 않는 JWT 토큰입니다.");
         } catch (MissingClaimException e) {
-            log.info("클레임이 비어있습니다.", e);
+            log.info("클레임이 비어있습니다.");
         }
-        return false;
     }
 
     public Subject getSubject(String token) throws JsonProcessingException {
@@ -105,6 +97,16 @@ public class JwtTokenProvider {
     public void abandonTokens(LogoutDTO logoutDTO) {
         redisRepository.setValue("black:" + logoutDTO.getAtk(), "true", Duration.ofMillis(atkExpire));
         redisRepository.deleteValue("rtk:" + logoutDTO.getEmail());
+    }
+
+    public ResponseCookie getRtkCookie(String rtk) {
+        return ResponseCookie.from("rtk", "Bearer+" + rtk)
+                .maxAge(rtkExpire)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
     }
 
 }

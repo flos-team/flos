@@ -13,10 +13,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Tag(name = "멤버API", description = "멤버, 토큰 관련 처리를 담당합니다.")
 @RestController
@@ -31,9 +35,13 @@ public class MemberController {
     @Tag(name = "멤버API")
     @Operation(summary = "토큰 재발행 메서드", description = "엑세스 토큰과 리프레시 토큰을 재발행 합니다.")
     @GetMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader(name = "Authorization") String atk) throws JsonProcessingException {
-        TokenResponse token = jwtTokenProvider.reissueToken(atk);
-        return new ResponseEntity<TokenResponse>(token, HttpStatus.OK);
+    public ResponseEntity<?> reissue(@AuthenticationPrincipal MemberDetails memberDetails, HttpServletResponse response) throws JsonProcessingException {
+        TokenResponse tokenResponse = jwtTokenProvider.generateTokenByMember(memberDetails.getMember());
+        response.setContentType("application/json;charset=UTF-8");
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
+        response.setHeader("Set-Cookie", cookie.toString());
+        tokenResponse.setRtk(null);
+        return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
     }
 
     @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.")
@@ -47,8 +55,12 @@ public class MemberController {
     @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.")
     @PostMapping("/login")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletResponse response) throws JsonProcessingException {
         TokenResponse tokenResponse = memberService.login(loginRequestDTO);
+        response.setContentType("application/json;charset=UTF-8");
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
+        response.setHeader("Set-Cookie", cookie.toString());
+        tokenResponse.setRtk(null);
         return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
     }
 
