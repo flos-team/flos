@@ -63,6 +63,11 @@ function Login() {
   const onClickKakaoLogin = () => {
     // console.log(axios.defaults.headers)
     console.log("카카오 로그인");
+    axios.get("/member/reissue").then(response => {
+      console.log(response).then(error => {
+        console.log(error)
+      })
+    })
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
