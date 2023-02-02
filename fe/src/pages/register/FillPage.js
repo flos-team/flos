@@ -6,6 +6,10 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
+import closeIcon from '../../assets/RegisterAsset/fi-br-cross-small.png'
+import showPwImg from '../../assets/RegisterAsset/fi-br-eye-crossed.png'
+import noshowPwImg from '../../assets/RegisterAsset/fi-br-eye.png'
+import cancelImg from '../../assets/RegisterAsset/Cancel.png'
 
 function FillPage() {
   const [inputValue, setInputValue] = useState({
@@ -37,13 +41,15 @@ function FillPage() {
   const [nicknameMsgColor, setNicknameMsgColor] = useState(false);
   const [useCheck, setUseCheck] = useState(false);
   const [useCheckMsg, setUseCheckMsg] = useState("");
-  const [checkModal, setCheckModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false); // 모달 띄울까?
   const [emailInputMsg, setEmailInputMsg] = useState('해당 이메일로 인증 메일을 보냈습니다.');
   const [isMailSend, setIsMailSend] = useState(false);
   const [canUseId, setCanUseId] = useState(false);
   const [canUseNickname, setCanUseNickname] = useState(false);
-
   const [verifyedId, setVerifyedId] = useState(false); // 이메일인증까지 마친 이메일인가?
+  const [cancelId, setCancelId] = useState(false); // 아이디 입력값 지우기
+  const [showPw, setShowPw] = useState(false); // 비밀번호 보이기 
+  const [showPwCheck, setShowPwCheck] = useState(false) // 비밀번호 확인 보이기
 
   // 이메일 - 문자열에 특수문자, 영어, 숫자만 있는지 확인
   // 비밀번호 - 문자열에 특수문자, 영어, 숫자만 있는지 확인
@@ -181,18 +187,87 @@ function FillPage() {
   };
 
   // 이용약관 모달 띄우기
-  const openModal = () => {
-    if (checkModal === false) {
-      setCheckModal(true);
-    } else if (checkModal === true) {
-      setCheckModal(false);
+  const requestModal = () => {
+    if (openModal === false) {
+      setOpenModal(true);
+    } else if (openModal === true) {
+      setOpenModal(false);
     }
   };
+
+const xBtnAppear = () =>{
+    const emailXBtn = document.getElementById('emailXBtn');
+    const input = document.getElementById('xbtn');
+    if(input.value){
+      emailXBtn.src= cancelImg
+    } else{
+      emailXBtn.src= ""
+    }
+}
+
+  // 아이디 지우기
+  const cancelIdValue = () => {
+    const emailXBtn = document.getElementById('emailXBtn');
+    const input = document.getElementById('xbtn');
+    emailXBtn.src = ""
+    input.value=''
+    inputValue.inputId = ""
+      // inputId('')
+  }
+
+  // 비밀번호 보여줄지 확인
+  const pwEyeIcon = () => {
+    if (showPw) {
+     setShowPw(false) 
+    } else {
+      setShowPw(true)
+    }
+  }
+
+  //비밀번호 확인 보여줄지 확인
+  const pwCheckEyeIcon = () => {
+    if (showPwCheck) {
+      setShowPwCheck(false)
+    } else {
+      setShowPwCheck(true)
+    }
+  }
+
+
   // 모달
   function Modal() {
     return (
       <div className={styles.modal}>
-        <span>약관 모달띄우기</span>
+        <div className={styles.modalheader}>
+          <h3>Flos 이용약관 동의</h3>
+          <img src={closeIcon} alt='' onClick={requestModal} className={styles.cursorpointer}></img>
+        </div>
+        <div className={styles.modalbodyterm}>
+          <p>Flos에 회원가입하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적 관한 사항을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.</p>
+          <br></br>
+          <h6># 1. 수집하는 개인정보</h6>
+          <p></p>이용자가 서비스를 이용하기 위해 회원가입을 할 경우, Flos는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.
+          <br></br>
+          <br></br>
+          <p>회원가입 시점에 Flos가 이용자로부터 수집하는 개인정보는 아래와 같습니다.</p>
+          <p>- 회원 가입 시 필수항목으로 이메일(아이디), 비밀번호, 닉네임을 수집합니다.</p>
+          <br></br>
+          <p>서비스 이용 과정에서 이용자로부터 수집하는 개인정보는 아래와 같습니다.</p>
+          <p>- 회원정보 또는 개별 서비스에서 프로필 정보(프로필 사진)를 설정할 수 있습니다.</p>
+          <br></br>
+          <h6># 2. 수집한 개인정보의 이용</h6>
+          <p>Flos의 회원관리, 서비스 개발·제공 및 향상 등 아래의 목적으로만 개인정보를 이용합니다.</p>
+          <p>- 회원 가입 의사의 확인, 이용자 식별, 회원탈퇴 의사의 확인 등 회원관리를 위하여 개인정보를 이용합니다.</p>
+          <p>- 보안, 프라이버시, 안전 측면에서 이용자가 안심하고 이용할 수 있는 서비스 이용환경 구축을 위해 개인정보를 이용합니다.</p>
+          <br></br>
+          <br></br>
+          <h6># 3. 개인정보 수집 및 이용 동의를 거부할 권리</h6>
+          <p>- 이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있습니다.</p>
+          <p>- 회원가입 시 수집하는 최소한의 개인정보 즉, 필수 항목에 대한 수집 및 이용 동의를 거부하실 경우, 회원가입이 어려울 수 있습니다.</p>
+      </div>
+      <div className={styles.modalfooter}>
+        <span className={styles.modalfootertext} onClick={requestModal}>확인</span>
+      </div>
       </div>
     );
   }
@@ -343,21 +418,30 @@ function FillPage() {
 
 
   return (
+    <>
+    {openModal ? <div className={styles.modalbackground}></div> : null}
     <div className={styles.bigframe}>
       <HeaderComponent backVisible={true} pageName={"회원가입"} optType={""}></HeaderComponent>
       <TextLogoComponent></TextLogoComponent>
       <div className={styles.mainframe}>
         <div className={styles.mainframeitem}>
           <p>이메일(아이디)</p>
-          <input
-            type="text"
-            name="inputId"
-            placeholder="flos@example.com"
-            onChange={handleInput}
-            onKeyUp={checkId}
-            className={styles.inputdiv}
-            disabled={verifyedId}
-          />
+          <div className={styles.inputdivicon}>
+            <input
+              type="text"
+              name="inputId"
+              id='xbtn'
+              placeholder="flos@example.com"
+              onChange={(name, value) => {
+                handleInput(name, value);
+                xBtnAppear();
+              }}
+              onKeyUp={checkId}
+              className={styles.inputdiv}
+              disabled={verifyedId}
+            />
+            <img id = "emailXBtn" alt='' onClick={cancelIdValue} className={styles.icon}></img>
+          </div>
           <span className={emailMsgColor ? styles.canuse : styles.cannotuse}>{emailMsg}</span>
           {/* 유효한 ID이면 메일 전송 버튼 출력 (조건부 렌더링) */}
           {emailMsgColor & !isMailSend ? (
@@ -385,27 +469,33 @@ function FillPage() {
         </div>
         <div className={styles.mainframeitem}>
           <p>비밀번호</p>
-          <input
-            type="password"
-            name="inputPw"
-            placeholder="영문, 숫자, 특수문자 8~12자"
-            onChange={handleInput}
-            onKeyUp={checkPw}
-            className={styles.inputdiv}
-          />
+          <div className={styles.inputdivicon}>
+            <input
+              type = {showPw ? "text" : "password"}
+              name="inputPw"
+              placeholder="영문, 숫자, 특수문자 8~12자"
+              onChange={handleInput}
+              onKeyUp={checkPw}
+              className={styles.inputdiv}
+            />
+            <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img>
+          </div>
           <span className={pwMsgColor ? styles.canuse : styles.cannotuse}>{pwMsg}</span>
         </div>
         <div className={styles.mainframeitem}>
           <p> 비밀번호 확인</p>
+          <div className={styles.inputdivicon}>
           <input
-            type="password"
+            type = {showPwCheck ? "text" : "password"}
             name="inputCheckPw"
             placeholder="비밀번호 재입력"
             onChange={handleInput}
             onKeyUp={reCheckPw}
             className={styles.inputdiv}
-          />
-          <span className={pwCheckMsgColor ? styles.canuse : styles.cannotuse}>{pwCheckMsg}</span>
+          />  
+          <img src={showPwCheck ? showPwImg : noshowPwImg} alt='' onClick={pwCheckEyeIcon} className={styles.icon}></img>
+        </div>
+        <span className={pwCheckMsgColor ? styles.canuse : styles.cannotuse}>{pwCheckMsg}</span>
         </div>
         <div className={styles.mainframeitem}>
           <p>닉네임</p>
@@ -435,11 +525,11 @@ function FillPage() {
           <label className={styles.termfont} for="check1">
             개인정보 수집 및 이용 동의 (필수) <span className={styles.textredcolor}>* </span>
           </label>
-          <span onClick={openModal} className={styles.termfont}>
+          <span onClick={requestModal} className={styles.termfont}>
             [보기]
           </span>
           <p className={styles.textredcolor}>{useCheckMsg}</p>
-          {checkModal === true ? <Modal /> : null}
+          {openModal === true ? <Modal /> : null}
         </div>
       </div>
 
@@ -460,6 +550,7 @@ function FillPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
