@@ -8,13 +8,34 @@ import userImg from "../../../assets/GlobalAsset/user-img.png";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
 import UserStatisticsPage from "./UserStatisticsPage/UserStatisticsPage";
+import WriteFormCompoent from "../../../components/WriteFormCompoent/WriteFormCompoent";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
+  const holderStlye1 = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100vw",
+    height: "80vh",
+    transition: ".3s",
+  };
+
+  const holderStlye2 = {
+    display: "flex",
+    // alignItems: "center",
+    justifyContent: "center",
+    width: "100vw",
+    height: "80vh",
+    transition: ".3s",
+  };
+
   const userName = "wonny";
   const postTime = "1시간 전";
+
+  let [touchIdx, setTouchIdx] = useState(false);
   const [userInfoNames, setUserInfoNames] = useState([
     { userInfoId: 1, userInfoName: "팔로워" },
     { userInfoId: 2, userInfoName: "팔로잉" },
@@ -47,8 +68,13 @@ const ProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent backVisible={false} pageName={"프로필"} menuOpt2={"SETTING"} menuOpt1={"STATISTICS"}></HeaderComponent>
-      <div className="profile-page">
+      <HeaderComponent
+        backVisible={false}
+        pageName={"프로필"}
+        menuOpt2={"SETTING"}
+        menuOpt1={"STATISTICS"}
+      ></HeaderComponent>
+      {/* <div className="profile-page">
         <img className="user-profile-img" src={userImg}></img>
         <div className="user-info-container">
           <div className="user-social-info-box">
