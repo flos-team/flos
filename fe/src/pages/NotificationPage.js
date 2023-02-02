@@ -4,7 +4,7 @@ function Setting() {
     return (
         <div>
             <HeaderComponent backVisible = {true} pageName={"알림"} optType={0}></HeaderComponent>
-            Setting Page
+            notification Page
         </div>
     );
 }
