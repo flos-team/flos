@@ -1,0 +1,70 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.alarm-page {
+  width: 100vw;
+  height: 100vh;
+}
+.alarm-page .alarm-header {
+  width: 100%;
+  height: 3.125rem;
+  display: flex;
+  box-shadow: 0 0.125rem 0.125rem #e8e8e8;
+}
+.alarm-page .alarm-header .back-profile-btn {
+  width: 3.125rem;
+  height: 3.125rem;
+}
+.alarm-page .alarm-header .back-profile-btn img {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 auto;
+  margin-top: 0.8125rem;
+}
+.alarm-page .alarm-header .page-title {
+  padding-left: 0.625rem;
+  line-height: 3.125rem;
+}
+.alarm-page .alarm-main {
+  width: 100%;
+  height: max-content;
+  margin-top: 1.875rem;
+}
+.alarm-page .alarm-main .alarm-ops-item {
+  height: 3.125rem;
+  margin: 0.625rem;
+  display: flex;
+}
+.alarm-page .alarm-main .alarm-ops-item div {
+  width: 50%;
+  height: 100%;
+}
+.alarm-page .alarm-main .alarm-ops-item div > p {
+  line-height: 3.125rem;
+}
+.alarm-page .alarm-main .alarm-ops-item div:last-child {
+  margin-top: 0.6875rem;
+  position: relative;
+}
+.alarm-page .alarm-main .alarm-ops-item div:last-child label {
+  display: block;
+  left: 50%;
+}
+
+/*# sourceMappingURL=SettingPage.css.map */

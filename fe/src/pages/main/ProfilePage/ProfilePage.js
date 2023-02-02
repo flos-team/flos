@@ -48,7 +48,7 @@ const ProfilePage = () => {
   return (
     <>
       <HeaderComponent backVisible={false} pageName={"프로필"} menuOpt2={"SETTING"} menuOpt1={"STATISTICS"}></HeaderComponent>
-      {/* <div className="profile-page">
+      <div className="profile-page">
         <img className="user-profile-img" src={userImg}></img>
         <div className="user-info-container">
           <div className="user-social-info-box">
@@ -63,8 +63,7 @@ const ProfilePage = () => {
           </ul>
         </div>
         <div className="feed-container">{postList}</div>
-      </div> */}
-      <UserStatisticsPage></UserStatisticsPage>
+      </div>
     </>
   );
 };
