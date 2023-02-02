@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UnollowRequestDTO {
-    private final String id;
+public class UnfollowRequestDTO {
+    private Long id;
 }
