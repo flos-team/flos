@@ -1,6 +1,8 @@
 
+@import "../../styles/commons.scss";
+
 .bottom-nav-bar{
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     /* Auto layout */
@@ -14,8 +16,9 @@
     position: relative;
     width: 100vw;
     height: 80px;
+    z-index: 10;
 
-    background: #FFFFFF;
+    background: $white;
 
     .bottom-nav-item{
         width: 48px;
