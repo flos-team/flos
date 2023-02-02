@@ -14,15 +14,14 @@ import WriteFormCompoent from "../../../components/WriteFormCompoent/WriteFormCo
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
-
   const holderStlye1 = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     width: "100vw",
     height: "80vh",
-    transition: ".3s"
-  }
+    transition: ".3s",
+  };
 
   const holderStlye2 = {
     display: "flex",
@@ -30,9 +29,8 @@ const ProfilePage = () => {
     justifyContent: "center",
     width: "100vw",
     height: "80vh",
-    transition: ".3s"
-  }
-
+    transition: ".3s",
+  };
 
   const userName = "wonny";
   const postTime = "1시간 전";
@@ -70,7 +68,12 @@ const ProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent backVisible={false} pageName={"프로필"} menuOpt2={"SETTING"} menuOpt1={"STATISTICS"}></HeaderComponent>
+      <HeaderComponent
+        backVisible={false}
+        pageName={"프로필"}
+        menuOpt2={"SETTING"}
+        menuOpt1={"STATISTICS"}
+      ></HeaderComponent>
       {/* <div className="profile-page">
         <img className="user-profile-img" src={userImg}></img>
         <div className="user-info-container">
@@ -87,15 +90,7 @@ const ProfilePage = () => {
         </div>
         <div className="feed-container">{postList}</div>
       </div> */}
-      {/* <UserStatisticsPage></UserStatisticsPage> */}
-      <div className="holder" style={touchIdx ? holderStlye1 : holderStlye2}>
-        <div className="" onClick={(e) => {
-          setTouchIdx(!touchIdx)
-          console.log(touchIdx);
-        }}>
-          <WriteFormCompoent></WriteFormCompoent>
-        </div>
-      </div>
+      <UserStatisticsPage></UserStatisticsPage>
     </>
   );
 };

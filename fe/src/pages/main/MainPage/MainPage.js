@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 
 /* import css */
 import "./MainPage.css";
@@ -14,10 +13,8 @@ import ProfilePage from "../ProfilePage/ProfilePage";
 import HomePage from "../HomePage";
 import GlobalPage from "../GlobalPage";
 import GardenPage from "../GardenPage";
-import WritePostPage from "../WritePostPage/WritePostPage"
 
 function Main() {
-  const navigate = useNavigate();
   const position = useSelector((state) => state.page.value);
   // console.log(position + " in Main")
   let currentPage;
