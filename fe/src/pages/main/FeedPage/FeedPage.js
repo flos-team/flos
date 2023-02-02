@@ -21,39 +21,14 @@ import axios from "axios";
  */
 
 function Feed() {
-  const loginInfo = {
-    email: "jihwan@ssafy.com",
-    password: "wlghks1234",
-  };
-  axios
-      .post("/member/login", loginInfo)
-      .then((response) => {
-        // console.log(response.data.atk);
-        const accessToken = response.data.atk;
-        // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-      })
-      .then(() => {
-        axios
-          .get("../member/info", {}, {  })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log("error : " + error);
-            console.dir(axios.defaults);
-          });
-      })
-      .catch((error) => {
-        // if(error.response.status === 400){
-        //   console.log(123);
-        // }
-        console.log("Error occurred : " + error);
-        // console.log(error.response)
-        // if()
-      });
-
-
+  console.log(axios.defaults)
+  axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
+  axios.get("/post/list")
+  .then(response => {
+  console.log(response)
+  }).catch(error => {
+    console.log(error)
+  })
 
   // Axios.get("http://i8b210.p.ssafy.io:8080/post/list").then(function (response) {
   //   console.log(response);
