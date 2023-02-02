@@ -15,7 +15,7 @@ import PwFindPage from "./pages/password/FindPage"
 
 import UserStatisticsPage from "./pages/main/ProfilePage/UserStatisticsPage/UserStatisticsPage";
 
-import SettingPage from "./pages/SettingPage"
+import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage"
 import NotificationPage from "./pages/NotificationPage"
 import GuidePage from "./pages/GuidePage"
 import "./Transition.css";
@@ -54,8 +54,6 @@ function Transition() {
           </Routes>
         </CSSTransition>
       </TransitionGroup>
-
-      
     </div>
   );
 }
