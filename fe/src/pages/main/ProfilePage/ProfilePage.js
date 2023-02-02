@@ -3,8 +3,6 @@ import { render } from "@testing-library/react";
 import { useState } from "react";
 /* 컴포넌트에서 사용할 이미지 에셋 import */
 import userImg from "../../../assets/GlobalAsset/user-img.png";
-import sunnyImg from "../../../assets/GlobalAsset/sunny.png";
-import questionMark from "../../../assets/ProfileAsset/question-mark.png";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -48,7 +46,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <HeaderComponent backVisible={false} pageName={"프로필"} optType={1}></HeaderComponent>
+      <HeaderComponent backVisible={false} pageName={"프로필"} menuOpt2={"SETTING"} menuOpt1={"STATISTICS"}></HeaderComponent>
       <div className="profile-page">
         <img className="user-profile-img" src={userImg}></img>
         <div className="user-info-container">
