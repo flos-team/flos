@@ -29,11 +29,11 @@ public interface PostService {
     Slice<PostResponseDTO> getLatestPostList(Pageable pageable);
 
     // 게시글 사람별 검색
-    Slice<PostResponseDTO> getPostListByWriter(Member writer, Pageable pageable);
+    Slice<PostResponseDTO> getPostListByWriter(Long id, Pageable pageable);
 
     // 북마크한 게시글 검색
     Slice<PostResponseDTO> getBookmarkedListByMember(Pageable pageable);
-    // 게시글 인기순 검색
+    // 게시글 인기(기여자생긴만큼)순 검색
 
     // 단일 게시글 정보 검색
     PostResponseDTO getPost(Long id) throws BadRequestException;
