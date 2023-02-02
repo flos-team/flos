@@ -29,6 +29,13 @@ public class PostController {
     private final PostService postService;
 
     @Tag(name = "게시글API")
+    @GetMapping("/test")
+    public ResponseEntity<?> getTest() {
+        PageRequest pageRequest = PageRequest.of(1, 20, Sort.by("createdAt").descending());
+        return new ResponseEntity<>(postService.getLatestPostList(pageRequest), HttpStatus.OK);
+    }
+
+    @Tag(name = "게시글API")
     @Operation(summary = "게시글 리스트", description = "게시글 리스트를 반환합니다.")
     @GetMapping("/list")
     public ResponseEntity<?> getList(@RequestParam("page") Integer page, @RequestParam("size") Integer size){
