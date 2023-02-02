@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
+                .antMatchers("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reissue", "/member/reset-password", "/v3/api-docs/**",
                         "/swagger-ui/**", "/swagger-resources/**")
                 .permitAll()
                 .anyRequest()
