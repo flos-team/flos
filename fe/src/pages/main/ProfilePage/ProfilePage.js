@@ -7,6 +7,7 @@ import userImg from "../../../assets/GlobalAsset/user-img.png";
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
+import UserStatisticsPage from "./UserStatisticsPage/UserStatisticsPage";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";

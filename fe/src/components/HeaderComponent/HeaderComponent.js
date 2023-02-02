@@ -34,11 +34,11 @@ const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2 }) => {
   // );
   let optBtn1 = null;
   switch (menuOpt1) {
-    case "CAMERA": // 알림
+    case "CAMERA": // 카메라
       optBtn1 = <img className="opt-icon" src={cameraBtn}></img>;
       break;
-    case "STATISTICS": // 세팅
-      optBtn1 = <img className="opt-icon" src={statisticsBtn}></img>;      
+    case "STATISTICS": // 통계
+      optBtn1 = <Link to="/dashboard"><img className="opt-icon" src={statisticsBtn}></img></Link>;      
       break;
     default:
       optBtn1 = <></>
@@ -51,7 +51,7 @@ const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2 }) => {
       optBtn2 = <Link to="/notification"><img className="opt-icon" src={notifyIcon}></img></Link>;
       break;
     case "SETTING": // 세팅
-      optBtn2 = <img className="opt-icon" src={settingIcon}></img>;      
+      optBtn2 = <Link to="/settings"><img className="opt-icon" src={settingIcon}></img></Link>;      
       break;
     case "CHECK": // 체크
       optBtn2 = <img className="opt-icon" src={checkIcon}></img>;      
