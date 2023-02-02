@@ -1,0 +1,222 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.post-detail-page {
+  z-index: 1;
+}
+.post-detail-page .post-detail-container {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.post-detail-page .post-detail-container .post-container {
+  width: 100vw;
+  height: max-content;
+}
+.post-detail-page .post-detail-container .post-container .user-info-container {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  width: 100vw;
+  height: 4rem;
+  background: #ffdcdc;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.post-detail-page .post-detail-container .post-container .user-info-container .user-info-div {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+.post-detail-page .post-detail-container .post-container .user-info-container .user-info-div img {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+}
+.post-detail-page .post-detail-container .post-container .user-info-container .user-info-div .text-div {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem 0px;
+  width: 10rem;
+  height: 4rem;
+}
+.post-detail-page .post-detail-container .post-container .img-container {
+  width: 22.5rem;
+  height: 22.5rem;
+  background-size: cover;
+}
+.post-detail-page .post-detail-container .post-container .post-content-container {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: max-content;
+  min-height: 8.75rem;
+  background-color: #fcfcfc;
+}
+.post-detail-page .post-detail-container .post-container .post-content-container .post-text-div {
+  width: 100%;
+  height: max-content;
+  border-bottom: 0.0625rem solid #e8e8e8;
+  padding: 0.875rem;
+  padding-bottom: 1rem;
+}
+.post-detail-page .post-detail-container .post-container .post-content-container .post-tag-container {
+  width: 100%;
+  height: max-content;
+  border-bottom: 0.0625rem solid #e8e8e8;
+  padding: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.post-detail-page .post-detail-container .post-container .post-content-container .post-tag-container .post-tag {
+  flex-shrink: 0;
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 0.125rem 0.3125rem 0.125rem 0.3125rem;
+  background-color: #e8e8e8;
+  border-radius: 1rem;
+}
+.post-detail-page .post-detail-container .comment-container {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 0.5rem;
+  width: 100vw;
+  min-height: 22.5rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-title-div {
+  width: 100%;
+  height: 1.875rem;
+  padding-left: 1rem;
+  line-height: 1.875rem;
+  background-color: #fcfcfc;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+  width: 100vw;
+  height: max-height;
+  min-height: 3.125rem;
+  background-color: #fcfcfc;
+  position: relative;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item img {
+  position: relative;
+  top: 0;
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item img:first-child {
+  border-radius: 1.125rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container {
+  width: 14.375rem;
+  height: max-content;
+  min-height: 3.125rem;
+  gap: 0.125rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header p:first-child {
+  font-size: 0.875rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header p:last-child {
+  font-size: 0.625rem;
+  line-height: 0.875rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-main {
+  width: 100%;
+  min-height: 1.25rem;
+  height: max-content;
+}
+.post-detail-page .user-content-input-div {
+  width: 100vw;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: #fcfcfc;
+  border-top: 0.0625rem solid #e8e8e8;
+}
+.post-detail-page .user-content-input-div img {
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 1.125rem;
+}
+.post-detail-page .user-content-input-div .comment-input-div {
+  width: 18.75rem;
+  height: 2.5rem;
+  display: flex;
+  position: relative;
+}
+.post-detail-page .user-content-input-div .comment-input-div input {
+  width: 100%;
+  border: 0.0625rem solid #e8e8e8;
+  border-radius: 1.125rem;
+  padding-left: 0.625rem;
+  font-size: 0.75rem;
+}
+.post-detail-page .user-content-input-div .comment-input-div button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  transition: 0.3s;
+  border-radius: 0.3125rem;
+}
+.post-detail-page .user-content-input-div .comment-input-div button:active,
+.post-detail-page .user-content-input-div .comment-input-div button:hover {
+  background-color: #e8e8e8;
+}
+
+/*# sourceMappingURL=PostDetailPage.css.map */

@@ -9,6 +9,7 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import PostItem from "../../../components/PostItem/PostItem";
 import UserStatisticsPage from "./UserStatisticsPage/UserStatisticsPage";
 import WriteFormComponent from "../../../components/WriteFormComponent/WriteFormComponent";
+import PostDetailPage from "../../../components/PostDetailPage/PostDetailPage";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
@@ -72,7 +73,7 @@ const ProfilePage = () => {
         menuOpt2={"SETTING"}
         menuOpt1={"STATISTICS"}
       ></HeaderComponent>
-      <div className="profile-page">
+      {/* <div className="profile-page">
         <img className="user-profile-img" src={userImg}></img>
         <div className="user-info-container">
           <div className="user-social-info-box">
@@ -87,11 +88,12 @@ const ProfilePage = () => {
           </ul>
         </div>
         <div className="feed-container">{postList}</div>
-      </div>
+      </div> */}
       {/* <PostItem></PostItem> */}
       {/* <div className="holder" style={touchIdx ? holderStyle1 : holderStyle2}>
         <WriteFormComponent holderFunc={setTouchIdx} holdIdx={touchIdx}></WriteFormComponent>
       </div> */}
+      <PostDetailPage></PostDetailPage>
     </>
   );
 };
