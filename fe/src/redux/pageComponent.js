@@ -10,23 +10,23 @@ export const counterSlice = createSlice({
   reducers: {
     feed: (state) => {
       state.value = "feed";
-      console.log(state.value);
+      // console.log(state.value);
     },
     global: (state) => {
       state.value = "global";
-      console.log(state.value);
+      // console.log(state.value);
     },
     home: (state) => {
       state.value = "home";
-      console.log(state.value);
+      // console.log(state.value);
     },
     garden: (state) => {
       state.value = "garden";
-      console.log(state.value);
+      // console.log(state.value);
     },
     profile: (state) => {
       state.value = "profile";
-      console.log(state.value);
+      // console.log(state.value);
     },
     test: (state) => {
       state.value = "test";      
