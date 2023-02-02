@@ -62,6 +62,7 @@ pipeline {
 										excludes: '', 
 										execCommand: '''cd springapp
 sudo docker-compose pull
+sudo rm -rf ~/mariadb
 sudo docker-compose up --force-recreate --build -d''', 
 										execTimeout: 120000, 
 										flatten: false, 
