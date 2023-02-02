@@ -12,6 +12,7 @@ import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -96,6 +97,16 @@ public class JwtTokenProvider {
     public void abandonTokens(LogoutDTO logoutDTO) {
         redisRepository.setValue("black:" + logoutDTO.getAtk(), "true", Duration.ofMillis(atkExpire));
         redisRepository.deleteValue("rtk:" + logoutDTO.getEmail());
+    }
+
+    public ResponseCookie getRtkCookie(String rtk) {
+        return ResponseCookie.from("rtk", "Bearer+" + rtk)
+                .maxAge(rtkExpire)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
     }
 
 }

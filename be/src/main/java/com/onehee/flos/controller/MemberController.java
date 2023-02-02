@@ -29,9 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 @Log4j2
 public class MemberController {
 
-    @Value("${spring.jwt.expire.rtk}")
-    private Long rtkExpire;
-
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
 
@@ -41,13 +38,7 @@ public class MemberController {
     public ResponseEntity<?> reissue(@AuthenticationPrincipal MemberDetails memberDetails, HttpServletResponse response) throws JsonProcessingException {
         TokenResponse tokenResponse = jwtTokenProvider.generateTokenByMember(memberDetails.getMember());
         response.setContentType("application/json;charset=UTF-8");
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenResponse.getRtk())
-                .maxAge(rtkExpire)
-                .path("/")
-                .secure(true)
-                .sameSite("None")
-                .httpOnly(true)
-                .build();
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
         response.setHeader("Set-Cookie", cookie.toString());
         tokenResponse.setRtk(null);
         return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
@@ -64,8 +55,12 @@ public class MemberController {
     @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.")
     @PostMapping("/login")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletResponse response) throws JsonProcessingException {
         TokenResponse tokenResponse = memberService.login(loginRequestDTO);
+        response.setContentType("application/json;charset=UTF-8");
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
+        response.setHeader("Set-Cookie", cookie.toString());
+        tokenResponse.setRtk(null);
         return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
     }
 
