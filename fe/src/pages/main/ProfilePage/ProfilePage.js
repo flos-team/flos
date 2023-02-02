@@ -8,28 +8,29 @@ import userImg from "../../../assets/GlobalAsset/user-img.png";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
 import UserStatisticsPage from "./UserStatisticsPage/UserStatisticsPage";
-import WriteFormCompoent from "../../../components/WriteFormCompoent/WriteFormCompoent";
+import WriteFormComponent from "../../../components/WriteFormComponent/WriteFormComponent";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
-  const holderStlye1 = {
+  const holderStyle1 = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     width: "100vw",
     height: "80vh",
-    transition: ".3s",
+    transition: ".5s",
   };
 
-  const holderStlye2 = {
+  const holderStyle2 = {
     display: "flex",
     // alignItems: "center",
+    marginTop: "8px",
     justifyContent: "center",
     width: "100vw",
     height: "80vh",
-    transition: ".3s",
+    transition: ".5s",
   };
 
   const userName = "wonny";
@@ -89,6 +90,9 @@ const ProfilePage = () => {
           </ul>
         </div>
         <div className="feed-container">{postList}</div>
+  </div> */}
+      <div className="holder" style={touchIdx ? holderStyle1 : holderStyle2}>
+        <WriteFormComponent holderFunc={setTouchIdx}></WriteFormComponent>
       </div>
     </>
   );
