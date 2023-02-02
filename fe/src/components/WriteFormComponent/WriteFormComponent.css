@@ -17,6 +17,7 @@
 }
 
 .post-write-form {
+  z-index: 999;
   /* Auto layout */
   display: flex;
   flex-direction: column;
@@ -52,7 +53,8 @@
   width: 18.625rem;
   height: 3.125rem;
 }
-.post-write-form .post-write-input-div input:active, .post-write-form .post-write-input-div input:focus {
+.post-write-form .post-write-input-div input:active,
+.post-write-form .post-write-input-div input:focus {
   border: none;
   outline: none;
 }
@@ -102,4 +104,4 @@
   height: 1.25rem;
 }
 
-/*# sourceMappingURL=WriteFormCompoent.css.map */
+/*# sourceMappingURL=WriteFormComponent.css.map */
