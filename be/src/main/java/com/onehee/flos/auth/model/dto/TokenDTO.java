@@ -1,6 +1,6 @@
 package com.onehee.flos.auth.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @ToString
@@ -8,11 +8,11 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class TokenResponse {
+public class TokenDTO {
 
     private String atk;
 
+    @JsonIgnore
     private String rtk;
 
 }

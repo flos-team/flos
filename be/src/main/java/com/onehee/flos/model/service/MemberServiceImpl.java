@@ -1,7 +1,7 @@
 package com.onehee.flos.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -61,7 +62,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public TokenResponse login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
+    public TokenDTO login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         Member member = memberRepository.findByEmailAndProviderType(loginRequestDTO.getEmail(), ProviderType.LOCAL)
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다."));
         if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {

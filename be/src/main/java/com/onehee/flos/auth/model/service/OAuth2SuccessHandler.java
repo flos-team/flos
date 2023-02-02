@@ -3,7 +3,7 @@ package com.onehee.flos.auth.model.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.OAuth2UserDTO;
-import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.repository.MemberRepository;
@@ -63,19 +63,19 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Member loginMember = memberRepository.findByEmailAndProviderType(oAuth2UserDTO.getEmail(), oAuth2UserDTO.getProviderType())
                 .orElseThrow(() -> new RuntimeException("소셜 회원 등록과정중에 에러가 발생했습니다."));
 
-        TokenResponse tokenResponse = jwtTokenProvider.generateTokenByMember(loginMember);
-        log.info("{}", tokenResponse);
+        TokenDTO tokenDTO = jwtTokenProvider.generateTokenByMember(loginMember);
+        log.info("{}", tokenDTO);
 
-        writeTokenResponse(response, tokenResponse);
+        writeTokenResponse(response, tokenDTO);
     }
 
-    private void writeTokenResponse(HttpServletResponse response, TokenResponse tokenResponse) throws IOException {
+    private void writeTokenResponse(HttpServletResponse response, TokenDTO tokenDTO) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
-        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenDTO.getRtk());
         response.setHeader("Set-Cookie", cookie.toString());
         PrintWriter writer = response.getWriter();
         Map<String, String> atk = new HashMap<>();
-        atk.put("atk", tokenResponse.getAtk());
+        atk.put("atk", tokenDTO.getAtk());
         writer.println(objectMapper.writeValueAsString(atk));
         writer.flush();
     }

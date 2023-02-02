@@ -2,24 +2,25 @@ package com.onehee.flos.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.MemberDetails;
-import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
+import com.onehee.flos.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Tag(name = "멤버API", description = "멤버, 토큰 관련 처리를 담당합니다.")
@@ -31,18 +32,6 @@ public class MemberController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
-
-    @Tag(name = "멤버API")
-    @Operation(summary = "토큰 재발행 메서드", description = "엑세스 토큰과 리프레시 토큰을 재발행 합니다.")
-    @GetMapping("/reissue")
-    public ResponseEntity<?> reissue(@AuthenticationPrincipal MemberDetails memberDetails, HttpServletResponse response) throws JsonProcessingException {
-        TokenResponse tokenResponse = jwtTokenProvider.generateTokenByMember(memberDetails.getMember());
-        response.setContentType("application/json;charset=UTF-8");
-        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
-        response.setHeader("Set-Cookie", cookie.toString());
-        tokenResponse.setRtk(null);
-        return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
-    }
 
     @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.")
     @PostMapping("/sign-up")
@@ -56,19 +45,21 @@ public class MemberController {
     @PostMapping("/login")
     @Tag(name = "멤버API")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletResponse response) throws JsonProcessingException {
-        TokenResponse tokenResponse = memberService.login(loginRequestDTO);
-        response.setContentType("application/json;charset=UTF-8");
-        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
+        TokenDTO tokenDTO = memberService.login(loginRequestDTO);
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenDTO.getRtk());
+        response.setHeader("Authorization", "Bearer " + tokenDTO.getAtk());
         response.setHeader("Set-Cookie", cookie.toString());
-        tokenResponse.setRtk(null);
-        return new ResponseEntity<TokenResponse>(tokenResponse, HttpStatus.OK);
+        return new ResponseEntity<TokenDTO>(tokenDTO, HttpStatus.OK);
     }
 
     @Operation(summary = "로그아웃 메서드", description = "요청사용자의 리프레시토큰을 만료시키고 사용된 엑세스 토큰을 사용할 수 없게 만듭니다.")
     @GetMapping("/logout")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> logout(@AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization") String atk) {
+    public ResponseEntity<?> logout(@AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization") String atk, HttpServletRequest request, HttpServletResponse response) {
         memberService.logout(LogoutDTO.builder().atk(atk.substring("Bearer ".length())).email(memberDetails.getMember().getEmail()).build());
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(CookieUtil.getRtk(request), 0);
+        response.setHeader("Set-Cookie", cookie.toString());
+        response.setHeader("Authorization", null);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 

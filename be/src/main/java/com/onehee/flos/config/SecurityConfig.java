@@ -1,6 +1,7 @@
 package com.onehee.flos.config;
 
 import com.onehee.flos.auth.model.service.*;
+import com.onehee.flos.model.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,7 +55,7 @@ public class SecurityConfig {
                 .and()
                 .permitAll()
                 .and()
-                .addFilterAfter(new JwtAuthenticationFilter(jwtTokenProvider, memberDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, memberDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
