@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 // import { ReactComponent as Eye1 } from "../../assets/HomeAsset/flower/eye1.svg";
 import { ReactComponent as Head1 } from "../../../assets/HomeAsset/flower/head1.svg";
-// import { ReactComponent as Leaf1 } from "../../assets/HomeAsset/flower/leaf1.svg";
+import { ReactComponent as Leaf1 } from "../../../assets/HomeAsset/flower/leaf1.svg";
 // import { ReactComponent as Mouth1 } from "../../assets/HomeAsset/flower/mouth1.svg";
 
 import { ReactComponent as Eyes1 } from "../../../assets/HomeAsset/flower/eye1.svg";
@@ -99,7 +99,7 @@ const Head = styled.div`
     bottom: 60px;
   
     path {
-      stroke: ${(p) => COLORS[p.colorType].color};
+      fill: ${(p) => COLORS[p.colorType].color};
     }
   `;
 
@@ -137,56 +137,30 @@ path {
 }
 `;
 
+const Leaf = styled.div`
+width: 100%;
+height: 50px;
+display: flex;
+justify-content: center;
+border-radius: 100%;
+top: 110px;
+position: relative;
+svg {
+  fill: ${(p) => COLORS[p.colorType].color};
+}
+`;
+
 
 const Flower = () => {
-    // const [LeafElement, setLeafElement] = useState(null);
-    // const [HeadElement, setHeadElement] = useState(null);
-    // const [EyesElement, setEyesElement] = useState(null);
-    // const [MouthElement, setMouthElement] = useState(null);
-    // const Leafs = [Leaf1];
-    // const Heads = [Head1];
-    // const Eyes = [Eye1];
-    // const Mouths = [Mouth1];
-
-    // setLeafElement(Leafs[0]);
-    // setHeadElement(Heads[0]);
-    // setEyesElement(Eyes[0]);
-    // setMouthElement(Mouths[0]);
-    // console.dir(Leaf1);
-
-    // return (
-    //     <Face colorType="green">
-    //         {LeafElement && (
-    //             <Leafs colorType={"green"}>
-    //                 <LeafElement />
-    //             </Leafs>
-    //         )}
-    //         {HeadElement && (
-    //             <Heads colorType={"green"}>
-    //                 <HeadElement />
-    //             </Heads>
-    //         )}
-    //         {EyesElement && (
-    //             <Eyes colorType={"green"}>
-    //                 <EyesElement />
-    //             </Eyes>
-    //         )}
-    //         {MouthElement && (
-    //             <Mouth colorType={"green"}>
-    //                 <MouthElement />
-    //             </Mouth>
-    //         )}
-    //     </Face>
-    // );
-
     const colorPickers = ["green", "yellow", "blue", "black"];
 
+    const leafs = [Leaf1]
     const eyes = [Eyes1, Eyes2];
     const mouths = [Mouth1, Mouth2, Mouth3];
     const heads = [Head1];
     const pots = [Pot1];
 
-
+    const [LeafElement, setLeafElement] = useState(leafs[0]);
     const [EyesElement, setEyesElement] = useState(eyes[0]);
     const [MouthElement, setMouthElement] = useState(mouths[0]);
     const [HeadElement, setHeadElement] = useState(heads[0]);
@@ -196,6 +170,9 @@ const Flower = () => {
 
     return (
         <>
+            <Leaf colorType="blue">
+              <LeafElement />
+            </Leaf>
             <Face colorType={color}>
                 {EyesElement && (
                     <Eyes colorType={color}>
@@ -208,7 +185,7 @@ const Flower = () => {
                     </Mouth>
                 )}
                 {HeadElement && (
-                    <Head colorType={color}>
+                    <Head colorType={"green"}>
                         <HeadElement />
                     </Head>
                 )

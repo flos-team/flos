@@ -1,0 +1,176 @@
+@import "../../styles/commons.scss";
+
+$rrpx: 0.8 * $rpx1;
+
+.post-item {
+  width: 340 * $rrpx;
+  height: 440 * $rrpx;
+  margin-bottom: 10px;
+  border: 1px solid $mono100;
+
+  /* mono50 */
+  background: #fbfbfb;
+  border-radius: 12 * $rpx1;
+  .img-container {
+    width: 340 * $rrpx;
+    height: 280 * $rrpx;
+    position: relative;
+    display: flex;
+    .img-filter {
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      flex-grow: 1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      .filter {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: $mono300, $alpha: 0.8);
+        border-top-left-radius: 12 * $rpx1;
+        border-top-right-radius: 12 * $rpx1;
+
+        .arrow-left {
+          // bottom: 0;
+          top: 0;
+          left: 10px;
+          position: absolute;
+          width: 30px;
+          height: 60px;
+          background-color: $yellow-p;
+        }
+      }
+      textarea {
+        margin: 0 auto;
+        width: 80%;
+        height: 50%;
+        text-align: center;
+        border: none;
+        resize: none;
+        z-index: 30;
+        background: none;
+      }
+    }
+    .img-filter:hover {
+      display: none;
+    }
+    img {
+      position: absolute;
+      border-top-left-radius: 12 * $rpx1;
+      border-top-right-radius: 12 * $rpx1;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .bottom-text-container {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px 24 * $rpx1;
+    gap: 8 * $rpx1;
+    width: 340 * $rrpx;
+    height: 140 * $rrpx;
+    /* mono50 */
+    border-radius: 0px 0px 12 * $rpx1 12 * $rpx1;
+    background-color: $white;
+    .user-info-container {
+      /* Auto layout */
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0px;
+      width: max-content;
+      height: 64 * $rrpx;
+
+      .user-info-div {
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px;
+        gap: 8px;
+        width: 190 * $rrpx;
+        height: 64 * $rrpx;
+        img {
+          box-sizing: border-box;
+          width: 48 * $rrpx;
+          height: 48 * $rrpx;
+          border-radius: 24px;
+        }
+        .text-div {
+          /* Auto layout */
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 8 * $rpx1 0;
+          width: 135 * $rrpx;
+          height: 64 * $rrpx;
+          order: 1;
+        }
+      }
+      .more-btn {
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0 10 * $rpx1;
+        gap: 5 * $rpx1;
+        width: 70 * $rpx1;
+        height: 24 * $rpx1;
+        /* mono100 */
+        background: $mono100;
+        border-radius: 12 * $rpx1;
+        /* Inside auto layout */
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+        .text-div {
+          width: max-content;
+          height: max-content;
+          p {
+            font-size: 12 * $rpx1;
+          }
+        }
+        .arrow-div {
+          flex: none;
+          order: 1;
+          flex-grow: 0;
+          width: max-content;
+          height: max-content;
+          img {
+            width: 8 * $rpx1;
+          }
+        }
+      }
+    }
+    .tag-container {
+      /* tag-container */
+      width: 280 * $rrpx;
+      height: 60 * $rrpx;
+      order: 1;
+      display: flex;
+      flex-flow: row wrap;
+      gap: 8 * $rpx1;
+      .tag {
+        flex-shrink: 0;
+        /* Auto layout */
+        padding: 5 * $rpx1;
+        width: max-content;
+        height: 28 * $rrpx;
+        /* mono100 */
+        background: $mono100;
+        border-radius: 12px;
+        font-size: 10 * $rpx1;
+        text-align: center;
+      }
+    }
+  }
+}
