@@ -64,7 +64,7 @@ pipeline {
 sudo docker-compose pull
 sudo rm -rf /mariadb
 sudo rm -rf ~/mariadb
-sudo docker-compose up --force-recreate --build -d''', 
+sudo docker-compose up --force-recreate -d''', 
 										execTimeout: 120000, 
 										flatten: false, 
 										makeEmptyDirs: false, 
