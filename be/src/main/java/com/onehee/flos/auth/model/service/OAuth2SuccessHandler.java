@@ -71,13 +71,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private void writeTokenResponse(HttpServletResponse response, TokenResponse tokenResponse) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenResponse.getRtk())
-                .maxAge(rtkExpire)
-                .path("/")
-                .secure(true)
-                .sameSite("None")
-                .httpOnly(true)
-                .build();
+        ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenResponse.getRtk());
         response.setHeader("Set-Cookie", cookie.toString());
         PrintWriter writer = response.getWriter();
         Map<String, String> atk = new HashMap<>();

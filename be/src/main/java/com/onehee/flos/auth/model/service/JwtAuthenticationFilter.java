@@ -45,7 +45,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (!request.getRequestURI().equals("/member/reissue")) {
                         throw new JwtException("리프레시 토큰은 재발행만 수행 할 수 있습니다.");
                     }
-                    if (jwtTokenProvider.isValidatedRTK(token, subject)) {
+                    if (!jwtTokenProvider.isValidatedRTK(token, subject)) {
+                        log.info("{}", token);
                         throw new JarException("만료된 리프레시 토큰입니다. 재로그인이 필요합니다.");
                     }
                 }
