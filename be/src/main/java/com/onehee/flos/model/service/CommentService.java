@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public interface CommentService {
     // 게시글의 댓글 리스트
-    Slice<CommentResponseDTO> getCommentListByPost(Post post, Pageable pageable);
+    Slice<CommentResponseDTO> getCommentListByPost(Long postId, Pageable pageable);
 
     // 회원의 댓글 리스트
     Slice<CommentResponseDTO> getCommentListByMember(Pageable pageable);

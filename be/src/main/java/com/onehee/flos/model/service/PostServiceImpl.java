@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
+    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
     private final FilesHandler filesHandler;
@@ -34,7 +35,8 @@ public class PostServiceImpl implements PostService {
     private final BookmarkRepository bookmarkRepository;
 
     @Override
-    public Slice<PostResponseDTO> getPostListByWriter(Member writer, Pageable pageable) {
+    public Slice<PostResponseDTO> getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
+        Member writer = memberRepository.findById(memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
         return postRepository.findSliceByWriter(writer, pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
     }
@@ -67,6 +69,8 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
 
+        // weatherType 확인해서 객체 추가 기능 넣어야함
+        
         Post tempPost = postRepository.save(postCreateRequestDTO.toEntity());
 
         for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
