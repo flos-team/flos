@@ -9,7 +9,7 @@ spring:
     password: test1234
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   security:
     oauth2:
       client:
@@ -19,4 +19,4 @@ spring:
           kakao:
             redirectUri: "http://localhost:8080/login/oauth2/code/kakao"
 file:
-  dir: C:/flos/
+  dir: C:\flos\

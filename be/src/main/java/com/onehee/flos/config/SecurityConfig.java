@@ -30,7 +30,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.cors().and().csrf().disable()
+        return http.httpBasic().disable()
+                .cors()
+                .and()
+                .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
@@ -38,7 +41,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/member/sign-up", "/member/login", "/email", "/v3/api-docs/**",
+                .antMatchers("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
                         "/swagger-ui/**", "/swagger-resources/**")
                 .permitAll()
                 .anyRequest()

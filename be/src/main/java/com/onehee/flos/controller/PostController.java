@@ -1,5 +1,6 @@
 package com.onehee.flos.controller;
 
+import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
@@ -10,8 +11,11 @@ import com.onehee.flos.model.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -25,38 +29,50 @@ public class PostController {
 
     private final PostService postService;
 
+    @GetMapping("/list/test")
+    public ResponseEntity<?> getTest() {
+        return new ResponseEntity<String>("hello", HttpStatus.OK);
+    }
+
     @Tag(name = "게시글API")
     @Operation(summary = "날씨별 게시글 리스트", description = "날씨에 해당하는 게시글을 시간순으로 나타냅니다.")
     @GetMapping("/list/weather")
-    public ResponseEntity<?> getListByWeather(@RequestBody WeatherType weather){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getPostListByWeather(weather), HttpStatus.OK);
+    public ResponseEntity<?> getListByWeather(@RequestParam WeatherType weather, Pageable pageable){
+        return new ResponseEntity<List<PostResponseDTO>>(postService.getPostListByWeather(weather, pageable).getContent(), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "최신순 게시글 리스트", description = "게시글을 시간순으로 나타냅니다.")
     @GetMapping("/list")
-    public ResponseEntity<?> getList(){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getLatestPostList(), HttpStatus.OK);
+    public ResponseEntity<?> getList(Pageable pageable){
+        return new ResponseEntity<List<PostResponseDTO>>(postService.getLatestPostList(pageable).getContent(), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "사람별 게시글 리스트", description = "특정 회원의 게시글 리스트를 나타냅니다.")
     @GetMapping("/list/writer")
-    public ResponseEntity<?> getListByWriter(@RequestBody Member writer){
-        return new ResponseEntity<List<PostResponseDTO>>(postService.getPostListByWriter(writer), HttpStatus.OK);
+    public ResponseEntity<?> getListByWriter(@RequestParam Member writer, Pageable pageable){
+        return new ResponseEntity<List<PostResponseDTO>>(postService.getPostListByWriter(writer, pageable).getContent(), HttpStatus.OK);
+    }
+
+    @Tag(name = "게시글API")
+    @Operation(summary = "사람별 게시글 리스트", description = "회원의 북마크한 게시글 리스트를 나타냅니다.")
+    @GetMapping("/list/bookmark")
+    public ResponseEntity<?> getListByBookmark(Pageable pageable){
+        return new ResponseEntity<List<PostResponseDTO>>(postService.getBookmarkedListByMember(pageable).getContent(), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
-    @PostMapping("/list/create")
-    public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws IOException {
+    @PostMapping("/create")
+    public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
         postService.createPost(postCreateRequestDTO);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 수정", description = "게시글 내용을 수정합니다.")
-    @PostMapping("/list/modify")
+    @PostMapping("/modify")
     public ResponseEntity<?> modifyPost(@RequestBody PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
         postService.modifyPost(postModifyRequestDTO);
         return new ResponseEntity<Void>(HttpStatus.OK);

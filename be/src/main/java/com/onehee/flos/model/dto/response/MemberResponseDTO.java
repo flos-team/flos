@@ -14,7 +14,7 @@ public class MemberResponseDTO {
     private Long id;
     private String email;
     private String nickname;
-    private String picture;
+    private FileResponseDTO picture;
     private int water;
     private int light;
 
@@ -23,7 +23,7 @@ public class MemberResponseDTO {
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .picture(member.getPicture())
+                .picture(FileResponseDTO.toDTO(member.getProfileImage()))
                 .build();
     }
 

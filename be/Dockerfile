@@ -1,11 +1,10 @@
 FROM gradle:7.4-jdk17-alpine as build
-RUN mkdir -p /be
-WORKDIR /be
+WORKDIR /
 COPY . .
-RUN gradle build --no-daemon
+RUN gradle clean build --no-daemon
+RUN ls -l build/libs
 
 FROM openjdk:17-alpine
-RUN mkdir -p /home/be
-WORKDIR /home/be
-COPY --from=build /be/build/libs/*.jar /home/be/app.jar 
-CMD ["java", "-jar", "app.jar"]
+WORKDIR /
+COPY --from=build /build/libs /
+CMD ["java", "-jar", "flos-0.0.1-SNAPSHOT.jar"]
