@@ -9,7 +9,6 @@ import naverlogo from "../assets/LoginAsset/naver-logo.png";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-// axios.defaults.baseURL = "http://localhost:3000"
 axios.defaults.withCredentials = true;
 
 function Login() {
@@ -33,7 +32,7 @@ function Login() {
     axios
       .post("/member/login", loginInfo)
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         const accessToken = response.data.atk;
         // console.log(accessToken)
         // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
