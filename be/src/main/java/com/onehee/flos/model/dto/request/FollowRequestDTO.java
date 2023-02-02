@@ -1,10 +1,9 @@
 package com.onehee.flos.model.dto.request;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Getter
 @RequiredArgsConstructor
 public class FollowRequestDTO {
-    private final String id;
+    private Long id;
 }
