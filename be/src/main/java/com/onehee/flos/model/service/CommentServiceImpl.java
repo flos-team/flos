@@ -5,10 +5,9 @@ import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
 import com.onehee.flos.model.entity.Comment;
-import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
-import com.onehee.flos.model.repository.CommentMemberRepository;
 import com.onehee.flos.model.repository.CommentRepository;
+import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +19,11 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-    private final CommentMemberRepository commentMemberRepository;
+    private final PostRepository postRepository;
 
     @Override
-    public Slice<CommentResponseDTO> getCommentListByPost(Post post, Pageable pageable) {
+    public Slice<CommentResponseDTO> getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         return commentRepository.findAllByPost(post, pageable)
                 .map(CommentResponseDTO::toDto);
     }
@@ -50,20 +50,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long id) throws BadRequestException {
         Comment tempComment = commentRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
-        commentMemberRepository.deleteAll(
-                commentMemberRepository.findAllByComment(
-                        tempComment
-                )
-        );
+        commentRepository.delete(tempComment);
     }
 
     @Override
     public void approveComment(Long id) throws BadRequestException {
-
+        // 빛, 물 구현 완료 후 제작
     }
 
     @Override
     public void cancelComment(Long id) throws BadRequestException {
-
+        // 빛, 물 구현 완료 후 제작
     }
 }

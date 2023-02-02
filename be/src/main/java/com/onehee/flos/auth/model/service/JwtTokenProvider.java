@@ -3,7 +3,7 @@ package com.onehee.flos.auth.model.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.Subject;
-import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.entity.Member;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -37,21 +36,20 @@ public class JwtTokenProvider {
 
     private final RedisRepository redisRepository;
     private final ObjectMapper objectMapper;
-    private final MemberRepository memberRepository;
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public TokenResponse generateTokenByMember(Member member) throws JsonProcessingException {
+    public TokenDTO generateTokenByMember(Member member) throws JsonProcessingException {
         Subject atkSubject = Subject.atk(member);
         Subject rtkSubject = Subject.rtk(member);
         String atk = generateToken(atkSubject, atkExpire);
         String rtk = generateToken(rtkSubject, rtkExpire);
         redisRepository.deleteValue("rtk:" + member.getId());
         redisRepository.setValue("rtk:" + member.getId(), rtk, Duration.ofMillis(rtkExpire));
-        return new TokenResponse(atk, rtk);
+        return new TokenDTO(atk, rtk);
     }
 
     public String generateToken(Subject subject, Long expire) throws JsonProcessingException {
@@ -102,6 +100,16 @@ public class JwtTokenProvider {
     public ResponseCookie getRtkCookie(String rtk) {
         return ResponseCookie.from("rtk", "Bearer+" + rtk)
                 .maxAge(rtkExpire)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
+    }
+
+    public ResponseCookie getRtkCookie(String rtk, long time) {
+        return ResponseCookie.from("rtk", "Bearer+" + rtk)
+                .maxAge(time)
                 .path("/")
                 .secure(true)
                 .sameSite("None")

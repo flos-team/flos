@@ -4,24 +4,27 @@ import com.onehee.flos.model.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberResponseDTO {
+public class MemberInfoResponseDTO {
     private Long id;
     private String email;
     private String nickname;
     private FileResponseDTO picture;
+    private int water;
+    private int light;
 
-    public static MemberResponseDTO toDto(Member member) {
-        return MemberResponseDTO.builder()
+    public static MemberInfoResponseDTO toDto(Member member) {
+        return MemberInfoResponseDTO.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .picture(FileResponseDTO.toDTO(member.getProfileImage()))
                 .build();
     }
+
 }

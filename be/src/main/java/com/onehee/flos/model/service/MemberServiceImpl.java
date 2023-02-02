@@ -1,14 +1,14 @@
 package com.onehee.flos.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.onehee.flos.auth.model.dto.TokenResponse;
+import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
-import com.onehee.flos.model.dto.response.MemberResponseDTO;
+import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.MemberStatus;
@@ -61,7 +61,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public TokenResponse login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
+    public TokenDTO login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         Member member = memberRepository.findByEmailAndProviderType(loginRequestDTO.getEmail(), ProviderType.LOCAL)
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다."));
         if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
@@ -72,7 +72,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberResponseDTO updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
+    public MemberInfoResponseDTO updateMember(MemberUpdateRequestDTO memberUpdateRequestDTO) {
         Member member = memberRepository.findById(SecurityManager.getCurrentMember().getId())
                 .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
         if (memberUpdateRequestDTO.getNickname() != null) {
@@ -91,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
             }
         }
         member = memberRepository.saveAndFlush(member);
-        return MemberResponseDTO.toDto(member);
+        return MemberInfoResponseDTO.toDto(member);
     }
 
     @Override
