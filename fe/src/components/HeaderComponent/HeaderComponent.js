@@ -5,15 +5,18 @@ import arrowLeft from "../../assets/GlobalAsset/arrow-left.png";
 import notifyIcon from "../../assets/GlobalAsset/notification.png";
 import settingIcon from "../../assets/GlobalAsset/setting-btn.png";
 import checkIcon from "../../assets/GlobalAsset/check-icon.png";
+import cameraBtn from "../../assets/GlobalAsset/camera-btn.png";
+import statisticsBtn from "../../assets/GlobalAsset/statistics-btn.png";
+
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 /* import css */
 import "./HeaderComponent.css";
 /** 
- * backVisible:Boolean/뒤로 가기 표시, pageName:String/현재 페이지 이름, optType:Integer/{0:알림, 1:세팅, 2:체크}
+ * backVisible:Boolean/뒤로 가기 표시, pageName:String/현재 페이지 이름, menuOpt1={CAMERA(카메라), STASTICS(통계)}, menuOpt2={ALERT(알림), SETTING(세팅), CHECK(체크)}
  */
-const HeaderComponent = ({ backVisible, pageName, optType }) => {
+const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2 }) => {
   // const navigate = useNavigate();
 
   // /* 뒤로갈 페이지가 있을 경우 arrow 표시 */
@@ -29,26 +32,36 @@ const HeaderComponent = ({ backVisible, pageName, optType }) => {
   //     </div>
   //   </Link>
   // );
-
-  let optBTn = null;
-  switch (optType) {
-    case 0: // 알림
-      optBTn = <img className="opt-icon" src={notifyIcon}></img>;
+  let optBtn1 = null;
+  switch (menuOpt1) {
+    case "CAMERA": // 알림
+      optBtn1 = <img className="opt-icon" src={cameraBtn}></img>;
       break;
-    case 1: // 세팅
-      optBTn = <img className="opt-icon" src={settingIcon}></img>;      
-      break;
-    case 2: // 체크
-      optBTn = <img className="opt-icon" src={checkIcon}></img>;      
+    case "STATISTICS": // 세팅
+      optBtn1 = <img className="opt-icon" src={statisticsBtn}></img>;      
       break;
     default:
-      optBTn = <></>
+      optBtn1 = <></>
       break;
   }
 
+  let optBtn2 = null;
+  switch (menuOpt2) {
+    case "ALERT": // 알림
+      optBtn2 = <img className="opt-icon" src={notifyIcon}></img>;
+      break;
+    case "SETTING": // 세팅
+      optBtn2 = <img className="opt-icon" src={settingIcon}></img>;      
+      break;
+    case "CHECK": // 체크
+      optBtn2 = <img className="opt-icon" src={checkIcon}></img>;      
+      break;
+    default:
+      optBtn2 = <></>
+      break;
+  }
+  // 글 작성할때 체크랑 사진
   let arrowBtn = backVisible?<div className="back-btn"><img className="back-icon" src={arrowLeft} /></div>:<></>
-
-
   // const settingCase = (
   //   <Link to="/settings">
   //     <div className="btn-div">
@@ -56,8 +69,6 @@ const HeaderComponent = ({ backVisible, pageName, optType }) => {
   //     </div>
   //   </Link>
   // );
-
-  
   return (
     <>
       <div className="top-bar">
@@ -66,11 +77,18 @@ const HeaderComponent = ({ backVisible, pageName, optType }) => {
           <p className="title-name">{pageName}</p>
         </div>
         <div className="opt-btn">
-          {optBTn}
+          {optBtn1}
+        </div>
+        <div className="opt-btn">
+          {optBtn2}
         </div>
       </div>
     </>
   );
+};
+
+HeaderComponent.defaultProps = {
+  optType: "DEFAULT VALUE",
 };
 
 export default HeaderComponent;

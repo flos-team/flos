@@ -1,5 +1,23 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .bottom-nav-bar {
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   /* Auto layout */
@@ -12,7 +30,8 @@
   position: relative;
   width: 100vw;
   height: 80px;
-  background: #FFFFFF;
+  z-index: 10;
+  background: #f9f9f9;
 }
 .bottom-nav-bar .bottom-nav-item {
   width: 48px;
