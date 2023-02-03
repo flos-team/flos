@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import PostItem from "../../components/PostItem/PostItem";
 import styles from "./GlobalPage.module.css";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
@@ -8,6 +7,7 @@ import FilterIcon from '../../assets/GlobalAsset/Filter.png'
 import SunnyIcon from '../../assets/GlobalAsset/sunny.png'
 import CloudyIcon from '../../assets/GlobalAsset/cloudy.png'
 import RainyIcon from '../../assets/GlobalAsset/rainy.png'
+import MoveToTopToggle from '../../components/MoveToTop/MoveToTopToggle.js'
 
 function Feed() {
   const [userInfos, setUserInfos] = useState([
@@ -17,11 +17,14 @@ function Feed() {
     { userInfoId: 4, userInfo: 999 },
     { userInfoId: 5, userInfo: 999 },
   ]);
-  const postList = userInfos.map(({ userInfoId, userInfo }) => (
+  
+  const postItems = userInfos.map(({ userInfoId, userInfo }) => (
     <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
   ));
+  
 
-  const [filtering, setFiltering] = useState(false)
+  const [filtering, setFiltering] = useState(false) // 필터링 아이콘 누른 상태 확인
+  const [filterStandard, setFilterStandard] = useState(1) // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
   
   const clickFilterIcon = () => {
     if (filtering===false) {
@@ -30,6 +33,7 @@ function Feed() {
       setFiltering(false)
     }
   }
+
 
   return (
     <div className={styles.feedRoot}>
@@ -44,20 +48,21 @@ function Feed() {
         {filtering ?
         (<div className={styles.filterselectbox}>
           <div className={styles.filtertextdiv}>
-            <span className={styles.filtertext}>최신순</span>
-            <span className={styles.filtertext}>댓글 많은 순</span>
+            <span className={filterStandard === 1 ? styles.filtertextstandard : styles.filtertext} onClick={() => setFilterStandard(1)}>최신순</span>
+            <span className={filterStandard === 2 ? styles.filtertextstandard : styles.filtertext} onClick={() => setFilterStandard(2)}>댓글 많은 순</span>
           </div>
           <div className={styles.filtertextdiv}>
-            <img src={SunnyIcon} alt='' className={styles.nonselecticon}></img>
-            <img src={CloudyIcon} alt='' className={styles.nonselecticon}></img>
-            <img src={RainyIcon} alt='' className={styles.nonselecticon}></img>
+            <img src={SunnyIcon} alt='' className={filterStandard === 3 ? styles.filterweatherstandard : styles.filterweathericon} onClick={() => setFilterStandard(3)}></img>
+            <img src={CloudyIcon} alt='' className={filterStandard === 4 ? styles.filterweatherstandard : styles.filterweathericon} onClick={() => setFilterStandard(4)}></img>
+            <img src={RainyIcon} alt='' className={filterStandard === 5 ? styles.filterweatherstandard : styles.filterweathericon} onClick={() => setFilterStandard(5)}></img>
           </div>
         </div>) : null}
+        <div className={styles.main}>
+          {postItems}
+        </div>
       </div>
-      <div className={styles.main}>
-        {/** 친구들의 포스트를 나열한다.  */}
-        {postList}
-      </div>
+      
+      <MoveToTopToggle></MoveToTopToggle>
     </div>
   );
 }
