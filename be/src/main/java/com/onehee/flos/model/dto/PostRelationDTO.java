@@ -16,15 +16,17 @@ import java.util.List;
 public class PostRelationDTO {
     private List<Tag> tagList; // List<Tag> 게시글 태그
     private List<FileResponseDTO> attachFiles; // List<File> 게시글 첨부파일
-    // Follow 게시글 팔로우 여부
-    private Boolean isBookmarked; // Bookmark 게시글 북마크 여부
-    // Integer 게시글 댓글 수
+    private boolean isFollowed;
+    private boolean isBookmarked; // Bookmark 게시글 북마크 여부
+    private Long countComment;
 
-    public static PostRelationDTO toDto(List<Tag> tagList, List<FileResponseDTO> attachFiles, Boolean isBookmarked) {
+    public static PostRelationDTO toDto(List<Tag> tagList, List<FileResponseDTO> attachFiles, boolean isFollowed, boolean isBookmarked, Long countComment) {
         return PostRelationDTO.builder()
                 .tagList(tagList)
                 .attachFiles(attachFiles)
+                .isFollowed(isFollowed)
                 .isBookmarked(isBookmarked)
+                .countComment(countComment)
                 .build();
     }
 }
