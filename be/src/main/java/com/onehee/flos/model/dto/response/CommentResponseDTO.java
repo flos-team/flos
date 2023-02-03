@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponseDTO {
     private Long id;
-    private Post post;
-    private Comment parent;
-    private Comment primitive;
-    private Member writer;
+    private Long postId;
+    private Long parentId;
+    private Long primitiveId;
+    private MemberResponseDTO writer;
     private String content;
     private LocalDateTime createdAt;
     //    private LocalDateTime modifiedAt;
@@ -28,10 +28,10 @@ public class CommentResponseDTO {
     public static CommentResponseDTO toDto(Comment comment) {
         return CommentResponseDTO.builder()
                 .id(comment.getId())
-                .post(comment.getPost())
-                .parent(comment.getParent())
-                .primitive(comment.getPrimitive())
-                .writer(comment.getWriter())
+                .postId(comment.getPost().getId())
+                .parentId(comment.getParent().getId())
+                .primitiveId(comment.getPrimitive().getId())
+                .writer(MemberResponseDTO.toDto(comment.getWriter()))
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
 //                .modifyAt(comment.getModifiedAt())
