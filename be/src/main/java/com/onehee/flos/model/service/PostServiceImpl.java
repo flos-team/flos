@@ -4,6 +4,7 @@ import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
+import com.onehee.flos.model.dto.request.TagRequestDTO;
 import com.onehee.flos.model.dto.response.FileResponseDTO;
 import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
@@ -87,11 +88,11 @@ public class PostServiceImpl implements PostService {
             );
         }
 
-        for (Tag e : postCreateRequestDTO.getTagList()) {
+        for (TagRequestDTO e : postCreateRequestDTO.getTagList()) {
             postTagRepository.saveAndFlush(
                     PostTag.builder()
                             .post(tempPost)
-                            .tag(tagRepository.saveAndFlush(e))
+                            .tag(tagRepository.saveAndFlush(e.toEntity()))
                             .build()
             );
         }
@@ -126,11 +127,11 @@ public class PostServiceImpl implements PostService {
             );
         }
 
-        for (Tag e : postModifyRequestDTO.getTagList()) {
+        for (TagRequestDTO e : postModifyRequestDTO.getTagList()) {
             postTagRepository.save(
                     PostTag.builder()
                             .post(tempPost)
-                            .tag(tagRepository.saveAndFlush(e))
+                            .tag(tagRepository.saveAndFlush(e.toEntity()))
                             .build()
             );
         }
