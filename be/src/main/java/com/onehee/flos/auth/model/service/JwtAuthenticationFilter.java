@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -74,6 +75,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         return Stream.of("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
-                "/swagger-ui/**", "/swagger-resources/**").anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
+                "/swagger-ui/**", "/swagger-resources/**").anyMatch(exclude -> new AntPathMatcher().match(exclude, request.getServletPath()));
     }
+
 }
