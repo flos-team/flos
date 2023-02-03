@@ -34,37 +34,32 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 리스트", description = "게시글 리스트를 반환합니다.")
     @GetMapping("/list")
-    public ResponseEntity<?> getList(@RequestParam(value="pageable", required = false) Pageable pageRequest){
-        if (pageRequest == null)
-            pageRequest = PageRequest.of(0, Math.toIntExact(size));
+    public ResponseEntity<?> getList(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="size", required = false) Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getLatestPostList(pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "날씨별 게시글 리스트", description = "날씨에 해당하는 게시글 리스트를 반환합니다.")
     @GetMapping("/list/weather")
-    public ResponseEntity<?> getListByWeather(@RequestParam(value="pageable", required = false) Pageable pageRequest, @RequestParam WeatherType weather){
-        if (pageRequest == null)
-            pageRequest = PageRequest.of(0, Math.toIntExact(size));
-
+    public ResponseEntity<?> getListByWeather(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="size", required = false) Integer size, WeatherType weather){
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByWeather(weather, pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "사람별 게시글 리스트", description = "특정 회원의 게시글 리스트를 반환합니다.")
     @GetMapping("/list/member")
-    public ResponseEntity<?> getListByWriter(@RequestParam(value="pageable", required = false) Pageable pageRequest, @RequestParam Long memberId){
-        if (pageRequest == null)
-            pageRequest = PageRequest.of(0, Math.toIntExact(size));
+    public ResponseEntity<?> getListByWriter(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="size", required = false) Integer size, Long memberId){
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByWriter(memberId, pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
     @Operation(summary = "사람별 게시글 리스트", description = "회원이 북마크한 게시글 리스트를 반환합니다.")
     @GetMapping("/list/bookmark")
-    public ResponseEntity<?> getListByBookmark(@RequestParam(value="pageable", required = false) Pageable pageRequest){
-        if (pageRequest == null)
-            pageRequest = PageRequest.of(0, Math.toIntExact(size));
+    public ResponseEntity<?> getListByBookmark(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="size", required = false) Integer size){
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getBookmarkedListByMember(pageRequest), HttpStatus.OK);
     }
 

@@ -21,16 +21,17 @@ public class SliceResponseDTO {
     private Boolean isLast;
     private Boolean hasContent;
     private Boolean hasNext;
-    private PageRequest nextPageable;
+    private Integer nextPage;
+    private Integer nextSize;
     public static SliceResponseDTO toDto(Slice<?> data) {
-        Pageable nextPageable = data.nextPageable();
         return SliceResponseDTO.builder()
                 .content(data.getContent())
                 .isFirst(data.isFirst())
                 .isLast(data.isLast())
                 .hasContent(data.hasContent())
                 .hasNext(data.hasNext())
-                .nextPageable(PageRequest.of(nextPageable.getPageNumber(), nextPageable.getPageSize(), nextPageable.getSort()))
+                .nextPage(data.nextPageable().getPageNumber())
+                .nextSize(data.nextPageable().getPageSize())
                 .build();
     }
 }
