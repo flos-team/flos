@@ -72,6 +72,13 @@ public class PostController {
     }
 
     @Tag(name = "게시글API")
+    @Operation(summary = "특정 게시글 정보", description = "특정 게시글 정보를 반환합니다.")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPostById(@PathVariable("id") Long postId) throws BadRequestException {
+        return new ResponseEntity<PostResponseDTO>(postService.getPost(postId), HttpStatus.OK);
+    }
+
+    @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
