@@ -6,7 +6,7 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import { Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { selectCurrentToken } from "../../../redux/userAuth";
+import { selectCurrentToken } from "../../../redux/auth";
 
 import axios from "axios";
 // import * as axios from "axios";
