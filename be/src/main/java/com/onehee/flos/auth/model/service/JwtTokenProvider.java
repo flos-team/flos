@@ -101,7 +101,7 @@ public class JwtTokenProvider {
         return ResponseCookie.from("rtk", "Bearer+" + rtk)
                 .maxAge(rtkExpire)
                 .path("/")
-                .secure(true)
+                .secure(false)
                 .sameSite("None")
                 .httpOnly(true)
                 .build();
@@ -111,7 +111,7 @@ public class JwtTokenProvider {
         return ResponseCookie.from("rtk", "Bearer+" + rtk)
                 .maxAge(time)
                 .path("/")
-                .secure(true)
+                .secure(false)
                 .sameSite("None")
                 .httpOnly(true)
                 .build();
