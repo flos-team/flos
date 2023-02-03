@@ -60,10 +60,11 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''cd springapp
-sudo docker-compose pull
+										execCommand: '''
 sudo rm -rf /mariadb
 sudo rm -rf ~/mariadb
+sudo docker-compose pull
+cd springapp
 sudo docker-compose up --force-recreate -d''', 
 										execTimeout: 120000, 
 										flatten: false, 
