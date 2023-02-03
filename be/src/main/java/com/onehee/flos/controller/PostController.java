@@ -44,7 +44,7 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "날씨별 게시글 리스트", description = "날씨에 해당하는 게시글 리스트를 반환합니다.")
     @GetMapping("/list/weather")
-    public ResponseEntity<?> getListByWeather(@RequestParam(value="page", required = false) Integer page, WeatherType weather){
+    public ResponseEntity<?> getListByWeather(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="weather") WeatherType weather){
         if (page==null)
             page = 0;
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -52,9 +52,9 @@ public class PostController {
     }
 
     @Tag(name = "게시글API")
-    @Operation(summary = "사람별 게시글 리스트", description = "특정 회원의 게시글 리스트를 반환합니다.")
+    @Operation(summary = "작성자별 게시글 리스트", description = "특정 회원이 작성한 게시글 리스트를 반환합니다.")
     @GetMapping("/list/member")
-    public ResponseEntity<?> getListByWriter(@RequestParam(value="page", required = false) Integer page, Long memberId){
+    public ResponseEntity<?> getListByWriter(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="memberId") Long memberId){
         if (page==null)
             page = 0;
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -62,7 +62,7 @@ public class PostController {
     }
 
     @Tag(name = "게시글API")
-    @Operation(summary = "사람별 게시글 리스트", description = "회원이 북마크한 게시글 리스트를 반환합니다.")
+    @Operation(summary = "회원별 북마크한 게시글 리스트", description = "회원이 북마크한 게시글 리스트를 반환합니다.")
     @GetMapping("/list/bookmark")
     public ResponseEntity<?> getListByBookmark(@RequestParam(value="page", required = false) Integer page){
         if (page==null)

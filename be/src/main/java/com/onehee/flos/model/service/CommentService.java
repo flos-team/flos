@@ -1,6 +1,7 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
@@ -14,10 +15,10 @@ import java.util.List;
 @Service
 public interface CommentService {
     // 게시글의 댓글 리스트
-    Slice<CommentResponseDTO> getCommentListByPost(Long postId, Pageable pageable);
+    SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable);
 
     // 회원의 댓글 리스트
-    Slice<CommentResponseDTO> getCommentListByMember(Pageable pageable);
+    SliceResponseDTO getCommentListByMember(Pageable pageable);
 
     // 댓글 등록
     void createComment(CommentCreateRequestDTO commentCreateRequestDTO) throws BadRequestException;

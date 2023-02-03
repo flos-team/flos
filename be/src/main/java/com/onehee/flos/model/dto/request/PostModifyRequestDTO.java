@@ -1,5 +1,6 @@
 package com.onehee.flos.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
@@ -17,14 +18,16 @@ import java.util.List;
 @Builder
 public class PostModifyRequestDTO {
     private Long id;
-    private Member writer;
+    private Long writerId;
     private String content;
     private LocalDateTime modifiedAt;
     private List<MultipartFile> attachFiles;
     private List<Tag> tagList;
+    @JsonIgnore
+    private Member writer;
 
-    public Post toAccept(Post post) {
-        post.setWriter(this.getWriter());
+    public Post toAccept(Post post, Member writer) {
+        post.setWriter(writer);
         post.setContent(this.getContent());
         post.setModifiedAt(this.getModifiedAt());
         return post;
