@@ -3,7 +3,7 @@ RUN mkdir -p /home/flos
 WORKDIR /home/flos
 COPY . .
 RUN mkdir -p build
-RUN npm install -- silent
+RUN npm install react-lottie --force
 RUN npm run build
 
 FROM nginx
