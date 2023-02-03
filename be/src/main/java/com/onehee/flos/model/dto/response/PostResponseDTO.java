@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 public class PostResponseDTO {
     private Long id;
-    private Member writer;
+    private MemberResponseDTO writer;
     private String content;
     private LocalDateTime regDate;
 //    private LocalDateTime modifyDate;
@@ -27,7 +27,7 @@ public class PostResponseDTO {
     public static PostResponseDTO toDto(Post post, PostRelationDTO postRelationDTO) {
         return PostResponseDTO.builder()
                 .id(post.getId())
-                .writer(post.getWriter())
+                .writer(MemberResponseDTO.toDto(post.getWriter()))
                 .content(post.getContent())
                 .regDate(post.getCreatedAt())
 //                .modifyDate(post.getModifyDate())
