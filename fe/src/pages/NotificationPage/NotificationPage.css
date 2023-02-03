@@ -16,4 +16,17 @@
   box-sizing: border-box;
 }
 
+.alarm-container {
+  width: 100vw;
+  min-height: 91.3vh;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  background-color: #fcfcfc;
+  align-items: center;
+}
+
 /*# sourceMappingURL=NotificationPage.css.map */
