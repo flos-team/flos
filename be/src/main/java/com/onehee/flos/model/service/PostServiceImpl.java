@@ -194,7 +194,7 @@ public class PostServiceImpl implements PostService {
 
     // 게시글의 북마크 여부
     private boolean isBookmarked(Post post) {
-        return bookmarkRepository.existByPostAndMember(post, SecurityManager.getCurrentMember());
+        return bookmarkRepository.existsByPostAndMember(post, SecurityManager.getCurrentMember());
     }
 
     // 게시글의 팔로우 여부
