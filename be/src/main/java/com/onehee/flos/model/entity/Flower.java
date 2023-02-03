@@ -31,6 +31,10 @@ public class Flower {
 
     private Long capacity;
 
+    @OneToOne
+    @JoinColumn(name = "files_id")
+    private FileEntity flowerImage;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "members_id")
     private Member owner;
