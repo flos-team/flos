@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 import java.util.List;
 
@@ -19,15 +21,16 @@ public class SliceResponseDTO {
     private Boolean isLast;
     private Boolean hasContent;
     private Boolean hasNext;
-    private Pageable nextPageable;
+    private PageRequest nextPageable;
     public static SliceResponseDTO toDto(Slice<?> data) {
+        Pageable nextPageable = data.nextPageable();
         return SliceResponseDTO.builder()
                 .content(data.getContent())
                 .isFirst(data.isFirst())
                 .isLast(data.isLast())
                 .hasContent(data.hasContent())
                 .hasNext(data.hasNext())
-                .nextPageable(data.nextPageable())
+                .nextPageable(PageRequest.of(nextPageable.getPageNumber(), nextPageable.getPageSize(), nextPageable.getSort()))
                 .build();
     }
 }
