@@ -4,6 +4,10 @@ import PostItem from "../../../components/PostItem/PostItem";
 import styles from "./FeedPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import { Link } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../../../redux/userAuth";
+
 import axios from "axios";
 // import * as axios from "axios";
 /** 게시글 리스트
@@ -21,44 +25,23 @@ import axios from "axios";
  */
 
 function Feed() {
-  console.log(axios.defaults)
   axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-  // axios.get("/post/list?page=1&size=1")
-  // .then(response => {
-  // console.log(response)
-  // }).catch(error => {
-  //   console.log(error)
-  // })
-  const loginInfo = {
-    email: "jihwan@ssafy.com",
-    password: "wlghks1234",
-  };
-  axios
-  .post("/member/login", loginInfo)
-  .then((response) => {
-    // console.log(response)
-    const accessToken = response.data.atk;
-    // console.log(accessToken)
-    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-    axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-    // console.dir(axios.defaults)
-    console.log(1231234)
-  }).then(() => {
-    axios
-      .get("/post/list?page=1&size=1")
-      .then((response) => {
-        console.log(response);
-        // navigate("/main");
-      })
-      .catch((error) => {
-        console.log("error : " + error);
-        console.dir(axios.defaults);
-      });
-  })
 
-  // Axios.get("http://i8b210.p.ssafy.io:8080/post/list").then(function (response) {
-  //   console.log(response);
-  // });
+  axios
+    .get("/member/info")
+    .then((response) => {
+      // console.log("123")
+      console.log(response)
+      // dispatch(setCredentials(response.data.atk));
+
+      // axios.defaults.headers["Authorization"] = `Bearer ${response.data.atk}`;
+
+      console.log(axios.defaults)
+    })
+    .catch((error) => {
+      console.log("error : " + error);
+      console.dir(axios.defaults);
+    });
 
   const [userInfos, setUserInfos] = useState([
     { userInfoId: 1, userInfo: 999, postId: 1 },
@@ -78,55 +61,123 @@ function Feed() {
       <div className={styles.friendListBar}>
         {/** 친구 프로필을 나열한다.  */}
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img alt="test" src="images/commentProfileSample.png" className={styles.friendProfileImg}></img>
+          <img
+            alt="test"
+            src="images/commentProfileSample.png"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
         <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img src="images/commentProfileSample.png" alt="test" className={styles.friendProfileImg}></img>
+          <img
+            src="images/commentProfileSample.png"
+            alt="test"
+            className={styles.friendProfileImg}
+          ></img>
         </div>
       </div>
       <Link to="write">
