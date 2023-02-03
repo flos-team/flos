@@ -8,6 +8,7 @@ import com.onehee.flos.model.dto.response.CommentResponseDTO;
 import com.onehee.flos.model.entity.Comment;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
+import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.CommentRepository;
 import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.util.SecurityManager;
@@ -15,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -61,8 +65,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void approveComment(Long id) throws BadRequestException {
-        // 빛, 물 구현 완료 후 제작
+    public void approveComment(Long id) throws BadRequestException, NoSuchAlgorithmException {
+        // 좋아요~
+        Comment tempComment = commentRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        tempComment.setIsApprove(true);
+        commentRepository.save(tempComment);
+        // 햇빛, 물 구분
+        WeatherType weather = tempComment.getPost().getWeather();
+
     }
 
     @Override

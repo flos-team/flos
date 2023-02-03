@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Service
@@ -30,7 +31,7 @@ public interface CommentService {
     void deleteComment(Long id) throws BadRequestException;
 
     // 댓글 채택됨
-    void approveComment(Long id) throws BadRequestException;
+    void approveComment(Long id) throws BadRequestException, NoSuchAlgorithmException;
 
     // 댓글 채택취소됨
     void cancelComment(Long id) throws BadRequestException;
