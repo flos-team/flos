@@ -17,6 +17,9 @@
 }
 
 .main-page {
+  width: 100vw;
+  height: max-content;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 }

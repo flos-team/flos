@@ -16,6 +16,23 @@
   box-sizing: border-box;
 }
 
+.test-container {
+  width: 100vw;
+  height: 81.3vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  overflow-y: scroll;
+}
+
+button {
+  width: 100px;
+  height: 60px;
+}
+
 .profile-page {
   display: flex;
   flex-direction: column;
