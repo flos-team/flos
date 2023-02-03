@@ -21,7 +21,7 @@
 }
 .post-detail-page .post-detail-container {
   width: 100vw;
-  height: 100vh;
+  height: max-content;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;

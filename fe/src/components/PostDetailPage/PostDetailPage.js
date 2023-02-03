@@ -18,7 +18,10 @@ const PostDetailPage = () => {
           <p>babdoduk</p>
           <p>34분 전</p>
         </div>
-        <div className="comment-main">아주 감명적인 글이네요~</div>
+        <div className="comment-main">아직도 난 너를 느끼죠 이렇게 우리 지금이 순간도 난 그대가 보여 길가에 덩그러니 놓여진 저 의자 위에도
+                밤을 타고 쓸쓸히 춤추는 전 낙엽 위에도 뺨을 스치는 어느 저녁의 그 공기 속에도 길가에 내려앉은 음악속에도
+                네가 있어 어떤가요 그대 어떤가요 그대 그대는 지웠을 텐데 어떤가요 그대 우린
+                라랄라라라라라라라라라라라라라라라라라라라라라라ㅏ라라라라라라랄</div>
       </div>
       <img className="check-btn" src={sunnyActivate} />
     </div>
