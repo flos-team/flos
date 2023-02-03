@@ -70,3 +70,56 @@
   margin-bottom: 12.625rem !important; 
   /* margin-bottom: 212300px; */
 }
+
+.globalroot{
+  width: 80%;
+}
+
+
+.searchdiv{
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.searchbar{
+  background-color: white;
+  width: 88%;
+  height: 32px;
+  border: solid 1px black;
+  border-radius: 45px;
+  padding-left: 48px;
+  font-size: 14px;
+}
+
+.searchicon{
+  position: absolute;
+  top: 4px;
+  left: 16px;
+}
+
+.filtericon{
+  position: absolute;
+  top: 4px;
+  right: 1%;
+} 
+
+.filterselectbox{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.filtertext{
+  margin: 0 8px;
+}
+
+.filtertextdiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nonselecticon{
+  margin: 0 4px;
+}

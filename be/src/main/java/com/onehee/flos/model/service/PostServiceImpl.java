@@ -14,7 +14,6 @@ import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +33,8 @@ public class PostServiceImpl implements PostService {
     private final PostTagRepository postTagRepository;
     private final TagRepository tagRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final CommentRepository commentRepository;
+    private final FollowRepository followRepository;
 
     @Override
     public SliceResponseDTO getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
@@ -171,6 +172,7 @@ public class PostServiceImpl implements PostService {
                 .tagList(getTagListByPost(post))
                 .attachFiles(getFileListByPost(post))
                 .isBookmarked(isBookmarked(post))
+                .countComment(countCommentByPost(post))
                 .build();
     }
 
@@ -191,11 +193,19 @@ public class PostServiceImpl implements PostService {
     }
 
     // 게시글의 북마크 여부
-    private Boolean isBookmarked(Post post) {
-        return bookmarkRepository.findByPostAndMember(post, SecurityManager.getCurrentMember()) != null;
+    private boolean isBookmarked(Post post) {
+        return bookmarkRepository.existByPostAndMember(post, SecurityManager.getCurrentMember());
     }
 
     // 게시글의 팔로우 여부
+    private boolean isFollowed(Post post) {
+        Member owner = post.getWriter();
+        Member follower = SecurityManager.getCurrentMember();
+        return followRepository.existsByOwnerAndFollower(owner, follower);
+    }
+
     // 게시글의 댓글 수
-    // 게시글의 댓글 리스트
+    private Long countCommentByPost(Post post) {
+        return commentRepository.countByPost(post);
+    }
 }

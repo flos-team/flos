@@ -1,0 +1,52 @@
+@import "../../styles/commons.scss";
+
+/* TOOLTIP */
+[data-tooltip] {
+  position: relative;
+  text-align: left;
+}
+[data-tooltip]:before,
+[data-tooltip]:after {
+  width: max-content;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  white-space: pre-wrap;
+  transform: translateX(-50%);
+  transition: all 1s ease;
+  font-size: 11 * $rpx1;
+  font-family: dotum;
+  letter-spacing: -1 * $rpx1;
+}
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  height: max-content;
+  position: absolute;
+  // top: -20px;
+  bottom: -10 * $rpx1;
+  padding: 5 * $rpx1 10 * $rpx1;
+  border-radius: 5 * $rpx1;
+  color: $mono800;
+  background: $mono100;
+  box-shadow: 0 3 * $rpx1 8 * $rpx1 rgba(165, 165, 165, 0.5);
+}
+/* 화살표 영역 속성 */
+[data-tooltip]:after {
+  content: "";
+  border-left: 5 * $rpx1 solid transparent;
+  bottom: 5 * $rpx1;
+  border-right: 5 * $rpx1 solid transparent;
+  border-bottom: 5 * $rpx1 solid $mono100;
+}
+/* 툴팁 표시 위치 */
+[data-tooltip]:not([data-tooltip=""]):hover:before {
+  visibility: visible;
+  opacity: 1;
+  bottom: -48 * $rpx1;
+}
+[data-tooltip]:not([data-tooltip=""]):hover:after {
+  visibility: visible;
+  opacity: 1;
+  bottom: 0;
+}

@@ -29,9 +29,7 @@ public class Flower {
 
     private Long height;
 
-    @OneToOne
-    @JoinColumn(name = "files_id")
-    private FileEntity profileImage;
+    private Long capacity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "members_id")
