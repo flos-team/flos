@@ -85,6 +85,13 @@ spring:
 file:
   extension-regex: \.(jpg|png|bmp|gif)
 
+sentiment:
+  url: 'https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze'
+  client-id: '6mmuqwuyg8'
+  client-secret: '8qhOEjBiPkZOanHtiz0xZt59dYlHRUHEjIBjzpMy'
+
+
+
 ---
 
 spring:
