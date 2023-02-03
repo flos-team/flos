@@ -84,6 +84,7 @@ public class MemberServiceImpl implements MemberService {
         if (memberUpdateRequestDTO.getProfileImage() != null) {
             try {
                 FileEntity profileImage = filesHandler.saveFile(memberUpdateRequestDTO.getProfileImage());
+                log.info("{}", profileImage);
                 profileImage.setMember(member);
                 member.setProfileImage(profileImage);
             } catch (IOException e) {

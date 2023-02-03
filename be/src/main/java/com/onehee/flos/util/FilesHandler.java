@@ -58,8 +58,7 @@ public class FilesHandler {
         // 최상위경로/날짜/UUID.확장자
         String savedPath = fileDir + uploadDate + File.separator + savedName;
         // 업로더
-        MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member uploader = memberDetails.getMember();
+        Member uploader = SecurityManager.getCurrentMember();
 
         // DB에 저장하기위해서 엔티티로 변환
         FileEntity fileEntity = FileEntity.builder()
@@ -71,6 +70,7 @@ public class FilesHandler {
                 .build();
 
         // 실제 파일 저장
+
         file.transferTo(new File(savedPath));
 
         // DB에 등록

@@ -6,8 +6,11 @@ import com.onehee.flos.model.dto.request.UnfollowRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Follow;
 import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.entity.Notification;
 import com.onehee.flos.model.repository.FollowRepository;
 import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.model.repository.NotificationRepository;
+import com.onehee.flos.util.NotificationUtil;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -57,6 +61,13 @@ public class FollowServiceImpl implements FollowService {
                 .build();
 
         followRepository.saveAndFlush(follow);
+
+        // 알림
+        notificationRepository.save(Notification.builder()
+                .member(target)
+                .message(NotificationUtil.followMessage(target.getNickname(), me.getNickname()))
+                .build()
+        );
 
         return getFollowingList();
     }
