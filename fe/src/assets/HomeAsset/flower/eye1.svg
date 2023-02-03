@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320.68 163.45">
+  <defs>
+    <style>
+      .eyes {
+        fill: #231815;
+      }
+    </style>
+  </defs>
+  <g id="_레이어_2-2" data-name="레이어 2">
+      <ellipse class="eyes" cx="37.31" cy="81.72" rx="37.31" ry="81.72"/>
+      <ellipse class="eyes" cx="283.37" cy="81.72" rx="37.31" ry="81.72"/>
+  </g>
+
+</svg>

@@ -1,0 +1,277 @@
+.bigframe{
+  background-color: white;
+  width: 100%;
+  height: 100vh;
+}
+
+.headertextframe{
+  margin: 2vh auto 0 auto;
+}
+
+.headertext{
+  display: flex;
+  justify-content: center;
+}
+
+.registerorderdiv{
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  margin: 0 auto;
+}
+.registerorderelement{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.termTextBox {
+  height: 10vh;
+  font-size: 12px;
+  width: 100%;
+}
+.blueCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  background-color: #3BACE2;
+  color: white;
+}
+
+.whiteCircle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  background-color: white;
+  border: #3BACE2 0.5px solid;
+}
+
+
+.mainframe {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.mainframeitem{
+  margin: 4px 0 8px 0;
+}
+
+.cannotuse {
+  color: red;
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+.canuse {
+  color: green;
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+.loginframe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  isolation: isolate;
+  position: relative;
+  width: 100%;
+}
+
+.inputdiv {
+  height: 30px;
+  width: 100%;
+  padding: 4px;
+  margin: 5px 0 0 0;
+}
+
+.textredcolor {
+  font-size: 12px;
+  color: red;
+}
+
+.nextBtn {
+  width: 100%;
+  background-color: #3BACE2;
+  color: white;
+  margin: 1vh 0 0 0;
+  padding: 0;
+  height: 5vh;
+  border: 0px;
+}
+
+.termfont {
+  font-size: 12px;
+  cursor : pointer;
+}
+
+.socialbtn {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kakaobtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FDDC3F;
+  border-radius: 30px;
+  border: none;
+  margin: 0 0 8px 0;
+}
+
+.naverbtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #00C73C;
+  border-radius: 30px;
+  border: none;
+}
+
+.gologintext{
+  display:flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  width: 100%;  
+  font-size: 12px;
+}
+
+.linktext {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.socialline {
+  color: black;
+  text-align: center;
+  font-size: 18px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+}
+.socialline:before {
+  content: "";
+  display: block;
+  width: 32%;
+  height: 1px;
+  background: black;
+  left: 0;
+  top: 50%;
+  position: absolute;
+}
+.socialline:after {
+  content: "";
+  display: block;
+  width: 32%;
+  height: 1px;
+  background: black;
+  right: 0;
+  top: 50%;
+  position: absolute;
+}
+
+::placeholder {
+  opacity: 60%;
+}
+
+.mailsend {
+  width: 100%;
+  height: 70px;
+  background-color: #f0f0f0;
+  padding: 8px;
+}
+.mailnuminput{
+  width: 60%;
+  height: 32px;
+  padding: 4px;
+  font-size: 14px;
+}
+.mailsendbtn {
+  width: 20%;
+  height: 30px;
+  padding: 0;
+}
+.checkingcode{
+  font-size: 10px;
+  color:red;
+}
+.checkedcode{
+  font-size: 10px;
+  color: green;
+}
+.modalbackground{
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  opacity: 0.2;
+  z-index: 1;
+}
+.modal{
+  position: absolute;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 440px;
+  border-radius: 8px;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 15;
+}
+
+.modalheader{
+  /* height: 56px; */
+  margin: 20px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+}
+.modalbodyterm{
+  padding: 12px 16px 0 16px;
+  max-height: 304px;
+  overflow: auto;
+  font-size: 12px;
+  border-top: 1px solid gray;
+}
+.modalfooter{
+  padding: 24px 24px 24px 16px;
+  text-align: right;
+}
+
+.modalfootertext{
+  cursor: pointer;
+  color: blue;
+}
+
+.inputdivicon{
+  display: flex;
+  position: relative;
+}
+
+.icon{
+  top: 12px;
+  right: 12px;
+  bottom: 2px;
+  margin: 0;
+  padding: 0;
+  /* background-color: transparent; */
+  border: 0;
+  font-size: 1px;
+  /* color: transparent; */
+  position: absolute;
+}

@@ -1,0 +1,193 @@
+.landingRoot {
+  /* landing-page-blue */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+
+  /* position: relative; */
+  width: auto;
+  height: 100vh;
+
+  /* navy300 */
+  background: #98e1ff;
+}
+.groomsSmall2 {
+  /* grooms-small2 */
+
+  /* width: 41.5%;
+  height: 12vh; */
+  width: 143px;
+  height: 85px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  background-image: url("../../assets/LoginAsset/groom-icon.png");
+  background-size: cover;
+
+  /* added */
+  /* background-attachment: fixed;
+  background-position: center;  */
+}
+
+.mainLogo {
+  /* main-logo */
+
+  width: 65%;
+  height: 8.6vh;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  padding: 2%;
+}
+.title {
+  /* title */
+
+  position: inherit;
+  left: 3.14%;
+  right: 2.52%;
+  top: 1.45%;
+  bottom: 28.99%;
+
+  font-family: "Itim";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  /* identical to box height */
+  justify-content: center;
+  display: flex;
+  color: #ffffff;
+}
+.subTitle {
+  /* subTitle */
+
+  position: relative;
+  left: -1.57%;
+  right: -1.57%;
+  bottom: -5.8%;
+
+  font-family: "Istok Web";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  /* identical to box height */
+  justify-content: center;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* white */
+
+  color: #ffffff;
+}
+.guideText {
+  /* guide-text */
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0px 0px;
+  gap: 10px;
+  text-align: center;
+
+  width: 60%;
+  height: 5vh;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+}
+/* .guideText:hover{
+    color:red
+} */
+.startBtn {
+  /* startBtn */
+
+  /* width: 100%; */
+  width: max-content;
+  height: 23px;
+
+  font-family: "Istok Web";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* mono400 */
+
+  color: #aaa9a9;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.spacer {
+  /* spacer */
+
+  width: 253px;
+  height: 40px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 3;
+  flex-grow: 0;
+}
+
+/** 점멸 기능  */
+.blinking {
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

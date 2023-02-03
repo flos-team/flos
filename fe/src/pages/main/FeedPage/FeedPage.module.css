@@ -1,0 +1,67 @@
+.feedRoot {
+  /* feed-page */
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  align-items: center;
+  padding: 20 20 20 0px;
+  gap: 8px;
+
+  position: relative;
+  width: 100%;
+  height: 95vh;
+
+  /* white2 */
+
+  background: #fbfbfb;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+.friendListBar {
+  /* friend-list-bar */
+
+  /* Auto layout */
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  padding: 0px 8px;
+  gap: 4px;
+
+  width: 100%;
+  height: 8vh;
+
+  background: #ffffff;
+
+  /* Inside auto layout */
+
+  flex: none;
+  flex-wrap: nowrap;
+}
+.friendThumbnail {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  /* height: 100vh; */
+  width: 18%;
+  /* border: 1px solid rebeccapurple; */
+  /* padding-bottom: 100%; */
+  overflow: hidden;
+}
+.friendProfileImg {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  border-radius: 50%;
+  border: 1px solid gray;
+}
+.main {
+  margin-top: 0.25rem;
+  /* margin-bottom: 0.25rem; */
+  width: 20rem;
+  height: 80rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

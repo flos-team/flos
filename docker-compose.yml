@@ -1,0 +1,11 @@
+version: "3"
+services:
+  pythonapp:
+    build: ./python
+    container_name: python-tester
+  nginxapp:
+    build: ./fe
+    container_name: front-end
+  springapp:
+    build: ./be
+    container_name: back-end

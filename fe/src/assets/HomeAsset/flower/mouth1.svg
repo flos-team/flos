@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.29 7.5">
+  <defs>
+    <style>
+      .mouth {
+        fill: none;
+        stroke: #231815;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="_레이어_3" data-name="레이어 3">
+    <path class="mouth" d="m.3.4l8.51,6.47L16.98.4"/>
+  </g>
+</svg>

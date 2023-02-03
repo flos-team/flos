@@ -1,0 +1,243 @@
+.HomePage {
+    /* home-page-M */
+
+
+    /* Auto layout */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 20px;
+    gap: 8px;
+    isolation: isolate;
+    position: relative;
+    background-image:url("../../assets/HomeAsset/home-sample-background-img.jpg");
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+
+.HomeRoot {
+    /* home-root */
+
+
+    width: 100%;
+    height: 90vh;
+
+    display: flex;
+    justify-content: center;
+    /* Inside auto layout */
+
+    /* flex: none; */
+    /* order: 0; */
+    /* flex-grow: 0; */
+    /* z-index: 0; */
+}
+
+.FlowerMessage {
+    /* flower-message-div */
+
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 235px;
+    height: 171px;
+    top: 106px;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #FFFFFF;
+    border-radius: 15px;
+    z-index: 20;
+}
+
+.HomeHeader {
+    /* home-header-div */
+
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    padding: 0 20px;
+    top: 24px;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .HeaderHelp {
+    float: left;
+}
+
+.HeaderNoti {
+    float: right;
+} */
+
+.FlowerInfo {
+    /* flower-info-div */
+
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 216px;
+    height: 100px;
+    bottom: 45px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+    z-index: 20;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.FlowerName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.FlowerNameText {
+    margin-right: 20px;
+}
+
+.FlowerItem {
+    /* flower-item-div */
+
+
+    position: absolute;
+    width: 168px;
+    height: 70px;
+    bottom: 150px;
+    z-index: 20;
+
+}
+
+.Flowerpot {
+    /* flowerpot-div */
+
+    position: absolute;
+    width: 294px;
+    height: 223px;
+    bottom: 250px;
+
+    border-radius: 5px;
+}
+
+.FlowerMessageText {
+    /* flower-message-text */
+
+
+    position: absolute;
+    width: 235px;
+    height: 171px;
+    left: 0px;
+    top: 0px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #000000;
+    padding: 20px;
+}
+
+.SunDiv {
+    /* sun-div */
+
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    left: 98px;
+    top: 0px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+}
+
+.SunDiv:hover {
+    background:#ffec44de;
+    border: 1px solid #f0dd33de;
+}
+
+.RainDiv {
+    /* rain-div */
+
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    left: 0px;
+    top: 0px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+}
+
+.RainDiv:hover {
+    background:#458fffb3;
+    border: 1px solid #3a78d4b3;
+}
+
+.SunRainText {
+    /* rain-count-text */
+    text-align: center;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 22px;
+    display: block;
+    top: 100px;
+    color: #373737;
+
+}
+
+.SunRainImg {
+    /* rain-img */
+
+    position: absolute;
+    left: 21.43%;
+    right: 21.43%;
+    top: 7.14%;
+    bottom: 35.71%;
+
+}
+
+.ElementImg {
+    width: 500px;
+    height: 500px;
+}
+
+.SunShine {
+    width: 300px;
+    height: calc(100vh - 300px);
+    position: absolute;
+    background-color: #ffd930c2;
+    z-index: 50;
+}
+
+.raindrop {
+    width: 300px;
+    height: calc(100vh - 300px);
+    position: absolute;
+}
