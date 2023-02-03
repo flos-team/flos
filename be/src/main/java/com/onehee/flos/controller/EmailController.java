@@ -17,17 +17,32 @@ public class EmailController {
 
     private final MailService mailService;
 
-    @GetMapping
-    public ResponseEntity<?> sendMail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
-        mailService.sendEmail(emailVerificationRequestDTO);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+    @GetMapping("/sign-up")
+    public ResponseEntity<?> sendSignUpMail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
+        mailService.sendSignUpEmail(emailVerificationRequestDTO);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping
-    public ResponseEntity<?> verifyCode(@RequestBody EmailVerificationRequestDTO emailVerificationRequestDTO) {
-        if (mailService.verifyEmail(emailVerificationRequestDTO)) {
+    @PostMapping("/sign-up")
+    public ResponseEntity<?> verifySignUpCode(@RequestBody EmailVerificationRequestDTO emailVerificationRequestDTO) {
+        if (mailService.verifySignUpEmail(emailVerificationRequestDTO)) {
             return new ResponseEntity<Void>(HttpStatus.OK);
         }
         return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/reset-password")
+    public ResponseEntity<?> sendResetPasswordMail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
+        mailService.sendPasswordResetEmail(emailVerificationRequestDTO);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> verifyResetPasswordCode(@RequestBody EmailVerificationRequestDTO emailVerificationRequestDTO) {
+        if (mailService.verifyPasswordResetEmail(emailVerificationRequestDTO)) {
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }
+        return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.onehee.flos.model.dto.response;
 
+import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
@@ -21,19 +22,16 @@ public class PostResponseDTO {
     private LocalDateTime regDate;
 //    private LocalDateTime modifyDate;
     private WeatherType weather;
-    // List<Tag> 게시글 태그
-    // List<File> 게시글 첨부파일
-    // Follow 게시글 팔로우 여부
-    // Bookmark 게시글 북마크 여부
-    // List<Comment> 게시글 댓글 수
+    private PostRelationDTO postRelationDTO;
 
-    public static PostResponseDTO toDto(Post post) {
+    public static PostResponseDTO toDto(Post post, PostRelationDTO postRelationDTO) {
         return PostResponseDTO.builder()
                 .id(post.getId())
                 .writer(post.getWriter())
                 .content(post.getContent())
                 .regDate(post.getCreatedAt())
 //                .modifyDate(post.getModifyDate())
+                .postRelationDTO(postRelationDTO)
                 .build();
     }
 

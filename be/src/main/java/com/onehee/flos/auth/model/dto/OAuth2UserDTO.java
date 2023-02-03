@@ -1,6 +1,5 @@
 package com.onehee.flos.auth.model.dto;
 
-import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.ProviderType;
 import lombok.*;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -15,15 +14,15 @@ public class OAuth2UserDTO {
 
     private String nickname;
 
-    private String picture;
+    private String profileImage;
 
     private ProviderType providerType;
 
     @Builder
-    public OAuth2UserDTO(String email, String nickname, String picture, ProviderType providerType) {
+    public OAuth2UserDTO(String email, String nickname, String profileImage, ProviderType providerType) {
         this.email = email;
         this.nickname = nickname;
-        this.picture = picture;
+        this.profileImage = profileImage;
         this.providerType = providerType;
     }
 
@@ -32,7 +31,7 @@ public class OAuth2UserDTO {
         return OAuth2UserDTO.builder()
                 .email((String) attributes.get("email"))
                 .nickname((String) attributes.get("nickname"))
-                .picture((String) attributes.get("picture"))
+                .profileImage((String) attributes.get("picture"))
                 .providerType((ProviderType) attributes.get("providerType"))
                 .build();
     }

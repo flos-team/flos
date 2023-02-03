@@ -2,11 +2,14 @@ package com.onehee.flos.model.entity;
 
 import com.onehee.flos.model.entity.type.WeatherType;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,13 +33,11 @@ public class Post {
     @Column(length = 1000)
     private String content;
 
-    @Column(columnDefinition = "datetime default now()", insertable = false, updatable = false)
+    @ColumnDefault("now()")
     private LocalDateTime createdAt; // 수정 불가
 
-    @Column(columnDefinition = "datetime default now()")
-    private LocalDateTime modifyAt;
+    private LocalDateTime modifiedAt;
 
     @Enumerated(EnumType.STRING)
     private WeatherType weather;
-
 }

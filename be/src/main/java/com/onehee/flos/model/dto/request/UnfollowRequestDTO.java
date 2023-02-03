@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class MemberFindPasswordDTO {
-    private final String email;
-    private final String code;
+public class UnfollowRequestDTO {
+    private Long id;
 }
