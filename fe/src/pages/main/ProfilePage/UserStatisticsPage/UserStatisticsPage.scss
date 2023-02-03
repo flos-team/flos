@@ -1,0 +1,296 @@
+@import "../../../../styles//commons.scss";
+
+body{
+}
+
+.user-static-page {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8*$rpx1;
+    background: linear-gradient(191.23deg, #E8B477 10.06%, #E7C39A 100.48%);
+    justify-content: center;
+    width: 100vw;
+    height: max-content;
+    // align-content: center;
+    flex-wrap: wrap;
+
+    /* 사용자 포스트 활동지수 아이템 */
+    .user-active-static-item{
+        margin-top: 16px;
+        /* user-active-static-item */
+        color: white;
+        box-sizing: border-box;
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10*$rpx1;
+        gap: 8*$rpx1;
+        width: 328*$rpx1;
+        height: 160px;
+        background: #E8B477;
+        /* mono100 */
+        border: 1*$rpx1 solid $mono100;
+        border-radius: 16*$rpx1;
+        /* Inside auto layout */
+        order: 1;
+        .user-active-div{
+            /* user-active-div */
+            width: 100%;
+            height: 94*$rpx1;
+            /* Inside auto layout */
+            flex-direction: row;
+            order: 0;
+            flex-grow: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            .user-info-div{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: max-content;
+                height: max-content;
+                position: relative;
+                gap: 12*$rpx1;
+                .user-name-div{
+                    width: max-content;
+                    height: max-content;
+                    p{
+                        font-size: 16*$rpx1;
+                        text-align: center;
+                    }
+                }
+                .user-grade-div{
+                    width: max-content;
+                    height: max-content;
+                    p{
+                        text-align: center;
+                        font-size: 20*$rpx1;
+                    }
+                }
+            }
+            .user-active-graph{
+                width: 94*$rpx1;
+                height: 94*$rpx1;
+                img{
+                    width: 100%;
+                }
+            }
+        }
+        .user-month-div{
+            /* user-month-div */
+            width: 100%;
+            height: 24*$rpx1;
+            /* Inside auto layout */
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+            p{
+                padding-left: 5*$rpx1;
+            }
+        }
+    }
+
+    .user-cast-static-item{
+        /* user-cast-static-item */
+        box-sizing: border-box;
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10*$rpx1;
+        gap: 4*$rpx1;
+        width: 328*$rpx1;
+        height: 160*$rpx1;
+        background: #E8B477;
+        /* mono100 */
+        border: 1*$rpx1 solid $mono100;
+        border-radius: 16*$rpx1;
+        order: 2;
+        .cast-title-div{
+            width: 274*$rpx1;
+            height: max-content;
+            p{  
+                color: $white;
+                font-size: 20*$rpx1;
+            }
+        }
+        .cast-statistics-item-div{
+            /* Auto layout */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 8*$rpx1;
+            gap: 8*$rpx1;
+
+            width: 300*$rpx1;
+            height: 36*$rpx1;
+            .img-div{
+                width: 28*$rpx1;
+                height: 28*$rpx1;
+                border-radius: 14*$rpx1;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 14*$rpx1;
+                }
+            }
+            .graph-div{
+                /* graph */
+                width: 240*$rpx1;
+                height: 16*$rpx1;
+                background: $white;
+                border-radius: 8*$rpx1;
+                position: relative;
+                .graph-gage{
+                    position: absolute;
+                    width: 156*$rpx1;
+                    height: 16*$rpx1;
+                    left: 0px;
+                    top: 0px;
+                    background-blend-mode: darken;
+                    border-radius: 8*$rpx1 0px 0px 8*$rpx1;
+                }
+            }
+        }
+
+        .sunny-item-static-div{
+            .graph-div{
+                .graph-gage{
+                    background: $yellow-p;
+                }
+            }
+        }
+        .cloudy-item-static-div{
+            .graph-div{
+                .graph-gage{
+                    background: $mono100;
+                }
+            }
+        }
+        .rainy-item-static-div{
+            .graph-div{
+                .graph-gage{
+                    background: $blue-p;
+                }
+            }
+        }
+    }
+
+    .plant-static-item{
+        /* plant-static-item */
+        box-sizing: border-box;
+        /* Auto layout */
+        display: flex; 
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12*$rpx1 16*$rpx1;
+        gap: 8*$rpx1;
+        width: 328*$rpx1;
+        height: 240*$rpx1;
+        background: #E8B477;
+        border: 1*$rpx1 solid $mono100;
+        border-radius: 16*$rpx1;
+        order: 3;
+        .plant-title{
+            width: 120*$rpx1;
+            height: 24*$rpx1;
+            color: $white;
+        }
+        .plant-container{
+            /* Auto layout */
+            display: flex;
+            align-items: center;
+            padding: 0px;
+            gap: 8*$rpx1;
+            width: 100%;
+            height: 160*$rpx1;
+            overflow-y: scroll;
+            flex-wrap: wrap;
+            flex-direction: column;
+            .plant-item{
+                /* plant-item */
+                box-sizing: border-box;
+                width: 94*$rpx1;
+                height: 160*$rpx1;
+                background: $mono50;
+                border: 1*$rpx1 solid $mono200;
+                border-radius: 4*$rpx1;
+                background-color: $mono50;
+                position: relative;
+                display: flex;
+                align-items: center;
+                img{
+                    width: 100%;
+                    // border: 1px solid black;
+                }
+                .plant-name{
+                    /* plant-name */
+                    box-sizing: border-box;
+                    position: absolute;
+                    width: 60*$rpx1;
+                    height: 16*$rpx1;
+                    left: 16*$rpx1;
+                    bottom: 5*$rpx1;
+                    background: $mono50;
+                    border: 1*$rpx1 solid $mono300;
+                    border-radius: 8*$rpx1;
+                    text-align: center;
+                    color: $mono600;
+                }
+            }
+        }
+    }
+
+    .user-active-log-item{
+        /* user-active-log-item */
+        box-sizing: border-box;
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12*$rpx1 16*$rpx1;
+        gap: 8*$rpx1;
+        width: 328*$rpx1;
+        height: 200*$rpx1;
+        background: #E8B477;
+        border: 1*$rpx1 solid $mono100;
+        border-radius: 16px;
+        /* Inside auto layout */
+        order: 3;
+        .user-active-title{
+            width: 80*$rpx1;
+            height: 24*$rpx1;
+            order: 0;
+        }
+        color: $white;
+
+        .user-post-count-div, .user-heart-share-div, .user-heart-get-div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6*$rpx1 16*$rpx1;
+            width: 100%;
+            height: 36*$rpx1;
+            .post-count-title, .post-count{
+                width: max-content;
+                height: max-content;
+            }
+        }
+
+        .user-post-count-div{
+            order: 1;
+        }        
+        .user-heart-share-div{
+            order: 2;
+        }
+        .user-heart-get-div{
+            order: 3;
+        }
+    }
+}
