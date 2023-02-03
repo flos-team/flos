@@ -1,14 +1,14 @@
 package com.onehee.flos.model.dto;
 
 import com.onehee.flos.model.entity.Notification;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Builder
 public class NotificationDTO {
     private Long id;
