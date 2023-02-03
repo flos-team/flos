@@ -64,4 +64,5 @@
   height: 80rem;
   overflow-y: scroll;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
