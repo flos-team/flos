@@ -1,5 +1,6 @@
 package com.onehee.flos.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
 import com.onehee.flos.model.entity.Comment;
 import com.onehee.flos.model.entity.Member;
@@ -16,17 +17,26 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class CommentCreateRequestDTO {
-    private Post post;
-    private Comment parent;
-    private Comment primitive;
+    private Long postId;
+    private Long parentId;
+    private Long primitiveId;
     private String content;
+    @JsonIgnore
+    private Member writer;
+    @JsonIgnore
+    private Post post;
+    @JsonIgnore
+    private Comment parent;
+    @JsonIgnore
+    private Comment primitive;
 
-    public Comment toEntity() {
+    public Comment toEntity(Member writer, Post post, Comment parent, Comment primitive) {
         return Comment.builder()
-                .post(this.getPost())
+                .writer(writer)
+                .post(post)
                 .content(this.getContent())
-                .parent(this.getParent())
-                .primitive(this.getPrimitive())
+                .parent(parent)
+                .primitive(primitive)
                 .build();
     }
 }

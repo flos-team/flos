@@ -70,13 +70,15 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
 
-        // weatherType 확인해서 객체 추가 기능 넣어야함
+        // 물/햇빛 weatherType 확인해서 객체 추가 기능 넣어야함
+
+        Member writer = SecurityManager.getCurrentMember();
         
-        Post tempPost = postRepository.save(postCreateRequestDTO.toEntity());
+        Post tempPost = postRepository.saveAndFlush(postCreateRequestDTO.toEntity(writer));
 
         for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
             FileEntity tempFile = filesHandler.saveFile(e);
-            postFileRepository.save(
+            postFileRepository.saveAndFlush(
                     PostFile.builder()
                             .post(tempPost)
                             .file(tempFile)
@@ -85,7 +87,7 @@ public class PostServiceImpl implements PostService {
         }
 
         for (Tag e : postCreateRequestDTO.getTagList()) {
-            postTagRepository.save(
+            postTagRepository.saveAndFlush(
                     PostTag.builder()
                             .post(tempPost)
                             .tag(tagRepository.saveAndFlush(e))
@@ -100,6 +102,8 @@ public class PostServiceImpl implements PostService {
 
         Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
 
+        Member tempWriter = memberRepository.findById(postModifyRequestDTO.getWriterId()).orElseThrow(() -> new BadRequestException("존재하지 않는 작성자입니다."));
+
         postFileRepository.deleteAll(
                 postFileRepository.findAllByPost(
                         tempPost
@@ -111,7 +115,6 @@ public class PostServiceImpl implements PostService {
                         tempPost
                 )
         );
-
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
             FileEntity tempFile = filesHandler.saveFile(e);
             postFileRepository.save(
@@ -131,7 +134,8 @@ public class PostServiceImpl implements PostService {
             );
         }
 
-        postRepository.save(postModifyRequestDTO.toAccept(tempPost));
+
+        postRepository.saveAndFlush(postModifyRequestDTO.toAccept(tempPost, tempWriter));
 
     }
 

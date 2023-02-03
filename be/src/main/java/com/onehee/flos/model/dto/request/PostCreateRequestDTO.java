@@ -1,5 +1,6 @@
 package com.onehee.flos.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
@@ -19,14 +20,13 @@ import java.util.List;
 @Builder
 public class PostCreateRequestDTO {
     private String content;
-    private Member writer;
     private WeatherType weather;
     private List<MultipartFile> attachFiles;
     private List<Tag> tagList;
 
-    public Post toEntity() {
+    public Post toEntity(Member writer) {
         return Post.builder()
-                .writer(this.getWriter())
+                .writer(writer)
                 .content(this.getContent())
                 .weather(this.getWeather())
                 .build();
