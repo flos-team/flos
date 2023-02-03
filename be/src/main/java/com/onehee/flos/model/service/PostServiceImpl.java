@@ -1,6 +1,7 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
 import com.onehee.flos.model.dto.response.FileResponseDTO;
@@ -35,28 +36,28 @@ public class PostServiceImpl implements PostService {
     private final BookmarkRepository bookmarkRepository;
 
     @Override
-    public Slice<PostResponseDTO> getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
+    public SliceResponseDTO getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
         Member writer = memberRepository.findById(memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        return postRepository.findSliceByWriter(writer, pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+        return SliceResponseDTO.toDto(postRepository.findSliceByWriter(writer, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    public Slice<PostResponseDTO> getPostListByWeather(WeatherType weatherType, Pageable pageable) {
-        return postRepository.findSliceByWeather(weatherType, pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+    public SliceResponseDTO getPostListByWeather(WeatherType weatherType, Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByWeather(weatherType, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    public Slice<PostResponseDTO> getLatestPostList(Pageable pageable) {
-        return postRepository.findSliceBy(pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+    public SliceResponseDTO getLatestPostList(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceBy(pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    public Slice<PostResponseDTO> getBookmarkedListByMember(Pageable pageable) {
-        return bookmarkRepository.findSliceAllByMember(SecurityManager.getCurrentMember(), pageable)
-                .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost())));
+    public SliceResponseDTO getBookmarkedListByMember(Pageable pageable) {
+        return SliceResponseDTO.toDto(bookmarkRepository.findSliceAllByMember(SecurityManager.getCurrentMember(), pageable)
+                .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost()))));
     }
 
     @Override

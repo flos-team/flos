@@ -90,3 +90,5 @@ file:
 spring:
   profiles:
     active: server
+  paging:
+    size: 10

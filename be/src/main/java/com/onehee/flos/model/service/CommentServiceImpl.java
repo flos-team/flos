@@ -24,13 +24,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Slice<CommentResponseDTO> getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException {
         Post post = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
-        return commentRepository.findAllByPost(post, pageable)
+        return commentRepository.findSliceByPost(post, pageable)
                 .map(CommentResponseDTO::toDto);
     }
 
     @Override
     public Slice<CommentResponseDTO> getCommentListByMember(Pageable pageable) {
-        return commentRepository.findAllByWriter(SecurityManager.getCurrentMember(), pageable)
+        return commentRepository.findSliceByWriter(SecurityManager.getCurrentMember(), pageable)
                 .map(CommentResponseDTO::toDto);
     }
 
