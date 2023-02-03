@@ -19,4 +19,10 @@ public class GlobalExceptionHandler {
         Message message = new Message(e.getMessage(), HttpStatus.FORBIDDEN);
         return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(UnauthorizedEmailException.class)
+    public ResponseEntity<Message> unauthorizedEmailHandler(UnauthorizedEmailException e) {
+        Message message = new Message(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+    }
 }

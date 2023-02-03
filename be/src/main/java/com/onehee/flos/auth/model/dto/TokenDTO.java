@@ -1,18 +1,18 @@
 package com.onehee.flos.auth.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class TokenResponse {
+@Setter
+public class TokenDTO {
 
     private String atk;
 
+    @JsonIgnore
     private String rtk;
 
 }

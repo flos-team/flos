@@ -1,8 +1,10 @@
 package com.onehee.flos.model.entity;
 
+import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.entity.type.RoleType;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -31,19 +33,28 @@ public class Member {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'USER'")
     private RoleType roleType;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(10) default 'LOCAL'")
+    @ColumnDefault("'LOCAL'")
     private ProviderType providerType;
 
-    private String picture;
+    @OneToOne
+    @JoinColumn(name = "files_id")
+    private FileEntity profileImage;
 
+    @ColumnDefault("0")
     private int water;
 
+    @ColumnDefault("0")
     private int light;
 
-    @Column(columnDefinition = "datetime default now()")
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'ACTIVE'")
+    private MemberStatus status;
+
+    @ColumnDefault("now()")
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;

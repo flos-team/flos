@@ -26,6 +26,7 @@ spring:
     port: 587
     username: joykst961@gmail.com
     password: ebimbutyehtuznzn
+    description: Flos 운영팀
     properties:
       transport:
         protocol: smtp
@@ -80,6 +81,9 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
+
+file:
+  extension-regex: \.(jpg|png|bmp|gif)
 
 ---
 
