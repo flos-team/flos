@@ -4,6 +4,7 @@ import PostItem from "../../../components/PostItem/PostItem";
 import styles from "./FeedPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import { Link } from "react-router-dom";
+import MoveToTopToggle from '../../../components/MoveToTop/MoveToTopToggle.js'
 
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../../../redux/auth";
@@ -187,6 +188,7 @@ function Feed() {
         {/** 친구들의 포스트를 나열한다.  */}
         {postList}
       </div>
+      <MoveToTopToggle></MoveToTopToggle>
     </div>
   );
 }
