@@ -9,33 +9,33 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import PostItem from "../../../components/PostItem/PostItem";
 import UserStatisticsPage from "./UserStatisticsPage/UserStatisticsPage";
 import WriteFormComponent from "../../../components/WriteFormComponent/WriteFormComponent";
+import PostDetailPage from "../../../components/PostDetailPage/PostDetailPage";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
-  const holderStyle1 = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100vw",
-    height: "80vh",
-    transition: ".5s",
-  };
+  // const holderStyle1 = {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   width: "100vw",
+  //   height: "80vh",
+  //   transition: ".5s",
+  // };
 
-  const holderStyle2 = {
-    display: "flex",
-    // alignItems: "center",
-    marginTop: "8px",
-    justifyContent: "center",
-    width: "100vw",
-    height: "80vh",
-    transition: ".5s",
-  };
+  // const holderStyle2 = {
+  //   display: "flex",
+  //   // alignItems: "center",
+  //   marginTop: "8px",
+  //   justifyContent: "center",
+  //   width: "100vw",
+  //   height: "80vh",
+  //   transition: ".5s",
+  // };
 
   const userName = "wonny";
   const postTime = "1시간 전";
-
   let [touchIdx, setTouchIdx] = useState(false);
   const [userInfoNames, setUserInfoNames] = useState([
     { userInfoId: 1, userInfoName: "팔로워" },
@@ -63,10 +63,8 @@ const ProfilePage = () => {
   // 댓글 수
   const commentCount = 123;
   const commentCountText = <p>{commentCount >= 99 ? "99+" : commentCount}</p>;
-
   const n = 8; // Or something else
   const postList = [...Array(n)].map((e, i) => <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>);
-
   return (
     <>
       <HeaderComponent
@@ -90,10 +88,12 @@ const ProfilePage = () => {
           </ul>
         </div>
         <div className="feed-container">{postList}</div>
-  </div> */}
-      <div className="holder" style={touchIdx ? holderStyle1 : holderStyle2}>
-        <WriteFormComponent holderFunc={setTouchIdx}></WriteFormComponent>
-      </div>
+      </div> */}
+      {/* <PostItem></PostItem> */}
+      {/* <div className="holder" style={touchIdx ? holderStyle1 : holderStyle2}>
+        <WriteFormComponent holderFunc={setTouchIdx} holdIdx={touchIdx}></WriteFormComponent>
+      </div> */}
+      <PostDetailPage></PostDetailPage>
     </>
   );
 };

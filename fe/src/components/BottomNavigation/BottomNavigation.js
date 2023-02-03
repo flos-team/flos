@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { feed, global, home, garden, profile, test } from "../../redux/pageComponent"
+import { feed, global, home, garden, profile, test } from "../../redux/pageComponent";
 
 import { Link } from "react-router-dom";
 
@@ -27,28 +27,23 @@ const Nav = () => {
   const dispatch = useDispatch();
 
   const [navItems, setNavItems] = useState([
-    { navId: "feed", navIcon: feedIcon, navIconClick:feedIconClick, clickAction: () => dispatch(feed()) },
-    { navId: "global", navIcon: globalIcon, navIconClick:globalIconClick, clickAction:() => dispatch(global()) },
-    { navId: "home", test : 1, navIcon: homeIcon, navIconClick:homeIconPlus, clickAction: () => dispatch(home())},
-    { navId: "garden", navIcon: gardenIcon, navIconClick:gardenIconClick, clickAction:() => dispatch(garden()) },
-    { navId: "profile", navIcon: profileIcon, navIconClick:profileIconClick, clickAction:() => dispatch(profile()) },
+    { navId: "feed", navIcon: feedIcon, navIconClick: feedIconClick, clickAction: () => dispatch(feed()) },
+    { navId: "global", navIcon: globalIcon, navIconClick: globalIconClick, clickAction: () => dispatch(global()) },
+    { navId: "home", test: 1, navIcon: homeIcon, navIconClick: homeIconPlus, clickAction: () => dispatch(home()) },
+    { navId: "garden", navIcon: gardenIcon, navIconClick: gardenIconClick, clickAction: () => dispatch(garden()) },
+    { navId: "profile", navIcon: profileIcon, navIconClick: profileIconClick, clickAction: () => dispatch(profile()) },
   ]);
-  
-
 
   const navItemList = navItems.map(({ navId, navIcon, navIconClick, clickAction }) => (
-    <Link to = {(position==="home" && navId == "home") ? "/main/write" : ""}>
-    <div key={navId} className="bottom-nav-item" onClick={clickAction}><img key={navIcon} src={navId==position?navIconClick:navIcon} /></div>
+    <Link to={position === "home" && navId == "home" ? "/main/write" : ""}>
+      <div key={navId} className="bottom-nav-item" onClick={clickAction}>
+        <img key={navIcon} src={navId == position ? navIconClick : navIcon} />
+      </div>
     </Link>
   ));
-
-
-
   return (
     <>
-      <div className="bottom-nav-bar">
-        {navItemList}
-      </div>
+      <div className="bottom-nav-bar">{navItemList}</div>
     </>
   );
 };

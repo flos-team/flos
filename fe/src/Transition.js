@@ -16,7 +16,7 @@ import PwFindPage from "./pages/password/FindPage"
 import UserStatisticsPage from "./pages/main/ProfilePage/UserStatisticsPage/UserStatisticsPage";
 
 import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage"
-import NotificationPage from "./pages/NotificationPage"
+import NotificationPage from "./pages/NotificationPage/NotificationPage"
 import GuidePage from "./pages/GuidePage"
 import "./Transition.css";
 

@@ -1,0 +1,214 @@
+@import "../../styles//commons.scss";
+
+.post-detail-page {
+  z-index: 1;
+  .post-detail-container {
+    width: 100vw;
+    // width: 200vw;
+    height: max-content;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    .post-container {
+      width: 100vw;
+      height: max-content;
+
+      .user-info-container {
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px;
+        width: 100vw;
+        height: 64 * $rpx1;
+        background: #ffdcdc;
+        padding-left: 16 * $rpx1;
+        padding-right: 16 * $rpx1;
+        .user-info-div {
+          /* Auto layout */
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 0px;
+          gap: 8 * $rpx1;
+          width: 100%;
+          height: 100%;
+          img {
+            display: block;
+            width: 48 * $rpx1;
+            height: 48 * $rpx1;
+            border-radius: 24 * $rpx1;
+          }
+          .text-div {
+            /* Auto layout */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 8 * $rpx1 0px;
+            width: 160 * $rpx1;
+            height: 64 * $rpx1;
+            .user-name {
+            }
+            .time-log {
+            }
+          }
+        }
+      }
+      .img-container {
+        width: 360 * $rpx1;
+        height: 360 * $rpx1;
+        background-size: cover;
+      }
+      .post-content-container {
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
+        height: max-content;
+        min-height: 140 * $rpx1;
+        background-color: $mono50;
+        .post-text-div {
+          width: 100%;
+          height: max-content;
+          border-bottom: 1 * $rpx1 solid $mono100;
+          padding: 14 * $rpx1;
+          padding-bottom: 16 * $rpx1;
+        }
+        .post-tag-container {
+          width: 100%;
+          height: max-content;
+          border-bottom: 1 * $rpx1 solid $mono100;
+          padding: 12 * $rpx1;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8 * $rpx1;
+          .post-tag {
+            flex-shrink: 0;
+            width: fit-content;
+            box-sizing: border-box;
+            padding: 2 * $rpx1 5 * $rpx1 2 * $rpx1 5 * $rpx1;
+            background-color: $mono100;
+            border-radius: 16 * $rpx1;
+          }
+        }
+      }
+    }
+    .comment-container {
+      /* Auto layout */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0px;
+      gap: 8 * $rpx1;
+      width: 100vw;
+      min-height: 360 * $rpx1;
+      .comment-title-div {
+        width: 100%;
+        height: 30 * $rpx1;
+        padding-left: 16 * $rpx1;
+        line-height: 30 * $rpx1;
+        background-color: $mono50;
+      }
+      .comment-item {
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        // align-items: center;
+        padding: 8 * $rpx1 16 * $rpx1;
+        gap: 8 * $rpx1;
+        width: 100vw;
+        height: max-height;
+        min-height: 50 * $rpx1;
+        background-color: $mono50;
+        position: relative;
+        img {
+          position: relative;
+          top: 0;
+          display: block;
+          width: 36 * $rpx1;
+          height: 36 * $rpx1;
+        }
+        img:first-child {
+          border-radius: 18 * $rpx1;
+        }
+        .comment-container {
+          width: 230 * $rpx1;
+          height: max-content;
+          min-height: 50 * $rpx1;
+          gap: 2 * $rpx1;
+          .comment-header {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 8 * $rpx1;
+            p:first-child {
+              font-size: 14 * $rpx1;
+            }
+            p:last-child {
+              font-size: 10 * $rpx1;
+              line-height: 14 * $rpx1;
+            }
+          }
+          .comment-main {
+            width: 100%;
+            min-height: 20 * $rpx1;
+            height: max-content;
+          }
+        }
+        .check-btn {
+        }
+      }
+    }
+  }
+  .user-content-input-div {
+    width: 100vw;
+    height: 48 * $rpx1;
+    // background-color: black;
+    display: flex;
+    flex-direction: row;
+    gap: 8 * $rpx1;
+    align-items: center;
+    padding-left: 8 * $rpx1;
+    padding-right: 8 * $rpx1;
+    background-color: $mono50;
+    border-top: 1 * $rpx1 solid $mono100;
+    img {
+      display: block;
+      width: 36 * $rpx1;
+      height: 36 * $rpx1;
+      border-radius: 18 * $rpx1;
+    }
+    .comment-input-div {
+      width: 300 * $rpx1;
+      height: 40 * $rpx1;
+      display: flex;
+      position: relative;
+      input {
+        width: 100%;
+        border: 1 * $rpx1 solid $mono100;
+        border-radius: 18 * $rpx1;
+        padding-left: 10 * $rpx1;
+        font-size: 12 * $rpx1;
+      }
+      button {
+        position: absolute;
+        top: 8 * $rpx1;
+        right: 8 * $rpx1;
+        width: 24 * $rpx1;
+        height: 24 * $rpx1;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: rgba($color: #000000, $alpha: 0);
+        border: none;
+        transition: 0.3s;
+        border-radius: 5 * $rpx1;
+      }
+      button:active,
+      button:hover {
+        background-color: $mono100;
+      }
+    }
+  }
+}
