@@ -29,13 +29,13 @@ public class PostController {
     private final PostService postService;
 
     @Value("${spring.paging.size}")
-    private Long size;
+    private Integer size;
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 리스트", description = "게시글 리스트를 반환합니다.")
     @GetMapping("/list")
     public ResponseEntity<?> getList(@RequestParam(value="page", required = false) Integer page){
-        PageRequest pageRequest = PageRequest.of(page, Math.toIntExact(size));
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getLatestPostList(pageRequest), HttpStatus.OK);
     }
 
@@ -43,7 +43,7 @@ public class PostController {
     @Operation(summary = "날씨별 게시글 리스트", description = "날씨에 해당하는 게시글 리스트를 반환합니다.")
     @GetMapping("/list/weather")
     public ResponseEntity<?> getListByWeather(@RequestParam(value="page", required = false) Integer page, WeatherType weather){
-        PageRequest pageRequest = PageRequest.of(page, Math.toIntExact(size));
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByWeather(weather, pageRequest), HttpStatus.OK);
     }
 
@@ -51,7 +51,7 @@ public class PostController {
     @Operation(summary = "사람별 게시글 리스트", description = "특정 회원의 게시글 리스트를 반환합니다.")
     @GetMapping("/list/member")
     public ResponseEntity<?> getListByWriter(@RequestParam(value="page", required = false) Integer page, Long memberId){
-        PageRequest pageRequest = PageRequest.of(page, Math.toIntExact(size));
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByWriter(memberId, pageRequest), HttpStatus.OK);
     }
 
@@ -59,7 +59,7 @@ public class PostController {
     @Operation(summary = "사람별 게시글 리스트", description = "회원이 북마크한 게시글 리스트를 반환합니다.")
     @GetMapping("/list/bookmark")
     public ResponseEntity<?> getListByBookmark(@RequestParam(value="page", required = false) Integer page){
-        PageRequest pageRequest = PageRequest.of(page, Math.toIntExact(size));
+        PageRequest pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(postService.getBookmarkedListByMember(pageRequest), HttpStatus.OK);
     }
 
