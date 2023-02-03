@@ -81,6 +81,8 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
+  paging:
+    size: 10
 
 file:
   extension-regex: \.(jpg|png|bmp|gif)
@@ -97,5 +99,3 @@ sentiment:
 spring:
   profiles:
     active: server
-  paging:
-    size: 10
