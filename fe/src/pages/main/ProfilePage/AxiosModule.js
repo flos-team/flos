@@ -32,6 +32,11 @@ const doLogin = () => {
     });
 };
 
+/**
+ *
+ * @param {number} pgNum 서버로부터 포스트를 요청할 때 다음 페이지의 번호, default = 1
+ * @returns
+ */
 const getPost = async (pgNum = 1) => {
   let url = `/post/list?page=${pgNum}`;
   let data = null;
@@ -43,4 +48,5 @@ const getPost = async (pgNum = 1) => {
     .then(() => {});
   return data;
 };
+
 export { doLogin, getPost };
