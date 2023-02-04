@@ -16,20 +16,10 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import PostItem from "../../../components/PostItem/PostItem";
 
 /* import module */
-import { getPost } from "./AxiosModule";
+// import { getPost } from "./AxiosModule";
 import { getTimeDiffText } from "../../../api/DateModule";
-import MemberAPI, {
-  getCheckEmail,
-  getCheckNickname,
-  getMemberInfo,
-  logout,
-  sendCodeToEmail,
-  doLogin,
-  signUpUser,
-  modifyUserInfo,
-  resetUserPassword,
-  withdrawalUser,
-} from "../../../api/MemberAPI";
+import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
+import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost } from "../../../api/PostAPI";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
@@ -40,21 +30,21 @@ const ProfilePage = () => {
   const [isScrollable, setIsScrollable] = useState(true);
   let scRef = useRef(1);
   // 무한 스크롤 함수;
-  const renderPostList = useCallback(
-    (array) => {
-      let getPostList = [...array].map((e, i) => {
-        // console.dir(e);
-        let { content, writer, regDate } = e;
-        let postDay = dayjs(regDate, "YYYY-MM-DD HH:mm:ss");
-        let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
-        let text = getTimeDiffText(postDay, curDay);
-        return <PostItem mood={"RAINY"} userName={writer.nickname} postText={content} postTimeLog={text}></PostItem>;
-      });
-      let newPostList = postList.concat(getPostList);
-      setPostList(newPostList);
-    },
-    [postList]
-  ); // postList가 바뀌었을 때만 작동!
+  // const renderPostList = useCallback(
+  //   (array) => {
+  //     let getPostList = [...array].map((e, i) => {
+  //       // console.dir(e);
+  //       let { content, writer, regDate } = e;
+  //       let postDay = dayjs(regDate, "YYYY-MM-DD HH:mm:ss");
+  //       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
+  //       let text = getTimeDiffText(postDay, curDay);
+  //       return <PostItem mood={"RAINY"} userName={writer.nickname} postText={content} postTimeLog={text}></PostItem>;
+  //     });
+  //     let newPostList = postList.concat(getPostList);
+  //     setPostList(newPostList);
+  //   },
+  //   [postList]
+  // ); // postList가 바뀌었을 때만 작동!
 
   // useEffect(() => {
   //   if (isScrollable) {
@@ -72,24 +62,24 @@ const ProfilePage = () => {
   //   }
   // }, []);
 
-  const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom && isScrollable) {
-      console.log("스크롤의 끝 감지");
-      let data = getPost(postIdx);
-      data
-        .then((response) => {
-          // console.dir(response);
-          renderPostList(response);
-          setPostIdx(postIdx + 1);
-        })
-        .catch((e) => {
-          console.log("에러감지");
-          alert("불러올 데이터가 없습니다");
-          setIsScrollable(false);
-        });
-    }
-  };
+  // const handleScroll = (e) => {
+  //   const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+  //   if (bottom && isScrollable) {
+  //     console.log("스크롤의 끝 감지");
+  //     let data = getPost(postIdx);
+  //     data
+  //       .then((response) => {
+  //         // console.dir(response);
+  //         renderPostList(response);
+  //         setPostIdx(postIdx + 1);
+  //       })
+  //       .catch((e) => {
+  //         console.log("에러감지");
+  //         alert("불러올 데이터가 없습니다");
+  //         setIsScrollable(false);
+  //       });
+  //   }
+  // };
 
   return (
     <>
@@ -108,17 +98,16 @@ const ProfilePage = () => {
         >
           로그인
         </button>
-        <button
-          style={{ width: "100px", height: "30px" }}
-          onClick={(e) => {
-            // "onehee@ssafy.com"
-            sendCodeToEmail("onehee@ssafy.com");
-          }}
-        >
-          로그아웃
+        <button style={{ width: "100px", height: "30px" }} onClick={(e) => {}}>
+          기능 테스트
         </button>
       </div>
-      <div className="test-container" onScroll={handleScroll}>
+      <div
+        className="test-container"
+        onScroll={(e) => {
+          // handleScroll();
+        }}
+      >
         {postList}
       </div>
       {/* <div className="profile-page">
