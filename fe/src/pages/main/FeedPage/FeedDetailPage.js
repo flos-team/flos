@@ -1,4 +1,4 @@
-import PostDetailPage from "../../../components/PostDetailPage/PostDetailPage";
+import PostDetailPage from "./PostDetailPage/PostDetailPage";
 
 function FeedDetailPage() {
   return (
