@@ -28,11 +28,6 @@
   overflow-y: scroll;
 }
 
-button {
-  width: 100px;
-  height: 60px;
-}
-
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -95,13 +90,16 @@ button {
   border-bottom: 0.0625rem solid #0c597c; /* 변수로 치환 예정 */
 }
 .profile-page .feed-container {
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   width: 88.8vw;
   height: 65vh;
+}
+.profile-page .feed-container .post-item {
+  margin: 0 auto;
 }
 .profile-page .feed-container .grid-container {
   display: grid;

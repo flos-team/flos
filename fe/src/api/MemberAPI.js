@@ -135,7 +135,7 @@ const doLogin = async (email, password) => {
       // console.dir(axios.defaults)
     })
     .catch((err) => {
-      console.log("회원가입 중 에러가 발생하였습니다.");
+      console.log("로그인 중 에러가 발생하였습니다.");
     });
 };
 
