@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-/* img import */
+import axios from "axios";
 
+/* img import */
 import writerProfileSample from "../../../../assets/DummyData/writerProfileSample.png";
 import commentProfileSample from "../../../../assets/DummyData/commentProfileSample.png";
 import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
@@ -15,6 +16,23 @@ import "./PostDetailPage.css";
 const PostDetailPage = () => {
   const params = useParams();
   console.log("current Post id : " + params.id);
+
+  const [post, setPost] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/post/${params.id}`)
+      .then((response) => {
+        // setPosts(response.data.content);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("error : " + error);
+        console.dir(axios.defaults);
+      });
+  }, []);
+
+
   let commentItem = (
     <div className="comment-item">
       <img className="user-img" src={writerProfileSample} />

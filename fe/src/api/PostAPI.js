@@ -49,7 +49,7 @@ const getPostList = async (page = 1) => {
     .catch((error) => {
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
-  return postList;
+  return postList ;
 };
 
 /**

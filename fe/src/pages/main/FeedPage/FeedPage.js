@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 
+// import PostApi from "../../../api/PostAPI"
+import {getPostList} from "../../../api/PostAPI"
 import PostItem from "../../../components/PostItem/PostItem";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle.js";
@@ -8,23 +10,13 @@ import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle.js";
 import styles from "./FeedPage.module.css";
 
 function Feed() {
-  axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-  // axios.defaults.baseURL = "http://localhost:8080/";
-  axios.defaults.withCredentials = false;
-
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("/post/list?page=1")
-      .then((response) => {
-        setPosts(response.data.content);
-      })
-      .catch((error) => {
-        console.log("error : " + error);
-        console.dir(axios.defaults);
-      });
-  }, []);
+  
+  useEffect(() =>{
+    getPostList().then(response => {
+      setPosts(response)
+    })
+  }, [])
 
   const postList = posts.map(({ id, writer, weather, regDate, content }) => (
     <PostItem
