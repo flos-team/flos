@@ -1,13 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PostItem from "../../../components/PostItem/PostItem";
 import styles from "./FeedPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import { Link } from "react-router-dom";
-import MoveToTopToggle from '../../../components/MoveToTop/MoveToTopToggle.js'
+import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle.js";
 
-import { useSelector } from "react-redux";
-import { selectCurrentToken } from "../../../redux/auth";
+// import { useSelector } from "react-redux";
+// import { selectCurrentToken } from "../../../redux/auth";
 
 import axios from "axios";
 // import * as axios from "axios";
@@ -24,38 +23,44 @@ import axios from "axios";
  * postTag 해시태그
  *
  */
+// let posts = [];
+// axios
+// .get("/post/list")
+//   .then((response) => {
+//     // setPosts(response.data.content);
+//     // posts.push(response.data.content)
+//     // posts =response.data.content
+//     console.log(response.data)
+//   })
+//   .catch((error) => {
+//     console.log("error : " + error);
+//     console.dir(axios.defaults);
+//   });
 
 function Feed() {
   axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
+  // axios.defaults.baseURL = "http://localhost:8080/";
+  axios.defaults.withCredentials = false;
 
-  axios
-    .get("/member/info")
-    .then((response) => {
-      // console.log("123")
-      console.log(response)
-      // dispatch(setCredentials(response.data.atk));
+  const [posts, setPosts] = useState([]);
 
-      // axios.defaults.headers["Authorization"] = `Bearer ${response.data.atk}`;
+  useEffect(() => {
+    axios
+      .get("/post/list")
+      .then((response) => {
+        setPosts(response.data.content);
+      })
+      .catch((error) => {
+        console.log("error : " + error);
+        console.dir(axios.defaults);
+      });
+  }, []);
 
-      console.log(axios.defaults)
-    })
-    .catch((error) => {
-      console.log("error : " + error);
-      console.dir(axios.defaults);
-    });
 
-  const [userInfos, setUserInfos] = useState([
-    { userInfoId: 1, userInfo: 999, postId: 1 },
-    { userInfoId: 2, userInfo: 999, postId: 2 },
-    { userInfoId: 3, userInfo: 999, postId: 3 },
-    { userInfoId: 4, userInfo: 999, postId: 4 },
-    { userInfoId: 5, userInfo: 999, postId: 5 },
-  ]);
+  // const postList =  posts.map(({ id }) => <PostItem postId={id}></PostItem>);
 
-  const postList = userInfos.map(({ userInfoId, userInfo, postId }) => (
-    <PostItem mood={"RAINY"} userName={"wonnny"} postId={postId}></PostItem>
-  ));
-
+  console.log("posts");
+  console.log(posts);
   return (
     <div className={styles.feedRoot}>
       <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
@@ -186,7 +191,7 @@ function Feed() {
       </Link>
       <div className={styles.main}>
         {/** 친구들의 포스트를 나열한다.  */}
-        {postList}
+        {/* {postList} */}
       </div>
       <MoveToTopToggle></MoveToTopToggle>
     </div>

@@ -32,7 +32,8 @@ function Transition() {
 
             <Route path="/main" element={<MainPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route> 
-            <Route path="/feed" element={<FeedDetailPage />}></Route>
+            <Route path="/post/:id" element={<FeedDetailPage />}></Route>
+            {/* <Link to ={`/post/${1}`} > 로 전달 */}
             <Route path="/main/write" element = {<WritePostPage />}></Route>
 
             <Route path="/register/fill" element={<FillPage />}></Route>
