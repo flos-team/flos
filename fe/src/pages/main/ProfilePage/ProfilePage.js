@@ -16,8 +16,20 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import PostItem from "../../../components/PostItem/PostItem";
 
 /* import module */
-import { getPost, doLogin } from "./AxiosModule";
+import { getPost } from "./AxiosModule";
 import { getTimeDiffText } from "./DateModule";
+import MemberAPI, {
+  getCheckEmail,
+  getCheckNickname,
+  getMemberInfo,
+  logout,
+  sendCodeToEmail,
+  doLogin,
+  signUpUser,
+  modifyUserInfo,
+  resetUserPassword,
+  withdrawalUser,
+} from "../../../api/MemberAPI";
 
 /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
@@ -44,21 +56,21 @@ const ProfilePage = () => {
     [postList]
   ); // postList가 바뀌었을 때만 작동!
 
-  useEffect(() => {
-    if (isScrollable) {
-      let data = getPost();
-      data
-        .then((response) => {
-          // console.dir(response);
-          renderPostList(response);
-          setPostIdx(postIdx + 1);
-        })
-        .catch((e) => {
-          console.log("에러감지");
-          alert("불러올 데이터가 없습니다");
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isScrollable) {
+  //     let data = getPost();
+  //     data
+  //       .then((response) => {
+  //         // console.dir(response);
+  //         renderPostList(response);
+  //         setPostIdx(postIdx + 1);
+  //       })
+  //       .catch((e) => {
+  //         console.log("에러감지");
+  //         alert("불러올 데이터가 없습니다");
+  //       });
+  //   }
+  // }, []);
 
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -88,8 +100,22 @@ const ProfilePage = () => {
         menuOpt1={"STATISTICS"}
       ></HeaderComponent>
       <div className="request-div" ref={scRef}>
-        <button style={{ width: "100px", height: "30px" }} onClick={doLogin}>
+        <button
+          style={{ width: "100px", height: "30px" }}
+          onClick={(e) => {
+            doLogin("onehee@ssafy.com", "dnjsgml1234");
+          }}
+        >
           로그인
+        </button>
+        <button
+          style={{ width: "100px", height: "30px" }}
+          onClick={(e) => {
+            // "onehee@ssafy.com"
+            sendCodeToEmail("onehee@ssafy.com");
+          }}
+        >
+          로그아웃
         </button>
       </div>
       <div className="test-container" onScroll={handleScroll}>
