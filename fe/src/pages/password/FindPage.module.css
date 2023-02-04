@@ -54,6 +54,33 @@
     padding: 16px;
     background-color: #f0f0f0;
   }
-  .inputbtnbox{
-    
+  .inputdiv {
+    width: 60%;
+    height: 24px;
+    padding: 4px;
+  }
+  .inputdivicon{
+    display: flex;
+    position: relative;
+  }
+  .icon {
+    position: absolute;
+    /* top: 12px; */
+    right: 42%;
+    top: 4px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 1px;
+  }
+
+  .green{
+    color: green;
+    font-size: 12px;
+    margin: 4px 0 0 4px;
+  }
+  .red{
+    color: red;
+    font-size: 12px;
+    margin: 4px 0 0 4px;
   }
