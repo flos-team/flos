@@ -21,9 +21,11 @@ const getCheckEmail = async (email) => {
   let value = null;
   await axios
     .get(url)
-    .then((response) => response)
-    .then((result) => {
-      value = result.data;
+    .then((response) => {
+      value = response.data;
+    })
+    .catch((err) => {
+      console.log("이메일 중복 검사 중 에러 발생");
     });
   return value;
 };
@@ -38,9 +40,11 @@ const getCheckNickname = async (nickname) => {
   let value = null;
   await axios
     .get(url)
-    .then((response) => response)
-    .then((result) => {
-      value = result.data;
+    .then((response) => {
+      value = response.data;
+    })
+    .catch((err) => {
+      console.log("닉네임 중복 검사 중 에러 발생");
     });
   return value;
 };
@@ -54,9 +58,9 @@ const getMemberInfo = async () => {
   let userObject = {};
   await axios
     .get(url)
-    .then((response) => response)
-    .then((result) => {
-      userObject = { ...result.data };
+    .then((response) => (userObject = { ...response.data }))
+    .catch((err) => {
+      console.log("회원정보 가져오는 중 에러 발생");
     });
   return userObject;
 };
@@ -72,9 +76,11 @@ const logout = async () => {
   let isLogout = false;
   await axios
     .get(url)
-    .then((response) => response)
-    .then((result) => {
-      console.dir(result);
+    .then((response) => {
+      console.dir(response);
+    })
+    .catch((err) => {
+      console.log("로그아웃 중 오류 발생");
     });
   return isLogout;
 };
@@ -102,7 +108,7 @@ const sendCodeToEmail = async (email) => {
       //console.dir(error);
       alert("회원 정보가 존재하지 않습니다.");
     });
-  return;
+  return isComplete;
 };
 
 /////////* POST *//////////////////
@@ -122,16 +128,14 @@ const doLogin = async (email, password) => {
   await axios
     .post("/member/login", loginInfo)
     .then((response) => {
+      if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
       // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
       axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
       // console.dir(axios.defaults)
     })
-    .then(() => {})
-    .catch((error) => {
-      //   console.dir(error);
-      //   console.dir(axios.defaults);
-      console.log("에러 발생");
+    .catch((err) => {
+      console.log("회원가입 중 에러가 발생하였습니다.");
     });
 };
 
@@ -152,9 +156,11 @@ const signUpUser = async (code, email, nickname, password) => {
   };
   await axios
     .post(url, newUser)
-    .then((response) => response)
-    .then((result) => {
-      console.dir(result);
+    .then((response) => {
+      console.dir(response);
+    })
+    .catch((err) => {
+      console.log("회원가입 중 에러가 발생하였습니다.");
     });
 };
 
@@ -173,9 +179,11 @@ const modifyUserInfo = async (nickname, profileImage) => {
   let isUpdated = false;
   await axios
     .put(url, {})
-    .then((response) => response)
-    .then((result) => {
-      console.dir(result);
+    .then((response) => {
+      console.dir(response);
+    })
+    .catch((err) => {
+      console.log("회원정보 수정 중 오류 발생");
     });
   return isUpdated;
 };
@@ -198,9 +206,11 @@ const resetUserPassword = async (code, email, password) => {
   };
   await axios
     .put(url, modifiedUserInfo)
-    .then((response) => response)
-    .then((result) => {
-      console.log(result);
+    .then((response) => {
+      console.dir(response);
+    })
+    .catch((err) => {
+      console.log("회원 비밀번호 수정중 오류 발생");
     });
 };
 
@@ -215,9 +225,11 @@ const withdrawalUser = async () => {
   let url = "/member/quit";
   await axios
     .delete(url)
-    .then((response) => response)
-    .then((result) => {
-      console.dir(result);
+    .then((response) => {
+      console.dir(response);
+    })
+    .catch((err) => {
+      console.log("로그아웃 중 오류 발생");
     });
 };
 
