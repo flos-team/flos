@@ -17,7 +17,7 @@ import PostItem from "../../../components/PostItem/PostItem";
 
 /* import module */
 import { getPost } from "./AxiosModule";
-import { getTimeDiffText } from "./DateModule";
+import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, {
   getCheckEmail,
   getCheckNickname,

@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 const getTimeDiffText = (postDay, curDay) => {
   const milliSeconds = curDay.diff(postDay);
   const seconds = milliSeconds / 1000;
