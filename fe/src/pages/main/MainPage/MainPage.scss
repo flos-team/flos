@@ -1,20 +1,22 @@
 @import "../../../styles/commons.scss";
 
-.main-page{
-    display: flex;
-    flex-direction: column;
-    .main {
-        order: 1;
-        flex-grow: 1;
-
-    }
-    .footer{
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100vw;
-        height: 80px;
-        order: 2;
-    }
-
+.main-page {
+  width: 100vw;
+  // width: 200vw;
+  height: max-content;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  .main {
+    order: 1;
+    flex-grow: 1;
+  }
+  .footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 80px;
+    order: 2;
+  }
 }
