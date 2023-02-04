@@ -1,5 +1,10 @@
 import dayjs from "dayjs";
-
+/**
+ * getTimeDiffText : 두 날짜 사이의 시간차이를 계산하여 텍스트로 돌려주는 메서드
+ * @param {dayjs} postDay
+ * @param {dayjs} curDay
+ * @returns
+ */
 const getTimeDiffText = (postDay, curDay) => {
   const milliSeconds = curDay.diff(postDay);
   const seconds = milliSeconds / 1000;
