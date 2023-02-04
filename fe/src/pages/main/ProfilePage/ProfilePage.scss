@@ -1,5 +1,30 @@
 @import "../../../styles/commons.scss";
 
+.test-container {
+  width: 100vw;
+  height: 81.3vh;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  overflow-y: scroll;
+}
+
+// div {
+//   width: 100vw;
+//   height: 60px;
+//   display: flex;
+//   justify-content: center;
+//   gap: 16px;
+// }
+
+button {
+  width: 100px;
+  height: 60px;
+}
+
 .profile-page {
   display: flex;
   flex-direction: column;
