@@ -42,6 +42,7 @@ function Global() {
       content={content}
     ></PostItem>
   ));
+  const noPost = <div>게시물이 없습니다.</div>;
 
   const [filtering, setFiltering] = useState(false); // 필터링 아이콘 누른 상태 확인
   const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
@@ -127,7 +128,9 @@ function Global() {
             </div>
           </div>
         ) : null}
-        <div className={styles.main}>{postList}</div>
+        <div className={styles.main}>
+          {posts.length === 0 ? noPost : postList}
+        </div>
       </div>
 
       <MoveToTopToggle></MoveToTopToggle>
