@@ -12,19 +12,6 @@
   overflow-y: scroll;
 }
 
-// div {
-//   width: 100vw;
-//   height: 60px;
-//   display: flex;
-//   justify-content: center;
-//   gap: 16px;
-// }
-
-button {
-  width: 100px;
-  height: 60px;
-}
-
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -89,14 +76,19 @@ button {
 
   /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
   .feed-container {
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10px;
 
     width: 88.8vw;
     height: 65vh;
+
+    .post-item {
+      margin: 0 auto;
+    }
+
     .grid-container {
       display: grid;
       row-gap: 10 * $rpx1;

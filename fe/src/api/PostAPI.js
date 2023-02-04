@@ -34,22 +34,30 @@ const getPost = async (postId) => {
 /**
  * getPostList : 게시글 리스트
  * @param {number} page 페이지번호 (1 ~ N)
- * @returns
+ * @returns {Object} 포스트 리스트 정보를 갖는 자바스크립트 객체
  */
 const getPostList = async (page = 1) => {
   let url = `/post/list?page=${page}`;
-  let postList = [];
+  let postListObject = {};
   await axios
     .get(url)
     .then((response) => {
       if (response.status === 200) {
-        postList = [...response.data.content];
+        let data = response.data;
+        postListObject = {
+          postList: [...data.content],
+          hasContent: data.hasContent,
+          isFirst: data.isFirst,
+          isLast: data.isLast,
+          nextPage: data.nextPage,
+          nextSize: data.nextSize,
+        };
       }
     })
     .catch((error) => {
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
-  return postList;
+  return postListObject;
 };
 
 /**
