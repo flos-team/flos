@@ -46,7 +46,7 @@ function Feed() {
 
   useEffect(() => {
     axios
-      .get("/post/list")
+      .get("/post/list?page=1")
       .then((response) => {
         setPosts(response.data.content);
       })
@@ -56,11 +56,17 @@ function Feed() {
       });
   }, []);
 
+  const postList = posts.map(({ id, writer, weather, regDate, content }) => (
+    <PostItem
+      key={id}
+      postId={id}
+      writer={writer}
+      weather={weather}
+      regDate={regDate}
+      content={content}
+    ></PostItem>
+  ));
 
-  // const postList =  posts.map(({ id }) => <PostItem postId={id}></PostItem>);
-
-  console.log("posts");
-  console.log(posts);
   return (
     <div className={styles.feedRoot}>
       <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
@@ -186,12 +192,9 @@ function Feed() {
           ></img>
         </div>
       </div>
-      <Link to="write">
-        <div>write로 가기</div>
-      </Link>
       <div className={styles.main}>
         {/** 친구들의 포스트를 나열한다.  */}
-        {/* {postList} */}
+        {postList}
       </div>
       <MoveToTopToggle></MoveToTopToggle>
     </div>

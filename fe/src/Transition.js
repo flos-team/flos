@@ -5,7 +5,8 @@ import LandingPage1 from "./pages/landing/LandingPage1";
 
 import MainPage from "./pages/main/MainPage/MainPage";
 import LoginPage from "./pages/LoginPage";
-import FeedDetailPage from "./pages/main/FeedPage/FeedDetailPage";
+// import FeedDetailPage from "./pages/main/FeedPage/FeedDetailPage";
+import PostDetailPage from "./pages/main/FeedPage/PostDetailPage/PostDetailPage";
 import WritePostPage from "./pages/main/WritePostPage/WritePostPage"
 
 import FillPage from "./pages/register/FillPage";
@@ -32,7 +33,7 @@ function Transition() {
 
             <Route path="/main" element={<MainPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route> 
-            <Route path="/post/:id" element={<FeedDetailPage />}></Route>
+            <Route path="/main/post/:id" element={<PostDetailPage />}></Route>
             {/* <Link to ={`/post/${1}`} > 로 전달 */}
             <Route path="/main/write" element = {<WritePostPage />}></Route>
 

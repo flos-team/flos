@@ -1,15 +1,20 @@
 import { useState } from "react";
-
+import { useParams } from "react-router-dom";
 /* img import */
-import writerProfileSample from "../../assets/DummyData/writerProfileSample.png";
-import commentProfileSample from "../../assets/DummyData/commentProfileSample.png";
-import sunnyActivate from "../../assets/GlobalAsset/sunny-activate.png";
-import sendCommentBtn from "../../assets/GlobalAsset/send-comment-btn.png";
+
+import writerProfileSample from "../../../../assets/DummyData/writerProfileSample.png";
+import commentProfileSample from "../../../../assets/DummyData/commentProfileSample.png";
+import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
+import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
+
+import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 
 /* css import */
 import "./PostDetailPage.css";
 
 const PostDetailPage = () => {
+  const params = useParams();
+  console.log("current Post id : " + params.id);
   let commentItem = (
     <div className="comment-item">
       <img className="user-img" src={writerProfileSample} />
@@ -31,6 +36,7 @@ const PostDetailPage = () => {
   return (
     <>
       <div className="post-detail-page">
+      <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
         <div className="post-detail-container">
           <div className="post-container">
             <div className="user-info-container">
@@ -45,7 +51,7 @@ const PostDetailPage = () => {
             <div className="img-container" style={{ backgroundImage: `url(${writerProfileSample})` }}></div>
             <div className="post-content-container">
               <div className="post-text-div">
-                아직도 난 너를 느끼죠 이렇게 우리 지금이 순간도 난 그대가 보여 길가에 덩그러니 놓여진 저 의자 위에도
+                본문 아직도 난 너를 느끼죠 이렇게 우리 지금이 순간도 난 그대가 보여 길가에 덩그러니 놓여진 저 의자 위에도
                 밤을 타고 쓸쓸히 춤추는 전 낙엽 위에도 뺨을 스치는 어느 저녁의 그 공기 속에도 길가에 내려앉은 음악속에도
                 네가 있어 어떤가요 그대 어떤가요 그대 그대는 지웠을 텐데 어떤가요 그대 우린
                 라랄라라라라라라라라라라라라라라라라라라라라라라ㅏ라라라라라라랄
