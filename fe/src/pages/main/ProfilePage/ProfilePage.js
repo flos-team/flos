@@ -1,28 +1,27 @@
-// import { render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
-// import axios from "axios";
+import axios from "axios";
 
 // /* libraray */
 // // 날짜 처리를 위한 라이브러리
-// import dayjs from "dayjs";
+import dayjs from "dayjs";
 
-// // import React from "react";
-// import { useState, useEffect, useCallback, useRef } from "react";
-// /* 컴포넌트에서 사용할 이미지 에셋 import */
-// import userImg from "../../../assets/GlobalAsset/user-img.png";
+import React from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+/* 컴포넌트에서 사용할 이미지 에셋 import */
+import userImg from "../../../assets/GlobalAsset/user-img.png";
 
-// /* import component */
-// import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
-// import PostItem from "../../../components/PostItem/PostItem";
+/* import component */
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
+import PostItem from "../../../components/PostItem/PostItem";
 
 /* import module */
-// import { getPost } from "./AxiosModule";
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
 import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost } from "../../../api/PostAPI";
 
 // /* Profile Page 전용 CSS import */
-// import "./ProfilePage.css";
+import "./ProfilePage.css";
 
 const ProfilePage = () => {
   const [postIdx, setPostIdx] = useState(1);
@@ -46,21 +45,21 @@ const ProfilePage = () => {
   //   [postList]
   // ); // postList가 바뀌었을 때만 작동!
 
-//   // useEffect(() => {
-//   //   if (isScrollable) {
-//   //     let data = getPost();
-//   //     data
-//   //       .then((response) => {
-//   //         // console.dir(response);
-//   //         renderPostList(response);
-//   //         setPostIdx(postIdx + 1);
-//   //       })
-//   //       .catch((e) => {
-//   //         console.log("에러감지");
-//   //         alert("불러올 데이터가 없습니다");
-//   //       });
-//   //   }
-//   // }, []);
+  //   // useEffect(() => {
+  //   //   if (isScrollable) {
+  //   //     let data = getPost();
+  //   //     data
+  //   //       .then((response) => {
+  //   //         // console.dir(response);
+  //   //         renderPostList(response);
+  //   //         setPostIdx(postIdx + 1);
+  //   //       })
+  //   //       .catch((e) => {
+  //   //         console.log("에러감지");
+  //   //         alert("불러올 데이터가 없습니다");
+  //   //       });
+  //   //   }
+  //   // }, []);
 
   // const handleScroll = (e) => {
   //   const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
