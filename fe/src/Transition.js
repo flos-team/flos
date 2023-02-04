@@ -25,7 +25,7 @@ function Transition() {
   return (
     <div>
       <TransitionGroup className="transitions-wrapper">
-        <CSSTransition key={location.key} classNames={`right`} timeout={300}>
+        {/* <CSSTransition key={location.key} classNames={`right`} timeout={300}> */}
           <Routes location={location}>
             <Route path="/" element={<LandingPage />}></Route>
             <Route path="/landing1" element={<LandingPage1 />}></Route>
@@ -53,7 +53,7 @@ function Transition() {
             {/* <Route path="/product/*" element={<Product />}></Route> */}
             {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}
           </Routes>
-        </CSSTransition>
+        {/* </CSSTransition> */}
       </TransitionGroup>
     </div>
   );
