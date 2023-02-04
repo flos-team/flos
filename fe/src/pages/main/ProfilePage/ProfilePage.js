@@ -130,4 +130,4 @@ const ProfilePage = () => {
   );
 };
 
-// export default ProfilePage;
+export default ProfilePage;

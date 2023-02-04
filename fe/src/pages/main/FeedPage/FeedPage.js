@@ -1,41 +1,11 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import PostItem from "../../../components/PostItem/PostItem";
-import styles from "./FeedPage.module.css";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
-import { Link } from "react-router-dom";
 import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle.js";
 
-// import { useSelector } from "react-redux";
-// import { selectCurrentToken } from "../../../redux/auth";
-
-import axios from "axios";
-// import * as axios from "axios";
-/** 게시글 리스트
- * writerProfileImg 작성자 프로필 사진
- * writerNickname 작성자 별명
- * postRegDate 작성 시간
- * postWeather 날씨
- * postContent 내용
- * postPhoto 첨부파일
- * isBookMarked 북마크 여부
- * postWeatherCount 채택된 날씨 수
- * postCommentCount 댓글 수
- * postTag 해시태그
- *
- */
-// let posts = [];
-// axios
-// .get("/post/list")
-//   .then((response) => {
-//     // setPosts(response.data.content);
-//     // posts.push(response.data.content)
-//     // posts =response.data.content
-//     console.log(response.data)
-//   })
-//   .catch((error) => {
-//     console.log("error : " + error);
-//     console.dir(axios.defaults);
-//   });
+import styles from "./FeedPage.module.css";
 
 function Feed() {
   axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
@@ -66,6 +36,8 @@ function Feed() {
       content={content}
     ></PostItem>
   ));
+
+  const noPost = <div>게시물이 없습니다.</div>;
 
   return (
     <div className={styles.feedRoot}>
@@ -194,7 +166,7 @@ function Feed() {
       </div>
       <div className={styles.main}>
         {/** 친구들의 포스트를 나열한다.  */}
-        {postList}
+        {posts.length === 0 ? noPost : postList}
       </div>
       <MoveToTopToggle></MoveToTopToggle>
     </div>
