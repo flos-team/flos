@@ -164,6 +164,7 @@
   margin: 0 auto;
 }
 
+/* 스크롤바 숨기는 속성 */
 .hide-scroll {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
