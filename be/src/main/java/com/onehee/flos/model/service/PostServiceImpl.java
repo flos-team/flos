@@ -59,7 +59,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public SliceResponseDTO getBookmarkedListByMember(Pageable pageable) {
-        return SliceResponseDTO.toDto(bookmarkRepository.findSliceAllByMember(SecurityManager.getCurrentMember(), pageable)
+        return SliceResponseDTO.toDto(bookmarkRepository.findSliceByMember(SecurityManager.getCurrentMember(), pageable)
                 .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost()))));
     }
 
