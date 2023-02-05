@@ -16,6 +16,7 @@ import PwFindPage from "./pages/password/FindPage";
 
 import UserStatisticsPage from "./pages/main/ProfilePage/UserStatisticsPage/UserStatisticsPage";
 import ProfileModifyPage from "./pages/main/ProfilePage/ProfileModifyPage/ProfileModifyPage";
+import OtherProfilePage from "./components/OtherProfilePage/OtherProfilePage";
 
 import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
@@ -48,7 +49,9 @@ function Transition() {
           <Route path="/settings" element={<SettingPage />}></Route>
           <Route path="/notification" element={<NotificationPage />}></Route>
           <Route path="/guide" element={<GuidePage />}></Route>
+
           <Route path="/profile-modify" element={<ProfileModifyPage />}></Route>
+          <Route path="/other-profile-page" element={<OtherProfilePage />}></Route>
 
           {/* <Route path="/product/*" element={<Product />}></Route> */}
           {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}

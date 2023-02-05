@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 /* import react */
 import React from "react";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 /* import img */
 import userImg from "../../../assets/GlobalAsset/user-img.png";
@@ -56,6 +56,7 @@ const ProfilePage = ({ setIsToast }) => {
         setPostIdx(pageIdx);
         postList = res.postList.map(({ id, content, writer, regDate, weather }) => (
           <PostItem
+            key={id}
             postId={id}
             content={content}
             writerNickname={writer.nickname}
@@ -117,6 +118,7 @@ const ProfilePage = ({ setIsToast }) => {
     [postList]
   ); // postList가 바뀌었을 때만 작동!
 
+  // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
 
@@ -126,6 +128,9 @@ const ProfilePage = ({ setIsToast }) => {
       setPostIdx(postIdx + 1);
     }
   };
+
+  // temp, 다른사람 페이지로 이동하는 메서드
+  const navigate = useNavigate();
 
   return (
     <>
@@ -154,10 +159,15 @@ const ProfilePage = ({ setIsToast }) => {
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
         <div className="profile-tab-menu">
-          <div className="post-tab focus-tab">
+          <div
+            className="post-tab focus-tab"
+            onClick={(e) => {
+              navigate("/other-profile-page");
+            }}
+          >
             <p>내 포스트</p>
           </div>
-          <div className="book-tab">
+          <div className="book-tab" onClick={setIsToast}>
             <p>북마크</p>
           </div>
         </div>
