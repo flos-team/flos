@@ -25,6 +25,8 @@ public class SliceResponseDTO {
     private Integer nextPage;
     private Integer nextSize;
     public static SliceResponseDTO toDto(Slice<?> data) {
+        if (data == null)
+            return null;
         List<?> tempContent = new ArrayList<>();
         Integer pageNumber = null;
         Integer pageSize = null;
