@@ -1,1 +1,107 @@
 @import "../../../../styles/commons.scss";
+
+.profiile-edit-page-conatiner {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 16px;
+  width: 360px;
+  height: 676px;
+  .profile-photo-edit-container {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 10px;
+    width: 328px;
+    height: 134px;
+    .user-img {
+      width: 80px;
+      height: 80px;
+      border: 1 * $rpx1 solid $mono200;
+      border-radius: 40px;
+      background-position: center;
+      background-size: cover;
+    }
+    .profile-photo-edit-btn {
+      width: 141px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      label {
+        font-size: 16px;
+        text-align: center;
+        color: $sky-blue300;
+        font-weight: 600;
+      }
+    }
+  }
+  .profile-edit-container {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 328px;
+    height: 602px;
+    .profile-edit-item {
+      /* Auto layout */
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      padding: 12px 0px;
+      gap: 8px;
+      width: 328px;
+      height: 80px;
+      background: #ffffff;
+      .nickname-input-lab,
+      .introduce-input-lab {
+        /* name-input-lab */
+        width: 328px;
+        height: 18px;
+        font-size: 14px;
+      }
+      .nickname-input,
+      .introduce-input {
+        box-sizing: border-box;
+        width: 328px;
+        height: 30px;
+        border: none;
+        border-bottom: 1px solid $black;
+      }
+    }
+
+    .password-modify-item {
+      /* Auto layout */
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      padding: 12px 0px;
+      gap: 8px;
+      width: 328px;
+      height: 80px;
+      background: $white-pure;
+      a {
+        text-decoration: none;
+        .password-modify-btn {
+          /* Auto layout */
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 0px;
+          width: 40%;
+          height: 40px;
+          p {
+            color: $sky-blue300;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

@@ -27,9 +27,9 @@ const WriteFormComponent = ({ holderFunc }) => {
         <input className="post-tag-input" placeholder="#태그를 입력하세요" />
       </div>
       <div className="post-option-container">
-        <label for="test">
+        <label htmlFor="photo-input">
           <div className="photo-add-btn">
-            <input type="file" id="test"></input>
+            <input type="file" id="photo-input"></input>
             <img src={pictureIcon} />
           </div>
         </label>
