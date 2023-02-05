@@ -17,11 +17,11 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 날씨에 해당하는 포스트
-    Slice<Post> findSliceByWeather(WeatherType weatherType, Pageable pageable);
+    Slice<Post> findAllByWeather(WeatherType weatherType, Pageable pageable);
 
     // 포스트 리스트
-    Slice<Post> findSliceBy(Pageable pageable);
+    Slice<Post> findAllBy(Pageable pageable);
 
     // 작성자에 해당하는 포스트
-    Slice<Post> findSliceByWriter(Member writer, Pageable pageable);
+    Slice<Post> findAllByWriter(Member writer, Pageable pageable);
 }
