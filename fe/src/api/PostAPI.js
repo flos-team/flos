@@ -212,13 +212,11 @@ const deletePost = async (postId) => {
       console.dir(response);
       if (response.status === 200) {
         console.log("글 삭제 완료");
-        alert("글이 삭제되었습니다");
         isDeleted = true;
       } else if (response.status === 204) {
         // console.log("해당 글이 존재하지 않습니다");
         // isDeleted = false;
         console.log("글 삭제 완료");
-        alert("글이 삭제되었습니다");
         isDeleted = true;
       }
     })

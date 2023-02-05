@@ -89,7 +89,8 @@ const ProfilePage = () => {
     PostListProm.then((res) => {
       setPostList([...res]);
     }).catch((err) => {
-      alert("게시글을 불러올 수 없습니다");
+      console.log("게시글 불러올 수 없음");
+      console.dir(err);
       // 나중에 여기서 토스트 메세지 띄울 것.
     });
   }, []);
@@ -104,7 +105,8 @@ const ProfilePage = () => {
         let newPostList = postList.concat(acceptPostList);
         setPostList(newPostList);
       }).catch((err) => {
-        alert("게시글을 불러올 수 없습니다");
+        console.log("게시글 불러올 수 없음");
+        console.dir(err);
         // 나중에 여기서 토스트 메세지 띄울 것.
         setIsScrollable(false);
       });
