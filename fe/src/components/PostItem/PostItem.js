@@ -63,8 +63,6 @@ const PostItem = ({ postId, writerNickname, weather, regDate, content, tagList }
         break;
     }
   }, [weather]);
-
-  console.log(weather);
   return (
     <>
       <div className="post-item" id={`${postId}`}>

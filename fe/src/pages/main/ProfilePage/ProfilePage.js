@@ -6,9 +6,12 @@ import axios from "axios";
 // // 날짜 처리를 위한 라이브러리
 import dayjs from "dayjs";
 
+/* import react */
 import React from "react";
 import { useState, useEffect, useCallback, useRef } from "react";
-/* 컴포넌트에서 사용할 이미지 에셋 import */
+import { Link } from "react-router-dom";
+
+/* import img */
 import userImg from "../../../assets/GlobalAsset/user-img.png";
 
 /* import component */
@@ -20,7 +23,7 @@ import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
 import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost } from "../../../api/PostAPI";
 
-// /* Profile Page 전용 CSS import */
+/* import css */
 import "./ProfilePage.css";
 
 const ProfilePage = ({ setIsToast }) => {
@@ -136,9 +139,11 @@ const ProfilePage = ({ setIsToast }) => {
         <div className="user-info-header">
           <img src={userImg} />
           <div className="profile-edit-nav-container">
-            <div className="profile-edit-btn">
-              <p>프로필 편집</p>
-            </div>
+            <Link to="/profile-modify">
+              <div className="profile-edit-btn">
+                <p>프로필 편집</p>
+              </div>
+            </Link>
           </div>
           <div className="user-introduce-contanier">
             <p>{"안녕하세요 Olivia입니다."}</p>
