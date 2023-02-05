@@ -26,16 +26,23 @@ public class SliceResponseDTO {
     private Integer nextSize;
     public static SliceResponseDTO toDto(Slice<?> data) {
         List<?> tempContent = new ArrayList<>();
+        Integer pageNumber = null;
+        Integer pageSize = null;
+        Pageable pageable = data.nextPageable();
         if (data.getContent() != null)
             tempContent = data.getContent();
+        if (data.nextPageable() != null) {
+            pageNumber = pageable.getPageNumber();
+            pageSize = pageable.getPageSize();
+        }
         return SliceResponseDTO.builder()
                 .content(tempContent)
                 .isFirst(data.isFirst())
                 .isLast(data.isLast())
                 .hasContent(data.hasContent())
                 .hasNext(data.hasNext())
-                .nextPage(data.nextPageable().getPageNumber())
-                .nextSize(data.nextPageable().getPageSize())
+                .nextPage(pageNumber)
+                .nextSize(pageSize)
                 .build();
     }
 }
