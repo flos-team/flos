@@ -1,138 +1,207 @@
 @import "../../../styles/commons.scss";
 
-.test-container {
+.profile-page-container {
+  /* Auto layout */
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 0px 16 * $rpx1;
+  gap: 8 * $rpx1;
   width: 100vw;
-  height: 81.3vh;
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 16px;
+  height: 656 * $rpx1;
+  overflow: hidden;
   overflow-y: scroll;
-}
-
-.profile-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 80vh; /* how... */
-  .user-profile-img {
-    width: 25vw;
-    height: 25vw;
-  }
-  /* 사용자 사진, 닉네임, 감정상태(mood)를 표시하는 헤더 */
-  .user-info-container {
-    width: 80vw;
-    height: 70 * $rpx1;
-    margin: 10 * $rpx1 auto;
-    // border: 1px solid black;
-    /* 사용자의 팔로워수, 팔로잉, 게시글에 대한 정보를 확인할 info box */
-    .user-social-info-box {
+  .user-info-header {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12 * $rpx1 16 * $rpx1;
+    width: 328 * $rpx1;
+    height: 194 * $rpx1;
+    img {
       display: block;
-      margin: 0 auto;
-      width: 90%;
-      height: 100%;
-      background: $white;
-      border-radius: 10 * $rpx1;
-      font-size: 12px;
-      ul {
-        list-style: none;
+      box-sizing: border-box;
+      width: 80 * $rpx1;
+      height: 80 * $rpx1;
+      /* mono 200*/
+      border: 1 * $rpx1 solid #d3d3d3;
+      border-radius: 40 * $rpx1;
+    }
+    .profile-edit-nav-container {
+      /* Auto layout */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8 * $rpx1 16 * $rpx1;
+      width: 100%;
+      height: 46 * $rpx1;
+      background: #ffffff;
+      .profile-edit-btn {
+        /* Auto layout */
         display: flex;
-        height: 50%;
-        li {
-          width: 25%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 4 * $rpx1 8 * $rpx1;
+        width: 100 * $rpx1;
+        height: 30 * $rpx1;
+        p {
+          font-size: 16 * $rpx1;
           text-align: center;
-          line-height: 35px;
         }
       }
     }
-  }
-  /* 사용자 게시글 / 북마크 글을 전환하는 nav 컴포넌트 */
-  .profile-tab-menu {
-    margin-top: 10 * $rpx1;
-    margin-bottom: 4 * $rpx1;
-    width: 66.7vw;
-    height: 80 * $rpx1;
-    // border: 1px solid black; /* temp */
-    .tab-menus {
-      list-style: none;
+    .user-introduce-contanier {
+      /* Auto layout */
       display: flex;
-      justify-content: space-between;
-      width: 100%;
-      height: 100%;
-      li {
-        width: 45%;
-        height: 60%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 8 * $rpx1 16 * $rpx1;
+      width: 296 * $rpx1;
+      height: 36 * $rpx1;
+      background: #ffffff;
+      p {
+        font-size: 16 * $rpx1;
         text-align: center;
-      }
-      li:first-child {
-        color: $blue800; /* 변수로 치환 예정 */
-        border-bottom: 1 * $rpx1 solid $blue800; /* 변수로 치환 예정 */
       }
     }
   }
 
-  /* 사용자의 게시글 / 북마크를 담을 Routes 태그 속성 */
-  .feed-container {
-    overflow-x: hidden;
-    overflow-y: scroll;
+  .user-social-info-box {
+    width: 328 * $rpx1;
+    height: 80 * $rpx1;
+    background: $white;
+    border-radius: 10 * $rpx1;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-flow: column wrap;
+    .social-info-title {
+      width: 100%;
+      height: 50%;
+      list-style: none;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+    .social-info-count {
+      width: 100%;
+      height: 50%;
+      list-style: none;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  }
 
-    width: 88.8vw;
-    height: 65vh;
+  .profile-tab-menu {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8 * $rpx1;
+    gap: 16 * $rpx1;
+    width: 328 * $rpx1;
+    height: 40 * $rpx1;
+    background: $white-pure;
+    .post-tab {
+      width: 100 * $rpx1;
+      height: 32 * $rpx1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        font-size: 16 * $rpx1;
+        text-align: center;
+      }
+    }
+    .book-tab {
+      width: 100 * $rpx1;
+      height: 32 * $rpx1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      p {
+        font-size: 16px;
+        text-align: center;
+      }
+    }
+  }
 
+  .post-container {
+    /* Auto layout */
+    display: flex;
+    flex-flow: row wrap;
+    overflow-y: scroll;
+    align-items: center;
+    padding: 8 * $rpx1 0px;
+    gap: 8 * $rpx1;
+    width: 328 * $rpx1;
+    height: 600 * $rpx1;
     .post-item {
       margin: 0 auto;
     }
-
-    .grid-container {
-      display: grid;
-      row-gap: 10 * $rpx1;
-      column-gap: 10 * $rpx1;
-    }
-  }
-}
-@media (min-height: 850px) {
-  .profile-page {
-    .feed-container {
-      height: 80vh;
-    }
   }
 }
 
-@media (max-width: 480px) {
-  .profile-page {
-    .user-profile-img {
-      width: 20vw;
-      height: 20vw;
-    }
-    .feed-container {
-      .grid-container {
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(1, 1fr);
-      }
-    }
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.focus-tab {
+  /* skyblue300 */
+  border-bottom: 1 * $rpx1 solid $sky-blue300;
+  transition: 0.5s;
+  p {
+    color: $sky-blue300;
   }
 }
-@media (min-width: 800px) {
-  .profile-page {
-    .feed-container {
-      display: grid;
-      row-gap: 10 * $rpx1;
-      column-gap: 10 * $rpx1;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      overflow-x: scroll;
-      overflow-y: scroll;
-      grid-template-columns: 1fr 1fr 1fr;
-      column-gap: 20 * $rpx1;
-      .grid-container {
-        height: 80vh;
-      }
-    }
-  }
-}
+
+// @media (min-height: 850px) {
+//   .profile-page {
+//     .feed-container {
+//       height: 80vh;
+//     }
+//   }
+// }
+
+// @media (max-width: 480px) {
+//   .profile-page {
+//     .user-profile-img {
+//       width: 20vw;
+//       height: 20vw;
+//     }
+//     .feed-container {
+//       .grid-container {
+//         grid-template-columns: repeat(1, 1fr);
+//         grid-template-rows: repeat(1, 1fr);
+//       }
+//     }
+//   }
+// }
+// @media (min-width: 800px) {
+//   .profile-page {
+//     .feed-container {
+//       display: grid;
+//       row-gap: 10 * $rpx1;
+//       column-gap: 10 * $rpx1;
+//       grid-template-columns: repeat(2, 1fr);
+//       grid-template-rows: repeat(2, 1fr);
+//       overflow-x: scroll;
+//       overflow-y: scroll;
+//       grid-template-columns: 1fr 1fr 1fr;
+//       column-gap: 20 * $rpx1;
+//       .grid-container {
+//         height: 80vh;
+//       }
+//     }
+//   }
+// }

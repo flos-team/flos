@@ -62,7 +62,6 @@ const BottomNavigation = ({ isToast, setIsToast, isChecked, setIsChecked }) => {
 
   useEffect(() => {
     setToastItem(isToast ? toastDivUp : toastDiv);
-    console.log("toast 렌더링");
   }, [isToast]);
   const [toastItem, setToastItem] = useState();
   const toastDiv = (

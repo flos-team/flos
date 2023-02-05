@@ -35,10 +35,10 @@ const ProfilePage = ({ setIsToast }) => {
   const [isBookScrollable, setIsBookScrollable] = useState(true);
 
   // 사용자 정보를 임시로 더미데이터로 맵핑...
-  const titles = [{ option: "팔로잉" }, { option: "팔로우" }, { option: "게시글" }, { option: "꽃송이" }];
-  const titleList = titles.map(({ option }) => <li>{option}</li>);
+  const titles = ["팔로잉", "팔로우", "게시글", "꽃송이"];
+  const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const userInfoList = userInfos.map((e) => <li>{e > 999 ? "999+" : e}</li>);
+  const userInfoList = userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
 
   // 사용자 정보를 다루는 state
   let [userInfo, setUserinfo] = useState({});
@@ -132,33 +132,32 @@ const ProfilePage = ({ setIsToast }) => {
         menuOpt2={"SETTING"}
         menuOpt1={"STATISTICS"}
       ></HeaderComponent>
-      <div className="profile-page">
-        <img className="user-profile-img" src={userImg}></img>
-        <div className="user-info-container">
-          <div className="user-social-info-box">
-            <ul className="user-social-info-title">{titleList}</ul>
-            <ul className="user-social-info">{userInfoList}</ul>
+      <div className="profile-page-container hide-scroll">
+        <div className="user-info-header">
+          <img src={userImg} />
+          <div className="profile-edit-nav-container">
+            <div className="profile-edit-btn">
+              <p>프로필 편집</p>
+            </div>
+          </div>
+          <div className="user-introduce-contanier">
+            <p>{"안녕하세요 Olivia입니다."}</p>
           </div>
         </div>
+        <div className="user-social-info-box">
+          <ul className="social-info-title">{titleList}</ul>
+          <ul className="social-info-count">{userInfoList}</ul>
+        </div>
         <div className="profile-tab-menu">
-          <ul className="tab-menus">
-            <li className="post-menu">포스트</li>
-            <li
-              className="book-menu"
-              onClick={(e) => {
-                setIsToast(true);
-                console.log("토스트 짠");
-              }}
-            >
-              북마크
-            </li>
-          </ul>
+          <div className="post-tab focus-tab">
+            <p>내 포스트</p>
+          </div>
+          <div className="book-tab">
+            <p>북마크</p>
+          </div>
         </div>
-        <div className="feed-container" onScroll={handleScroll}>
-          {/* {postList} */}
-        </div>
+        <div className="post-container hide-scroll">{postList}</div>
       </div>
-      {/* <PostDetailPage></PostDetailPage> */}
     </>
   );
 };
