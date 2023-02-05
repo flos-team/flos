@@ -1,0 +1,13 @@
+.flowerMessage{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 235px;
+    height: 171px;
+    top: 106px;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #FFFFFF;
+    border-radius: 15px;
+    z-index: 20;
+}
