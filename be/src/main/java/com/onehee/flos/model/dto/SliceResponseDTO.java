@@ -10,6 +10,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @NoArgsConstructor
@@ -24,8 +25,11 @@ public class SliceResponseDTO {
     private Integer nextPage;
     private Integer nextSize;
     public static SliceResponseDTO toDto(Slice<?> data) {
+        List<?> tempContent = new ArrayList<>();
+        if (data.getContent() != null)
+            tempContent = data.getContent();
         return SliceResponseDTO.builder()
-                .content(data.getContent())
+                .content(tempContent)
                 .isFirst(data.isFirst())
                 .isLast(data.isLast())
                 .hasContent(data.hasContent())
