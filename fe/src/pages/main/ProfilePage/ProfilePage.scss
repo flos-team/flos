@@ -19,13 +19,13 @@
     padding: 12 * $rpx1 16 * $rpx1;
     width: 328 * $rpx1;
     height: 194 * $rpx1;
-    img {
-      display: block;
-      box-sizing: border-box;
-      width: 80 * $rpx1;
-      height: 80 * $rpx1;
+    .user-img {
+      width: 80px;
+      height: 80px;
       border: 1 * $rpx1 solid $mono200;
-      border-radius: 40 * $rpx1;
+      border-radius: 40px;
+      background-position: center;
+      background-size: cover;
     }
     .profile-edit-nav-container {
       /* Auto layout */

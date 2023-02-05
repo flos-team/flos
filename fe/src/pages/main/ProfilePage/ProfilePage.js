@@ -142,7 +142,7 @@ const ProfilePage = ({ setIsToast }) => {
       ></HeaderComponent>
       <div className="profile-page-container hide-scroll">
         <div className="user-info-header">
-          <img src={userImg} />
+          <div className="user-img" style={{ backgroundImage: `url(${userImg})` }}></div>
           <div className="profile-edit-nav-container">
             <Link to="/profile-modify">
               <div className="profile-edit-btn">
@@ -158,6 +158,14 @@ const ProfilePage = ({ setIsToast }) => {
           <ul className="social-info-title">{titleList}</ul>
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
+        <button
+          style={{ width: "160px", height: "30px", display: "block", margin: "0 auto" }}
+          onClick={(e) => {
+            navigate("/follower-view-page");
+          }}
+        >
+          팔로워 확인 페이지로 이동
+        </button>
         <div className="profile-tab-menu">
           <div
             className="post-tab focus-tab"
