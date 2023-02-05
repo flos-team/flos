@@ -14,7 +14,7 @@
   .user-info-header {
     /* Auto layout */
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
     align-items: center;
     padding: 12 * $rpx1 16 * $rpx1;
     width: 328 * $rpx1;
@@ -38,18 +38,22 @@
       width: 100%;
       height: 46 * $rpx1;
       background: #ffffff;
-      .profile-edit-btn {
-        /* Auto layout */
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 4 * $rpx1 8 * $rpx1;
-        width: 100 * $rpx1;
-        height: 30 * $rpx1;
-        p {
-          font-size: 16 * $rpx1;
-          text-align: center;
+      a {
+        text-decoration: none;
+        color: $sky-blue300;
+        .profile-edit-btn {
+          /* Auto layout */
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 4 * $rpx1 8 * $rpx1;
+          width: 100 * $rpx1;
+          height: 30 * $rpx1;
+          p {
+            font-size: 16 * $rpx1;
+            text-align: center;
+          }
         }
       }
     }
