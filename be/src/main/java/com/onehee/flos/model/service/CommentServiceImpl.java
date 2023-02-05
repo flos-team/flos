@@ -28,6 +28,12 @@ public class CommentServiceImpl implements CommentService {
     private final PostRepository postRepository;
 
     @Override
+    public CommentResponseDTO getCommentById(Long commentId) throws BadRequestException{
+        Comment tempComment = commentRepository.findById(commentId).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        return CommentResponseDTO.toDto(tempComment);
+    }
+
+    @Override
     public SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException {
         Post post = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         return SliceResponseDTO.toDto(commentRepository.findSliceByPost(post, pageable)

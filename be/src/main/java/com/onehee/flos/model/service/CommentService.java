@@ -15,8 +15,10 @@ import java.util.List;
 
 @Service
 public interface CommentService {
+    // 특정 댓글 정보
+    CommentResponseDTO getCommentById(Long commentId) throws BadRequestException;
     // 게시글의 댓글 리스트
-    SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable);
+    SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException;
 
     // 회원의 댓글 리스트
     SliceResponseDTO getCommentListByMember(Pageable pageable);
