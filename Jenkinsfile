@@ -1,6 +1,6 @@
 def component = [
-	Nginxapp: false, // 프론트 서버 사용 여부
-	Springapp: true, // 백 서버 사용 여부
+	Nginxapp: true, // 프론트 서버 사용 여부
+	Springapp: false, // 백 서버 사용 여부
 	Pythonapp: false // 테스트 서버 사용 여부
 ]
 pipeline {
@@ -60,10 +60,8 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''cd springapp
+										execCommand: '''
 sudo docker-compose pull
-sudo rm -rf /mariadb
-sudo rm -rf ~/mariadb
 sudo docker-compose up --force-recreate -d''', 
 										execTimeout: 120000, 
 										flatten: false, 
