@@ -42,7 +42,6 @@
   box-sizing: border-box;
   width: 5rem;
   height: 5rem;
-  /* mono 200*/
   border: 0.0625rem solid #d3d3d3;
   border-radius: 2.5rem;
 }
