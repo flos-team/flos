@@ -1,6 +1,6 @@
 def component = [
-	Nginxapp: false, // 프론트 서버 사용 여부
-	Springapp: true, // 백 서버 사용 여부
+	Nginxapp: true, // 프론트 서버 사용 여부
+	Springapp: false, // 백 서버 사용 여부
 	Pythonapp: false // 테스트 서버 사용 여부
 ]
 pipeline {
@@ -39,7 +39,7 @@ pipeline {
 								usernameVariable: 'DOCKER_USER_ID',
 								passwordVariable: 'DOCKER_USER_PASSWORD'
 								]]){
-								sh "docker tag flos_pipeline_sub_${var.toLowerCase()}:latest ${DOCKER_USER_ID}/flos_pipeline_${var.toLowerCase()}:${BUILD_NUMBER}"
+								sh "docker tag flos_pipeline_${var.toLowerCase()}:latest ${DOCKER_USER_ID}/flos_pipeline_${var.toLowerCase()}:${BUILD_NUMBER}"
 								sh "docker login -u ${DOCKER_USER_ID} -p ${DOCKER_USER_PASSWORD}"
 								sh "docker push ${DOCKER_USER_ID}/flos_pipeline_${var.toLowerCase()}:${BUILD_NUMBER}"
 								}
@@ -60,10 +60,8 @@ pipeline {
 									sshTransfer(
 										cleanRemote: false, 
 										excludes: '', 
-										execCommand: '''cd springapp
+										execCommand: '''
 sudo docker-compose pull
-sudo rm -rf /mariadb
-sudo rm -rf ~/mariadb
 sudo docker-compose up --force-recreate -d''', 
 										execTimeout: 120000, 
 										flatten: false, 

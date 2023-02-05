@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.alarm-item {
+  /* alarm-item */
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  gap: 0.25rem;
+  isolation: isolate;
+  position: relative;
+  width: 21.25rem;
+  min-height: 5rem;
+  height: max-content;
+  background: #fcfcfc;
+  /* mono300 */
+  border-bottom: 0.0625rem solid #bfbfbf;
+  position: relative;
+}
+.alarm-item .close-btn {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  display: flex;
+  align-items: center;
+}
+.alarm-item .close-btn img {
+  margin: 0 auto;
+  display: block;
+  height: 24px;
+}
+
+/*# sourceMappingURL=AlarmItem.css.map */

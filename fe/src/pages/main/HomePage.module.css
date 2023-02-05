@@ -1,21 +1,3 @@
-.HomePage {
-    /* home-page-M */
-
-
-    /* Auto layout */
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px 20px;
-    gap: 8px;
-    isolation: isolate;
-    position: relative;
-    background-image:url("../../assets/HomeAsset/home-sample-background-img.jpg");
-    background-repeat:no-repeat;
-    background-size: cover;
-}
-
 .HomeRoot {
     /* home-root */
 
@@ -25,29 +7,13 @@
 
     display: flex;
     justify-content: center;
+    align-items : center;
     /* Inside auto layout */
 
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    z-index: 0;
-}
-
-.FlowerMessage {
-    /* flower-message-div */
-
-
-    box-sizing: border-box;
-
-    position: absolute;
-    width: 235px;
-    height: 171px;
-    top: 106px;
-
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #FFFFFF;
-    border-radius: 15px;
-    z-index: 20;
+    /* flex: none; */
+    /* order: 0; */
+    /* flex-grow: 0; */
+    /* z-index: 0; */
 }
 
 .HomeHeader {
@@ -62,14 +28,6 @@
     display: flex;
     justify-content: space-between;
 }
-
-/* .HeaderHelp {
-    float: left;
-}
-
-.HeaderNoti {
-    float: right;
-} */
 
 .FlowerInfo {
     /* flower-info-div */
@@ -96,11 +54,11 @@
 .FlowerName {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .FlowerNameText {
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .FlowerItem {
@@ -124,29 +82,6 @@
     bottom: 250px;
 
     border-radius: 5px;
-}
-
-.FlowerMessageText {
-    /* flower-message-text */
-
-
-    position: absolute;
-    width: 235px;
-    height: 171px;
-    left: 0px;
-    top: 0px;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #000000;
-    padding: 20px;
 }
 
 .SunDiv {
@@ -207,7 +142,8 @@
     font-size: 14px;
     line-height: 22px;
     display: block;
-    top: 100px;
+    position: relative;
+    top: 45px;
     color: #373737;
 
 }
@@ -230,8 +166,14 @@
 
 .SunShine {
     width: 300px;
-    height: 700px;
+    height: calc(100vh - 300px);
     position: absolute;
     background-color: #ffd930c2;
     z-index: 50;
+}
+
+.raindrop {
+    width: 300px;
+    height: calc(100vh - 300px);
+    position: absolute;
 }

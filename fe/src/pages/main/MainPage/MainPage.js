@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 /* import css */
 import "./MainPage.css";
 
 /* immport compoent */
-import Nav from "../../../components/BottomNavigation/BottomNavigation";
+import BottomNavigation from "../../../components/BottomNavigation/BottomNavigation";
 import Feed from "../FeedPage/FeedPage";
 
 /* import Page */
@@ -15,6 +15,14 @@ import GlobalPage from "../GlobalPage";
 import GardenPage from "../GardenPage";
 
 function Main() {
+  const [isToast, setIsToast] = useState(true);
+  const [isChecked, setIsChecked] = useState(false);
+  useEffect(() => {
+    if (!isChecked) {
+      setIsToast(true);
+    }
+  }, [isToast]);
+
   const position = useSelector((state) => state.page.value);
   // console.log(position + " in Main")
   let currentPage;
@@ -27,17 +35,21 @@ function Main() {
   } else if (position === "garden") {
     currentPage = <GardenPage />;
   } else if (position === "profile") {
-    currentPage = <ProfilePage />;
+    currentPage = <ProfilePage setIsToast={setIsToast}></ProfilePage>;
   } else {
     currentPage = <div>404</div>;
   }
+
   return (
     <div className="main-page">
-      <div className="main">
-        {currentPage}
-      </div>
+      <div className="main">{currentPage}</div>
       <div className="footer">
-        <Nav></Nav>
+        <BottomNavigation
+          isToast={isToast}
+          setIsToast={setIsToast}
+          isChecked={isChecked}
+          setIsChecked={setIsChecked}
+        ></BottomNavigation>
       </div>
     </div>
   );

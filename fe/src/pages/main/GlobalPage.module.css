@@ -64,6 +64,7 @@
   height: 80rem;
   overflow-y: scroll;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .posts {
@@ -110,16 +111,28 @@
   margin-top: 4px;
 }
 
-.filtertext{
-  margin: 0 8px;
-}
-
 .filtertextdiv{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.nonselecticon{
+.filtertext{
+  margin: 0 8px;
+}
+
+.filtertextstandard{
+  margin: 0 8px;
+  color: #3BACE2;
+  /* padding-top: 4px; */
+}
+
+.filterweathericon{
   margin: 0 4px;
+}
+
+.filterweatherstandard{
+  margin: 0 4px;
+  border: 1px solid #3BACE2;
+  padding: 2px;
 }

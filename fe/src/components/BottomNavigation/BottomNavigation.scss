@@ -1,10 +1,41 @@
-
 @import "../../styles/commons.scss";
 
-.bottom-nav-bar{
-    position: fixed;
-    left: 0;
-    bottom: 0;
+.bottom-nav-container {
+  position: sticky;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 80px;
+  position: relative;
+  .toast-message-div {
+    z-index: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 16px;
+    width: 360px;
+    height: 24px;
+    transition: 1s;
+    /* black */
+    background: $black;
+    font-size: 12px;
+    color: $white;
+    .toast-message {
+      width: 108px;
+      height: 18px;
+      line-height: 18px;
+    }
+    .check-btn {
+      width: 40px;
+      height: 18px;
+      line-height: 18px;
+    }
+  }
+
+  .bottom-nav-bar {
+    z-index: 1;
     /* Auto layout */
     display: flex;
     flex-direction: row;
@@ -12,24 +43,27 @@
     align-items: center;
     padding: 12px 16px;
     gap: 24px;
-
     position: relative;
     width: 100vw;
     height: 80px;
-    z-index: 10;
-
     background: $white;
 
-    .bottom-nav-item{
-        width: 48px;
-        height: 48px;
-        /* Inside auto layout */        
-        img{
-            display: block;
-            width: 24px;
-            margin: 12px auto;
-            height: fit-content;
-            align-items: center;
-        }
+    .bottom-nav-item {
+      width: 48px;
+      height: 48px;
+      /* Inside auto layout */
+      img {
+        display: block;
+        width: 24px;
+        margin: 12px auto;
+        height: fit-content;
+        align-items: center;
+      }
     }
+  }
+}
+
+.toast-up {
+  transition: 1s;
+  transform: translateY(-24px); // 좌표이동
 }
