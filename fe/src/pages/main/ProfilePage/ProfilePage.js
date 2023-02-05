@@ -23,7 +23,7 @@ import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost 
 // /* Profile Page 전용 CSS import */
 import "./ProfilePage.css";
 
-const ProfilePage = () => {
+const ProfilePage = ({ setIsToast }) => {
   // 사용자가 작성한 포스트의 세팅을 위한 state
   const [postIdx, setPostIdx] = useState(1);
   const [postList, setPostList] = useState([]);
@@ -143,19 +143,19 @@ const ProfilePage = () => {
         <div className="profile-tab-menu">
           <ul className="tab-menus">
             <li className="post-menu">포스트</li>
-            <li className="book-menu">북마크</li>
+            <li
+              className="book-menu"
+              onClick={(e) => {
+                setIsToast(true);
+                console.log("토스트 짠");
+              }}
+            >
+              북마크
+            </li>
           </ul>
         </div>
         <div className="feed-container" onScroll={handleScroll}>
           {/* {postList} */}
-          <PostItem
-            postId={1}
-            content={"test"}
-            regDate={new Date()}
-            tagList={[]}
-            weather={""}
-            writerNickname={"홍길동"}
-          ></PostItem>
         </div>
       </div>
       {/* <PostDetailPage></PostDetailPage> */}
