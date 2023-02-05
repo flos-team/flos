@@ -26,11 +26,17 @@ public class CommentResponseDTO {
     private Boolean isApprove;
 
     public static CommentResponseDTO toDto(Comment comment) {
+        Long parent = null;
+        Long primitive = null;
+        if (comment.getParent() != null)
+            parent = comment.getParent().getId()
+        if (comment.getPrimitive() != null)
+            primitive = comment.getPrimitive().getId()
         return CommentResponseDTO.builder()
                 .id(comment.getId())
                 .postId(comment.getPost().getId())
-                .parentId(comment.getParent().getId())
-                .primitiveId(comment.getPrimitive().getId())
+                .parentId(parent)
+                .primitiveId(primitive)
                 .writer(MemberResponseDTO.toDto(comment.getWriter()))
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
