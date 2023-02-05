@@ -16,6 +16,8 @@ import Lottie from "react-lottie";
 import ChangeFlowerNamemodal from "../../components/homepage/ChangeFlowerNamemodal";
 import DayBackground from "../../assets/HomeAsset/home-sample-background-img-day.jpg";
 import NightBackground from "../../assets/HomeAsset/home-sample-background-img-night.png";
+import "./HomePage.css";
+import { motion } from "framer-motion"
 
 const Title = styled.h1`
   color: #007bff;
@@ -47,6 +49,26 @@ const HomePageDiv = styled.div`
     overflow: hidden;
 `;
 
+const FlowerMessageText = styled.div`
+position: absolute;
+width: 235px;
+height: 171px;
+left: 0px;
+top: 0px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+display: flex;
+align-items: center;
+text-align: center;
+justify-content: center;
+color: #000000;
+padding: 20px;
+`;
+
 
 const makeNewSeed = () => { };
 
@@ -70,9 +92,21 @@ const isDay = (hour) => {
     }
 }
 
-const Home = () => {
-    const FlowerMessage = "안녕! 나는 튤립이야!";
+const show = {
+    opacity: 1,
+    display: "block",
+    scale: 1
+  };
+  
+  const hide = {
+    opacity: 0,
+    transitionEnd: {
+      display: "none"
+    }
+  };
+  
 
+const Home = () => {
     const sunBox = useRef();
     const rainBox = useRef();
     const sunshine = useRef();
@@ -92,6 +126,11 @@ const Home = () => {
         CurrentGrowthValue: 0,
         MaxGrowthValue: 100,
     });
+
+    const flowerMessageArr = ["하하", "히히", "호호"];
+
+    const [flowerMessage, setFlowerMessage] = useState(null);
+    const [flowerMessageIsVisible, setFlowerMessageIsVisible] = useState(true);
 
     // ----------------------- 시간에 따른 배경화면 지정 -------------------------
     let currentHour = 20;
@@ -126,6 +165,39 @@ const Home = () => {
             // 현재 키우고 있는 꽃이 있고 게이지가 가득 찬 경우
             flowering();
         }
+
+        setInterval(function () {
+            const value = Math.floor(Math.random() * 2);
+            console.log(value);
+            setFlowerMessageIsVisible(true);
+            setFlowerMessage(
+                <motion.div
+                    className="flowerMessage"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={flowerMessageIsVisible ? show : hide}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <FlowerMessageText>
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.1 }}
+                        >
+                            {flowerMessageArr[value]}
+                        </motion.span>
+                    </FlowerMessageText>
+                </motion.div>
+            );
+
+            setTimeout(() => { 
+                console.log("닫혀라!");
+                setFlowerMessageIsVisible(!flowerMessageIsVisible);
+                setFlowerMessage(null);        
+             }, 7000);
+        }, 10000);
+
 
     }, []);
 
@@ -279,9 +351,7 @@ const Home = () => {
                         <Noti onClick={notiClick} />
                     </Link>
                 </div>
-                <div className={styles.FlowerMessage}>
-                    <div className={styles.FlowerMessageText}>{FlowerMessage}</div>
-                </div>
+                {flowerMessage}
                 <div className={styles.FlowerInfo}>
                     <div className={styles.FlowerName}>
                         <span className={styles.FlowerNameText}>{flowerInfo.name}</span>

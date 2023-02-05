@@ -16,23 +16,6 @@
     /* z-index: 0; */
 }
 
-.FlowerMessage {
-    /* flower-message-div */
-
-
-    box-sizing: border-box;
-
-    position: absolute;
-    width: 235px;
-    height: 171px;
-    top: 106px;
-
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #FFFFFF;
-    border-radius: 15px;
-    z-index: 20;
-}
-
 .HomeHeader {
     /* home-header-div */
 
@@ -45,14 +28,6 @@
     display: flex;
     justify-content: space-between;
 }
-
-/* .HeaderHelp {
-    float: left;
-}
-
-.HeaderNoti {
-    float: right;
-} */
 
 .FlowerInfo {
     /* flower-info-div */
@@ -107,29 +82,6 @@
     bottom: 250px;
 
     border-radius: 5px;
-}
-
-.FlowerMessageText {
-    /* flower-message-text */
-
-
-    position: absolute;
-    width: 235px;
-    height: 171px;
-    left: 0px;
-    top: 0px;
-
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: #000000;
-    padding: 20px;
 }
 
 .SunDiv {

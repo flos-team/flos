@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import GardenFullComponentDetailData from "./GardenFullComponentDetailData"
+import GardenFullComponentDetailData from "./GardenFullComponentDetail"
 
 const FlowerView = styled.div`
     display: flex;
