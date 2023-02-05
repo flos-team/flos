@@ -154,11 +154,11 @@
   display: flex;
   flex-flow: row wrap;
   overflow-y: scroll;
-  align-items: center;
   padding: 0.5rem 0px;
   gap: 0.5rem;
   width: 20.5rem;
   height: 37.5rem;
+  margin-bottom: 5rem;
 }
 .profile-page-container .post-container .post-item {
   margin: 0 auto;

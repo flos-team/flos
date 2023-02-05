@@ -88,35 +88,35 @@ const ProfilePage = ({ setIsToast }) => {
       });
     });
 
-    // 북마크 포스트 요청
-    let PostListProm = requestPostList(1);
-    PostListProm.then((res) => {
-      setPostList([...res]);
-    }).catch((err) => {
-      console.log("게시글 불러올 수 없음");
-      console.dir(err);
-      // 나중에 여기서 토스트 메세지 띄울 것.
-    });
+    // // 북마크 포스트 요청
+    // let PostListProm = requestPostList(1);
+    // PostListProm.then((res) => {
+    //   setPostList([...res]);
+    // }).catch((err) => {
+    //   console.log("게시글 불러올 수 없음");
+    //   console.dir(err);
+    //   // 나중에 여기서 토스트 메세지 띄울 것.
+    // });
   }, []);
 
-  // 포스트 리스트를 추가하여 새롭게 렌더링 하는 메서드
-  const renderPostList = useCallback(
-    (postIdx) => {
-      console.log(postIdx);
-      let PostListProm = requestPostList(postIdx);
-      PostListProm.then((res) => {
-        let acceptPostList = [...res];
-        let newPostList = postList.concat(acceptPostList);
-        setPostList(newPostList);
-      }).catch((err) => {
-        console.log("게시글 불러올 수 없음");
-        console.dir(err);
-        // 나중에 여기서 토스트 메세지 띄울 것.
-        setIsScrollable(false);
-      });
-    },
-    [postList]
-  ); // postList가 바뀌었을 때만 작동!
+  // // 포스트 리스트를 추가하여 새롭게 렌더링 하는 메서드
+  // const renderPostList = useCallback(
+  //   (postIdx) => {
+  //     console.log(postIdx);
+  //     let PostListProm = requestPostList(postIdx);
+  //     PostListProm.then((res) => {
+  //       let acceptPostList = [...res];
+  //       let newPostList = postList.concat(acceptPostList);
+  //       setPostList(newPostList);
+  //     }).catch((err) => {
+  //       console.log("게시글 불러올 수 없음");
+  //       console.dir(err);
+  //       // 나중에 여기서 토스트 메세지 띄울 것.
+  //       setIsScrollable(false);
+  //     });
+  //   },
+  //   [postList]
+  // ); // postList가 바뀌었을 때만 작동!
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
@@ -124,7 +124,7 @@ const ProfilePage = ({ setIsToast }) => {
 
     if (bottom && isScrollable) {
       console.log("스크롤 끝 감지");
-      renderPostList(postIdx + 1);
+      // renderPostList(postIdx + 1);
       setPostIdx(postIdx + 1);
     }
   };
@@ -179,7 +179,27 @@ const ProfilePage = ({ setIsToast }) => {
             <p>북마크</p>
           </div>
         </div>
-        <div className="post-container hide-scroll">{postList}</div>
+        <div className="post-container hide-scroll">
+          {/* {postList} */}
+          <PostItem
+            content={
+              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
+            }
+            weather={"SUNNY"}
+          ></PostItem>
+          <PostItem
+            content={
+              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
+            }
+            weather={"CLOUDY"}
+          ></PostItem>
+          <PostItem
+            content={
+              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
+            }
+            weather={"RAINY"}
+          ></PostItem>
+        </div>
       </div>
     </>
   );

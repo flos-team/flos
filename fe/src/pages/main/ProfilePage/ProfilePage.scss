@@ -140,11 +140,11 @@
     display: flex;
     flex-flow: row wrap;
     overflow-y: scroll;
-    align-items: center;
     padding: 8 * $rpx1 0px;
     gap: 8 * $rpx1;
     width: 328 * $rpx1;
     height: 600 * $rpx1;
+    margin-bottom: 80 * $rpx1;
     .post-item {
       margin: 0 auto;
     }
