@@ -29,9 +29,9 @@ public class CommentResponseDTO {
         Long parent = null;
         Long primitive = null;
         if (comment.getParent() != null)
-            parent = comment.getParent().getId()
+            parent = comment.getParent().getId();
         if (comment.getPrimitive() != null)
-            primitive = comment.getPrimitive().getId()
+            primitive = comment.getPrimitive().getId();
         return CommentResponseDTO.builder()
                 .id(comment.getId())
                 .postId(comment.getPost().getId())
