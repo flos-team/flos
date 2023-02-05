@@ -1,36 +1,37 @@
 @import "../../styles/commons.scss";
 
-.alarm-item{
-    /* alarm-item */
-    box-sizing: border-box;
-    /* Auto layout */
+.alarm-item {
+  /* alarm-item */
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8 * $rpx1 16 * $rpx1;
+  gap: 4 * $rpx1;
+  isolation: isolate;
+  position: relative;
+  width: 340 * $rpx1;
+  min-height: 80 * $rpx1;
+  height: max-content;
+  background: $mono50;
+  /* mono300 */
+  border-bottom: 1 * $rpx1 solid $mono300;
+  // margin: 0 auto;
+  position: relative;
+  .close-btn {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 8*$rpx1 16*$rpx1;
-    gap: 4*$rpx1;
-    isolation: isolate;
-    position: relative;
-    width: 340*$rpx1;
-    height: 80*$rpx1;
-    background: $mono50;
-    /* mono300 */
-    border-bottom: 1*$rpx1 solid $mono300;
-    // margin: 0 auto;
-    position: relative;
-    .close-btn{
-        width: 24px;
-        height: 24px;
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        display: flex;
-        align-items: center;
-        img{
-            margin: 0 auto;
-            display: block;
-            // width: 24px;
-            height: 24px;
-        }        
+    img {
+      margin: 0 auto;
+      display: block;
+      // width: 24px;
+      height: 24px;
     }
+  }
 }

@@ -28,7 +28,8 @@
   isolation: isolate;
   position: relative;
   width: 21.25rem;
-  height: 5rem;
+  min-height: 5rem;
+  height: max-content;
   background: #fcfcfc;
   /* mono300 */
   border-bottom: 0.0625rem solid #bfbfbf;
