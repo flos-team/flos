@@ -5,6 +5,7 @@ import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
 import com.onehee.flos.model.dto.request.TagRequestDTO;
+import com.onehee.flos.model.dto.response.TagResponseDTO;
 import com.onehee.flos.model.dto.response.FileResponseDTO;
 import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
@@ -178,10 +179,10 @@ public class PostServiceImpl implements PostService {
     }
 
     // 게시글의 태그 리스트
-    private List<Tag> getTagListByPost(Post post) {
+    private List<TagResponseDTO> getTagListByPost(Post post) {
         return postTagRepository.findAllByPost(post)
                 .stream()
-                .map(PostTag::getTag)
+                .map(e -> TagResponseDTO.toDto(e.getTag()))
                 .collect(Collectors.toList());
     }
 

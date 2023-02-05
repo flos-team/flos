@@ -53,7 +53,7 @@ public class FlowerController {
 
     @Tag(name = "꽃API")
     @Operation(summary = "꽃 수정", description = "꽃 이름을 수정합니다.")
-    @PostMapping("/modify")
+    @PutMapping("/modify")
     public ResponseEntity<?> modifyFlower(@RequestBody FlowerModifyRequestDTO flowerModifyRequestDTO) throws BadRequestException {
         flowerService.modifyFlower(flowerModifyRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
