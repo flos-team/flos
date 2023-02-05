@@ -34,11 +34,7 @@ const GardenFullComponent = () => {
 
     let presentCount = 0;
     let totalCount = 20;
-    const flowerInfo = {
-        name: "아"
-
-    };
-    const flowerFullList = [...Array(10)].map((e, i) => <SwiperSlide><FlowerFullItem flowerInfo={flowerInfo}></FlowerFullItem></SwiperSlide>);
+    const flowerFullList = [...Array(10)].map((e, i) => <SwiperSlide><FlowerFullItem></FlowerFullItem></SwiperSlide>);
     return (
         <FullConponent>
             <FlowerCountData>

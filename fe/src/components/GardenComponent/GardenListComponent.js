@@ -1,8 +1,10 @@
+import FlowerListItem from "./FlowerListItem";
 
-const GardenListComponent = () => {
+const GardenListComponent = (props) => {
+    const flowersubList = [...Array(10)].map((e, i) => <FlowerListItem></FlowerListItem>);
     return (
         <>
-            여기는 ListComponent
+            {flowersubList}
         </>
     );
 }
