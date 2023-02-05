@@ -41,25 +41,25 @@ public class PostServiceImpl implements PostService {
     @Override
     public SliceResponseDTO getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
         Member writer = memberRepository.findById(memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        return SliceResponseDTO.toDto(postRepository.findAllByWriter(writer, pageable)
+        return SliceResponseDTO.toDto(postRepository.findSliceByWriter(writer, pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
     public SliceResponseDTO getPostListByWeather(WeatherType weatherType, Pageable pageable) {
-        return SliceResponseDTO.toDto(postRepository.findAllByWeather(weatherType, pageable)
+        return SliceResponseDTO.toDto(postRepository.findSliceByWeather(weatherType, pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
     public SliceResponseDTO getLatestPostList(Pageable pageable) {
-        return SliceResponseDTO.toDto(postRepository.findAll(pageable)
+        return SliceResponseDTO.toDto(postRepository.findSliceBy(pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
     public SliceResponseDTO getBookmarkedListByMember(Pageable pageable) {
-        return SliceResponseDTO.toDto(bookmarkRepository.findAllByMember(SecurityManager.getCurrentMember(), pageable)
+        return SliceResponseDTO.toDto(bookmarkRepository.findSliceByMember(SecurityManager.getCurrentMember(), pageable)
                 .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost()))));
     }
 

@@ -33,7 +33,7 @@ public class SliceResponseDTO {
         Pageable pageable = data.nextPageable();
         if (data.getContent() != null)
             tempContent = data.getContent();
-        if (data.nextPageable() != null) {
+        if (data.nextPageable().isPaged()) {
             pageNumber = pageable.getPageNumber();
             pageSize = pageable.getPageSize();
         }

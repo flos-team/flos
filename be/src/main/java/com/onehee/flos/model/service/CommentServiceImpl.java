@@ -14,11 +14,9 @@ import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -36,13 +34,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException {
         Post post = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
-        return SliceResponseDTO.toDto(commentRepository.findAllByPost(post, pageable)
+        return SliceResponseDTO.toDto(commentRepository.findSliceByPost(post, pageable)
                 .map(CommentResponseDTO::toDto));
     }
 
     @Override
     public SliceResponseDTO getCommentListByMember(Pageable pageable) {
-        return SliceResponseDTO.toDto(commentRepository.findAllByWriter(SecurityManager.getCurrentMember(), pageable)
+        return SliceResponseDTO.toDto(commentRepository.findSliceByWriter(SecurityManager.getCurrentMember(), pageable)
                 .map(CommentResponseDTO::toDto));
     }
 
