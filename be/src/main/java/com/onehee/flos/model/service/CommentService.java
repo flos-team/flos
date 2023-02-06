@@ -35,6 +35,4 @@ public interface CommentService {
     // 댓글 채택됨
     void approveComment(Long id) throws BadRequestException, NoSuchAlgorithmException;
 
-    // 댓글 채택취소됨
-    void cancelComment(Long id) throws BadRequestException;
 }

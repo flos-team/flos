@@ -1,6 +1,7 @@
 package com.onehee.flos.model.entity;
 
 import com.onehee.flos.model.entity.type.ResourceType;
+import com.onehee.flos.model.entity.type.WeatherType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -36,7 +37,7 @@ public class WeatherResource {
     private Flower flower;
 
     @Enumerated(EnumType.STRING)
-    private ResourceType resourceType;
+    private WeatherType weatherType;
 
     @ColumnDefault("now()")
     private LocalDateTime createdAt;

@@ -65,7 +65,7 @@ public class FollowServiceImpl implements FollowService {
         // 알림
         notificationRepository.save(Notification.builder()
                 .member(target)
-                .message(NotificationUtil.followMessage(target.getNickname(), me.getNickname()))
+                .message(NotificationUtil.followMessage(me))
                 .build()
         );
 
