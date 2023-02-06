@@ -30,6 +30,7 @@ public class PostResponseDTO {
                 .writer(MemberResponseDTO.toDto(post.getWriter()))
                 .content(post.getContent())
                 .regDate(post.getCreatedAt())
+                .weather(post.getWeather())
 //                .modifyDate(post.getModifyDate())
                 .postRelationDTO(postRelationDTO)
                 .build();

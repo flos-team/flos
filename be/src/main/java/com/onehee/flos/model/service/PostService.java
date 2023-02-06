@@ -25,7 +25,12 @@ public interface PostService {
 
     // 북마크한 게시글 검색
     SliceResponseDTO getBookmarkedListByMember(Pageable pageable);
-    // 게시글 인기(기여자생긴만큼)순 검색
+
+    // 게시글 댓글 많은순 검색
+    SliceResponseDTO getPostListOrderByCountComment(Pageable pageable);
+
+    // 태그 기준으로 검색
+    SliceResponseDTO getPostListByTagName(String tagName, Pageable pageable);
 
     // 단일 게시글 정보 검색
     PostResponseDTO getPost(Long id) throws BadRequestException;

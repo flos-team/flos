@@ -11,4 +11,6 @@ public interface WeatherResourceRepository extends JpaRepository<WeatherResource
 
     WeatherResource findByOwnerAndFlower(Member member, Flower flower);
 
+    Long countLightByFlower(Flower flower);
+
 }

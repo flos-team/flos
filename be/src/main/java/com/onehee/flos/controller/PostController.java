@@ -37,9 +37,9 @@ public class PostController {
     public ResponseEntity<?> getList(@RequestParam(value="page", required = false) Integer page){
         PageRequest pageRequest = null;
         if (page==null)
-            pageRequest = PageRequest.of(0, size);
+            pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
         else
-            pageRequest = PageRequest.of(page, size);
+            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return new ResponseEntity<SliceResponseDTO>(postService.getLatestPostList(pageRequest), HttpStatus.OK);
     }
 
@@ -49,9 +49,9 @@ public class PostController {
     public ResponseEntity<?> getListByWeather(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="weather") WeatherType weather){
         PageRequest pageRequest = null;
         if (page==null)
-            pageRequest = PageRequest.of(0, size);
+            pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
         else
-            pageRequest = PageRequest.of(page, size);
+            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByWeather(weather, pageRequest), HttpStatus.OK);
     }
 
@@ -61,9 +61,9 @@ public class PostController {
     public ResponseEntity<?> getListByWriter(@RequestParam(value="page", required = false) Integer page, @RequestParam(value="memberId") Long memberId){
         PageRequest pageRequest = null;
         if (page==null)
-            pageRequest = PageRequest.of(0, size);
+            pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
         else
-            pageRequest = PageRequest.of(page, size);
+            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByWriter(memberId, pageRequest), HttpStatus.OK);
     }
 
@@ -73,10 +73,34 @@ public class PostController {
     public ResponseEntity<?> getListByBookmark(@RequestParam(value="page", required = false) Integer page){
         PageRequest pageRequest = null;
         if (page==null)
+            pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
+        else
+            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return new ResponseEntity<SliceResponseDTO>(postService.getBookmarkedListByMember(pageRequest), HttpStatus.OK);
+    }
+
+    @Tag(name = "게시글API")
+    @Operation(summary = "댓글수 정렬 게시글 리스트", description = "댓글이 많은 순으로 게시글 리스트를 반환합니다.")
+    @GetMapping("/list/descnt")
+    public ResponseEntity<?> getListOrderByCountComment(@RequestParam(value="page", required = false) Integer page){
+        PageRequest pageRequest = null;
+        if (page==null)
             pageRequest = PageRequest.of(0, size);
         else
             pageRequest = PageRequest.of(page, size);
-        return new ResponseEntity<SliceResponseDTO>(postService.getBookmarkedListByMember(pageRequest), HttpStatus.OK);
+        return new ResponseEntity<SliceResponseDTO>(postService.getPostListOrderByCountComment(pageRequest), HttpStatus.OK);
+    }
+
+    @Tag(name = "게시글API")
+    @Operation(summary = "태그별 게시글 리스트", description = "태그에 따라 게시글 리스트를 반환합니다.")
+    @GetMapping("/list/tag/{tagName}")
+    public ResponseEntity<?> getListByTagName(@RequestParam(value = "page", required = false) Integer page, @PathVariable String tagName){
+        PageRequest pageRequest = null;
+        if (page==null)
+            pageRequest = PageRequest.of(0, size, Sort.by("created_at").descending());
+        else
+            pageRequest = PageRequest.of(page, size, Sort.by("created_at").descending());
+        return new ResponseEntity<SliceResponseDTO>(postService.getPostListByTagName(tagName, pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "게시글API")
