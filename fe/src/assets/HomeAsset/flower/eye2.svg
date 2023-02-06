@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320.68 272.24">
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46.09 1">
   <defs>
     <style>
-      .cls-1 {
-        fill: #231815;
+      .eye2 {
+        fill: #000000;
+        stroke: #000000;
+        stroke-miterlimit: 10;
       }
     </style>
   </defs>
-  <ellipse class="cls-1" cx="37.31" cy="190.52" rx="37.31" ry="81.72"/>
-  <ellipse class="cls-1" cx="283.37" cy="190.52" rx="37.31" ry="81.72"/>
+  <g id="_레이어_6" data-name="레이어 6">
+    <path class="eye2" d="m0,.5h10.72"/>
+    <path class="eye2" d="m35.36.5h10.72"/>
+  </g>
 </svg>
