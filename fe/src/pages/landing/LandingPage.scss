@@ -1,0 +1,86 @@
+@import "../../styles//commons.scss";
+
+
+a{
+    .landing-page-container{
+        /* landing-page-blue */
+        /* Auto layout */
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 16px;
+        gap: 16px;
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        /* skyblue200-primary */
+        background: $sky-blue200;
+        .groom-img-cotainer{
+            /* groom-img-cotainer */
+            width: 44vw;
+            height: 25vw;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .main-title-div{
+            /* main-title-div */
+            /* Auto layout */
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 4*$rpx1 8*$rpx1;
+            gap: 8*$rpx1;
+            width: 180*$rpx1;
+            height: 87*$rpx1;
+            color: $white;
+        }
+        .tab-text-div{
+            /* Auto layout */
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 12*$rpx1 16*$rpx1;
+            width: 141*$rpx1;
+            height: 47*$rpx1;
+            color: $mono600;
+        }
+    }
+
+}
+
+/** 점멸 기능  */
+.blinking {
+    -webkit-animation: blink 1s ease-in-out infinite alternate;
+    -moz-animation: blink 1s ease-in-out infinite alternate;
+    animation: blink 1s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @-moz-keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
