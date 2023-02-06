@@ -12,5 +12,5 @@ RUN rm -rf /etc/nginx/conf.d
 RUN mkdir -p /etc/nginx/conf.d
 COPY ./flos.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /home/flos/build /usr/share/nginx/html
-EXPOSE 80, 443
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
