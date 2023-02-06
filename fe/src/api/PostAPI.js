@@ -5,7 +5,7 @@ import axios from "axios";
  * @copyright 2023
  */
 // 엑시오스 기본 세팅
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
+axios.defaults.baseURL = "http://i8b210.p.ssafy.io";
 
 /////////* GET *///////////////////
 /**
@@ -14,7 +14,7 @@ axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
  * @returns {Promise} A Promise object containing a PostObject
  */
 const getPost = async (postId) => {
-  let url = `/post/${postId}`;
+  let url = `/api/post/${postId}`;
   let post = null;
   await axios
     .get(url)
@@ -38,7 +38,7 @@ const getPost = async (postId) => {
  * @returns {Object} 포스트 리스트 정보를 갖는 자바스크립트 객체
  */
 const getPostList = async (page = 1) => {
-  let url = `/post/list?page=${page}`;
+  let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
     .get(url)
@@ -68,7 +68,7 @@ const getPostList = async (page = 1) => {
  */
 // TODO
 const getBookMarkList = async (page = 1) => {
-  let url = `/post/list/bookmark?page=${page}`;
+  let url = `/api/post/list/bookmark?page=${page}`;
   let bookmarkList = [];
   await axios
     .get(url)
@@ -93,7 +93,7 @@ const getBookMarkList = async (page = 1) => {
 // 작성자별 게시글 리스트
 // TODO...
 const getPostListByUserId = async (page, memberId) => {
-  let url = `/post/list/member?page=${page}&page=${memberId}`;
+  let url = `/api/post/list/member?page=${page}&page=${memberId}`;
   let userPostList = [];
   await axios
     .get(url)
@@ -116,7 +116,7 @@ const getPostListByUserId = async (page, memberId) => {
  * @returns
  */
 const getPostListByWeather = async (page, weather) => {
-  let url = `/post/list/weather?page=${page}&weather=${weather}`;
+  let url = `/api/post/list/weather?page=${page}&weather=${weather}`;
   let weatherPostList = [];
   await axios
     .get(url)
@@ -143,7 +143,7 @@ const getPostListByWeather = async (page, weather) => {
  */
 // TODO...
 const createPost = async (content, weather, tagList, attachFiles) => {
-  let url = `/post/create`;
+  let url = `/api/post/create`;
   // weather 감정 string 아마 enum?
   let newPost = {
     attachFiles,
@@ -182,7 +182,7 @@ const modifyPost = async (
   attachFiles,
   modifiedAt
 ) => {
-  let url = "/post/modify";
+  let url = "/api/post/modify";
   let modfiedPost = {
     attachFiles,
     content,
@@ -212,7 +212,7 @@ const modifyPost = async (
  * @returns {Promise} A Promise object containing Boolean
  */
 const deletePost = async (postId) => {
-  let url = `/post/${postId}/delete`;
+  let url = `/api/post/${postId}/delete`;
   let isDeleted = false;
   await axios
     .delete(url)
