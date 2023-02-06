@@ -5,7 +5,8 @@ import axios from "axios";
  * @copyright 2023
  */
 // 엑시오스 기본 세팅
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
+axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
+axios.defaults.withCredentials = true;
 
 /////////* GET *///////////////////
 /**
@@ -14,7 +15,7 @@ axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
  * @returns {Promise} A Promise object containing a PostObject
  */
 const getPost = async (postId) => {
-  let url = `/post/${postId}`;
+  let url = `/api/post/${postId}`;
   let post = null;
   await axios
     .get(url)
@@ -22,12 +23,13 @@ const getPost = async (postId) => {
       if (response.status === 200) {
         // console.dir(response.data);
         post = response.data;
+        // console.log(post)
       }
     })
     .catch((error) => {
       console.log("해당 게시글이 존재하지 않습니다.");
     });
-
+  console.log(post);
   return post;
 };
 
@@ -36,8 +38,8 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Object} 포스트 리스트 정보를 갖는 자바스크립트 객체
  */
-const getPostList = async (page = 1) => {
-  let url = `/post/list?page=${page}`;
+const getPostList = async (page = 0) => {
+  let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
     .get(url)
@@ -67,7 +69,7 @@ const getPostList = async (page = 1) => {
  */
 // TODO
 const getBookMarkList = async (page = 1) => {
-  let url = `/post/list/bookmark?page=${page}`;
+  let url = `/api/post/list/bookmark?page=${page}`;
   let bookmarkList = [];
   await axios
     .get(url)
@@ -92,7 +94,7 @@ const getBookMarkList = async (page = 1) => {
 // 작성자별 게시글 리스트
 // TODO...
 const getPostListByUserId = async (page, memberId) => {
-  let url = `/post/list/member?page=${page}&page=${memberId}`;
+  let url = `/api/post/list/member?page=${page}&page=${memberId}`;
   let userPostList = [];
   await axios
     .get(url)
@@ -115,7 +117,7 @@ const getPostListByUserId = async (page, memberId) => {
  * @returns
  */
 const getPostListByWeather = async (page, weather) => {
-  let url = `/post/list/weather?page=${page}&weather=${weather}`;
+  let url = `/api/post/list/weather?page=${page}&weather=${weather}`;
   let weatherPostList = [];
   await axios
     .get(url)
@@ -131,6 +133,29 @@ const getPostListByWeather = async (page, weather) => {
   return weatherPostList;
 };
 
+
+const getPostListByComment = async (page = 0) => {
+  let commentPostListObject = {};
+  await axios
+    .get(`https://i8b210.p.ssafy.io​/api/post/list/descnt?page=${page}`)
+    .then((response) => {
+      if (response.status === 200) {
+        let data = response.data;
+       commentPostListObject = {
+          postList: [...data.content],
+          hasContent: data.hasContent,
+          isFirst: data.isFirst,
+          isLast: data.isLast,
+          nextPage: data.nextPage,
+          nextSize: data.nextSize,
+        };
+      }
+    })
+    .catch((error) => {
+      console.log("게시글 리스트가 존재하지 않습니다.");
+    });
+  return commentPostListObject;
+};
 /////////* POST *///////////////////
 /**
  * createPost : 게시글 생성
@@ -142,7 +167,7 @@ const getPostListByWeather = async (page, weather) => {
  */
 // TODO...
 const createPost = async (content, weather, tagList, attachFiles) => {
-  let url = `/post/create`;
+  let url = `/api/post/create`;
   // weather 감정 string 아마 enum?
   let newPost = {
     attachFiles,
@@ -173,8 +198,15 @@ const createPost = async (content, weather, tagList, attachFiles) => {
  * @returns {Promise} A Promise object containing Boolean
  */
 // TODO...
-const modifyPost = async (postId, content, writerId, tagList, attachFiles, modifiedAt) => {
-  let url = "/post/modify";
+const modifyPost = async (
+  postId,
+  content,
+  writerId,
+  tagList,
+  attachFiles,
+  modifiedAt
+) => {
+  let url = "/api/post/modify";
   let modfiedPost = {
     attachFiles,
     content,
@@ -204,7 +236,7 @@ const modifyPost = async (postId, content, writerId, tagList, attachFiles, modif
  * @returns {Promise} A Promise object containing Boolean
  */
 const deletePost = async (postId) => {
-  let url = `/post/${postId}/delete`;
+  let url = `/api/post/${postId}/delete`;
   let isDeleted = false;
   await axios
     .delete(url)
@@ -226,4 +258,14 @@ const deletePost = async (postId) => {
   return isDeleted;
 };
 
-export { getPost, getPostList, getBookMarkList, getPostListByUserId, createPost, modifyPost, deletePost };
+export {
+  getPost,
+  getPostList,
+  getBookMarkList,
+  getPostListByUserId,
+  getPostListByWeather,
+  getPostListByComment,
+  createPost,
+  modifyPost,
+  deletePost,
+};

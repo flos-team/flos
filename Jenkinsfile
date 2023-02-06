@@ -28,8 +28,7 @@ pipeline {
 		stage("Tag and Push") {
 			steps {
 				script {
-					sh "mkdir -p springapp"
-					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > springapp/.env"
+					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
 					component.each{ entry ->
 						stage ("${entry.key} Push"){
 							if(entry.value){
@@ -71,7 +70,7 @@ sudo docker-compose up --force-recreate -d''',
 										remoteDirectory: '', 
 										remoteDirectorySDF: false, 
 										removePrefix: '', 
-										sourceFiles: 'springapp/.env'
+										sourceFiles: '.env'
 									)
 								], 
 								usePromotionTimestamp: false, 
