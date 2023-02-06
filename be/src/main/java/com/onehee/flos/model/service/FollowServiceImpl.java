@@ -1,15 +1,13 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.request.FlowerSpendResourceRequestDTO;
 import com.onehee.flos.model.dto.request.FollowRequestDTO;
 import com.onehee.flos.model.dto.request.UnfollowRequestDTO;
+import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
-import com.onehee.flos.model.entity.Follow;
-import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.Notification;
-import com.onehee.flos.model.repository.FollowRepository;
-import com.onehee.flos.model.repository.MemberRepository;
-import com.onehee.flos.model.repository.NotificationRepository;
+import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.NotificationUtil;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +24,8 @@ public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
     private final NotificationRepository notificationRepository;
+    private final FlowerRepository flowerRepository;
+    private final WeatherResourceRepository weatherResourceRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -88,5 +88,25 @@ public class FollowServiceImpl implements FollowService {
         followRepository.flush();
 
         return getFollowingList();
+    }
+
+    @Override
+    @Transactional
+    public FlowerResponseDTO giveWater(FlowerSpendResourceRequestDTO flowerSpendResourceRequestDTO) {
+        Member member = SecurityManager.getCurrentMember();
+        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member);
+        if (flower == null) {
+            throw new BadRequestException("현재 키우고 있는 꽃이 없습니다.");
+        }
+//        WeatherResource water = weatherResourceRepository.findBy
+        return null;
+
+
+    }
+
+    @Override
+    @Transactional
+    public FlowerResponseDTO giveLight(FlowerSpendResourceRequestDTO flowerSpendResourceRequestDTO) {
+        return null;
     }
 }
