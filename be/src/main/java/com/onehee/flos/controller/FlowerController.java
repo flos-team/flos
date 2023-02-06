@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +69,19 @@ public class FlowerController {
         else
             pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(flowerService.getContributorByFlower(flowerId, pageRequest), HttpStatus.OK);
+    }
+
+    @Tag(name = "꽃API")
+    @Operation(summary = "물주기", description = "꽃에 물을 줍니다. 가장 오랜된 물부터 적용됩니다.")
+    @PostMapping("/give-water")
+    public ResponseEntity<?> giveWater() {
+        return new ResponseEntity<FlowerResponseDTO>(flowerService.giveWater(), HttpStatus.OK);
+    }
+
+    @Tag(name = "꽃API")
+    @Operation(summary = "햇빛주기", description = "꽃에 햇빛을 줍니다. 가장 오랜된 물부터 적용됩니다.")
+    @PostMapping("/give-light")
+    public ResponseEntity<?> giveLight() {
+        return new ResponseEntity<FlowerResponseDTO>(flowerService.giveLight(), HttpStatus.OK);
     }
 }
