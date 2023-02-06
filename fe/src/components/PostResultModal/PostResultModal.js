@@ -26,7 +26,7 @@ import COLORS from "../../styles/colors";
 /* import css */
 import "./PostResultModal.css";
 
-const PostResultModal = ({ setVisible }) => {
+const PostResultModal = ({ setVisible, moveMain }) => {
   const swiperRef = useRef(null);
   const imgList = [sunny128, cloudy128, rainy128];
   const [groomIdx, setGroomIdx] = useState(0);
@@ -40,7 +40,7 @@ const PostResultModal = ({ setVisible }) => {
     randGrooms();
   };
   const weatherList = imgList.map((e, i) => (
-    <SwiperSlide>
+    <SwiperSlide key={i}>
       <div key={i} className="weather-img" style={{ backgroundImage: `url(${e})` }}></div>
     </SwiperSlide>
   ));
@@ -116,7 +116,7 @@ const PostResultModal = ({ setVisible }) => {
         <div
           className="confirm-btn"
           onClick={(e) => {
-            setVisible();
+            moveMain();
           }}
         >
           <p>작성완료</p>
