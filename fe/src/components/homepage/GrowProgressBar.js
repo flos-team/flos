@@ -1,6 +1,9 @@
 import React from "react";
 import "react-step-progress-bar/styles.css";
 import { ProgressBar, Step } from "react-step-progress-bar";
+import Seed from "../../assets/HomeAsset/seed.svg";
+import Diamond from "../../assets/HomeAsset/diamond.svg";
+import Flowering from "../../assets/HomeAsset/flowering.svg";
 
 class GrowProgressBar extends React.Component {
   render() {
@@ -15,8 +18,35 @@ class GrowProgressBar extends React.Component {
           {({ accomplished }) => (
             <img
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="20"
-              src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/9d/Pichu.png/revision/latest?cb=20170407222851"
+              width="15"
+              src={Seed}
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="10"
+              src={Diamond}
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="10"
+              src={Diamond}
+            />
+          )}
+        </Step>
+        <Step transition="scale">
+          {({ accomplished }) => (
+            <img
+              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
+              width="10"
+              src={Diamond}
             />
           )}
         </Step>
@@ -25,16 +55,7 @@ class GrowProgressBar extends React.Component {
             <img
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
               width="20"
-              src="https://vignette.wikia.nocookie.net/pkmnshuffle/images/9/97/Pikachu_%28Smiling%29.png/revision/latest?cb=20170410234508"
-            />
-          )}
-        </Step>
-        <Step transition="scale">
-          {({ accomplished }) => (
-            <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="20"
-              src="https://orig00.deviantart.net/493a/f/2017/095/5/4/raichu_icon_by_pokemonshuffle_icons-db4ryym.png"
+              src={Flowering}
             />
           )}
         </Step>
