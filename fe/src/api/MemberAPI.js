@@ -171,9 +171,6 @@ const signUpUser = async (code, email, nickname, password) => {
  * @param {ImageBitmap} profileImage 이미지 비트맵 파일
  * @returns {Promise} A Promise object containing a boolean value
  */
-// TODO....
-// 스웨거 보면서 파라미터 등을 어떻게 보내줄지?
-// Stringify 안해도 되는지? JSON으로 보내야 할텐데 어케할지?
 const modifyUserInfo = async (nickname, profileImage) => {
   let url = "/api/member/info";
   let isUpdated = false;
