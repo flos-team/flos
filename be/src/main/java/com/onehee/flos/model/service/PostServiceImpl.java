@@ -16,6 +16,7 @@ import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,10 +40,10 @@ public class PostServiceImpl implements PostService {
     private final FollowRepository followRepository;
 
     @Override
-    public SliceResponseDTO getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
-        Member writer = memberRepository.findById(memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        return SliceResponseDTO.toDto(postRepository.findSliceByWriter(writer, pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    public Slice<PostResponseDTO> getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
+        Member writer = memberRepository.findByNickname(nickName).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
+        return postRepository.findSliceByWriter(writer, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
     }
 
     @Override
