@@ -98,4 +98,4 @@ sentiment:
 
 spring:
   profiles:
-    active: local
+    active: server
