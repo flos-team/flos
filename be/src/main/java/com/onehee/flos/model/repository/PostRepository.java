@@ -27,7 +27,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Slice<Post> findSliceByWriter(Member writer, Pageable pageable);
 
     // 게시글 댓글 많은순 검색
-    @Query(value = "select p.* from post p left join (select post_id, count(*) as cnt from comment group by post_id) as pc on p.post_id = pc.post_id order by pc.cnt", nativeQuery = true)
+    @Query(value = "select p.* from post p left join (select post_id, count(*) as cnt from comment group by post_id) as pc on p.post_id = pc.post_id order by pc.cnt desc, p.created_at desc", nativeQuery = true)
     Slice<Post> findSliceByCountComment(Pageable pageable);
 
     // 태그 기준으로 검색
