@@ -14,7 +14,7 @@ axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
  */
 const getCommentList = async (id) => {
   // let url = `/post/list?page=${page}`;
-  let url = `/post/${id}/comment/list`;
+  let url = `/api/comment/list/post/${id}`;
   let commentList = [];
   await axios
     .get(url)
