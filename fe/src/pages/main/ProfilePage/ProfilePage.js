@@ -17,6 +17,7 @@ import userImg from "../../../assets/GlobalAsset/user-img.png";
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
+import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
@@ -210,25 +211,7 @@ const ProfilePage = ({ setIsToast }) => {
           </div>
         </div>
         <div className="post-container hide-scroll">
-          {postList}
-          {/* <PostItem
-            content={
-              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
-            }
-            weather={"SUNNY"}
-          ></PostItem>
-          <PostItem
-            content={
-              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
-            }
-            weather={"CLOUDY"}
-          ></PostItem>
-          <PostItem
-            content={
-              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
-            }
-            weather={"RAINY"}
-          ></PostItem> */}
+            <PostResultModal></PostResultModal>
         </div>
       </div>
     </>
