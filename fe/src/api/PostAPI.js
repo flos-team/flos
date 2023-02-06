@@ -6,6 +6,7 @@ import axios from "axios";
  */
 // 엑시오스 기본 세팅
 axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
+axios.defaults.withCredentials = true;
 
 /////////* GET *///////////////////
 /**
@@ -132,6 +133,29 @@ const getPostListByWeather = async (page, weather) => {
   return weatherPostList;
 };
 
+
+const getPostListByComment = async (page = 0) => {
+  let commentPostListObject = {};
+  await axios
+    .get(`https://i8b210.p.ssafy.io​/api/post/list/descnt?page=${page}`)
+    .then((response) => {
+      if (response.status === 200) {
+        let data = response.data;
+       commentPostListObject = {
+          postList: [...data.content],
+          hasContent: data.hasContent,
+          isFirst: data.isFirst,
+          isLast: data.isLast,
+          nextPage: data.nextPage,
+          nextSize: data.nextSize,
+        };
+      }
+    })
+    .catch((error) => {
+      console.log("게시글 리스트가 존재하지 않습니다.");
+    });
+  return commentPostListObject;
+};
 /////////* POST *///////////////////
 /**
  * createPost : 게시글 생성
@@ -240,6 +264,7 @@ export {
   getBookMarkList,
   getPostListByUserId,
   getPostListByWeather,
+  getPostListByComment,
   createPost,
   modifyPost,
   deletePost,
