@@ -18,10 +18,8 @@ git commit -m "refactor : 로그인 서버 통신 코드 리펙토링"
 ## `develop` 브랜치 라이브 빌드    
 #  
 ## 페이지
-### http://i8b210.p.ssafy.io
+### https://i8b210.p.ssafy.io
 ## 젠킨스
 ### http://i8b210.p.ssafy.io:2080
 ## 스웨거
-### http://i8b210.p.ssafy.io:8080/swagger-ui/
-
-- 젠킨스 포트 2080
+### https://i8b210.p.ssafy.io/api/swagger-ui/
