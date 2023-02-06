@@ -116,3 +116,9 @@ insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_i
 insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (8, 1, null, null, 2, "광고 삭제좀");
 insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (9, 1, null, 8, 3, "광고 에반데");
 insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (10, 1, null, 8, 4, "광고 뭐임");
+insert into `follow` (`follow_id`, `owner_id`, `follower_id`) value (1, 1, 2);
+insert into `follow` (`follow_id`, `owner_id`, `follower_id`) value (2, 1, 3);
+insert into `follow` (`follow_id`, `owner_id`, `follower_id`) value (3, 1, 4);
+insert into `follow` (`follow_id`, `owner_id`, `follower_id`) value (4, 1, 5);
+insert into `follow` (`follow_id`, `owner_id`, `follower_id`) value (5, 2, 3);
+insert into `follow` (`follow_id`, `owner_id`, `follower_id`) value (6, 3, 4);
