@@ -28,5 +28,35 @@ const getCommentList = async (id) => {
     });
   return commentList;
 };
+/**
+ * 해당 게시글에 댓글을 추가 각 인자 머임?
+ * @param {*} content
+ * @param {*} parentId
+ * @param {*} postId
+ * @param {*} primitiveId
+ * @returns
+ */
+const createCommentById = async (content, parentId, postId, primitiveId) => {
+  let url = `/api/comment/create`;
+  let newComment = {
+    content,
+    parentId,
+    postId,
+    primitiveId,
+  };
+  let isCreated = false;
+  await axios
+    .post(url, newComment)
+    .then((response) => {
+      if (response.status === 200) {
+        console.dir(response);
+        isCreated = true;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return isCreated;
+};
 
 export { getCommentList };

@@ -7,10 +7,14 @@ import { getTimeDiffText } from "../../../../api/DateModule";
 
 import dayjs from "dayjs";
 
+// https://www.npmjs.com/package/react-responsive-carousel
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+
 /* img import */
 import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
+import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
-
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 
 /* css import */
@@ -21,8 +25,15 @@ const PostDetailPage = () => {
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
+  const [commentInputValue, setCommentInputValue] = useState("");
+
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
+
+  const handleCommentInputValue = (e) => {
+    setCommentInputValue(e.target.value);
+    // console.log(commentInputValue);
+  };
 
   useEffect(() => {
     getPost(params.id).then((response) => {
@@ -34,6 +45,25 @@ const PostDetailPage = () => {
       setCommentLoading(true);
     });
   }, []);
+
+  /**
+   * 댓글의 공감을 채택하는 함수
+   * @param {*} id
+   */
+  const AdoptComment = (id) => {
+    // console.log(id);
+    // 댓글의 아이디를 입력하여 그 댓글을 채택 처리하고
+    // 댓글의 주인에게 아이템을 전달
+  };
+
+  /**
+   * 댓글을 입력하는 함수
+   * @param {*} postId
+   */
+  const commentInput = (postId) => {
+    // console.log(commentInputValue);
+    console.log(postId);
+  };
 
   // 가져온 리스트를 이제 화면에 띄우면 된다.
   if (postLoading && commentLoading) {
@@ -47,9 +77,10 @@ const PostDetailPage = () => {
         {tagName}
       </div>
     ));
-    console.log(comments);
+    // console.log(comments);
 
-    const commentList = comments.map(({ writer, createdAt, content }) => {
+    const commentList = comments.map(({ key, id, writer, createdAt, content, isApprove }) => {
+      let commentKey = key;
       let commentDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
       let RegBefore = getTimeDiffText(commentDay, curDay);
@@ -63,21 +94,35 @@ const PostDetailPage = () => {
             </div>
             <div className="comment-main">{content}</div>
           </div>
-          <img className="check-btn" src={sunnyActivate} />
+          <img
+            className="check-btn"
+            onClick={() => AdoptComment(id)}
+            src={isApprove ? sunnyActivate : sunnyDeActivate}
+          />
         </div>
       );
       return result;
     });
+    console.log(post);
 
-    // console.log(post);
+    let imgs = "";
+    if (post.postRelationDTO.attachFiles.length >= 1) {
+      imgs = post.postRelationDTO.attachFiles.map(({ key, saveName }) => (
+        <div id={key}>
+          <img src={`https://i8b210.p.ssafy.io/api/file/${saveName}`}></img>
+        </div>
+      ));
+      imgs = (
+        <Carousel showThumbs={true} thumbWidth={50}>
+          {imgs}
+        </Carousel>
+      );
+    }
+
     return (
       <>
         <div className="post-detail-page">
-          <HeaderComponent
-            backVisible={true}
-            pageName={"피드"}
-            optType={0}
-          ></HeaderComponent>
+          <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
               <div className="user-info-container">
@@ -89,10 +134,7 @@ const PostDetailPage = () => {
                   </div>
                 </div>
               </div>
-              <div
-                className="img-container"
-                style={{ backgroundImage: `url(${post.writer.picture})` }}
-              ></div>
+              {imgs}
               <div className="post-content-container">
                 <div className="post-text-div">{post.content}</div>
                 <div className="post-tag-container">{tags ? tags : ""}</div>
@@ -106,9 +148,14 @@ const PostDetailPage = () => {
           <div className="user-content-input-div">
             <img className="user-icon" src={post.writer.picture} />
             <div className="comment-input-div">
-              <input className="comment-input" />
+              <input
+                className="comment-input"
+                value={commentInputValue}
+                onChange={handleCommentInputValue}
+              />
               <button
                 style={{ backgroundImage: `url(${sendCommentBtn})` }}
+                onClick={() => commentInput(post.id)}
               ></button>
             </div>
           </div>
