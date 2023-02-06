@@ -124,7 +124,7 @@ const getPostListByWeather = async (page, weather) => {
     .then((response) => {
       console.dir(response);
       if (response.status === 200) {
-        // weatherPostList = [...response.data.content];
+        weatherPostList = [...response.data.content];
       }
     })
     .catch((error) => {
@@ -133,7 +133,7 @@ const getPostListByWeather = async (page, weather) => {
   return weatherPostList;
 };
 
-
+// 댓글 많은 순 가져오기
 const getPostListByComment = async (page = 0) => {
   let commentPostListObject = {};
   await axios
