@@ -19,6 +19,8 @@ public class FlowerResponseDTO {
     private MemberResponseDTO owner;
     private FlowerType flowerType;
     private String name;
+    private int water;
+    private int light;
     private LocalDateTime createdAt;
 
     public static FlowerResponseDTO toDto(Flower flower) {
@@ -27,6 +29,8 @@ public class FlowerResponseDTO {
                 .owner(MemberResponseDTO.toDto(flower.getOwner()))
                 .flowerType(flower.getFlowerType())
                 .name(flower.getName())
+                .water(flower.getWater())
+                .light(flower.getLight())
                 .createdAt(flower.getCreatedAt())
                 .build();
     }

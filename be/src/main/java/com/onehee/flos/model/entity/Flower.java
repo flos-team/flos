@@ -45,6 +45,10 @@ public class Flower {
     @Enumerated(EnumType.STRING)
     private FlowerType flowerType;
 
+    private int water;
+
+    private int light;
+
     @ColumnDefault("now()")
     private LocalDateTime createdAt; // 수정 불가
 

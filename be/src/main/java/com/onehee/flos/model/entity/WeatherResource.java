@@ -1,5 +1,6 @@
 package com.onehee.flos.model.entity;
 
+import com.onehee.flos.model.entity.type.ResourceType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -11,29 +12,33 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @DynamicInsert
 @DynamicUpdate
-public class Water {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "light_id")
+public class WeatherResource {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "weather_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "own_members_id")
+    @JoinColumn(name = "owner_id")
     private Member owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "con_members_id")
-    private Member contributer;
+    @JoinColumn(name = "contributor_id")
+    private Member contributor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flower_id")
     private Flower flower;
 
+    @Enumerated(EnumType.STRING)
+    private ResourceType resourceType;
+
     @ColumnDefault("now()")
     private LocalDateTime createdAt;
+
 }

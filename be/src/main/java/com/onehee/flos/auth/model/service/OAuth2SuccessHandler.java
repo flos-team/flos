@@ -73,10 +73,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json;charset=UTF-8");
         ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenDTO.getRtk());
         response.setHeader("Set-Cookie", cookie.toString());
-        PrintWriter writer = response.getWriter();
-        Map<String, String> atk = new HashMap<>();
-        atk.put("atk", tokenDTO.getAtk());
-        writer.println(objectMapper.writeValueAsString(atk));
-        writer.flush();
+        response.setHeader("Authorization", "Bearer " + tokenDTO.getAtk());
+        response.sendRedirect("https://i8b210.p.ssafy.io/main");
     }
 }
