@@ -33,4 +33,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 게시글별 채택 댓글 수
     Long countByIsApprove(Boolean bool);
 
+    // 채택된 댓글이 존재하는지
+    boolean existsByWriterAndPostAndIsApproveIs(Member writer, Post post, boolean isApproved);
+
 }
