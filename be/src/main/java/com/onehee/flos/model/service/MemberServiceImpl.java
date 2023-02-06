@@ -148,11 +148,4 @@ public class MemberServiceImpl implements MemberService {
         return MemberInfoResponseDTO.toDto(member);
     }
 
-    @Override
-    public SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
-        Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
-//        if (!flower.getOwner().equals(SecurityManager.getCurrentMember()))
-//            throw new BadRequestException("꽃 주인이 아닙니다.");
-        return SliceResponseDTO.toDto(memberRepository.findContributorByFlower(flower, pageable));
-    }
 }

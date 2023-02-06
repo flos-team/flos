@@ -20,7 +20,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByEmailAndProviderType(String email, ProviderType providerType);
 
-    @Query("SELECT wr.contributor FROM WeatherResource wr WHERE wr.flower = :flower")
-    Slice<Member> findContributorByFlower(Flower flower, Pageable pageable);
-
 }
