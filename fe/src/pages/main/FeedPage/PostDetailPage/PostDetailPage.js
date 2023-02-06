@@ -8,8 +8,6 @@ import { getTimeDiffText } from "../../../../api/DateModule";
 import dayjs from "dayjs";
 
 /* img import */
-import writerProfileSample from "../../../../assets/DummyData/writerProfileSample.png";
-import commentProfileSample from "../../../../assets/DummyData/commentProfileSample.png";
 import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 
@@ -38,30 +36,38 @@ const PostDetailPage = () => {
   }, []);
 
   // 가져온 리스트를 이제 화면에 띄우면 된다.
-  if (postLoading && commentLoading) { 
-    let postDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss"); 
+  if (postLoading && commentLoading) {
+    let postDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
     let RegBefore = getTimeDiffText(postDay, curDay);
+
     const tags = post.postRelationDTO.tagList.map(({ key, tagName }) => (
       <div className="post-tag">
         {key}
         {tagName}
       </div>
     ));
-      console.log(comments)
-    const commentList = comments.map(({ writer, createdAt, content }) => (
-      <div className="comment-item">
-        <img className="user-img" src={writer.profileImage} />
-        <div className="comment-container">
-          <div className="comment-header">
-            <p>{writer.nickname}</p>
-            <p>{createdAt}</p>
+    console.log(comments);
+
+    const commentList = comments.map(({ writer, createdAt, content }) => {
+      let commentDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
+      let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
+      let RegBefore = getTimeDiffText(commentDay, curDay);
+      const result = (
+        <div className="comment-item">
+          <img className="user-img" src={writer.profileImage} />
+          <div className="comment-container">
+            <div className="comment-header">
+              <p>{writer.nickname}</p>
+              <p>{RegBefore}</p>
+            </div>
+            <div className="comment-main">{content}</div>
           </div>
-          <div className="comment-main">{content}</div>
+          <img className="check-btn" src={sunnyActivate} />
         </div>
-        <img className="check-btn" src={sunnyActivate} />
-      </div>
-    ));
+      );
+      return result;
+    });
 
     // console.log(post);
     return (
@@ -85,7 +91,7 @@ const PostDetailPage = () => {
               </div>
               <div
                 className="img-container"
-                style={{ backgroundImage: `url(${writerProfileSample})` }}
+                style={{ backgroundImage: `url(${post.writer.picture})` }}
               ></div>
               <div className="post-content-container">
                 <div className="post-text-div">{post.content}</div>
@@ -98,7 +104,7 @@ const PostDetailPage = () => {
             </div>
           </div>
           <div className="user-content-input-div">
-            <img className="user-icon" src={writerProfileSample} />
+            <img className="user-icon" src={post.writer.picture} />
             <div className="comment-input-div">
               <input className="comment-input" />
               <button
