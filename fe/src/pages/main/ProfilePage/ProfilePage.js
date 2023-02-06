@@ -17,11 +17,18 @@ import userImg from "../../../assets/GlobalAsset/user-img.png";
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
+import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost } from "../../../api/PostAPI";
+import PostAPI, {
+  getPost,
+  getPostList,
+  getBookMarkList,
+  modifyPost,
+  deletePost,
+} from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -41,7 +48,9 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로잉", "팔로우", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const userInfoList = userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
+  const userInfoList = userInfos.map((e, i) => (
+    <li key={i}>{e > 999 ? "999+" : e}</li>
+  ));
 
   // 사용자 정보를 다루는 state
   let [userInfo, setUserinfo] = useState({});
@@ -54,16 +63,17 @@ const ProfilePage = ({ setIsToast }) => {
     await postListProm
       .then((res) => {
         setPostIdx(pageIdx);
-        postList = res.postList.map(({ id, content, writer, regDate, weather }) => (
-          <PostItem
-            key={id}
-            postId={id}
-            content={content}
-            writerNickname={writer.nickname}
-            regDate={regDate}
-            weather={weather}
-          ></PostItem>
-        ));
+        // postList = res.postList.map(({ id, content, writer, regDate, weather }) => (
+        //   <PostItem
+        //     key={id}
+        //     postId={id}
+        //     content={content}
+        //     writerNickname={writer.nickname}
+        //     regDate={regDate}
+        //     weather={weather}
+        //   ></PostItem>
+        // ));
+        postList = res.map((EachPost) => <PostItem post={EachPost}></PostItem>);
       })
       .catch((err) => {
         setIsScrollable(false);
@@ -120,7 +130,8 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
 
     if (bottom && isScrollable) {
       console.log("스크롤 끝 감지");
@@ -142,7 +153,10 @@ const ProfilePage = ({ setIsToast }) => {
       ></HeaderComponent>
       <div className="profile-page-container hide-scroll">
         <div className="user-info-header">
-          <div className="user-img" style={{ backgroundImage: `url(${userImg})` }}></div>
+          <div
+            className="user-img"
+            style={{ backgroundImage: `url(${userImg})` }}
+          ></div>
           <div className="profile-edit-nav-container">
             <Link to="/profile-modify">
               <div className="profile-edit-btn">
@@ -159,22 +173,27 @@ const ProfilePage = ({ setIsToast }) => {
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
         <button
-          style={{ width: "160px", height: "30px", display: "block", margin: "0 auto" }}
-          // onClick={(e) => {
-          //   navigate("/follower-view-page");
-          // }}
-          onClick={(e) => {
-                // 북마크 포스트 요청
-    let PostListProm = requestPostList(1);
-    PostListProm.then((res) => {
-      setPostList([...res]);
-      console.dir(postList);
-    }).catch((err) => {
-      console.log("게시글 불러올 수 없음");
-      console.dir(err);
-      // 나중에 여기서 토스트 메세지 띄울 것.
-    });
+          style={{
+            width: "160px",
+            height: "30px",
+            display: "block",
+            margin: "0 auto",
           }}
+          onClick={(e) => {
+            navigate("/follower-view-page");
+          }}
+          // onClick={(e) => {
+          //   // 북마크 포스트 요청
+          //   let PostListProm = requestPostList(1);
+          //   PostListProm.then((res) => {
+          //     setPostList([...res]);
+          //     console.dir(postList);
+          //   }).catch((err) => {
+          //     console.log("게시글 불러올 수 없음");
+          //     console.dir(err);
+          //     // 나중에 여기서 토스트 메세지 띄울 것.
+          //   });
+          // }}
         >
           팔로워 확인 페이지로 이동
         </button>
@@ -192,25 +211,7 @@ const ProfilePage = ({ setIsToast }) => {
           </div>
         </div>
         <div className="post-container hide-scroll">
-          {/* {postList} */}
-          <PostItem
-            content={
-              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
-            }
-            weather={"SUNNY"}
-          ></PostItem>
-          <PostItem
-            content={
-              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
-            }
-            weather={"CLOUDY"}
-          ></PostItem>
-          <PostItem
-            content={
-              "동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과동해물과"
-            }
-            weather={"RAINY"}
-          ></PostItem>
+            <PostResultModal></PostResultModal>
         </div>
       </div>
     </>
