@@ -60,7 +60,7 @@ const PostItem = ({ post }) => {
   let thumbNail = null;
   if(post.postRelationDTO.attachFiles[0]){
     thumbNailURL = "https://i8b210.p.ssafy.io/api/file/" +post.postRelationDTO.attachFiles[0].saveName;
-    console.log(thumbNail)
+    // console.log(thumbNail)
     thumbNail = (
       <img src={thumbNailURL}></img>
     )

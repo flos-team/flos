@@ -74,16 +74,7 @@ function Global() {
     )};
   }
 
-  const postList = posts.map(({ id, writer, weather, regDate, content }) => (
-    <PostItem
-      key={id}
-      postId={id}
-      writer={writer}
-      weather={weather}
-      regDate={regDate}
-      content={content}
-    ></PostItem>
-  ));
+  const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
   const noPost = <div>게시물이 없습니다.</div>;
 
   const clickFilterIcon = () => {
