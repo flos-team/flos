@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import { gsap } from "gsap";
 
 // import { ReactComponent as Eye1 } from "../../assets/HomeAsset/flower/eye1.svg";
 import { ReactComponent as Head1 } from "../../../assets/HomeAsset/flower/head1.svg";
 import { ReactComponent as Leaf1 } from "../../../assets/HomeAsset/flower/leaf1.svg";
+import { ReactComponent as Leaf2 } from "../../../assets/HomeAsset/flower/leaf2.svg"
 // import { ReactComponent as Mouth1 } from "../../assets/HomeAsset/flower/mouth1.svg";
 
 import { ReactComponent as Eyes1 } from "../../../assets/HomeAsset/flower/eye1.svg";
@@ -12,12 +14,17 @@ import { ReactComponent as Mouth1 } from "../../../assets/HomeAsset/flower/mouth
 import { ReactComponent as Mouth2 } from "../../../assets/HomeAsset/flower/mouth1.svg";
 import { ReactComponent as Mouth3 } from "../../../assets/HomeAsset/flower/mouth1.svg";
 import { ReactComponent as Pot1 } from "../../../assets/HomeAsset/flower/pot1.svg";
+import { ReactComponent as Stem1 } from "../../../assets/HomeAsset/flower/stem1.svg";
+import { ReactComponent as Flower1 } from "../../../assets/HomeAsset/flower/flower1.svg";
+import { ReactComponent as Flower2 } from "../../../assets/HomeAsset/flower/flower2.svg";
+
+
 
 
 const COLORS = {
     green: {
         face: "#F1F9F6",
-        color: "#53AC8E",
+        color: "#59C727",
     },
     yellow: {
         face: "#FFFBEB",
@@ -87,7 +94,7 @@ const Mouth = styled.div`
     bottom: 70px;
     z-index: 10;
     path {
-      stroke: ${(p) => COLORS[p.colorType].color};
+      stroke: #000000;
     }
   `;
 
@@ -99,7 +106,7 @@ const Head = styled.div`
     bottom: 60px;
   
     path {
-      fill: ${(p) => COLORS[p.colorType].color};
+      fill: #FFE8A4;
     }
   `;
 
@@ -139,38 +146,189 @@ path {
 
 const Leaf = styled.div`
 width: 100%;
-height: 50px;
+height: ${(p) => p.height};
 display: flex;
 justify-content: center;
 border-radius: 100%;
 top: 110px;
 position: relative;
-svg {
+transition-duration: 1s;
+path {
+  fill: ${(p) => COLORS[p.colorType].color};
+}
+`;
+
+const Stem = styled.div`
+width: 100%;
+height: ${(p) => p.height};
+display: flex;
+justify-content: center;
+border-radius: 100%;
+top: 200px;
+position: relative;
+transition-duration: 1s;
+path {
+  fill: ${(p) => COLORS[p.colorType].color};
+}
+`;
+
+const FlowerDiv = styled.div`
+width: 100%;
+height: ${(p) => p.height};
+display: flex;
+justify-content: center;
+border-radius: 100%;
+top: 205px;
+z-index: 20;
+position: relative;
+transition-duration: 2s;
+path {
   fill: ${(p) => COLORS[p.colorType].color};
 }
 `;
 
 
-const Flower = () => {
+const Flower = (props) => {
     const colorPickers = ["green", "yellow", "blue", "black"];
 
-    const leafs = [Leaf1]
+    const flowers = [Flower1, Flower2];
+    const stems = [Stem1];
+    const leafs = [Leaf1, Leaf2]
     const eyes = [Eyes1, Eyes2];
     const mouths = [Mouth1, Mouth2, Mouth3];
     const heads = [Head1];
     const pots = [Pot1];
 
-    const [LeafElement, setLeafElement] = useState(leafs[0]);
+    const [FlowerElement, setFlowerElement] = useState(flowers[0]);
+    const [StemElement, setStemElement] = useState(stems[0]);
+    const [LeafElement, setLeafElement] = useState(leafs[1]);
     const [EyesElement, setEyesElement] = useState(eyes[0]);
     const [MouthElement, setMouthElement] = useState(mouths[0]);
     const [HeadElement, setHeadElement] = useState(heads[0]);
     const [PotElement, setPotElement] = useState(pots[0]);
-    const [color, setColor] = useState("black");
 
+    const [color, setColor] = useState("green");
+    const [flowerColor, setFlowerColor] = useState("red");
+    const [leafHeight, setLeafHeight] = useState("50px");
+    const [stemHeight, setStemHeight] = useState("50px");
+    const [flowerHeight, setFlowerHeight] = useState("50px");
+
+    const [isStemAvailable, setIsStemAvailable] = useState(false);
+    const [isFlowerAvailable, setIsFlowerAvailable] = useState(false);
+
+    useEffect(() => {
+      const timeline = gsap.timeline({
+        repeat:Infinity, yoyo: true, repeatDelay: 0.5, defaults: {duration: 1}
+      });
+  
+      timeline.to(Leaf, {x: 170, scale:2});
+    }, []);
+
+    useEffect(() => {
+      console.log("Flower UseEffect", leafHeight);
+      const percent = props.flowerInfo.CurrentGrowthValue / props.flowerInfo.MaxGrowthValue * 100;
+      console.log(percent+"% 만큼 나옴");
+      if(percent >= 0 && percent < 25){
+        setIsFlowerAvailable(false);
+        setLeafElement(leafs[0]);
+        // height 50px
+        setLeafHeight("50px");
+        setColor("green");
+      }
+      else if(percent >= 25 && percent < 50){
+        setIsFlowerAvailable(false);
+        setLeafElement(leafs[1]);
+        if(percent < 30){
+          setLeafHeight("100px");
+        }
+        else if(percent < 35){
+          setLeafHeight("110px");
+        }
+        else if(percent < 40){
+          setLeafHeight("120px");
+        }
+        else if(percent < 45){
+          setLeafHeight("130px");
+        }
+        else if(percent < 50){
+          setLeafHeight("140px");
+        }
+        setColor("green");
+      }
+      else if(percent >= 50 && percent < 75){
+        setIsFlowerAvailable(false);
+        setLeafElement(leafs[1]);
+          // height 150px
+          if(percent < 55){
+            setLeafHeight("150px");
+          }
+          else if(percent < 60){
+            setLeafHeight("160px");
+          }
+          else if(percent < 65){
+            setLeafHeight("170px");
+            setIsStemAvailable(true);
+            setStemHeight("50px");
+          }
+          else if(percent < 70){
+            setLeafHeight("180px");
+            setStemHeight("60px");
+          }
+          else if(percent < 75){
+            setLeafHeight("190px");
+            setStemHeight("70px");
+          }
+          setColor("green");
+      }
+      else if(percent >= 75 && percent < 100){  // 꽃 등장
+        setLeafElement(leafs[1]);
+        // height 200px
+        setIsFlowerAvailable(true);
+        setIsStemAvailable(true);
+        if(percent < 80){
+          setLeafHeight("200px");
+          setFlowerHeight("30px");
+        }
+        else if(percent < 85){
+          setLeafHeight("210px");
+          setFlowerHeight("40px");
+        }
+        else if(percent < 90){
+          setLeafHeight("220px");
+          setFlowerHeight("60px");
+          setFlowerElement(flowers[1]);
+        }
+        else if(percent < 95){
+          setLeafHeight("230px");
+          setFlowerHeight("70px");
+          setFlowerElement(flowers[1]);
+        }
+        else if(percent < 100){
+          setLeafHeight("240px");
+          setFlowerHeight("80px");
+          setFlowerElement(flowers[1]);
+        }
+      }
+      else if(percent == 100){  // 개화
+        setIsFlowerAvailable(true);
+        setIsStemAvailable(true);
+        setLeafElement(leafs[1]);
+        setFlowerHeight("80px");
+        setLeafHeight("250px");
+        props.makeFullfilled();
+      }
+      else {
+        console.log("오류가 발생했습니다. 적절한 값이 아닙니다.");
+      }
+    }, [props.flowerInfo.CurrentGrowthValue]);
 
     return (
         <>
-            <Leaf colorType="blue">
+          {(isFlowerAvailable ? <FlowerDiv colorType={"blue"} height={flowerHeight}><FlowerElement /></FlowerDiv> : null)}
+          {(isStemAvailable ? <Stem colorType={color} height={stemHeight}>
+            <StemElement />
+          </Stem> : null)}
+            <Leaf colorType={color} height={leafHeight}>
               <LeafElement />
             </Leaf>
             <Face colorType={color}>
@@ -185,7 +343,7 @@ const Flower = () => {
                     </Mouth>
                 )}
                 {HeadElement && (
-                    <Head colorType={"green"}>
+                    <Head colorType={color}>
                         <HeadElement />
                     </Head>
                 )
