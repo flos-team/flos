@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {getPostList} from "../../api/PostAPI"
+import {getPostList, getPostListByWeather, getPostListByComment} from "../../api/PostAPI"
 
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../components/PostItem/PostItem";
@@ -15,12 +15,50 @@ import styles from "./GlobalPage.module.css";
 
 function Global() {
   const [posts, setPosts] = useState([]);
+  const [filtering, setFiltering] = useState(false); // 필터링 아이콘 누른 상태 확인
+  const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
+
 
   useEffect(() => {
     getPostList().then((response) => {
-      setPosts(response);
+      console.dir(response)
+      setPosts(response.postList);
     });
-  }, []);
+    getPostListByComment(0).then((res)=>{
+      console.dir(res.postList);
+
+    });
+}, []);
+
+  // 필터
+  const onFilterWeather = () => {
+    if (filterStandard === 1) {
+      getPostList().then((response) => {
+        setPosts(response.postList)
+        console.log(filterStandard)
+      }
+    )} else if (filterStandard === 2) {
+      getPostListByComment().then((response) => {
+        setPosts(response.postList)
+        console.log(filterStandard)
+      })
+    } else if (filterStandard === 3) {
+      getPostListByWeather(1, 'SUNNY').then((response) => {
+        setPosts(response.postList);
+        console.log(filterStandard)
+    }
+    )} else if (filterStandard === 4) {
+      getPostListByWeather(1, 'CLOUDY').then((response) => {
+        setPosts(response.postList);
+        console.log(filterStandard)
+      }
+    )} else if (filterStandard === 5) {
+      getPostListByWeather(1, 'RAINY').then((response) => {
+        setPosts(response.postList);
+        console.log(filterStandard)
+    }
+    )};
+  }
 
   const postList = posts.map(({ id, writer, weather, regDate, content }) => (
     <PostItem
@@ -34,9 +72,6 @@ function Global() {
   ));
   const noPost = <div>게시물이 없습니다.</div>;
 
-  const [filtering, setFiltering] = useState(false); // 필터링 아이콘 누른 상태 확인
-  const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
-
   const clickFilterIcon = () => {
     if (filtering === false) {
       setFiltering(true);
@@ -44,6 +79,10 @@ function Global() {
       setFiltering(false);
     }
   };
+
+  const changeFilterStandard = (num) => {
+    setFilterStandard(num)
+  }
 
   return (
     <div className={styles.feedRoot}>
@@ -69,7 +108,7 @@ function Global() {
                     ? styles.filtertextstandard
                     : styles.filtertext
                 }
-                onClick={() => setFilterStandard(1)}
+                onClick={() => changeFilterStandard(1)}
               >
                 최신순
               </span>
@@ -79,7 +118,10 @@ function Global() {
                     ? styles.filtertextstandard
                     : styles.filtertext
                 }
-                onClick={() => setFilterStandard(2)}
+                onClick={() => {
+                  changeFilterStandard(2);
+                  onFilterWeather();
+                }}
               >
                 댓글 많은 순
               </span>
@@ -93,7 +135,10 @@ function Global() {
                     ? styles.filterweatherstandard
                     : styles.filterweathericon
                 }
-                onClick={() => setFilterStandard(3)}
+                onClick={() => {
+                  changeFilterStandard(3);
+                  onFilterWeather();
+                }}
               ></img>
               <img
                 src={CloudyIcon}
@@ -103,7 +148,10 @@ function Global() {
                     ? styles.filterweatherstandard
                     : styles.filterweathericon
                 }
-                onClick={() => setFilterStandard(4)}
+                onClick={() => {
+                  changeFilterStandard(4);
+                  onFilterWeather();
+                }}
               ></img>
               <img
                 src={RainyIcon}
@@ -113,7 +161,10 @@ function Global() {
                     ? styles.filterweatherstandard
                     : styles.filterweathericon
                 }
-                onClick={() => setFilterStandard(5)}
+                onClick={() => {
+                  changeFilterStandard(5);
+                  onFilterWeather();
+                }}
               ></img>
             </div>
           </div>
