@@ -50,12 +50,10 @@ public class Member {
 
     @Basic(fetch = FetchType.LAZY)
     @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = member_id AND wr.weather_type = 'RAINY' AND wr.flower_id IS NULL)")
-    @ColumnDefault("0")
     private int water;
 
     @Basic(fetch = FetchType.LAZY)
     @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = member_id AND wr.weather_type = 'SUNNY' AND wr.flower_id IS NULL)")
-    @ColumnDefault("0")
     private int light;
 
     @Basic(fetch = FetchType.LAZY)

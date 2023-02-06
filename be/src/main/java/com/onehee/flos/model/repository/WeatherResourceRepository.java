@@ -6,10 +6,12 @@ import com.onehee.flos.model.entity.WeatherResource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface WeatherResourceRepository extends JpaRepository<WeatherResource, Long> {
 
-    WeatherResource findByOwnerAndFlower(Member member, Flower flower);
+//    Optional<WeatherResource> findFirstByOwnerAndAndFlowerIsNull(Member member);
 
     Long countLightByFlower(Flower flower);
 
