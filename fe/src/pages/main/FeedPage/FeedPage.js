@@ -14,7 +14,7 @@ function Feed() {
   
   useEffect(() =>{
     getPostList().then(response => {
-      setPosts(response)
+      setPosts(response.postList)
     })
   }, [])
 
