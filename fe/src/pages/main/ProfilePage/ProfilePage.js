@@ -22,18 +22,7 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, {
-  getPost,
-  getPostList,
-  getBookMarkList,
-  getPostListByUserId,
-  getPostListByWeather,
-  getPostListByComment,
-  getPostListByTagName,
-  createPost,
-  modifyPost,
-  deletePost,
-} from "../../../api/PostAPI";
+import PostAPI, { getPost, getPostList } from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -181,18 +170,7 @@ const ProfilePage = ({ setIsToast }) => {
             display: "block",
             margin: "0 auto",
           }}
-          onClick={(e) => {
-            // navigate("/follower-view-page");
-            //setIsVisible(true);
-            // let data = getPostList();
-            // data.then((res) => {
-            //   console.dir(res);
-            // });
-            let data = deletePost(39);
-            data.then((res) => {
-              console.dir(res);
-            });
-          }}
+          onClick={(e) => {}}
         >
           기능테스트
         </button>
