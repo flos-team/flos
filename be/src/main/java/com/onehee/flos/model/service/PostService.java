@@ -21,7 +21,7 @@ public interface PostService {
     SliceResponseDTO getLatestPostList(Pageable pageable);
 
     // 게시글 사람별 검색
-    SliceResponseDTO getPostListByWriter(Long id, Pageable pageable);
+    Slice<PostResponseDTO> getPostListByWriter(String nickName, Pageable pageable);
 
     // 북마크한 게시글 검색
     SliceResponseDTO getBookmarkedListByMember(Pageable pageable);
