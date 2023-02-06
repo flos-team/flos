@@ -91,9 +91,9 @@ insert into `bookmark` (`bookmark_id`, `members_id`, `post_id`) VALUE (10, 4, 4)
 insert into `bookmark` (`bookmark_id`, `members_id`, `post_id`) VALUE (11, 5, 3);
 insert into `bookmark` (`bookmark_id`, `members_id`, `post_id`) VALUE (12, 5, 4);
 insert into `bookmark` (`bookmark_id`, `members_id`, `post_id`) VALUE (13, 6, 5);
-insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (1, 1, "test1.jpg", "test1.jpg", now());
-insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (2, 1, "test2.jpg", "test2.jpg", now());
-insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (3, 1, "test3.jpg", "test3.jpg", now());
+insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (1, 1, "test1.jpg", "test1.jpg", "2023-02-05");
+insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (2, 1, "test2.jpg", "test2.jpg", "2023-02-05");
+insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (3, 1, "test3.jpg", "test3.jpg", "2023-02-05");
 insert into `post_file` (`post_file_id`, `files_id`, `post_id`) VALUE (1, 1, 1);
 insert into `post_file` (`post_file_id`, `files_id`, `post_id`) VALUE (2, 2, 1);
 insert into `post_file` (`post_file_id`, `files_id`, `post_id`) VALUE (3, 3, 1);
