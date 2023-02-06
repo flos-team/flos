@@ -28,11 +28,16 @@
   width: 17rem;
   height: 14rem;
   display: flex;
-  flex-direction: row;
-  overflow-y: scroll;
+  flex-flow: column wrap;
+  overflow: scroll;
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
+  display: flex;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
 }
 .post-item .img-container img {
   order: 1;
@@ -68,8 +73,15 @@
   width: 80%;
   height: 60%;
   font-size: 16px;
+  text-overflow: ellipsis; /* 말줄임 css */
+  white-space: nowrap; /*글자를 한줄로 모아준다*/
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+.post-item .img-container .img-div {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
 }
 .post-item .img-container .filter:last-child {
   background-color: #fff;
@@ -177,9 +189,20 @@
 .post-item a .bottom-text-container .user-info-container .more-btn .arrow-div img {
   width: 0.5rem;
 }
+.post-item a .bottom-text-container .text-container {
+  width: 100%;
+  height: 0.875rem;
+}
+.post-item a .bottom-text-container .text-container p {
+  height: 100%;
+  text-overflow: ellipsis; /* 말줄임 css */
+  white-space: nowrap; /*글자를 한줄로 모아준다*/
+  overflow: hidden;
+  font-size: 0.75rem;
+}
 .post-item a .bottom-text-container .tag-container {
   /* tag-container */
-  width: 14rem;
+  width: 100%;
   height: 3rem;
   order: 1;
   display: flex;
@@ -197,6 +220,16 @@
   border-radius: 0.75rem;
   font-size: 0.625rem;
   text-align: center;
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 /*# sourceMappingURL=PostItem.css.map */

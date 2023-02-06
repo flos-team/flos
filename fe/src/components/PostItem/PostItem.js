@@ -13,6 +13,7 @@ import sunnyImg from "../../assets/GlobalAsset/sunny.png";
 import cloudyImg from "../../assets/GlobalAsset/cloudy.png";
 import rainyImg from "../../assets/GlobalAsset/rainy.png";
 import questionMark from "../../assets/ProfileAsset/question-mark.png";
+import commentProfileSample from "../../assets/DummyData/commentProfileSample.png";
 
 import dayjs from "dayjs";
 import { getTimeDiffText } from "../../api/DateModule";
@@ -66,15 +67,18 @@ const PostItem = ({ postId, writerNickname, weather, regDate, content, tagList }
   return (
     <>
       <div className="post-item" id={`${postId}`}>
-        <div className="img-container" style={{ backgroundImage: `url(${testURL})` }}>
-          <div className="filter">
+        <div className="img-container hide-scroll" style={{ backgroundImage: `url(${testURL})` }}>
+          {/* <div className="filter">
             <div className="arrow-div" style={{ backgroundColor: bgColor }}></div>
             <div className="text-content">{content}</div>
-          </div>
-          <div className="filter"></div>
+          </div> */}
+          {/* <div className="filter"></div> */}
+          <div className="img-div" style={{ backgroundImage: `url(${commentProfileSample})` }}></div>
+          <div className="img-div" style={{ backgroundImage: `url(${commentProfileSample})` }}></div>
+          <div className="img-div" style={{ backgroundImage: `url(${commentProfileSample})` }}></div>
         </div>
         <Link to={`post/${postId}`}>
-          <div className="bottom-text-container">
+          <div className="bottom-text-container" style={{ backgroundColor: bgColor }}>
             <div className="user-info-container">
               <div className="user-info-div">
                 <img src={userSample}></img>
@@ -95,7 +99,10 @@ const PostItem = ({ postId, writerNickname, weather, regDate, content, tagList }
                 </div>
               </div>
             </div>
-            <div className="tag-container">
+            <div className="text-container">
+              <p>{content}</p>
+            </div>
+            <div className="tag-container hide-scroll">
               {/* 태그가 여러 개일 경우 그에 맞춰 배열 조정 必 */}
               {postTagList}
             </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {getPostList} from "../../api/PostAPI"
 
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../components/PostItem/PostItem";
@@ -14,22 +14,12 @@ import RainyIcon from "../../assets/GlobalAsset/rainy.png";
 import styles from "./GlobalPage.module.css";
 
 function Global() {
-  axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-  // axios.defaults.baseURL = "http://localhost:8080/";
-  axios.defaults.withCredentials = false;
-
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("/post/list?page=1")
-      .then((response) => {
-        setPosts(response.data.content);
-      })
-      .catch((error) => {
-        console.log("error : " + error);
-        console.dir(axios.defaults);
-      });
+    getPostList().then((response) => {
+      setPosts(response);
+    });
   }, []);
 
   const postList = posts.map(({ id, writer, weather, regDate, content }) => (
