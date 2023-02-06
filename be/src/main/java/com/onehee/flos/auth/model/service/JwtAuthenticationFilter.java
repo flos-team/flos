@@ -32,6 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final MemberDetailsService memberDetailsService;
     // 헤더에 오는 토큰의 형식은 "Bearer " + 토큰으로 날아온다.
     private final String TokenType = "Bearer ";
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -73,9 +74,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         return Stream.of("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
-                "/swagger-ui/**", "/swagger-resources/**").anyMatch(exclude -> new AntPathMatcher().match(exclude, request.getServletPath()));
+                "/swagger-ui/**", "/swagger-resources/**").anyMatch(exclude -> antPathMatcher.match(exclude, request.getServletPath()));
     }
 
 }
