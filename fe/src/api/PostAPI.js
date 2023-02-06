@@ -28,7 +28,7 @@ const getPost = async (postId) => {
     .catch((error) => {
       console.log("해당 게시글이 존재하지 않습니다.");
     });
-  console.log(post);
+  // console.log(post);
   return post;
 };
 
@@ -37,7 +37,7 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Object} 포스트 리스트 정보를 갖는 자바스크립트 객체
  */
-const getPostList = async (page = 0) => {
+const getPostList = async (page = 3) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
