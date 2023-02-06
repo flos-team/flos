@@ -18,6 +18,8 @@ public class MemberInfoResponseDTO {
     private String introduction;
     private int water;
     private int light;
+    private int followerCount;
+    private int followingCount;
 
     public static MemberInfoResponseDTO toDto(Member member) {
         return MemberInfoResponseDTO.builder()
@@ -26,6 +28,10 @@ public class MemberInfoResponseDTO {
                 .nickname(member.getNickname())
                 .profileImage(FileResponseDTO.toDTO(member.getProfileImage()))
                 .introduction(member.getIntroduction())
+                .water(member.getWater())
+                .light(member.getLight())
+                .followerCount(member.getFollowerCount())
+                .followingCount(member.getFollowingCount())
                 .build();
     }
 

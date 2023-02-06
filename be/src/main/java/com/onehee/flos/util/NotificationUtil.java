@@ -1,7 +1,6 @@
 package com.onehee.flos.util;
 
 import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.type.ResourceType;
 
 public class NotificationUtil {
 

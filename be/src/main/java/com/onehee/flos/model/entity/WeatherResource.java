@@ -1,6 +1,5 @@
 package com.onehee.flos.model.entity;
 
-import com.onehee.flos.model.entity.type.ResourceType;
 import com.onehee.flos.model.entity.type.WeatherType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
