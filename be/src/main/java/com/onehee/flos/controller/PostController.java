@@ -97,9 +97,9 @@ public class PostController {
     public ResponseEntity<?> getListByTagName(@RequestParam(value = "page", required = false) Integer page, @PathVariable String tagName){
         PageRequest pageRequest = null;
         if (page==null)
-            pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
+            pageRequest = PageRequest.of(0, size, Sort.by("created_at").descending());
         else
-            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+            pageRequest = PageRequest.of(page, size, Sort.by("created_at").descending());
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByTagName(tagName, pageRequest), HttpStatus.OK);
     }
 
