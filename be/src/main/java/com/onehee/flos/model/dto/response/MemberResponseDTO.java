@@ -14,14 +14,16 @@ public class MemberResponseDTO {
     private Long id;
     private String email;
     private String nickname;
-    private FileResponseDTO picture;
+    private FileResponseDTO profileImage;
+    private String introduction;
 
     public static MemberResponseDTO toDto(Member member) {
         return MemberResponseDTO.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .picture(FileResponseDTO.toDTO(member.getProfileImage()))
+                .profileImage(FileResponseDTO.toDTO(member.getProfileImage()))
+                .introduction(member.getIntroduction())
                 .build();
     }
 }

@@ -26,4 +26,6 @@ public interface MemberService {
 
     void logout(LogoutDTO logoutDTO);
 
+    MemberInfoResponseDTO getMemberInfo(MemberSelectRequestDTO memberSelectRequestDTO);
+
 }

@@ -44,6 +44,9 @@ public class Member {
     @JoinColumn(name = "files_id")
     private FileEntity profileImage;
 
+    @ColumnDefault("'안녕하세요~'")
+    private String introduction;
+
     @ColumnDefault("0")
     private int water;
 

@@ -91,6 +91,9 @@ public class MemberServiceImpl implements MemberService {
                 throw new BadRequestException("프로필 사진 등록 중에 문제가 발생했습니다.");
             }
         }
+        if (memberUpdateRequestDTO.getIntroduction() != null) {
+            member.setIntroduction(memberUpdateRequestDTO.getIntroduction());
+        }
         member = memberRepository.saveAndFlush(member);
         return MemberInfoResponseDTO.toDto(member);
     }
@@ -110,7 +113,7 @@ public class MemberServiceImpl implements MemberService {
         // 이메일 유효검사
         log.info("{}", memberResetPasswordDTO.getEmail());
         Member member = memberRepository.findByEmailAndProviderType(memberResetPasswordDTO.getEmail(), ProviderType.LOCAL)
-                        .orElseThrow(() -> new BadRequestException("해당 이메일 주소로 가입된 계정이 존재하지 않습니다."));
+                .orElseThrow(() -> new BadRequestException("해당 이메일 주소로 가입된 계정이 존재하지 않습니다."));
 
 
         if (memberResetPasswordDTO.getCode() == null || !memberResetPasswordDTO.getEmail().equals(redisRepository.getValue("approved_resetPassword:" + memberResetPasswordDTO.getCode()))) {
@@ -130,5 +133,13 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean isExistNickname(MemberNicknameCheckRequestDTO memberNicknameCheckRequestDTO) {
         return memberRepository.existsByNickname(memberNicknameCheckRequestDTO.getNickname());
+    }
+
+    @Override
+    public MemberInfoResponseDTO getMemberInfo(MemberSelectRequestDTO memberSelectRequestDTO) {
+        Member member = memberRepository.findById(memberSelectRequestDTO.getId())
+                .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
+
+        return MemberInfoResponseDTO.toDto(member);
     }
 }
