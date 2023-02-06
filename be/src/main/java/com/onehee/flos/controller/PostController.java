@@ -58,7 +58,7 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "사람별 게시글 리스트", description = "특정 회원의 게시글 리스트를 반환합니다.")
     @GetMapping("/list/member/{nickName}")
-    public ResponseEntity<?> getListByWriter(@RequestParam("page") Integer page, @PathVariable String nickName) throws BadRequestException{
+    public ResponseEntity<?> getListByWriter(@RequestParam(value = "page", required = false) Integer page, @PathVariable String nickName) throws BadRequestException{
         PageRequest pageRequest = null;
         if (page==null)
             pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
