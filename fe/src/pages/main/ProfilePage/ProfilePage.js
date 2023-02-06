@@ -160,8 +160,20 @@ const ProfilePage = ({ setIsToast }) => {
         </div>
         <button
           style={{ width: "160px", height: "30px", display: "block", margin: "0 auto" }}
+          // onClick={(e) => {
+          //   navigate("/follower-view-page");
+          // }}
           onClick={(e) => {
-            navigate("/follower-view-page");
+                // 북마크 포스트 요청
+    let PostListProm = requestPostList(1);
+    PostListProm.then((res) => {
+      setPostList([...res]);
+      console.dir(postList);
+    }).catch((err) => {
+      console.log("게시글 불러올 수 없음");
+      console.dir(err);
+      // 나중에 여기서 토스트 메세지 띄울 것.
+    });
           }}
         >
           팔로워 확인 페이지로 이동
