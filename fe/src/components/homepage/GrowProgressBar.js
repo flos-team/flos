@@ -18,7 +18,7 @@ class GrowProgressBar extends React.Component {
           {({ accomplished }) => (
             <img
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="15"
+              width="10"
               src={Seed}
             />
           )}
@@ -27,7 +27,7 @@ class GrowProgressBar extends React.Component {
           {({ accomplished }) => (
             <img
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="10"
+              width="5"
               src={Diamond}
             />
           )}
@@ -36,7 +36,7 @@ class GrowProgressBar extends React.Component {
           {({ accomplished }) => (
             <img
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="10"
+              width="5"
               src={Diamond}
             />
           )}
@@ -45,7 +45,7 @@ class GrowProgressBar extends React.Component {
           {({ accomplished }) => (
             <img
               style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="10"
+              width="5"
               src={Diamond}
             />
           )}
@@ -53,8 +53,8 @@ class GrowProgressBar extends React.Component {
         <Step transition="scale">
           {({ accomplished }) => (
             <img
-              style={{ filter: `grayscale(${accomplished ? 0 : 80}%)` }}
-              width="20"
+              style={{ filter: `(${accomplished ? 0 : 80}%)` }}
+              width="15"
               src={Flowering}
             />
           )}
