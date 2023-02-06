@@ -7,7 +7,7 @@ import axios from "axios";
  */
 
 // 엑시오스 기본 세팅
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io";
+axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
 axios.defaults.withCredentials = true;
 
 /////////* GET *///////////////////
