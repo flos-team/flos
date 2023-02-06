@@ -136,64 +136,71 @@ const Home = () => {
     backgroundImgUrl = NightBackground;
   }
 
-  // useEffect(() => {
-  //     // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 시작 ---------------------
+  let timer;
 
-  //     setFlowerInfo({
-  //         existence: "fulfilled", // 존재 여부
-  //         name: "명식이", // 이름
-  //         sunElementCount: 20, // 태양 요소 개수
-  //         rainElementCount: 20, // 빗물 요소 개수
-  //         CurrentGrowthValue: 60, // 현재 고정 값
-  //         MaxGrowthValue: 100, // 최대 값
-  //     }); // flower 상태 일반 상태로 부여
+  useEffect(() => {
+      // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 시작 ---------------------
 
-  //     // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 끝 ---------------------
+      setFlowerInfo({
+          existence: "fulfilled", // 존재 여부
+          name: "명식이", // 이름
+          sunElementCount: 20, // 태양 요소 개수
+          rainElementCount: 20, // 빗물 요소 개수
+          CurrentGrowthValue: 60, // 현재 고정 값
+          MaxGrowthValue: 100, // 최대 값
+      }); // flower 상태 일반 상태로 부여
 
-  //     /*
-  //             꽃 정보에 따른 추가 작업
-  //         */
-  //     if (flowerInfo.flowerExistence === "empty") {
-  //         // 현재 키우고 있는 꽃이 없을 경우
-  //         makeNewSeed(); // 새로운 꽃을 만든다.
-  //     } else if (flowerInfo.flowerExistence === "fulfilled") {
-  //         // 현재 키우고 있는 꽃이 있고 게이지가 가득 찬 경우
-  //         flowering();
-  //     }
+      // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 끝 ---------------------
 
-  //     setInterval(function () {
-  //         const value = Math.floor(Math.random() * 2);
-  //         console.log(value);
-  //         setFlowerMessageIsVisible(true);
-  //         setFlowerMessage(
-  //             <motion.div
-  //                 className="flowerMessage"
-  //                 initial={{ opacity: 0, scale: 0.5 }}
-  //                 animate={flowerMessageIsVisible ? show : hide}
-  //                 transition={{ duration: 0.5 }}
-  //                 whileHover={{ scale: 1.1 }}
-  //                 whileTap={{ scale: 0.9 }}
-  //             >
-  //                 <FlowerMessageText>
-  //                     <motion.span
-  //                         initial={{ opacity: 0, scale: 0.5 }}
-  //                         animate={{ opacity: 1, scale: 1 }}
-  //                         transition={{ duration: 0.1 }}
-  //                     >
-  //                         {flowerMessageArr[value]}
-  //                     </motion.span>
-  //                 </FlowerMessageText>
-  //             </motion.div>
-  //         );
+      /*
+              꽃 정보에 따른 추가 작업
+          */
+      if (flowerInfo.flowerExistence === "empty") {
+          // 현재 키우고 있는 꽃이 없을 경우
+          makeNewSeed(); // 새로운 꽃을 만든다.
+      } else if (flowerInfo.flowerExistence === "fulfilled") {
+          // 현재 키우고 있는 꽃이 있고 게이지가 가득 찬 경우
+          flowering();
+      }
 
-  //         setTimeout(() => {
-  //             console.log("닫혀라!");
-  //             setFlowerMessageIsVisible(!flowerMessageIsVisible);
-  //             setFlowerMessage(null);
-  //          }, 7000);
-  //     }, 10000);
+      let interval = setInterval(function () {
+          const value = Math.floor(Math.random() * 2);
+          console.log(value);
+          setFlowerMessageIsVisible(true);
+          setFlowerMessage(
+              <motion.div
+                  className="flowerMessage"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={flowerMessageIsVisible ? show : hide}
+                  transition={{ duration: 0.5 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+              >
+                  <FlowerMessageText>
+                      <motion.span
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.1 }}
+                      >
+                          {flowerMessageArr[value]}
+                      </motion.span>
+                  </FlowerMessageText>
+              </motion.div>
+          );
 
-  // }, []);
+          timer = setTimeout(() => {
+              console.log("닫혀라!");
+              setFlowerMessageIsVisible(!flowerMessageIsVisible);
+              setFlowerMessage(null);
+           }, 7000);
+
+      }, 10000);
+
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timer);
+      }
+  }, []);
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
