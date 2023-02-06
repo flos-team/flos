@@ -77,7 +77,9 @@ const logout = async () => {
   await axios
     .get(url)
     .then((response) => {
-      console.dir(response);
+      if (response.status === 204) {
+        isLogout = true;
+      }
     })
     .catch((err) => {
       console.log("로그아웃 중 오류 발생");
@@ -168,16 +170,20 @@ const signUpUser = async (code, email, nickname, password) => {
 /**
  * modifyUserInfo : 회원정보 수정 메서드
  * @param {string} nickname 사용자 이름
+ * @param {string} introduction 사용자 소개
  * @param {ImageBitmap} profileImage 이미지 비트맵 파일
  * @returns {Promise} A Promise object containing a boolean value
  */
-const modifyUserInfo = async (nickname, profileImage) => {
-  let url = "/api/member/info";
+const modifyUserInfo = async (nickname, introduction, profileImage) => {
+  let url = `/api/member/info?nickname=${nickname}&introduction=${introduction}`;
   let isUpdated = false;
   await axios
     .put(url, {})
     .then((response) => {
-      console.dir(response);
+      // response.data
+      if (response.status === 201) {
+        isUpdated = true;
+      }
     })
     .catch((err) => {
       console.log("회원정보 수정 중 오류 발생");
