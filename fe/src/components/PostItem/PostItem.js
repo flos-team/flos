@@ -56,14 +56,20 @@ const PostItem = ({ post }) => {
   ));
 
   // console.log(post.postRelationDTO.attachFiles[0]);
-  let thumbNailURL = ""; 
+  let thumbNailURL = "";
   let thumbNail = null;
-  if(post.postRelationDTO.attachFiles[0]){
-    thumbNailURL = "https://i8b210.p.ssafy.io/api/file/" +post.postRelationDTO.attachFiles[0].saveName;
-    // console.log(thumbNail)
+  if (post.postRelationDTO.attachFiles[0]) {
+    thumbNailURL =
+      "https://i8b210.p.ssafy.io/api/file/" +
+      post.postRelationDTO.attachFiles[0].saveName;
     thumbNail = (
-      <img src={thumbNailURL}></img>
-    )
+      <div
+        className="img-container hide-scroll"
+        style={{
+          backgroundImage: `url(${thumbNailURL})`,
+        }}
+      ></div>
+    );
   }
 
   const tags = post.postRelationDTO.tagList.map(({ key, tagName }) => (
