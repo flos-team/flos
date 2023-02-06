@@ -171,15 +171,15 @@ const Home = () => {
       name: "명식이", // 이름
       sunElementCount: 20, // 태양 요소 개수
       rainElementCount: 1000, // 빗물 요소 개수
-      CurrentGrowthValue: 50, // 현재 고정 값
-      MaxGrowthValue: 100, // 최대 값
+      CurrentGrowthValue: 0, // 현재 고정 값
+      MaxGrowthValue: 50, // 최대 값
     }); // flower 상태 일반 상태로 부여
 
 
     // ---------------------- 노래 틀기
 
-    var audio = new Audio('button-16.mp3');
-    audio.play();
+    // var audio = new Audio('button-16.mp3');
+    // audio.play();
 
     // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 끝 ---------------------
 

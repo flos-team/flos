@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styled from "@emotion/styled";
 import { gsap } from "gsap";
 
@@ -75,16 +75,6 @@ const Eyes = styled.div`
     position: absolute;
     z-index: 10;
     top: 125px;
-    svg {
-      fill: ${(p) => COLORS[p.colorType].color};
-    }
-    path {
-      stroke: ${(p) => COLORS[p.colorType].color};
-    }
-    circle {
-      stroke: ${(p) => COLORS[p.colorType].color};
-      fill: ${(p) => COLORS[p.colorType].color};
-    }
   `;
 const Mouth = styled.div`
     width: 18px;
@@ -103,7 +93,7 @@ const Head = styled.div`
     text-align: center;
     
     position: absolute;
-    bottom: 60px;
+    bottom: -80px;
   
     path {
       fill: #FFE8A4;
@@ -118,7 +108,7 @@ const Face = styled.div`
     justify-content: center;
     border-radius: 100%;
 
-    bottom: -38px;
+    bottom: -30px;
     position: relative;
   `;
 
@@ -191,6 +181,10 @@ path {
 const Flower = (props) => {
     const colorPickers = ["green", "yellow", "blue", "black"];
 
+    const LeafRef = useRef();
+    const FaceRef = useRef();
+    const wholeFlowerRef = useRef();
+
     const flowers = [Flower1, Flower2];
     const stems = [Stem1];
     const leafs = [Leaf1, Leaf2]
@@ -209,6 +203,7 @@ const Flower = (props) => {
 
     const [color, setColor] = useState("green");
     const [flowerColor, setFlowerColor] = useState("red");
+
     const [leafHeight, setLeafHeight] = useState("50px");
     const [stemHeight, setStemHeight] = useState("50px");
     const [flowerHeight, setFlowerHeight] = useState("50px");
@@ -216,12 +211,32 @@ const Flower = (props) => {
     const [isStemAvailable, setIsStemAvailable] = useState(false);
     const [isFlowerAvailable, setIsFlowerAvailable] = useState(false);
 
+    let blinkSec = 100;
+    let blinkSecInterval;
+    let blinkingSec = 5000;
+    let blinkingSecTimeout;
+
     useEffect(() => {
-      const timeline = gsap.timeline({
+      gsap.timeline({
         repeat:Infinity, yoyo: true, repeatDelay: 0.5, defaults: {duration: 1}
-      });
-  
-      timeline.to(Leaf, {x: 170, scale:2});
+      }).fromTo(LeafRef.current, {x: -5, rotate: -3},{x: 5, rotate: 3});
+
+      gsap.timeline({repeat:Infinity, yoyo: true, repeatDelay: 1, defaults: {duration: 2}}).fromTo(FaceRef.current, {y: -2}, {y: 2});
+
+
+      blinkSecInterval = setInterval(() => {
+        setEyesElement(eyes[1]);
+        blinkingSecTimeout = setTimeout(() =>{
+          setEyesElement(eyes[0]);
+          blinkSec = Math.floor(Math.random() * (500 - 100)) + 100;
+        }, blinkSec);
+        blinkingSec = Math.floor(Math.random() * (5000 - 1000)) + 1000;
+      }, blinkingSec);
+      return () =>
+        {
+          clearInterval(blinkSecInterval);
+          clearTimeout(blinkingSecTimeout);
+        };
     }, []);
 
     useEffect(() => {
@@ -232,7 +247,21 @@ const Flower = (props) => {
         setIsFlowerAvailable(false);
         setLeafElement(leafs[0]);
         // height 50px
-        setLeafHeight("50px");
+        if(percent < 5){
+          setLeafHeight("20px");
+        }
+        else if(percent < 10){
+          setLeafHeight("25px");
+        }
+        else if(percent < 15){
+          setLeafHeight("30px");
+        }
+        else if(percent < 20){
+          setLeafHeight("35px");
+        }
+        else if(percent < 25){
+          setLeafHeight("40px");
+        }
         setColor("green");
       }
       else if(percent >= 25 && percent < 50){
@@ -322,28 +351,37 @@ const Flower = (props) => {
       }
     }, [props.flowerInfo.CurrentGrowthValue]);
 
+
+    const FlowerClick = () => {
+      console.log("clicked - flower");
+
+      gsap.timeline({yoyo: true, repeatDelay: 0, defaults: {duration: 1}})
+      .fromTo(wholeFlowerRef.current, {y: -10}, {y: 5});
+
+    };
+
     return (
-        <>
-          {(isFlowerAvailable ? <FlowerDiv colorType={"blue"} height={flowerHeight}><FlowerElement /></FlowerDiv> : null)}
+        <div ref={wholeFlowerRef} onClick={FlowerClick}>
+          {(isFlowerAvailable ? <FlowerDiv colorType={"yellow"} height={flowerHeight}><FlowerElement /></FlowerDiv> : null)}
           {(isStemAvailable ? <Stem colorType={color} height={stemHeight}>
             <StemElement />
           </Stem> : null)}
-            <Leaf colorType={color} height={leafHeight}>
+            <Leaf ref={LeafRef} colorType={color} height={leafHeight}>
               <LeafElement />
             </Leaf>
-            <Face colorType={color}>
+            <Face ref={FaceRef} colorType={color}>
                 {EyesElement && (
-                    <Eyes colorType={color}>
+                    <Eyes>
                         <EyesElement />
                     </Eyes>
                 )}
                 {MouthElement && (
-                    <Mouth colorType={color}>
+                    <Mouth>
                         <MouthElement />
                     </Mouth>
                 )}
                 {HeadElement && (
-                    <Head colorType={color}>
+                    <Head>
                         <HeadElement />
                     </Head>
                 )
@@ -354,7 +392,7 @@ const Flower = (props) => {
                     <PotElement />
                 </Pot>
             </FlowerPot>
-        </>
+        </div>
     );
 }
 
