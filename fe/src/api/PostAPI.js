@@ -22,12 +22,13 @@ const getPost = async (postId) => {
       if (response.status === 200) {
         // console.dir(response.data);
         post = response.data;
+        // console.log(post)
       }
     })
     .catch((error) => {
       console.log("해당 게시글이 존재하지 않습니다.");
     });
-
+  console.log(post);
   return post;
 };
 
@@ -49,7 +50,7 @@ const getPostList = async (page = 1) => {
     .catch((error) => {
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
-  return postList ;
+  return postList;
 };
 
 /**
@@ -165,7 +166,14 @@ const createPost = async (content, weather, tagList, attachFiles) => {
  * @returns {Promise} A Promise object containing Boolean
  */
 // TODO...
-const modifyPost = async (postId, content, writerId, tagList, attachFiles, modifiedAt) => {
+const modifyPost = async (
+  postId,
+  content,
+  writerId,
+  tagList,
+  attachFiles,
+  modifiedAt
+) => {
   let url = "/post/modify";
   let modfiedPost = {
     attachFiles,
@@ -220,4 +228,12 @@ const deletePost = async (postId) => {
   return isDeleted;
 };
 
-export { getPost, getPostList, getBookMarkList, getPostListByUserId, createPost, modifyPost, deletePost };
+export {
+  getPost,
+  getPostList,
+  getBookMarkList,
+  getPostListByUserId,
+  createPost,
+  modifyPost,
+  deletePost,
+};

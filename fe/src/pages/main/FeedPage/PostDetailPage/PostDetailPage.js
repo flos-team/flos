@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../../../api/PostAPI";
+// import { getPost } from "../../../../api/PostAPI";
+
 import { getTimeDiffText } from "../../../../api/DateModule";
 
 import dayjs from "dayjs";
-
 
 /* img import */
 import writerProfileSample from "../../../../assets/DummyData/writerProfileSample.png";
@@ -19,17 +20,20 @@ import "./PostDetailPage.css";
 
 const PostDetailPage = () => {
   const params = useParams();
-  console.log("current Post id : " + params.id);
+  // console.log("current Post id : " + params.id);
 
   const [post, setPost] = useState([]);
-
+  const [postLoading, setPostLoading ] = useState(false);
+  const [commentLoading, setCommentLoading ] = useState(false);
   useEffect(() => {
     getPost(params.id).then((response) => {
-      // console.log(response);
+      // console.log(response)
       setPost(response);
+      setPostLoading(true);
+      setCommentLoading(true)
     });
   }, []);
-  console.log(post)
+
   let commentItem = (
     <div className="comment-item">
       <img className="user-img" src={writerProfileSample} />
@@ -55,61 +59,64 @@ const PostDetailPage = () => {
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
   let RegBefore = getTimeDiffText(postDay, curDay);
 
-  return (
-    <>
-      <div className="post-detail-page">
-        <HeaderComponent
-          backVisible={true}
-          pageName={"피드"}
-          optType={0}
-        ></HeaderComponent>
-        <div className="post-detail-container">
-          <div className="post-container">
-            <div className="user-info-container">
-              <div className="user-info-div">
-                <img src={post.writer.picture} />
-                <div className="text-div">
-                  <p className="user-name">{post.writer.nickname}</p>
-                  <p className="time-log">{RegBefore} ☀️</p>
+  
+  if (postLoading && commentLoading) {
+    const nickName = post.writer.nickname;
+    const profile = post.writer.picture;
+    return (
+      <>
+        <div className="post-detail-page">
+          <HeaderComponent
+            backVisible={true}
+            pageName={"피드"}
+            optType={0}
+          ></HeaderComponent>
+          <div className="post-detail-container">
+            <div className="post-container">
+              <div className="user-info-container">
+                <div className="user-info-div">
+                  <img src={profile} />
+                  <div className="text-div">
+                    <p className="user-name">{nickName}</p>
+                    <p className="time-log">{RegBefore} ☀️</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="img-container"
+                style={{ backgroundImage: `url(${writerProfileSample})` }}
+              ></div>
+              <div className="post-content-container">
+                <div className="post-text-div">{post.content}</div>
+                <div className="post-tag-container">
+                  <div className="post-tag">
+                    한둘셋넷다여일여아열한둘셋넷다여일여아열
+                  </div>
+                  <div className="post-tag">HTTP통신</div>
+                  <div className="post-tag">CORS</div>
+                  <div className="post-tag">프록시</div>
+                  <div className="post-tag">프록시</div>
                 </div>
               </div>
             </div>
-            <div
-              className="img-container"
-              style={{ backgroundImage: `url(${writerProfileSample})` }}
-            ></div>
-            <div className="post-content-container">
-              <div className="post-text-div">
-                {post.content}
-              </div>
-              <div className="post-tag-container">
-                <div className="post-tag">
-                  한둘셋넷다여일여아열한둘셋넷다여일여아열
-                </div>
-                <div className="post-tag">HTTP통신</div>
-                <div className="post-tag">CORS</div>
-                <div className="post-tag">프록시</div>
-                <div className="post-tag">프록시</div>
-              </div>
+            <div className="comment-container">
+              <div className="comment-title-div">댓글</div>
+              {commentItemList}
             </div>
           </div>
-          <div className="comment-container">
-            <div className="comment-title-div">댓글</div>
-            {commentItemList}
+          <div className="user-content-input-div">
+            <img className="user-icon" src={writerProfileSample} />
+            <div className="comment-input-div">
+              <input className="comment-input" />
+              <button
+                style={{ backgroundImage: `url(${sendCommentBtn})` }}
+              ></button>
+            </div>
           </div>
         </div>
-        <div className="user-content-input-div">
-          <img className="user-icon" src={writerProfileSample} />
-          <div className="comment-input-div">
-            <input className="comment-input" />
-            <button
-              style={{ backgroundImage: `url(${sendCommentBtn})` }}
-            ></button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default PostDetailPage;

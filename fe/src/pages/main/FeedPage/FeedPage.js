@@ -18,6 +18,8 @@ function Feed() {
     })
   }, [])
 
+console.log(posts)
+
   const postList = posts.map(({ id, writer, weather, regDate, content }) => (
     <PostItem
       key={id}
@@ -28,6 +30,7 @@ function Feed() {
       content={content}
     ></PostItem>
   ));
+
 
   const noPost = <div>게시물이 없습니다.</div>;
 
