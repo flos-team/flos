@@ -1,7 +1,9 @@
 package com.onehee.flos.model.service;
 
+import com.onehee.flos.model.dto.request.FlowerSpendResourceRequestDTO;
 import com.onehee.flos.model.dto.request.FollowRequestDTO;
 import com.onehee.flos.model.dto.request.UnfollowRequestDTO;
+import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +22,10 @@ public interface FollowService {
 
     // 팔로잉 해제
     List<MemberResponseDTO> unfollow(UnfollowRequestDTO unfollowRequestDTO);
+
+    // 물주기
+    FlowerResponseDTO giveWater(FlowerSpendResourceRequestDTO flowerSpendResourceRequestDTO);
+
+    // 햇빛주기
+    FlowerResponseDTO giveLight(FlowerSpendResourceRequestDTO flowerSpendResourceRequestDTO);
 }
