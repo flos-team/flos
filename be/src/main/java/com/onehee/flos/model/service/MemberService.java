@@ -2,9 +2,12 @@ package com.onehee.flos.model.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.TokenDTO;
+import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.LogoutDTO;
+import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,5 +30,7 @@ public interface MemberService {
     void logout(LogoutDTO logoutDTO);
 
     MemberInfoResponseDTO getMemberInfo(MemberSelectRequestDTO memberSelectRequestDTO);
+
+    SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
 
 }

@@ -75,6 +75,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void modifyComment(CommentModifyRequestDTO commentModifyRequestDTO) throws BadRequestException {
         Comment tempComment = commentRepository.findById(commentModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        if (tempComment.getWriter().getId() != SecurityManager.getCurrentMember().getId())
+            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
         Post tempPost = postRepository.findById(commentModifyRequestDTO.getPostId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         commentRepository.save(commentModifyRequestDTO.toAccept(tempComment, tempPost));
     }
@@ -82,6 +84,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(Long id) throws BadRequestException {
         Comment tempComment = commentRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        if (tempComment.getWriter().getId() != SecurityManager.getCurrentMember().getId())
+            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
         commentRepository.delete(tempComment);
     }
 

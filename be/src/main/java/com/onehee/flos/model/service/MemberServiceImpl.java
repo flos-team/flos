@@ -7,17 +7,21 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
+import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
 import com.onehee.flos.model.entity.FileEntity;
+import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.ProviderType;
+import com.onehee.flos.model.repository.FlowerRepository;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final RedisRepository redisRepository;
     private final FilesHandler filesHandler;
+    private final FlowerRepository flowerRepository;
 
     @Override
     @Transactional
@@ -141,5 +146,13 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
 
         return MemberInfoResponseDTO.toDto(member);
+    }
+
+    @Override
+    public SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
+        Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
+//        if (!flower.getOwner().equals(SecurityManager.getCurrentMember()))
+//            throw new BadRequestException("꽃 주인이 아닙니다.");
+        return SliceResponseDTO.toDto(memberRepository.findContributorByFlower(flower, pageable));
     }
 }
