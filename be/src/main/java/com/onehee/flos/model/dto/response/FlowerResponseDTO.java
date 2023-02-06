@@ -19,6 +19,8 @@ public class FlowerResponseDTO {
     private MemberResponseDTO owner;
     private FlowerType flowerType;
     private String name;
+    private int water;
+    private int light;
     private LocalDateTime createdAt;
     // 가진 물 수
     // 가진 빛 수
@@ -29,6 +31,8 @@ public class FlowerResponseDTO {
                 .owner(MemberResponseDTO.toDto(flower.getOwner()))
                 .flowerType(flower.getFlowerType())
                 .name(flower.getName())
+                .water(flower.getWater())
+                .light(flower.getLight())
                 .createdAt(flower.getCreatedAt())
                 .build();
     }
