@@ -25,24 +25,21 @@ function Global() {
     });
     getPostListByComment(0).then((res)=>{
       // console.dir(res.postList);
-
+      
     });
 }, []);
 
 
-// useCallback(async ()=>{
-//   let data = getPostListByComment(0);
-//   let acceptedList = [];
-//   await data.then((e)=>{
-//     acceptedList = e.data;
-//   });
-//   let newList = posts.concat(acceptedList);
-//   setPosts(newList);
-
-// },[posts]);
+  useEffect(() => {
+    onFilter();
+  }, [filterStandard])
 
 
   // 필터
+  const changeFilterStandard = (num) => {
+    setFilterStandard(num)
+  }
+
   const onFilter = () => {
     if (filterStandard === 1) {
       getPostList().then((response) => {
@@ -71,7 +68,7 @@ function Global() {
         setPosts(response);
         console.log(filterStandard)
     }
-    )};
+    )}
   }
 
   const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
@@ -84,10 +81,6 @@ function Global() {
       setFiltering(false);
     }
   };
-
-  const changeFilterStandard = (num) => {
-    setFilterStandard(num)
-  }
 
 
   return (
@@ -116,7 +109,6 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(1);
-                  onFilter();
                 }}
               >
                 최신순
@@ -129,7 +121,6 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(2);
-                  onFilter();
                 }}
               >
                 댓글 많은 순
@@ -146,7 +137,6 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(3);
-                  onFilter();
                 }}
               ></img>
               <img
@@ -159,7 +149,6 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(4);
-                  onFilter();
                 }}
               ></img>
               <img
@@ -172,7 +161,6 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(5);
-                  onFilter();
                 }}
               ></img>
             </div>
