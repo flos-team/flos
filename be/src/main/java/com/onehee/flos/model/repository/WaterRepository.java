@@ -13,4 +13,6 @@ public interface WaterRepository extends JpaRepository<Water, Long> {
 
     List<Water> findAllByFlowerAndOwner(Flower flower, Member owner);
 
+    Long countWaterByFlower(Flower flower);
+
 }
