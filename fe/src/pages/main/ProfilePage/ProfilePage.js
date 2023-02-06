@@ -22,7 +22,18 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost } from "../../../api/PostAPI";
+import PostAPI, {
+  getPost,
+  getPostList,
+  getBookMarkList,
+  getPostListByUserId,
+  getPostListByWeather,
+  getPostListByComment,
+  getPostListByTagName,
+  createPost,
+  modifyPost,
+  deletePost,
+} from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -75,7 +86,7 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
   useEffect(() => {
-    doLogin("onehee@ssafy.com", "dnjsgml1234"); // 로그인 구현되면 삭제 필요
+    doLogin("seongtae@ssafy.com", "tjdxo1234"); // 로그인 구현되면 삭제 필요
     // 사용자 정보 세팅
     let userData = getMemberInfo();
     userData.then((res) => {
@@ -172,22 +183,18 @@ const ProfilePage = ({ setIsToast }) => {
           }}
           onClick={(e) => {
             // navigate("/follower-view-page");
-            setIsVisible(true);
+            //setIsVisible(true);
+            // let data = getPostList();
+            // data.then((res) => {
+            //   console.dir(res);
+            // });
+            let data = deletePost(39);
+            data.then((res) => {
+              console.dir(res);
+            });
           }}
-          // onClick={(e) => {
-          //   // 북마크 포스트 요청
-          //   let PostListProm = requestPostList(1);
-          //   PostListProm.then((res) => {
-          //     setPostList([...res]);
-          //     console.dir(postList);
-          //   }).catch((err) => {
-          //     console.log("게시글 불러올 수 없음");
-          //     console.dir(err);
-          //     // 나중에 여기서 토스트 메세지 띄울 것.
-          //   });
-          // }}
         >
-          팔로워 확인 페이지로 이동
+          기능테스트
         </button>
         <div className="profile-tab-menu">
           <div
