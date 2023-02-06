@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,6 +76,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public PostResponseDTO getPost(Long id) throws BadRequestException {
         Post post = postRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         return PostResponseDTO.toDto(post, getPostRelation(post));
@@ -88,7 +89,7 @@ public class PostServiceImpl implements PostService {
         // 물/햇빛 weatherType 확인해서 객체 추가 기능 넣어야함
 
         Member writer = SecurityManager.getCurrentMember();
-        
+
         Post tempPost = postRepository.saveAndFlush(postCreateRequestDTO.toEntity(writer));
 
         for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
@@ -117,7 +118,10 @@ public class PostServiceImpl implements PostService {
 
         Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
 
-        Member tempWriter = memberRepository.findById(postModifyRequestDTO.getWriterId()).orElseThrow(() -> new BadRequestException("존재하지 않는 작성자입니다."));
+        Member tempWriter = tempPost.getWriter();
+
+        if (!tempWriter.equals(SecurityManager.getCurrentMember()))
+            throw new BadRequestException("작성자가 아닙니다");
 
         postFileRepository.deleteAll(
                 postFileRepository.findAllByPost(
@@ -155,9 +159,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public void deletePost(Long id) throws BadRequestException {
 
         Post tempPost = postRepository.findById(id).orElseThrow(() -> new BadRequestException("이미 삭제된 게시글입니다."));
+
+        Member tempWriter = tempPost.getWriter();
+
+        if (!tempWriter.equals(SecurityManager.getCurrentMember()))
+            throw new BadRequestException("작성자가 아닙니다");
 
         postFileRepository.deleteAll(
                 postFileRepository.findAllByPost(
