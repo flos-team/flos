@@ -1,0 +1,98 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a .landing-page-container {
+  /* landing-page-blue */
+  /* Auto layout */
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 16px;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  /* skyblue200-primary */
+  background: #aae0f9;
+}
+a .landing-page-container .groom-img-cotainer {
+  /* groom-img-cotainer */
+  width: 44vw;
+  height: 25vw;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+a .landing-page-container .main-title-div {
+  /* main-title-div */
+  /* Auto layout */
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  gap: 0.5rem;
+  width: 11.25rem;
+  height: 5.4375rem;
+  color: #f9f9f9;
+}
+a .landing-page-container .tab-text-div {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0.75rem 1rem;
+  width: 8.8125rem;
+  height: 2.9375rem;
+  color: #827c7c;
+}
+
+/** 점멸 기능  */
+.blinking {
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=LandingPage.css.map */
