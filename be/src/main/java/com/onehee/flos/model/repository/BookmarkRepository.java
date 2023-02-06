@@ -17,7 +17,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     List<Bookmark> findAllByPost(Post post);
 
     // 회원별 북마크 상태 리스트
-    Slice<Bookmark> findAllByMember(Member member, Pageable pageable);
+    Slice<Bookmark> findSliceByMember(Member member, Pageable pageable);
 
     // 회원이 게시글을 북마크 했는지
     boolean existsByPostAndMember(Post post, Member member);
