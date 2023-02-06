@@ -91,6 +91,9 @@ public class MemberServiceImpl implements MemberService {
                 throw new BadRequestException("프로필 사진 등록 중에 문제가 발생했습니다.");
             }
         }
+        if (memberUpdateRequestDTO.getIntroduction() != null) {
+            member.setIntroduction(memberUpdateRequestDTO.getIntroduction());
+        }
         member = memberRepository.saveAndFlush(member);
         return MemberInfoResponseDTO.toDto(member);
     }
