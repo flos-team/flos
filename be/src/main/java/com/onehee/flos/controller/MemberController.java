@@ -63,12 +63,19 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
+    @Operation(summary = "나의 회원정보 메서드", description = "나의 정보를 반환합니다.")
     @GetMapping("/info")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> getInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getMyInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
         Member member = memberDetails.getMember();
         return new ResponseEntity<MemberInfoResponseDTO>(MemberInfoResponseDTO.toDto(member), HttpStatus.OK);
+    }
+
+    @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
+    @GetMapping("/info/{id}")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getInfo(@PathVariable("id") Long id) {
+        return new ResponseEntity<MemberInfoResponseDTO>(memberService.getMemberInfo(new MemberSelectRequestDTO(id)), HttpStatus.OK);
     }
 
     @Operation(summary = "중복이메일 체크 메서드", description = "이메일의 중복 여부를 확인합니다. 회원가입시 keyUp 이벤트에 사용합니다.")
