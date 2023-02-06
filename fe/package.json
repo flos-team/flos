@@ -21,6 +21,7 @@
     "react-game-engine": "^1.1.0",
     "react-lottie": "^1.2.3",
     "react-redux": "^8.0.5",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
     "react-step-progress-bar": "^1.0.3",
