@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {getPostList, getPostListByWeather, getPostListByComment} from "../../api/PostAPI"
 
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
@@ -21,55 +21,60 @@ function Global() {
 
   useEffect(() => {
     getPostList().then((response) => {
-      console.dir(response)
       setPosts(response.postList);
     });
     getPostListByComment(0).then((res)=>{
-      console.dir(res.postList);
+      // console.dir(res.postList);
 
     });
 }, []);
 
+
+// useCallback(async ()=>{
+//   let data = getPostListByComment(0);
+//   let acceptedList = [];
+//   await data.then((e)=>{
+//     acceptedList = e.data;
+//   });
+//   let newList = posts.concat(acceptedList);
+//   setPosts(newList);
+
+// },[posts]);
+
+
   // 필터
-  const onFilterWeather = () => {
+  const onFilter = () => {
     if (filterStandard === 1) {
       getPostList().then((response) => {
-        setPosts(response.postList)
+        setPosts(response.postList) // 작동 됨
+        console.log(response.postList)
         console.log(filterStandard)
       }
     )} else if (filterStandard === 2) {
       getPostListByComment().then((response) => {
-        setPosts(response.postList)
+        setPosts(response.postList) // 작동 됨
+        console.log(response.postList)
         console.log(filterStandard)
       })
     } else if (filterStandard === 3) {
-      getPostListByWeather(1, 'SUNNY').then((response) => {
-        setPosts(response.postList);
+      getPostListByWeather(0, 'SUNNY').then((response) => {
+        setPosts(response);
         console.log(filterStandard)
     }
     )} else if (filterStandard === 4) {
-      getPostListByWeather(1, 'CLOUDY').then((response) => {
-        setPosts(response.postList);
+      getPostListByWeather(0, 'CLOUDY').then((response) => {
+        setPosts(response);
         console.log(filterStandard)
       }
     )} else if (filterStandard === 5) {
-      getPostListByWeather(1, 'RAINY').then((response) => {
-        setPosts(response.postList);
+      getPostListByWeather(0, 'RAINY').then((response) => {
+        setPosts(response);
         console.log(filterStandard)
     }
     )};
   }
 
-  const postList = posts.map(({ id, writer, weather, regDate, content }) => (
-    <PostItem
-      key={id}
-      postId={id}
-      writer={writer}
-      weather={weather}
-      regDate={regDate}
-      content={content}
-    ></PostItem>
-  ));
+  const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
   const noPost = <div>게시물이 없습니다.</div>;
 
   const clickFilterIcon = () => {
@@ -83,6 +88,7 @@ function Global() {
   const changeFilterStandard = (num) => {
     setFilterStandard(num)
   }
+
 
   return (
     <div className={styles.feedRoot}>
@@ -108,7 +114,10 @@ function Global() {
                     ? styles.filtertextstandard
                     : styles.filtertext
                 }
-                onClick={() => changeFilterStandard(1)}
+                onClick={() => {
+                  changeFilterStandard(1);
+                  onFilter();
+                }}
               >
                 최신순
               </span>
@@ -120,7 +129,7 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(2);
-                  onFilterWeather();
+                  onFilter();
                 }}
               >
                 댓글 많은 순
@@ -137,7 +146,7 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(3);
-                  onFilterWeather();
+                  onFilter();
                 }}
               ></img>
               <img
@@ -150,7 +159,7 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(4);
-                  onFilterWeather();
+                  onFilter();
                 }}
               ></img>
               <img
@@ -163,7 +172,7 @@ function Global() {
                 }
                 onClick={() => {
                   changeFilterStandard(5);
-                  onFilterWeather();
+                  onFilter();
                 }}
               ></img>
             </div>

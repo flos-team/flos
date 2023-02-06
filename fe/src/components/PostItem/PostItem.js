@@ -30,22 +30,51 @@ import "./PostItem.css";
  * @param {string} content 게시글 내용
  * @param {Array:Object} tagList 태그 리스트
  */
-const PostItem = ({ postId, writerNickname, weather, regDate, content, tagList }) => {
-  const testURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsM_1pnOJt_sEd1qODO-oTkU_DAbzeQirV7GrFZIaD&s";
-  let postDay = dayjs(regDate, "YYYY-MM-DD HH:mm:ss");
+// const PostItem = ({ postId, writerNickname, weather, regDate, content, tagList }) => {
+const PostItem = ({ post }) => {
+  const testURL =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsM_1pnOJt_sEd1qODO-oTkU_DAbzeQirV7GrFZIaD&s";
+  let postDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
   let RegBefore = getTimeDiffText(postDay, curDay);
 
-  // 포스트 태그 리스트
-  const [postTagList, setPostTagList] = useState([...Array(10)].map((e) => <div className="tag">프록시</div>));
   // 화면 렌더링 시
   // 포스트 감정상테에 따라 이미지 로딩을 다르게!
 
   const [bgColor, setBgColor] = useState("#fff");
-  const [weatherImg, setWeatherImg] = useState(<></>);
+  const [weatherImg, setWeatherImg] = useState(<div></div>);
+
+  // console.log(post.postRelationDTO.attachFiles);
+  const imgs = post.postRelationDTO.attachFiles.map(({ saveName }) => (
+    <div
+      className="img-div"
+      style={{
+        backgroundImage: `url(https://i8b210.p.ssafy.io/api/file/${saveName})`,
+        // backgroundImage: `url(${testURL})`,
+      }}
+    ></div>
+  ));
+
+  // console.log(post.postRelationDTO.attachFiles[0]);
+  let thumbNailURL = ""; 
+  let thumbNail = null;
+  if(post.postRelationDTO.attachFiles[0]){
+    thumbNailURL = "https://i8b210.p.ssafy.io/api/file/" +post.postRelationDTO.attachFiles[0].saveName;
+    // console.log(thumbNail)
+    thumbNail = (
+      <img src={thumbNailURL}></img>
+    )
+  }
+
+  const tags = post.postRelationDTO.tagList.map(({ key, tagName }) => (
+    <div className="tag">
+      {key}
+      {tagName}
+    </div>
+  ));
 
   useEffect(() => {
-    switch (weather) {
+    switch (post.weather) {
       case "SUNNY":
         setWeatherImg(<img src={sunnyImg} />);
         setBgColor(COLORS.yellowP);
@@ -63,54 +92,64 @@ const PostItem = ({ postId, writerNickname, weather, regDate, content, tagList }
         setBgColor(COLORS.white);
         break;
     }
-  }, [weather]);
-  return (
-    <>
-      <div className="post-item" id={`${postId}`}>
-        <div className="img-container hide-scroll" style={{ backgroundImage: `url(${testURL})` }}>
+  }, [post.weather]);
+
+  if (post) {
+    return (
+      <>
+        <div className="post-item" id={`${post.id}`}>
+          {/* <div
+            className="img-container hide-scroll"
+            style={{
+              backgroundImage: `url(https://i8b210.p.ssafy.io/api/file/20230205/test1.jpg)`,
+            }}
+            >
+            </div> */}
+          {thumbNailURL === "" ? "" : thumbNail}
           {/* <div className="filter">
             <div className="arrow-div" style={{ backgroundColor: bgColor }}></div>
             <div className="text-content">{content}</div>
           </div> */}
           {/* <div className="filter"></div> */}
-          <div className="img-div" style={{ backgroundImage: `url(${commentProfileSample})` }}></div>
-          <div className="img-div" style={{ backgroundImage: `url(${commentProfileSample})` }}></div>
-          <div className="img-div" style={{ backgroundImage: `url(${commentProfileSample})` }}></div>
+
+          <Link to={`post/${post.id}`}>
+            <div
+              className="bottom-text-container"
+              style={{ backgroundColor: bgColor }}
+            >
+              <div className="user-info-container">
+                <div className="user-info-div">
+                  <img src={userSample}></img>
+                  <div className="text-div">
+                    <p className="user-name">{post.writer.nickname}</p>
+                    <p className="time-log">
+                      {RegBefore}
+                      {weatherImg}
+                    </p>
+                  </div>
+                </div>
+                <div className="more-btn">
+                  <div className="text-div">
+                    <p>더보기</p>
+                  </div>
+                  <div className="arrow-div">
+                    <img src={arrowRight} />
+                  </div>
+                </div>
+              </div>
+              <div className="text-container">
+                <p>{post.content}</p>
+              </div>
+              <div className="tag-container hide-scroll">
+                {/* 태그가 여러 개일 경우 그에 맞춰 배열 조정 必 */}
+                {tags ? tags : ""}
+              </div>
+            </div>
+          </Link>
         </div>
-        <Link to={`post/${postId}`}>
-          <div className="bottom-text-container" style={{ backgroundColor: bgColor }}>
-            <div className="user-info-container">
-              <div className="user-info-div">
-                <img src={userSample}></img>
-                <div className="text-div">
-                  <p className="user-name">{writerNickname}</p>
-                  <p className="time-log">
-                    {RegBefore}
-                    {weatherImg}
-                  </p>
-                </div>
-              </div>
-              <div className="more-btn">
-                <div className="text-div">
-                  <p>더보기</p>
-                </div>
-                <div className="arrow-div">
-                  <img src={arrowRight} />
-                </div>
-              </div>
-            </div>
-            <div className="text-container">
-              <p>{content}</p>
-            </div>
-            <div className="tag-container hide-scroll">
-              {/* 태그가 여러 개일 경우 그에 맞춰 배열 조정 必 */}
-              {postTagList}
-            </div>
-          </div>
-        </Link>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default PostItem;
