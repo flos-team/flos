@@ -37,7 +37,7 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Object} 포스트 리스트 정보를 갖는 자바스크립트 객체
  */
-const getPostList = async (page = 1) => {
+const getPostList = async (page = 0) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios

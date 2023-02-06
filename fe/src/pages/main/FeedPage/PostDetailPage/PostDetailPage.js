@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../../../api/PostAPI";
-// import { getPost } from "../../../../api/PostAPI";
+import { getCommentList } from "../../../../api/CommentAPI";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
 
@@ -23,16 +23,27 @@ const PostDetailPage = () => {
   // console.log("current Post id : " + params.id);
 
   const [post, setPost] = useState([]);
-  const [postLoading, setPostLoading ] = useState(false);
-  const [commentLoading, setCommentLoading ] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [postLoading, setPostLoading] = useState(false);
+  const [commentLoading, setCommentLoading] = useState(false);
   useEffect(() => {
     getPost(params.id).then((response) => {
       // console.log(response)
       setPost(response);
       setPostLoading(true);
-      setCommentLoading(true)
+      // setCommentLoading(true);
+    });
+    getCommentList(params.id).then((response) => {
+      setComments(response);
+      // setPostLoading(true);
+      setCommentLoading(true);
     });
   }, []);
+
+  // 가져온 리스트를 이제 화면에 띄우면 된다.
+  if(commentLoading){
+    
+  }
 
   let commentItem = (
     <div className="comment-item">
@@ -59,7 +70,6 @@ const PostDetailPage = () => {
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
   let RegBefore = getTimeDiffText(postDay, curDay);
 
-  
   if (postLoading && commentLoading) {
     const nickName = post.writer.nickname;
     const profile = post.writer.picture;
