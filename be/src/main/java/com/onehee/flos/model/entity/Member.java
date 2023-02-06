@@ -49,19 +49,19 @@ public class Member {
     private String introduction;
 
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = member_id AND wr.weather_type = 'RAINY' AND wr.flower_id IS NULL)")
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'RAINY' AND wr.flower_id IS NULL)")
     private int water;
 
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = member_id AND wr.weather_type = 'SUNNY' AND wr.flower_id IS NULL)")
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'SUNNY' AND wr.flower_id IS NULL)")
     private int light;
 
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.owner_id = member_id)")
+    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.owner_id = members_id)")
     private int followerCount;
 
     @Basic(fetch = FetchType.LAZY)
-    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.follower_id = member_id)")
+    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.follower_id = members_id)")
     private int followingCount;
 
     @Enumerated(EnumType.STRING)
