@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -47,11 +48,23 @@ public class Member {
     @ColumnDefault("'안녕하세요~'")
     private String introduction;
 
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = member_id AND wr.weather_type = 'RAINY' AND wr.flower_id IS NULL)")
     @ColumnDefault("0")
     private int water;
 
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = member_id AND wr.weather_type = 'SUNNY' AND wr.flower_id IS NULL)")
     @ColumnDefault("0")
     private int light;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.owner_id = member_id)")
+    private int followerCount;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.follower_id = member_id)")
+    private int followingCount;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
