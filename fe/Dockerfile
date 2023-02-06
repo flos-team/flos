@@ -4,6 +4,7 @@ WORKDIR /home/flos
 COPY . .
 RUN mkdir -p build
 RUN npm install react-lottie --force
+RUN npm install framer-motion --force
 RUN npm run build
 
 FROM nginx
