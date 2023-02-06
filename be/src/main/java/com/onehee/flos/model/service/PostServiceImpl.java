@@ -120,8 +120,8 @@ public class PostServiceImpl implements PostService {
 
         Member tempWriter = tempPost.getWriter();
 
-        if (!tempWriter.equals(SecurityManager.getCurrentMember()))
-            throw new BadRequestException("작성자가 아닙니다");
+        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
         postFileRepository.deleteAll(
                 postFileRepository.findAllByPost(
@@ -166,8 +166,8 @@ public class PostServiceImpl implements PostService {
 
         Member tempWriter = tempPost.getWriter();
 
-        if (!tempWriter.equals(SecurityManager.getCurrentMember()))
-            throw new BadRequestException("작성자가 아닙니다");
+        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
         postFileRepository.deleteAll(
                 postFileRepository.findAllByPost(
