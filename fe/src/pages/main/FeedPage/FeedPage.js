@@ -25,14 +25,10 @@ function Feed() {
   }, []);
 
   if (isPostsLoading && isFriendsLoading) {
-    const postList = posts.map((EachPost) => (
-      <PostItem post={EachPost}></PostItem>
-    ));
+    const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
 
     const friendList = friends.map((EachFriend) => {
-      let url =
-        "https://i8b210.p.ssafy.io/api/file/" +
-        EachFriend.profileImage.saveName;
+      let url = "https://i8b210.p.ssafy.io/api/file/" + EachFriend.profileImage.saveName;
       // console.log(url);
       const result = (
         <div className={`${styles.friendThumbnail}`}>
@@ -45,17 +41,19 @@ function Feed() {
     const noPost = <div>게시물이 없습니다.</div>;
 
     return (
-      <div className={styles.feedRoot}>
+      <div className={`${styles.feedRoot} ${styles.scroll}`}>
         <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
-        <div className={styles.friendListBar}>
-          {/** 친구 프로필을 나열한다.  */}
-          {friendList}
+        <div className={styles.globalroot}>
+          <div className={styles.friendListBar}>
+            {/** 친구 프로필을 나열한다.  */}
+            {friendList}
+          </div>
+          <div className={`${styles.main} ${styles.scroll}`}>
+            {/** 친구들의 포스트를 나열한다.  */}
+            {posts.length === 0 ? noPost : postList}
+          </div>
+          <MoveToTopToggle></MoveToTopToggle>
         </div>
-        <div className={styles.main}>
-          {/** 친구들의 포스트를 나열한다.  */}
-          {posts.length === 0 ? noPost : postList}
-        </div>
-        <MoveToTopToggle></MoveToTopToggle>
       </div>
     );
   }
