@@ -64,6 +64,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public SliceResponseDTO getPostListOrderByCountComment(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByCountComment(pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    }
+
+    @Override
+    public SliceResponseDTO getPostListByTagName(String tagName, Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByTagName(tagName, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    }
+
+    @Override
     public PostResponseDTO getPost(Long id) throws BadRequestException {
         Post post = postRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         return PostResponseDTO.toDto(post, getPostRelation(post));

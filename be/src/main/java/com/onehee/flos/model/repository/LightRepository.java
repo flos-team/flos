@@ -13,4 +13,6 @@ public interface LightRepository extends JpaRepository<Light, Long> {
 
     List<Light> findAllByFlowerAndOwner(Flower flower, Member owner);
 
+    Long countLightByFlower(Flower flower);
+
 }

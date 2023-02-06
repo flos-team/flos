@@ -20,6 +20,8 @@ public class FlowerResponseDTO {
     private FlowerType flowerType;
     private String name;
     private LocalDateTime createdAt;
+    // 가진 물 수
+    // 가진 빛 수
 
     public static FlowerResponseDTO toDto(Flower flower) {
         return FlowerResponseDTO.builder()
