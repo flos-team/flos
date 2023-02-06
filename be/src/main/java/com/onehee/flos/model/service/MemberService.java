@@ -31,6 +31,5 @@ public interface MemberService {
 
     MemberInfoResponseDTO getMemberInfo(MemberSelectRequestDTO memberSelectRequestDTO);
 
-    SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
 
 }

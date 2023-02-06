@@ -8,6 +8,7 @@ import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.repository.FlowerRepository;
+import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -48,5 +49,13 @@ public class FlowerServiceImpl implements FlowerService {
     public SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
         return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNull(owner, pageable));
+    }
+
+    @Override
+    public SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
+        Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
+//        if (!flower.getOwner().equals(SecurityManager.getCurrentMember()))
+//            throw new BadRequestException("꽃 주인이 아닙니다.");
+        return SliceResponseDTO.toDto(flowerRepository.findContributorByFlower(flower, pageable));
     }
 }

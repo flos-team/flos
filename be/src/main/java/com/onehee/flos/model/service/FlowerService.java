@@ -22,4 +22,6 @@ public interface FlowerService {
     FlowerResponseDTO getFlowerInfoById(Long flowerId) throws BadRequestException;
     // 회원의 가든 꽃 리스트
     SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException;
+
+    SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
 }
