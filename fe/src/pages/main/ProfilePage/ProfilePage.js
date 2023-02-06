@@ -22,13 +22,7 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, {
-  getPost,
-  getPostList,
-  getBookMarkList,
-  modifyPost,
-  deletePost,
-} from "../../../api/PostAPI";
+import PostAPI, { getPost, getPostList, getBookMarkList, modifyPost, deletePost } from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -48,9 +42,7 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로잉", "팔로우", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const userInfoList = userInfos.map((e, i) => (
-    <li key={i}>{e > 999 ? "999+" : e}</li>
-  ));
+  const userInfoList = userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
 
   // 사용자 정보를 다루는 state
   let [userInfo, setUserinfo] = useState({});
@@ -130,8 +122,7 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
 
     if (bottom && isScrollable) {
       console.log("스크롤 끝 감지");
@@ -143,6 +134,9 @@ const ProfilePage = ({ setIsToast }) => {
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
 
+  // 글작성 모달 on/off 조정하는 함수
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <>
       <HeaderComponent
@@ -153,10 +147,7 @@ const ProfilePage = ({ setIsToast }) => {
       ></HeaderComponent>
       <div className="profile-page-container hide-scroll">
         <div className="user-info-header">
-          <div
-            className="user-img"
-            style={{ backgroundImage: `url(${userImg})` }}
-          ></div>
+          <div className="user-img" style={{ backgroundImage: `url(${userImg})` }}></div>
           <div className="profile-edit-nav-container">
             <Link to="/profile-modify">
               <div className="profile-edit-btn">
@@ -180,7 +171,8 @@ const ProfilePage = ({ setIsToast }) => {
             margin: "0 auto",
           }}
           onClick={(e) => {
-            navigate("/follower-view-page");
+            // navigate("/follower-view-page");
+            setIsVisible(true);
           }}
           // onClick={(e) => {
           //   // 북마크 포스트 요청
@@ -211,7 +203,7 @@ const ProfilePage = ({ setIsToast }) => {
           </div>
         </div>
         <div className="post-container hide-scroll">
-            <PostResultModal></PostResultModal>
+          {isVisible ? <PostResultModal setVisible={setIsVisible}></PostResultModal> : <></>}
         </div>
       </div>
     </>
