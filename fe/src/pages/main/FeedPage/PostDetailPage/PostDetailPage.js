@@ -25,8 +25,15 @@ const PostDetailPage = () => {
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
+  const [commentInputValue, setCommentInputValue] = useState("");
+
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
+
+  const handleCommentInputValue = (e) => {
+    setCommentInputValue(e.target.value);
+    // console.log(commentInputValue);
+  };
 
   useEffect(() => {
     getPost(params.id).then((response) => {
@@ -38,6 +45,25 @@ const PostDetailPage = () => {
       setCommentLoading(true);
     });
   }, []);
+
+  /**
+   * 댓글의 공감을 채택하는 함수
+   * @param {*} id
+   */
+  const AdoptComment = (id) => {
+    // console.log(id);
+    // 댓글의 아이디를 입력하여 그 댓글을 채택 처리하고
+    // 댓글의 주인에게 아이템을 전달
+  };
+
+  /**
+   * 댓글을 입력하는 함수
+   * @param {*} postId
+   */
+  const commentInput = (postId) => {
+    // console.log(commentInputValue);
+    console.log(postId);
+  };
 
   // 가져온 리스트를 이제 화면에 띄우면 된다.
   if (postLoading && commentLoading) {
@@ -51,9 +77,9 @@ const PostDetailPage = () => {
         {tagName}
       </div>
     ));
-    console.log(comments);
+    // console.log(comments);
 
-    const commentList = comments.map(({ key, writer, createdAt, content }) => {
+    const commentList = comments.map(({ key, id, writer, createdAt, content, isApprove }) => {
       let commentKey = key;
       let commentDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
@@ -68,13 +94,17 @@ const PostDetailPage = () => {
             </div>
             <div className="comment-main">{content}</div>
           </div>
-          <img className="check-btn" src={sunnyDeActivate} />
+          <img
+            className="check-btn"
+            onClick={() => AdoptComment(id)}
+            src={isApprove ? sunnyActivate : sunnyDeActivate}
+          />
         </div>
       );
       return result;
     });
-
     console.log(post);
+
     let imgs = "";
     if (post.postRelationDTO.attachFiles.length >= 1) {
       imgs = post.postRelationDTO.attachFiles.map(({ key, saveName }) => (
@@ -118,8 +148,15 @@ const PostDetailPage = () => {
           <div className="user-content-input-div">
             <img className="user-icon" src={post.writer.picture} />
             <div className="comment-input-div">
-              <input className="comment-input" />
-              <button style={{ backgroundImage: `url(${sendCommentBtn})` }}></button>
+              <input
+                className="comment-input"
+                value={commentInputValue}
+                onChange={handleCommentInputValue}
+              />
+              <button
+                style={{ backgroundImage: `url(${sendCommentBtn})` }}
+                onClick={() => commentInput(post.id)}
+              ></button>
             </div>
           </div>
         </div>

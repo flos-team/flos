@@ -35,7 +35,7 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains PostListObject
  */
-const getPostList = async (page = 0) => {
+const getPostList = async (page = 3) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
@@ -211,7 +211,14 @@ const createPost = async (content, weather, tagList, attachFiles) => {
  * @param {Date} modifiedAt 글을 수정한 시간 (자바스크립트 Date 객체)
  * @returns {Promise} A Promise object containing Boolean
  */
-const modifyPost = async (postId, content, writerId, tagList, attachFiles, modifiedAt = new Date()) => {
+const modifyPost = async (
+  postId,
+  content,
+  writerId,
+  tagList,
+  attachFiles,
+  modifiedAt = new Date()
+) => {
   let url = "/api/post/modify";
   let modfiedPost = {
     attachFiles,
