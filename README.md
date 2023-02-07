@@ -1,25 +1,102 @@
-## [FLOS] 깃랩 커밋 켄벤션 규칙
+# 🌺  FLOS - 감정 공유 SNS
 
-- [기능 추가] feat: 추가한 기능 명 
-- [버그 수정] fix: 수정한 버그 명 
-- [문서 수정] docs: 수정한 문서명
-- [코드 formatting] style: 변경된 코드 부분 
-- [CSS 등 사용자 UI 디자인 변경] design: 변경된 부분 
-- [주석 추가 및 변경] comment: 주석 추가한 부분
-- [파일 수정/이동/삭제] file: 수정/이동/삭제한 파일 
-- [치명적인 버그 수정] !HOTFIX: 버그명
-- [리팩토링] refactor : 코드의 리팩터링
-- [기타] chore : 빌드 혹은 패키지 매니저 수정사항
-- [테스트] test : test 코드 삽입 및 수정
+~대충 랜딩페이지 사진~
 
-예시 )
-git commit -m "refactor : 로그인 서버 통신 코드 리펙토링"
+## FLOS 링크 : https://i8b210.p.ssafy.io
 
-## `develop` 브랜치 라이브 빌드    
-#  
-## 페이지
-### https://i8b210.p.ssafy.io
-## 젠킨스
-### http://i8b210.p.ssafy.io:2080
-## 스웨거
-### https://i8b210.p.ssafy.io/api/swagger-ui/
+## UCC 링크 : 
+
+## 🎬 프로젝트 기간
+　2023. 01. 03. (화) ~ 2023. 02. 17. (금)
+
+　SSAFY 8기 2학기 공통프로젝트 - FLOS
+<br>
+
+## 🌺 개요
+
+<br>
+
+## 🌺 주요 기능
+
+<br>
+
+## 🛠 주요 기술
+
+**Back-end : Spring Boot**
+```
+- Springboot 2.7.8
+- Spring Data JPA
+- Spring Security
+- Spring Validation
+- Spring Web
+- Redis
+- Swagger 3.0.0
+- MariaDB
+```
+**Front-end : REACT**
+```
+- 몰루?
+```
+**CI/CD**
+```
+- Jenkins
+- Docker
+- Nginx
+- Letsencrypt
+```
+
+<br>
+
+## 🚩 파일 구조
+
+### back
+```
+  flos
+  ├── auth
+  │    └── model
+  │         ├── dto
+  │         ├── repository
+  │         └── service
+  ├── config
+  ├── controller
+  ├── exception
+  ├── model
+  │    ├── dto
+  │    │    ├── request
+  │    │    └── response
+  │    ├── entity
+  │    │    └── type
+  │    ├── repository
+  │    └── service
+  └── util
+```
+### front
+```
+  fe
+  └── src
+       ├── api
+       ├── assets
+       ├── components
+       ├── constants
+       ├── hooks
+       ├── pages
+       ├── redux
+       └── styles
+```
+
+## 🚀 협업 방식
+
+밑에 컨벤션 md로 정리해서 넣어두기
+
+<br>
+
+## 📋 팀원 역할 분배
+
+~대충 장표~
+
+<br>
+
+## 🌺 결과물
+ - [컨벤션](docs/convention.md)
+
+## 🌺 이하 사용법 자세히
