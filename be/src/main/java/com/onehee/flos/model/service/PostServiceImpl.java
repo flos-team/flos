@@ -40,44 +40,58 @@ public class PostServiceImpl implements PostService {
     private final FollowRepository followRepository;
 
     @Override
-    public Slice<PostResponseDTO> getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
-        Member writer = memberRepository.findByNickname(nickName).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        return postRepository.findSliceByWriter(writer, pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
+        if (!memberRepository.existsByNickname(nickName))
+            throw new BadRequestException("존재하지 않는 회원입니다.");
+        return SliceResponseDTO.toDto(postRepository.findSliceByNickname(nickName, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SliceResponseDTO getPostListByWeather(WeatherType weatherType, Pageable pageable) {
         return SliceResponseDTO.toDto(postRepository.findSliceByWeather(weatherType, pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SliceResponseDTO getLatestPostList(Pageable pageable) {
         return SliceResponseDTO.toDto(postRepository.findSliceBy(pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SliceResponseDTO getBookmarkedListByMember(Pageable pageable) {
-        return SliceResponseDTO.toDto(bookmarkRepository.findSliceByMember(SecurityManager.getCurrentMember(), pageable)
-                .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost()))));
+        return SliceResponseDTO.toDto(postRepository.findSliceByBookmark(SecurityManager.getCurrentMember(), pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SliceResponseDTO getPostListOrderByCountComment(Pageable pageable) {
         return SliceResponseDTO.toDto(postRepository.findSliceByCountComment(pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SliceResponseDTO getPostListByTagName(String tagName, Pageable pageable) {
         return SliceResponseDTO.toDto(postRepository.findSliceByTagName(tagName, pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListByFollow(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByFollow(SecurityManager.getCurrentMember(), pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PostResponseDTO getPost(Long id) throws BadRequestException {
         Post post = postRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         return PostResponseDTO.toDto(post, getPostRelation(post));
@@ -86,8 +100,6 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
-
-        // 물/햇빛 weatherType 확인해서 객체 추가 기능 넣어야함
 
         Member writer = SecurityManager.getCurrentMember();
 
@@ -197,6 +209,7 @@ public class PostServiceImpl implements PostService {
                 .tagList(getTagListByPost(post))
                 .attachFiles(getFileListByPost(post))
                 .isBookmarked(isBookmarked(post))
+                .isFollowed(isFollowed(post))
                 .countComment(countCommentByPost(post))
                 .build();
     }

@@ -11,6 +11,7 @@ import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,18 +26,21 @@ public class BookmarkServiceImpl implements BookmarkService {
         Member tempMember = SecurityManager.getCurrentMember();
         if (bookmarkRepository.existsByPostAndMember(tempPost, tempMember))
             throw new BadRequestException("이미 북마크한 게시글입니다.");
-        bookmarkRepository.save(Bookmark.builder()
-                        .post(tempPost)
-                        .member(tempMember)
-                        .build());
+        bookmarkRepository.saveAndFlush(Bookmark.builder()
+                .post(tempPost)
+                .member(tempMember)
+                .build());
     }
 
     @Override
+    @Transactional
     public void deleteBookmark(Long postId) throws BadRequestException {
         Post tempPost = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         Member tempMember = SecurityManager.getCurrentMember();
-        if (!bookmarkRepository.existsByPostAndMember(tempPost, tempMember))
-            throw new BadRequestException("북마크 하지 않은 게시글입니다.");
-        bookmarkRepository.delete(bookmarkRepository.findByPostAndMember(tempPost, tempMember));
+        bookmarkRepository.delete(
+                bookmarkRepository.findByPostAndMember(tempPost, tempMember)
+                        .orElseThrow(() -> new BadRequestException("북마크 하지 않은 게시글입니다."))
+        );
+        bookmarkRepository.flush();
     }
 }

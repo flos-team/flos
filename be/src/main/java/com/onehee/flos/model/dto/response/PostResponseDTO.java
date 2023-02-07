@@ -22,7 +22,7 @@ public class PostResponseDTO {
     private LocalDateTime regDate;
 //    private LocalDateTime modifyDate;
     private WeatherType weather;
-    private PostRelationDTO postRelationDTO;
+    private PostRelationDTO relation;
 
     public static PostResponseDTO toDto(Post post, PostRelationDTO postRelationDTO) {
         return PostResponseDTO.builder()
@@ -32,7 +32,7 @@ public class PostResponseDTO {
                 .regDate(post.getCreatedAt())
                 .weather(post.getWeather())
 //                .modifyDate(post.getModifyDate())
-                .postRelationDTO(postRelationDTO)
+                .relation(postRelationDTO)
                 .build();
     }
 
