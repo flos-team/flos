@@ -1,0 +1,11 @@
+@import "../../../styles/commons.scss";
+
+.img-container{
+    width: 100%;
+    min-height: 261*$rpx1;
+    max-height: 74.2%;
+    order: 1;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 12*$rpx1 12*$rpx1;
+}
