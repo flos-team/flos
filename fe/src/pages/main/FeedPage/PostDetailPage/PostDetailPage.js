@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../../../api/PostAPI";
-import { getCommentList } from "../../../../api/CommentAPI";
+import { getCommentList, createCommentById } from "../../../../api/CommentAPI";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
 
@@ -50,8 +50,8 @@ const PostDetailPage = () => {
    * 댓글의 공감을 채택하는 함수
    * @param {*} id
    */
-  const AdoptComment = (id) => {
-    // console.log(id);
+  const AdoptComment = (id, parentId, postId, primitiveId) => {
+    console.log(id);
     // 댓글의 아이디를 입력하여 그 댓글을 채택 처리하고
     // 댓글의 주인에게 아이템을 전달
   };
@@ -60,9 +60,14 @@ const PostDetailPage = () => {
    * 댓글을 입력하는 함수
    * @param {*} postId
    */
-  const commentInput = (postId) => {
-    // console.log(commentInputValue);
-    console.log(postId);
+  const commentInput = (postId, parentId, primitiveId) => {
+    console.log(commentInputValue);
+    // console.log(postId);
+    createCommentById(commentInputValue, parentId, postId, primitiveId).then(
+      (response) => {
+        console.log(response);
+      }
+    );
   };
 
   // 가져온 리스트를 이제 화면에 띄우면 된다.
@@ -71,43 +76,82 @@ const PostDetailPage = () => {
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
     let RegBefore = getTimeDiffText(postDay, curDay);
 
-    const tags = post.postRelationDTO.tagList.map(({ key, tagName }) => (
+    const tags = post.relation.tagList.map(({ key, tagName }) => (
       <div className="post-tag">
         {key}
         {tagName}
       </div>
     ));
-    // console.log(comments);
+    console.log(comments);
 
-    const commentList = comments.map(({ key, id, writer, createdAt, content, isApprove }) => {
-      let commentKey = key;
-      let commentDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
+    // const commentList = comments.map(
+    //   ({
+    //     key,
+    //     id,
+    //     parentId,
+    //     postId,
+    //     primitiveId,
+    //     writer,
+    //     createdAt,
+    //     content,
+    //     isApprove,
+    //   }) => {
+    //     let commentKey = key;
+    //     let commentDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
+    //     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
+    //     let RegBefore = getTimeDiffText(commentDay, curDay);
+    //     const result = (
+    //       <div className="comment-item">
+    //         <img className="user-img" src={writer.profileImage} />
+    //         <div className="comment-container">
+    //           <div className="comment-header">
+    //             <p>{writer.nickname}</p>
+    //             <p>{RegBefore}</p>
+    //           </div>
+    //           <div className="comment-main">{content}</div>
+    //         </div>
+    //         <img
+    //           className="check-btn"
+    //           onClick={() => AdoptComment(id, parentId, postId, primitiveId)}
+    //           src={isApprove ? sunnyActivate : sunnyDeActivate}
+    //         />
+    //       </div>
+    //     );
+    //     return result;
+    //   }
+    // );
+    console.log(post);
+
+    const commentList = comments.map((e) => {
+      let commentKey = e.key;
+      let commentDay = dayjs(e.createdAt, "YYYY-MM-DD HH:mm:ss");
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
       let RegBefore = getTimeDiffText(commentDay, curDay);
       const result = (
         <div className="comment-item">
-          <img className="user-img" src={writer.profileImage} />
+          <img className="user-img" src={e.writer.profileImage} />
           <div className="comment-container">
             <div className="comment-header">
-              <p>{writer.nickname}</p>
+              <p>{e.writer.nickname}</p>
               <p>{RegBefore}</p>
             </div>
-            <div className="comment-main">{content}</div>
+            <div className="comment-main">{e.content}</div>
           </div>
           <img
             className="check-btn"
-            onClick={() => AdoptComment(id)}
-            src={isApprove ? sunnyActivate : sunnyDeActivate}
+            onClick={() =>
+              AdoptComment(e.id, e.parentId, e.postId, e.primitiveId)
+            }
+            src={e.isApprove ? sunnyActivate : sunnyDeActivate}
           />
         </div>
       );
       return result;
     });
-    console.log(post);
 
     let imgs = "";
-    if (post.postRelationDTO.attachFiles.length >= 1) {
-      imgs = post.postRelationDTO.attachFiles.map(({ key, saveName }) => (
+    if (post.relation.attachFiles.length >= 1) {
+      imgs = post.relation.attachFiles.map(({ key, saveName }) => (
         <div id={key}>
           <img src={`https://i8b210.p.ssafy.io/api/file/${saveName}`}></img>
         </div>
@@ -122,7 +166,11 @@ const PostDetailPage = () => {
     return (
       <>
         <div className="post-detail-page">
-          <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
+          <HeaderComponent
+            backVisible={true}
+            pageName={"피드"}
+            optType={0}
+          ></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
               <div className="user-info-container">
@@ -155,7 +203,10 @@ const PostDetailPage = () => {
               />
               <button
                 style={{ backgroundImage: `url(${sendCommentBtn})` }}
-                onClick={() => commentInput(post.id)}
+                onClick={() =>
+                  // commentInput( post.id, post.parentId, post.primitiveId)
+                  commentInput(post.id, null, null)
+                }
               ></button>
             </div>
           </div>

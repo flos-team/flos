@@ -31,7 +31,7 @@ const getCommentList = async (id) => {
 /**
  * 해당 게시글에 댓글을 추가 각 인자 머임?
  * @param {*} content
- * @param {*} parentId
+ * @param {*} parentId :
  * @param {*} postId
  * @param {*} primitiveId
  * @returns
@@ -39,11 +39,12 @@ const getCommentList = async (id) => {
 const createCommentById = async (content, parentId, postId, primitiveId) => {
   let url = `/api/comment/create`;
   let newComment = {
-    content,
-    parentId,
-    postId,
-    primitiveId,
+    content: content,
+    parentId: parentId,
+    postId: postId,
+    primitiveId: primitiveId,
   };
+  console.log(newComment)
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -59,4 +60,4 @@ const createCommentById = async (content, parentId, postId, primitiveId) => {
   return isCreated;
 };
 
-export { getCommentList };
+export { getCommentList, createCommentById };
