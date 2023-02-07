@@ -109,9 +109,9 @@ public class PostController {
     public ResponseEntity<?> getListByFollow(@RequestParam(value = "page", required = false) Integer page){
         PageRequest pageRequest = null;
         if (page==null)
-            pageRequest = PageRequest.of(0, size, Sort.by("created_at").descending());
+            pageRequest = PageRequest.of(0, size, Sort.by("createdAt").descending());
         else
-            pageRequest = PageRequest.of(page, size, Sort.by("created_at").descending());
+            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return new ResponseEntity<SliceResponseDTO>(postService.getPostListByFollow(pageRequest), HttpStatus.OK);
     }
 
