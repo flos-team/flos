@@ -208,7 +208,7 @@ function Global() {
             </div>
           </div>
         ) : null}
-        <div className={styles.main}>
+        <div className={styles.main} id = "postMain">
         {isSearching ?
           posts.length === 0 ? noSearchResult : searchResult
         : posts.length === 0 ? noPost : postList}

@@ -23,12 +23,16 @@ function Feed() {
       SetFriendsLoading(true);
     });
   }, []);
-
+  console.log(posts);
   if (isPostsLoading && isFriendsLoading) {
-    const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
+    const postList = posts.map((EachPost) => (
+      <PostItem post={EachPost}></PostItem>
+    ));
 
     const friendList = friends.map((EachFriend) => {
-      let url = "https://i8b210.p.ssafy.io/api/file/" + EachFriend.profileImage.saveName;
+      let url =
+        "https://i8b210.p.ssafy.io/api/file/" +
+        EachFriend.profileImage.saveName;
       // console.log(url);
       const result = (
         <div className={`${styles.friendThumbnail}`}>
@@ -48,7 +52,7 @@ function Feed() {
             {/** 친구 프로필을 나열한다.  */}
             {friendList}
           </div>
-          <div className={`${styles.main} ${styles.scroll}`}>
+          <div className={`${styles.main} ${styles.scroll}`} id="postMain">
             {/** 친구들의 포스트를 나열한다.  */}
             {posts.length === 0 ? noPost : postList}
           </div>
