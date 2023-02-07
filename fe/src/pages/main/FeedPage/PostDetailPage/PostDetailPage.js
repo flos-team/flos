@@ -21,6 +21,7 @@ import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 
+
 /* css import */
 import "./PostDetailPage.css";
 
@@ -51,7 +52,7 @@ const PostDetailPage = () => {
       setComments(response);
       setCommentLoading(true);
     });
-  });
+  },[]);
 
   if (postLoading && commentLoading) {
     console.log(comments);
@@ -83,8 +84,14 @@ const PostDetailPage = () => {
           />
           <div className="comment-container">
             <div className="comment-header">
-              <p>{e.writer.nickname}</p>
-              <p>{RegBefore}</p>
+              <div>
+                <span className="comment-header-left">{e.writer.nickname}</span>
+                <span className="comment-header-left">{RegBefore}</span>
+              </div>
+              <div>
+                <span className="comment-header-right">수정</span>
+                <span className="comment-header-right">삭제</span>
+              </div>
             </div>
             <div className="comment-main">{e.content}</div>
           </div>
@@ -114,6 +121,24 @@ const PostDetailPage = () => {
         </Carousel>
       );
     }
+    
+    // function Update (props) {
+    //   const [content, setContent] = useState(props.setComments)
+      
+    //   return (
+    //     <>
+    //     <form onSubmit={(e) => {
+    //         e.preventDefault();
+    //         const content = event.taget.content.value
+    //         props.onUpdate(content);
+    //       }}>
+    //       <p><input type="text" name="content" placeholder="댓글을 수정하시오." value={content} onChange={e=>{
+    //         setContent(event.target.value)}}></input></p>
+    //       <p><input type="submit" alue="Update"></input></p>
+    //     </form>
+    //     </>
+    //   )
+    // }
 
     return (
       <>
