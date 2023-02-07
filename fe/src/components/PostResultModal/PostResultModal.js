@@ -33,11 +33,9 @@ const PostResultModal = ({ setVisible, moveMain }) => {
   const groomList = [groomImg, groomGlassImg];
   const handleOnRightClick = () => {
     swiperRef.current.swiper.slideNext(500);
-    randGrooms();
   };
   const handleOnLeftClick = () => {
     swiperRef.current.swiper.slidePrev(500);
-    randGrooms();
   };
   const weatherList = imgList.map((e, i) => (
     <SwiperSlide key={i}>
@@ -98,7 +96,6 @@ const PostResultModal = ({ setVisible, moveMain }) => {
               let idx = swiper.realIndex;
               setWeatherTextIdx(idx);
               setWeatherTextColorIdx(idx);
-              randGrooms();
             }}
             style={swiperClass}
             ref={swiperRef}

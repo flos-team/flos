@@ -1,5 +1,5 @@
 /* import react */
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 /* import img */
@@ -10,13 +10,19 @@ import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
+/* import module */
+import { createPost } from "../../../api/PostAPI"
+import { getSentimentResult } from "../../../api/SentimentAPI";
+
 /* import css */
 import "./WritePostPage.css";
 
 const WritePostPage = ({ holderFunc }) => {
   // 글작성 모달 on/off 조정하는 함수
   const [isVisible, setIsVisible] = useState(false);
+  const [content, setContent] = useState("");
   const navigate = useNavigate();
+  const contentRef = useRef(1);
   return (
     <>
       <HeaderComponent
@@ -25,12 +31,23 @@ const WritePostPage = ({ holderFunc }) => {
         menuOpt2={"CHECK"}
         menuOpt2Func={() => {
           setIsVisible(true);
+          let data = {
+            content: content,
+            weather:"CLOUDY"
+          }
+          let data2 = createPost(data.content, data.weather);
+          data2.then((e) => {
+            console.dir(e);
+          })
         }}
       ></HeaderComponent>
       <div className="post-write-container">
         <form className="post-write-form">
           <div className="post-write-input-div">
-            <textarea className="post-content-input" placeholder="내용을 입력하세요" />
+            <textarea className="post-content-input" placeholder="내용을 입력하세요" ref={contentRef} onChange={(e) => {
+              setContent(contentRef.current.value);
+              console.log(contentRef.current.value);
+            }} />
             <input className="post-tag-input" placeholder="#태그를 입력하세요" />
           </div>
           <div className="post-option-container">
