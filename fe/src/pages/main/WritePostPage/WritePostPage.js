@@ -1,6 +1,11 @@
 /* import react */
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+// redux/toolkit
+import { useSelector, useDispatch } from "react-redux";
+import { setIsToastValue } from "../../../redux/toast";
+
 /* import img */
 import pictureIcon from "../../../assets/GlobalAsset/picture-btn.png";
 
@@ -17,6 +22,16 @@ import { createPost } from "../../../api/PostAPI";
 import "./WritePostPage.css";
 
 const WritePostPage = () => {
+  // redux-toolkit
+  const toastValue = useSelector((state) => state.toast.value.isToast);
+  //
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(toastValue);
+    // user();
+    dispatch(setIsToastValue({ isToast: true }));
+  }, []);
+
   // 글작성 모달 on/off 조정하는 함수
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
