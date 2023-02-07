@@ -6,13 +6,14 @@
   flex-direction: column;
   align-items: center;
   padding: 0px;
-  position: relative;
   width: 272px;
   height: max-content;
   max-height: 352px;
   background: $mono50;
   border-radius: 12px;
   border: 2*$rpx1 solid $mono300;
+  margin-top: 16*$rpx1;
+  margin-bottom: 16*$rpx1;
 }
 
 /* 스크롤바 숨기는 속성 */

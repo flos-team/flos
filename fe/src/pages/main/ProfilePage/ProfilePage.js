@@ -217,7 +217,7 @@ const ProfilePage = ({ setIsToast }) => {
         </div>
         <div className="post-container hide-scroll">
           {isVisible ? <PostResultModal setVisible={setIsVisible}></PostResultModal> : <></>}
-          {/* <PostItem post={testPost!==null?testPost:null}></PostItem> */}
+          {testPost?<PostItem post={testPost}></PostItem>:<></>}
         </div>
       </div>
     </>
