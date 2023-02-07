@@ -23,7 +23,7 @@ function Feed() {
       SetFriendsLoading(true);
     });
   }, []);
-  console.log(posts)
+
   if (isPostsLoading && isFriendsLoading) {
     const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
 

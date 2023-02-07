@@ -16,10 +16,9 @@
   box-sizing: border-box;
 }
 
-.img-container {
-  width: 100%;
-  min-height: 16.3125rem;
-  max-height: 74.2%;
+.post-img-container {
+  width: 17rem;
+  height: 18.25rem;
   order: 1;
   background-size: cover;
   background-position: center;

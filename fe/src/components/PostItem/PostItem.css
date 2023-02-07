@@ -25,10 +25,12 @@
   position: relative;
   width: 272px;
   height: max-content;
-  max-height: 352px;
+  max-height: 292px;
   background: #fcfcfc;
   border-radius: 12px;
   border: 0.125rem solid #bfbfbf;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* 스크롤바 숨기는 속성 */

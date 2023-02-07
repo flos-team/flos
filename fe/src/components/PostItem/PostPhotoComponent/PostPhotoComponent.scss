@@ -1,9 +1,8 @@
 @import "../../../styles/commons.scss";
 
-.img-container{
-    width: 100%;
-    min-height: 261*$rpx1;
-    max-height: 74.2%;
+.post-img-container{
+    width: 272*$rpx1;
+    height: 292*$rpx1;
     order: 1;
     background-size: cover;
     background-position: center;

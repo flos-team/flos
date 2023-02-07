@@ -5,7 +5,7 @@
  */
 /* import react */
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 /* import img */
 
 /* import component */
@@ -27,16 +27,19 @@ const PostItem = ({ post }) => {
     writer.id/email/introduction/nickname/profileImage.saveName
     writer.profileImage.saveName
   */
+  const navigate = useNavigate();
   const [imgBaseURL, setImgBaseURL] = useState("https://i8b210.p.ssafy.io/api/file/");
-  const [bottomCompoent, setBottomComponent] = useState(<PostTextComponent content={post.content!==""?post.content:"게시글 내용이 없습니다."}></PostTextComponent>);
+  const [bottomComponent, setBottomComponent] = useState(<PostTextComponent content={post.content?post.content:"게시글 내용이 없습니다."}></PostTextComponent>);
   useEffect(() => {
-    console.log(post.attachFiles === null ? "없는데?": "있는데");
     if (post !== null) {
-      if (post.hasOwnProperty("attachFiles")) {
-        // let newImgList = [...post.attachFile.map((e)=>(`${imgBaseURL}/${e}`))];
-        // setBottomComponent(<PostPhotoComponent imgURLList={newImgList}></PostPhotoComponent>)
-        setBottomComponent(<PostPhotoComponent imgURLList={[`${imgBaseURL}${post.writer.profileImage.saveName}`]} ></PostPhotoComponent>);
+      if (post.relation.attachFiles.length) {
+        let list = post.relation.attachFiles;
+        console.dir(list)
+        setBottomComponent(<PostPhotoComponent imgURLList={list}></PostPhotoComponent>)
+        // setBottomComponent(<PostPhotoComponent testURL={`${post.writer.profileImage.saveName}`} ></PostPhotoComponent>);
+        //console.dir(`${imgBaseURL}${post.writer.profileImage.saveName}`);
       } else {
+        // setBottomComponent(<PostPhotoComponent testURL={`${post.writer.profileImage.saveName}`} ></PostPhotoComponent>);
         setBottomComponent(<PostTextComponent content={post.content ? post.content : "게시글 내용이 없습니다."}></PostTextComponent>);
       }
     }
@@ -45,16 +48,23 @@ const PostItem = ({ post }) => {
   // wetaher에 따라서
   if (post) {
     return (<div className="post-item">
+    
     <PostTopComponent
       userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
       userNickname={post.writer.nickname}
       date={post.regDate}
       weather={post.weather}
       tagList={post.relation.tagList}
-    ></PostTopComponent>
+        ></PostTopComponent>
+        
     {/* <PostPhotoComponent imgURLList={[`${imgBaseURL}${post.writer.profileImage.saveName}`]} ></PostPhotoComponent> */}
       {/* <PostTextComponent content={post.content}></PostTextComponent> */}
-      {bottomCompoent}
+      {/* <Link to={`/main/post/${post.id}`}>
+        
+      </Link> */}
+      <div onClick={(e) => { navigate(`/main/post/${post.id}`) }} >      
+        {bottomComponent}
+      </div>
   </div>)
   }
 

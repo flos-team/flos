@@ -21,10 +21,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0.5rem;
+  padding: 0.125rem 0.125rem 0.5rem 0.5rem;
   gap: 0.25rem;
   width: 100%;
-  height: 25.8%;
+  flex-grow: 1;
+  max-height: 3.75rem;
   /* yellow100 */
   border-radius: 0.75rem 0.75rem 0 0;
   order: 0;
@@ -41,8 +42,8 @@
 }
 .post-top-component .user-info-div .user-img {
   box-sizing: border-box;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   background-position: center;
   background-size: contain;
   border-radius: 1.75rem;
