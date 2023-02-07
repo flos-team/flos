@@ -30,15 +30,13 @@ const PostDetailPage = () => {
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
-  const [commentInputValue, setCommentInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
-  // const [isImg, setIsImg] = useState(false);
 
   const handleCommentInputValue = (e) => {
-    setCommentInputValue(e.target.value);
-    // console.log(commentInputValue);
+    setInputValue(e.target.value);
   };
 
   useEffect(() => {
@@ -53,36 +51,12 @@ const PostDetailPage = () => {
       setComments(response);
       setCommentLoading(true);
     });
-    commentInput();
-  }, []);
+  });
 
-  /**
-   * 댓글의 공감을 채택하는 함수
-   * @param {*} id
-   */
-  const AdoptComment = (id) => {
-    console.log(id);
-    commentApprove(id).then((response) => {
-      console.log(response);
-    });
-  };
-
-  /**
-   * 댓글을 입력하는 함수
-   * @param {*} postId
-   */
-  const commentInput = (postId, parentId, primitiveId) => {
-    console.log(commentInputValue);
-    // console.log(postId);
-    createComment(commentInputValue, parentId, postId, primitiveId).then(
-      (response) => {
-        console.log(response);
-      }
-    );
-  };
-
-  // 가져온 리스트를 이제 화면에 띄우면 된다.
   if (postLoading && commentLoading) {
+    console.log(comments);
+    console.log(post);
+
     let postDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
     let RegBefore = getTimeDiffText(postDay, curDay);
@@ -93,15 +67,14 @@ const PostDetailPage = () => {
         {tagName}
       </div>
     ));
-    console.log(comments);
-    console.log(post);
 
+    // 수정 버튼 구현 + 기능 구현
     const commentList = comments.map((e) => {
       let commentKey = e.key;
       let commentDay = dayjs(e.createdAt, "YYYY-MM-DD HH:mm:ss");
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
       let RegBefore = getTimeDiffText(commentDay, curDay);
-      // setIsImg(e.isApprove);
+
       const result = (
         <div className="comment-item">
           <img
@@ -117,9 +90,10 @@ const PostDetailPage = () => {
           </div>
           <img
             className="check-btn"
-            onClick={() =>
-              AdoptComment(e.id, e.parentId, e.postId, e.primitiveId)
-            }
+            id="ApproveIcon"
+            onClick={() => {
+              commentApprove(e.id);
+            }}
             src={e.isApprove ? sunnyActivate : sunnyDeActivate}
           />
         </div>
@@ -179,16 +153,15 @@ const PostDetailPage = () => {
             <div className="comment-input-div">
               <input
                 className="comment-input"
-                value={commentInputValue}
+                value={inputValue}
                 onChange={handleCommentInputValue}
               />
               <button
                 style={{ backgroundImage: `url(${sendCommentBtn})` }}
-                onClick={() =>
-                  // commentInput( post.id, post.parentId, post.primitiveId)
-                  commentInput(post.id, 0, 0, 0)
-                }
-              ></button>
+                onClick={() => {
+                  createComment(inputValue, post.id);
+                }}
+              />
             </div>
           </div>
         </div>
