@@ -12,7 +12,7 @@ import { gsap } from "gsap";
 import rainObjectData from "../../assets/HomeAsset/53484-digital-clouds-rain.json";
 import rainAnimationData from "../../assets/HomeAsset/81756-rain.json";
 import sunObjectData from "../../assets/HomeAsset/22190-sunny-day.json";
-import congratulationData from "../../assets/HomeAsset/76411-confetti-effects-lottie-animation.json"
+import congratulationData from "../../assets/HomeAsset/76411-confetti-effects-lottie-animation.json";
 import Lottie from "react-lottie";
 import ChangeFlowerNamemodal from "../../components/homepage/ChangeFlowerNamemodal";
 import DayBackground from "../../assets/HomeAsset/day.png";
@@ -72,30 +72,31 @@ const FlowerMessageText = styled.div`
 `;
 
 const FloweringButton = styled.button`
-    width: 40%;
-    height: 50px;
-    position: absolute;
-    z-index: 49;
-    text-align: center;
-    border: 0px;
-    border-radius: 10px;
+  width: 40%;
+  height: 50px;
+  position: absolute;
+  z-index: 49;
+  text-align: center;
+  border: 0px;
+  border-radius: 10px;
 
-    &:hover {
-      background-color: gray;
-    }
+  &:hover {
+    background-color: gray;
+  }
 `;
 
 const Flowering = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 `;
 
 const Congratulation = styled.div`
-pointer-events: none;`;
+  pointer-events: none;
+`;
 
 // 낮인지 확인하는 메소드
 const isDay = (hour) => {
@@ -145,7 +146,7 @@ const Home = () => {
     flowerInfo.isFullGrown = true;
     console.log("개화 시작");
     setIsFlowering(true);
-  }
+  };
 
   const flowerMessageArr = ["안녕~", "졸리다~", "기분짱!"];
 
@@ -167,12 +168,12 @@ const Home = () => {
     console.log("왜 않되");
     // --------------------- 꽃 상태 받아옴 (false / true) 시작 ---------------------
     getFlowerInfo()
-    .then((res) => {
-      console.dir(res);
-    })
-    .catch((e) => {
-      console.log("[홈 꽃 정보 오류]", e);
-    });
+      .then((res) => {
+        console.dir(res);
+      })
+      .catch((e) => {
+        console.log("[홈 꽃 정보 오류]", e);
+      });
 
     setFlowerInfo({
       isFullGrown: true, // 존재 여부
@@ -181,7 +182,7 @@ const Home = () => {
       rainElementCount: 1000, // 빗물 요소 개수
       CurrentGrowthValue: 50, // 현재 고정 값
       MaxGrowthValue: 50, // 최대 값
-    }, ); // flower 상태 일반 상태로 부여
+    }); // flower 상태 일반 상태로 부여
 
     // ---------------------- 노래 틀기
 
@@ -220,13 +221,12 @@ const Home = () => {
         setFlowerMessageIsVisible(!flowerMessageIsVisible);
         setFlowerMessage(null);
       }, 7000);
-
     }, 10000);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timer);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -275,7 +275,6 @@ const Home = () => {
       setElementStatus("");
     }
   }, [elementStatus]);
-
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
@@ -375,19 +374,21 @@ const Home = () => {
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
-        {
-          isFlowering == true ? (
-            <Flowering>
-              <FloweringButton>개화</FloweringButton>
-              <Congratulation>
-                <Lottie options={{
+        {isFlowering == true ? (
+          <Flowering>
+            <FloweringButton>개화</FloweringButton>
+            <Congratulation>
+              <Lottie
+                options={{
                   autoplay: true,
                   animationData: congratulationData,
-                }} height={800} width={800} />
-              </Congratulation>
-            </Flowering>
-          ) : null
-        }
+                }}
+                height={800}
+                width={800}
+              />
+            </Congratulation>
+          </Flowering>
+        ) : null}
         {changeFlowerNamemodal == true ? (
           <ChangeFlowerNamemodal
             oldName={flowerInfo.name}
@@ -420,11 +421,15 @@ const Home = () => {
         <div className={styles.FlowerItem}>
           <div className={styles.RainDiv} onClick={rainClick}>
             <img className={styles.SunRainImg} src={require("../../assets/HomeAsset/rain-img.png")} />
-            <div className={styles.SunRainText}>{(flowerInfo.rainElementCount > 999 ? "999+" : flowerInfo.rainElementCount)}</div>
+            <div className={styles.SunRainText}>
+              {flowerInfo.rainElementCount > 999 ? "999+" : flowerInfo.rainElementCount}
+            </div>
           </div>
           <div className={styles.SunDiv} onClick={sunClick}>
             <img className={styles.SunRainImg} src={require("../../assets/HomeAsset/sun-img.png")} />
-            <div className={styles.SunRainText}>{(flowerInfo.sunElementCount > 999 ? "999+" : flowerInfo.sunElementCount)}</div>
+            <div className={styles.SunRainText}>
+              {flowerInfo.sunElementCount > 999 ? "999+" : flowerInfo.sunElementCount}
+            </div>
           </div>
         </div>
         <div className={styles.Flowerpot}>
