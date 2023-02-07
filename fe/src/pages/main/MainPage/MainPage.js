@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import {setUserId} from "../../../redux/user";
 
 /* import css */
 import "./MainPage.css";
@@ -15,8 +17,11 @@ import GlobalPage from "../GlobalPage";
 import GardenPage from "../GardenPage";
 
 function Main() {
+  const dispatch = useDispatch();
+
   const [isToast, setIsToast] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
+
   useEffect(() => {
     if (!isChecked) {
       setIsToast(true);
@@ -24,6 +29,9 @@ function Main() {
   }, [isToast]);
 
   const position = useSelector((state) => state.page.value);
+  const userId = useSelector((state) => state.user.userId);
+
+  console.log(userId)
   // console.log(position + " in Main")
   let currentPage;
   if (position === "feed") {

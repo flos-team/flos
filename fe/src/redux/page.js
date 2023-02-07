@@ -4,7 +4,7 @@ const initialState = {
   value: "home",
 };
 
-export const counterSlice = createSlice({
+export const pagerSlice = createSlice({
   name: "load",
   initialState,
   reducers: {
@@ -35,6 +35,6 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { feed, global, home, garden, profile, test } = counterSlice.actions;
+export const { feed, global, home, garden, profile, test } = pagerSlice.actions;
 
-export default counterSlice.reducer;
+export default pagerSlice.reducer;
