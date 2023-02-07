@@ -218,10 +218,10 @@ public class PostServiceImpl implements PostService {
     }
 
     // 게시글의 태그 리스트
-    private List<TagResponseDTO> getTagListByPost(Post post) {
+    private List<String> getTagListByPost(Post post) {
         return postTagRepository.findAllByPost(post)
                 .stream()
-                .map(e -> TagResponseDTO.toDto(e.getTag()))
+                .map(e -> e.getTag().getTagName())
                 .collect(Collectors.toList());
     }
 
