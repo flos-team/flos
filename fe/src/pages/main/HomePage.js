@@ -15,10 +15,11 @@ import sunObjectData from "../../assets/HomeAsset/22190-sunny-day.json";
 import congratulationData from "../../assets/HomeAsset/76411-confetti-effects-lottie-animation.json"
 import Lottie from "react-lottie";
 import ChangeFlowerNamemodal from "../../components/homepage/ChangeFlowerNamemodal";
-import DayBackground from "../../assets/HomeAsset/home-sample-background-img-day.jpg";
-import NightBackground from "../../assets/HomeAsset/home-sample-background-img-night.png";
+import DayBackground from "../../assets/HomeAsset/day.png";
+import NightBackground from "../../assets/HomeAsset/night.png";
 import "./HomePage.css";
 import { motion } from "framer-motion";
+import { getFlowerInfo } from "../../api/FlowerAPI";
 
 const Title = styled.h1`
   color: #007bff;
@@ -164,7 +165,15 @@ const Home = () => {
   let timer;
 
   useEffect(() => {
+    console.log("왜 않되");
     // --------------------- 꽃 상태 받아옴 (normal / fullfilled) 시작 ---------------------
+    getFlowerInfo()
+    .then((info) => {
+      console.log(info);
+    })
+    .catch((e) => {
+      console.log("[홈 꽃 정보 오류]", e);
+    });
 
     setFlowerInfo({
       existence: "fulfilled", // 존재 여부
@@ -173,8 +182,7 @@ const Home = () => {
       rainElementCount: 1000, // 빗물 요소 개수
       CurrentGrowthValue: 0, // 현재 고정 값
       MaxGrowthValue: 50, // 최대 값
-    }); // flower 상태 일반 상태로 부여
-
+    }, ); // flower 상태 일반 상태로 부여
 
     // ---------------------- 노래 틀기
 
@@ -221,6 +229,54 @@ const Home = () => {
       clearTimeout(timer);
     }
   }, []);
+
+  useEffect(() => {
+    if (elementStatus === "sun") {
+      console.log("useEffect");
+      setRainAnimation(null);
+      let sunTimeLine = gsap.timeline();
+      sunTimeLine.fromTo(
+        sunBox.current,
+        { y: "-2000" },
+        {
+          y: "-600",
+        }
+      );
+      sunTimeLine.fromTo(
+        sunshine.current,
+        { y: "-1000" },
+        {
+          y: "0",
+          duration: 2,
+        }
+      );
+      sunTimeLine.to(sunshine.current, {
+        y: "-2000",
+      });
+      sunTimeLine.to(sunBox.current, { y: "-2000" });
+      setElementStatus("");
+      // setTimeout(function() {
+      //     if(Animation !== null){
+      //         setAnimation(null);
+      //     }
+      //   }, 10000);
+    } else if (elementStatus === "rain") {
+      setSunAnimation(null);
+      let rainTimeLine = gsap.timeline();
+      rainTimeLine.fromTo(
+        rainBox.current,
+        { y: "-1000" },
+        {
+          y: "0",
+          duration: 2,
+        }
+      );
+      rainTimeLine.to(rainBox.current, { y: "-2000" });
+      // timeLine.fromTo(rain.current, {y: "0"}, {y: "-2000"});
+      setElementStatus("");
+    }
+  }, [elementStatus]);
+
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
@@ -316,53 +372,6 @@ const Home = () => {
   const CancelChangingFlowerNameOnclick = () => {
     setChangeFlowerNamemodal(false);
   };
-
-  useEffect(() => {
-    if (elementStatus === "sun") {
-      console.log("useEffect");
-      setRainAnimation(null);
-      let sunTimeLine = gsap.timeline();
-      sunTimeLine.fromTo(
-        sunBox.current,
-        { y: "-2000" },
-        {
-          y: "-600",
-        }
-      );
-      sunTimeLine.fromTo(
-        sunshine.current,
-        { y: "-1000" },
-        {
-          y: "0",
-          duration: 2,
-        }
-      );
-      sunTimeLine.to(sunshine.current, {
-        y: "-2000",
-      });
-      sunTimeLine.to(sunBox.current, { y: "-2000" });
-      setElementStatus("");
-      // setTimeout(function() {
-      //     if(Animation !== null){
-      //         setAnimation(null);
-      //     }
-      //   }, 10000);
-    } else if (elementStatus === "rain") {
-      setSunAnimation(null);
-      let rainTimeLine = gsap.timeline();
-      rainTimeLine.fromTo(
-        rainBox.current,
-        { y: "-1000" },
-        {
-          y: "0",
-          duration: 2,
-        }
-      );
-      rainTimeLine.to(rainBox.current, { y: "-2000" });
-      // timeLine.fromTo(rain.current, {y: "0"}, {y: "-2000"});
-      setElementStatus("");
-    }
-  }, [elementStatus]);
 
   return (
     <HomePageDiv url={backgroundImgUrl}>
