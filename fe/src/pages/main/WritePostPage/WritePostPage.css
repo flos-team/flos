@@ -40,16 +40,17 @@
   border-radius: 0.75rem;
 }
 .post-write-container .post-write-form .post-write-input-div {
-  display: block;
+  display: flex;
+  flex-flow: column wrap;
   width: 100%;
-  height: 77%;
   order: 0;
+  flex-grow: 4;
 }
 .post-write-container .post-write-form .post-write-input-div .post-content-input {
   border: none;
   box-sizing: border-box;
   width: 100%;
-  height: 77%;
+  flex-grow: 5;
   /* mono200 */
   border-bottom: 0.0625rem solid #d3d3d3;
   border-color: none;
@@ -58,9 +59,23 @@
   outline: none;
   resize: none;
 }
-.post-write-container .post-write-form .post-write-input-div .post-tag-input {
+.post-write-container .post-write-form .post-write-input-div .post-tag-input-div {
   width: 100%;
-  height: 23%;
+  flex-grow: 0.5;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 4px;
+}
+.post-write-container .post-write-form .post-write-input-div .post-tag-input-div .post-tag-input {
+  width: max-content;
+  height: max-content;
+}
+.post-write-container .post-write-form .post-write-input-div .post-tag-input-div .tag-span {
+  background-color: #d3d3d3;
+  color: #ffffff;
+  padding: 4px 8px 4px 8px;
+  border-radius: 16px;
 }
 .post-write-container .post-write-form .post-write-input-div input:active,
 .post-write-container .post-write-form .post-write-input-div input:focus {
@@ -82,7 +97,7 @@
   padding: 0.75rem 1rem;
   gap: 0.5rem;
   width: 100%;
-  height: 23%;
+  flex-grow: 0.5;
   order: 1;
   justify-content: space-between;
 }

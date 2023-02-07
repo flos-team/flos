@@ -23,15 +23,18 @@
     border-radius: 12 * $rpx1;
     // margin: 32*$rpx1 auto;
     .post-write-input-div {
-      display: block;
+      display: flex;
+      flex-flow: column wrap;
       width: 100%;
-      height: 77%;
+      // height: 77%;
       order: 0;
+      flex-grow: 4;
       .post-content-input {
         border: none;
         box-sizing: border-box;
         width: 100%;
-        height: 77%;
+        // height: 77%;
+        flex-grow: 5;
         /* mono200 */
         border-bottom: 1 * $rpx1 solid $mono200;
         border-color: none;
@@ -40,9 +43,23 @@
         outline: none;
         resize: none;
       }
-      .post-tag-input {
+      .post-tag-input-div {
         width: 100%;
-        height: 23%;
+        flex-grow: 0.5;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        gap: 4px;
+        .post-tag-input {
+          width: max-content;
+          height: max-content;
+        }
+        .tag-span {
+          background-color: $mono200;
+          color: $white-pure;
+          padding: 4px 8px 4px 8px;
+          border-radius: 16px;
+        }
       }
       input:active,
       input:focus {
@@ -65,7 +82,8 @@
       padding: 12 * $rpx1 16 * $rpx1;
       gap: 8 * $rpx1;
       width: 100%;
-      height: 23%;
+      // height: 23%;
+      flex-grow: 0.5;
       order: 1;
       justify-content: space-between;
       label {

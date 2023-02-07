@@ -29,7 +29,7 @@ const WritePostPage = () => {
   useEffect(() => {
     console.log(toastValue);
     // user();
-    dispatch(setIsToastValue({ isToast: true }));
+    // dispatch(setIsToastValue({ isToast: true }));
   }, []);
 
   // 글작성 모달 on/off 조정하는 함수
@@ -63,7 +63,27 @@ const WritePostPage = () => {
         break;
     }
   };
-  const [createPostStatus, setCreatePostStatus] = useState(false);
+  const [taglist, setTagList] = useState([<></>]);
+  const [tagObjList, setTagObjList] = useState([]);
+  const handleKeyPress = (e) => {
+    let value = tagRef.current.value;
+    if (value.includes("#")) {
+      let text = value.slice(1, value.length - 1);
+      if (e.code === "Space") {
+        if (value.length - 3 > 0) {
+          const nextList = taglist.concat(<span className="tag-span">{text}</span>);
+          setTagList(nextList);
+          const nextTag = tagObjList.concat({ tagName: text });
+          setTagObjList(nextTag);
+        }
+        tagRef.current.value = "";
+      }
+    }
+  };
+  const checkTagList = () => {
+    console.dir(tagObjList);
+  };
+
   return (
     <>
       <HeaderComponent
@@ -102,7 +122,15 @@ const WritePostPage = () => {
                 console.log(content);
               }}
             />
-            <input className="post-tag-input" placeholder="#태그를 입력하세요" ref={tagRef} />
+            <div className="post-tag-input-div">
+              {taglist}
+              <input
+                className="post-tag-input"
+                placeholder="#태그를 입력하세요"
+                ref={tagRef}
+                onKeyUp={handleKeyPress}
+              />
+            </div>
           </div>
           <div className="post-option-container">
             <label htmlFor="photo-input">
@@ -116,6 +144,7 @@ const WritePostPage = () => {
               {/* <div className="toggle-btn"></div> */}
               <div
                 onClick={(e) => {
+                  checkTagList();
                   //console.dir(locationData);
                 }}
               >
@@ -136,6 +165,7 @@ const WritePostPage = () => {
               await data.then((res) => {
                 if (res) {
                   alert("글작성이 완료되었습니다.");
+                  dispatch(setIsToastValue({ isToast: true }));
                 }
               });
             }}
