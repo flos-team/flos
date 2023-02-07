@@ -1,12 +1,11 @@
 package com.onehee.flos.model.dto.response;
 
+import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,6 +19,7 @@ public class MemberInfoResponseDTO {
     private int light;
     private int followerCount;
     private int followingCount;
+    private MemberRelation memberRelation;
 
     public static MemberInfoResponseDTO toDto(Member member) {
         return MemberInfoResponseDTO.builder()
