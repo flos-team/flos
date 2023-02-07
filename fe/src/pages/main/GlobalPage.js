@@ -47,22 +47,22 @@ function Global() {
       }
     )} else if (filterStandard === 2) {
       getPostListByComment().then((response) => {
-        setPosts(response.postList)
+        setPosts(response.content)
         setIsSearching(false)
       })
     } else if (filterStandard === 3) {
-      getPostListByWeather(0, 'SUNNY').then((response) => {
-        setPosts(response);
+      getPostListByWeather('SUNNY').then((response) => {
+        setPosts(response.content);
         setIsSearching(false)
     }
     )} else if (filterStandard === 4) {
-      getPostListByWeather(0, 'CLOUDY').then((response) => {
-        setPosts(response);
+      getPostListByWeather('CLOUDY').then((response) => {
+        setPosts(response.content);
         setIsSearching(false)
       }
     )} else if (filterStandard === 5) {
-      getPostListByWeather(0, 'RAINY').then((response) => {
-        setPosts(response);
+      getPostListByWeather('RAINY').then((response) => {
+        setPosts(response.content);
         setIsSearching(false)
     }
     )}
@@ -77,34 +77,39 @@ function Global() {
   // 검색기능
   // 입력값이 변경할 때마다 발동하는 함수
   const searchValue = (e) => {
-    console.log(e.target.value)
-    if ((e.target.value.substr(0, 1) === '#') && e.target.value.length > 1) {
+    // 태그 검색
+    if ((e.target.value.substr(0, 1) === '#') && e.target.value.length >= 2) {
       getPostListByTagName(e.target.value.substr(1))
         .then((response) => {
-          // console.dir(response.content)
           setIsSearching(true)
           setSearchInput(e.target.value)
           setPosts(response.content)
         })
+      }
+      // 사용자 검색
+      else if (e.target.value.substr(0, 1) !== '#' && e.target.value.length >= 2) {
+        getPostListByNickname(e.target.value)
+          .then((response) => {
+            if (response.content) {
+              setIsSearching(true)
+              setSearchInput(e.target.value)
+              setPosts(response.content)
+            } else {
+              setSearchInput(e.target.value)
+              setIsSearching(true)
+              setPosts([])
+            }
+          })
+        }
+        // 검색하다가 비웠을 때
+        else if (e.target.value.length === 0){
+        getPostList()
+          .then((response) => {
+          setPosts(response.postList)
+          setIsSearching(false)
+        })
+      }
     }
-    else if ((!e.target.value.includes('#')) && e.target.value.length > 1) {
-      getPostListByNickname(e.target.value)
-      .then((response) => {
-        console.dir(response)
-        // console.dir(postList)
-        // setPosts(response.content)
-        setSearchInput(e.target.value)
-        // console.log(searchInput)
-        // setIsSearching(true)
-      })
-    } else if (e.target.value.length===0) {
-      getPostList()
-        .then((response) => {
-        setPosts(response.postList)
-        setIsSearching(false)
-      })
-    }
-  }
 
   const noPost = <div>게시물이 없습니다.</div>
   const searchResult =
