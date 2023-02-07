@@ -45,11 +45,7 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerInfo() {
-        Flower tempFlower = flowerRepository.findByOwnerAndBlossomAtIsNull(SecurityManager.getCurrentMember()).orElse(null);
-        if (tempFlower!=null)
-            return FlowerResponseDTO.toDto(tempFlower);
-        else
-            return null;
+        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNull(SecurityManager.getCurrentMember()).orElse(null));
     }
 
     @Override

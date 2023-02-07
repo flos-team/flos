@@ -30,6 +30,7 @@ public class Flower {
 
     private Long height;
 
+    @ColumnDefault("50")
     private Long capacity;
 
     @OneToOne
