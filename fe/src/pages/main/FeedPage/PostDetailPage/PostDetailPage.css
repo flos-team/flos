@@ -219,4 +219,16 @@
   background-color: #e8e8e8;
 }
 
+.comment-header-left{
+  margin-right: 12px;
+}
+.comment-header-right{
+  margin: 0 4px;
+  font-size: 14px;
+}
+
+.comment-header{
+  display: flex;
+  justify-content: space-between;
+}
 /*# sourceMappingURL=PostDetailPage.css.map */
