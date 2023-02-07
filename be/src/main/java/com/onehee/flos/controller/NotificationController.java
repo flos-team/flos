@@ -6,10 +6,7 @@ import com.onehee.flos.model.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/notification")
@@ -25,9 +22,9 @@ public class NotificationController {
         return new ResponseEntity<NotificationResponseDTO>(notificationResponseDTO, status);
     }
 
-    @PostMapping
-    public ResponseEntity<?> checkNotification(NotificationCheckRequestDTO notificationCheckRequestDTO) {
-        NotificationResponseDTO notificationResponseDTO = notificationService.checkNotification(notificationCheckRequestDTO);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> checkNotification(@PathVariable("id") Long id) {
+        NotificationResponseDTO notificationResponseDTO = notificationService.checkNotification(new NotificationCheckRequestDTO(id));
         HttpStatus status = notificationResponseDTO.getNotifications().size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return new ResponseEntity<NotificationResponseDTO>(notificationResponseDTO, status);
     }

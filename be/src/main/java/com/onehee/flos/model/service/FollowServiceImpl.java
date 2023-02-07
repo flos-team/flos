@@ -7,8 +7,8 @@ import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Follow;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Notification;
+import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.repository.*;
-import com.onehee.flos.util.NotificationUtil;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -63,7 +63,8 @@ public class FollowServiceImpl implements FollowService {
         // 알림
         notificationRepository.save(Notification.builder()
                 .member(target)
-                .message(NotificationUtil.followMessage(me))
+                .messageType(MessageType.FOLLOW)
+                .message(String.format(MessageType.FOLLOW.getMessage(), me.getNickname()))
                 .build()
         );
 

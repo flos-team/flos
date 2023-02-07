@@ -7,33 +7,32 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
-import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
-import com.onehee.flos.model.entity.FileEntity;
-import com.onehee.flos.model.entity.Flower;
-import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.entity.*;
 import com.onehee.flos.model.entity.type.MemberStatus;
+import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.entity.type.ProviderType;
-import com.onehee.flos.model.repository.FlowerRepository;
-import com.onehee.flos.model.repository.FollowRepository;
-import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Service
 @RequiredArgsConstructor
 @Log4j2
 public class MemberServiceImpl implements MemberService {
+    private final FlowerRepository flowerRepository;
+    private final NotificationRepository notificationRepository;
     private final FollowRepository followRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -41,7 +40,8 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final RedisRepository redisRepository;
     private final FilesHandler filesHandler;
-    private final FlowerRepository flowerRepository;
+    private final PostRepository postRepository;
+    private final WeatherResourceRepository weatherResourceRepository;
 
     @Override
     @Transactional
@@ -75,6 +75,40 @@ public class MemberServiceImpl implements MemberService {
         if (!passwordEncoder.matches(loginRequestDTO.getPassword(), member.getPassword())) {
             throw new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다.");
         }
+
+        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+
+        if (
+                !postRepository.existsByWriterAndCreatedAtIsAfter(member, yesterday)
+                && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
+        ) {
+            Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(member);
+            if (lastPost != null) {
+                long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
+                Notification notification = Notification.builder()
+                        .member(member)
+                        .messageType(MessageType.NOFEED24H)
+                        .message(String.format(MessageType.NOFEED24H.getMessage(), member.getNickname(), time))
+                        .build();
+                notificationRepository.save(notification);
+            }
+        }
+
+        if (
+                !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
+                && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
+        ) {
+            Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElse(null);
+            if (flower != null) {
+                Notification notification = Notification.builder()
+                        .member(member)
+                        .messageType(MessageType.NOCAREPLANT24H)
+                        .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), member.getNickname(), flower.getName()))
+                        .build();
+                notificationRepository.save(notification);
+            }
+        }
+
         return jwtTokenProvider.generateTokenByMember(member);
     }
 

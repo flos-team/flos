@@ -7,6 +7,7 @@ import com.onehee.flos.model.entity.type.WeatherType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -15,5 +16,7 @@ public interface WeatherResourceRepository extends JpaRepository<WeatherResource
     Optional<WeatherResource> findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(Member member, WeatherType weatherType);
 
     Long countLightByFlower(Flower flower);
+
+    boolean existsByOwnerAndUsedAtAfter(Member member, LocalDateTime usedAt);
 
 }

@@ -6,12 +6,12 @@ import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
 import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.CommentRepository;
 import com.onehee.flos.model.repository.NotificationRepository;
 import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.model.repository.WeatherResourceRepository;
-import com.onehee.flos.util.NotificationUtil;
 import com.onehee.flos.util.RandomWeatherSelector;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
@@ -59,13 +59,23 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
 
         // 알람 갈 사람
-        Member receiver = tempParentComment == null ? tempPost.getWriter() : tempParentComment.getWriter();
+        Member receiver;
+        MessageType messageType;
+
+        if (tempParentComment == null) {
+            receiver = tempPost.getWriter();
+            messageType = MessageType.NEWCOMMENT;
+        } else {
+            receiver = tempParentComment.getWriter();
+            messageType = MessageType.NEWREPLY;
+        }
 
         // 알람 보내기
         notificationRepository.save(
                 Notification.builder()
                         .member(receiver)
-                        .message(NotificationUtil.commentMessage(writer))
+                        .messageType(messageType)
+                        .message(String.format(messageType.getMessage(), writer))
                         .build()
         );
 
@@ -119,7 +129,8 @@ public class CommentServiceImpl implements CommentService {
         notificationRepository.save(
                 Notification.builder()
                         .member(tempComment.getWriter())
-                        .message(NotificationUtil.commentChosen(post.getWriter()))
+                        .messageType(MessageType.COMMENTCHOSEN)
+                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
                         .build()
         );
 
