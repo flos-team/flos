@@ -19,6 +19,7 @@ function Global() {
   const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
   const [searchInput, setSearchInput] = useState('') // 검색 : # 포함 -> 태그검색, # 미포함 -> 사용자검색
   const [isSearching, setIsSearching] = useState(false)
+  
   // 기본 렌더링 = 최신순
   useEffect(() => {
     getPostList().then((response) => {

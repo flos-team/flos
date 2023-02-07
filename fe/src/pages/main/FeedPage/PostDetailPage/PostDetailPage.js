@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../../../api/PostAPI";
-import { getCommentList, createCommentById } from "../../../../api/CommentAPI";
+import {
+  getCommentList,
+  createComment,
+  commentApprove,
+} from "../../../../api/CommentAPI";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
 
@@ -22,6 +26,7 @@ import "./PostDetailPage.css";
 
 const PostDetailPage = () => {
   const params = useParams();
+  const url = "https://i8b210.p.ssafy.io/api/file/";
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
@@ -29,6 +34,7 @@ const PostDetailPage = () => {
 
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
+  // const [isImg, setIsImg] = useState(false);
 
   const handleCommentInputValue = (e) => {
     setCommentInputValue(e.target.value);
@@ -40,20 +46,25 @@ const PostDetailPage = () => {
       setPost(response);
       setPostLoading(true);
     });
+  }, []);
+
+  useEffect(() => {
     getCommentList(params.id).then((response) => {
       setComments(response);
       setCommentLoading(true);
     });
+    commentInput();
   }, []);
 
   /**
    * 댓글의 공감을 채택하는 함수
    * @param {*} id
    */
-  const AdoptComment = (id, parentId, postId, primitiveId) => {
+  const AdoptComment = (id) => {
     console.log(id);
-    // 댓글의 아이디를 입력하여 그 댓글을 채택 처리하고
-    // 댓글의 주인에게 아이템을 전달
+    commentApprove(id).then((response) => {
+      console.log(response);
+    });
   };
 
   /**
@@ -63,7 +74,7 @@ const PostDetailPage = () => {
   const commentInput = (postId, parentId, primitiveId) => {
     console.log(commentInputValue);
     // console.log(postId);
-    createCommentById(commentInputValue, parentId, postId, primitiveId).then(
+    createComment(commentInputValue, parentId, postId, primitiveId).then(
       (response) => {
         console.log(response);
       }
@@ -83,43 +94,6 @@ const PostDetailPage = () => {
       </div>
     ));
     console.log(comments);
-
-    // const commentList = comments.map(
-    //   ({
-    //     key,
-    //     id,
-    //     parentId,
-    //     postId,
-    //     primitiveId,
-    //     writer,
-    //     createdAt,
-    //     content,
-    //     isApprove,
-    //   }) => {
-    //     let commentKey = key;
-    //     let commentDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
-    //     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
-    //     let RegBefore = getTimeDiffText(commentDay, curDay);
-    //     const result = (
-    //       <div className="comment-item">
-    //         <img className="user-img" src={writer.profileImage} />
-    //         <div className="comment-container">
-    //           <div className="comment-header">
-    //             <p>{writer.nickname}</p>
-    //             <p>{RegBefore}</p>
-    //           </div>
-    //           <div className="comment-main">{content}</div>
-    //         </div>
-    //         <img
-    //           className="check-btn"
-    //           onClick={() => AdoptComment(id, parentId, postId, primitiveId)}
-    //           src={isApprove ? sunnyActivate : sunnyDeActivate}
-    //         />
-    //       </div>
-    //     );
-    //     return result;
-    //   }
-    // );
     console.log(post);
 
     const commentList = comments.map((e) => {
@@ -127,9 +101,13 @@ const PostDetailPage = () => {
       let commentDay = dayjs(e.createdAt, "YYYY-MM-DD HH:mm:ss");
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
       let RegBefore = getTimeDiffText(commentDay, curDay);
+      // setIsImg(e.isApprove);
       const result = (
         <div className="comment-item">
-          <img className="user-img" src={e.writer.profileImage} />
+          <img
+            className="user-img"
+            src={`${url}${e.writer.profileImage.saveName}`}
+          />
           <div className="comment-container">
             <div className="comment-header">
               <p>{e.writer.nickname}</p>
@@ -153,7 +131,7 @@ const PostDetailPage = () => {
     if (post.relation.attachFiles.length >= 1) {
       imgs = post.relation.attachFiles.map(({ key, saveName }) => (
         <div id={key}>
-          <img src={`https://i8b210.p.ssafy.io/api/file/${saveName}`}></img>
+          <img src={`${url}${saveName}`}></img>
         </div>
       ));
       imgs = (
@@ -175,7 +153,7 @@ const PostDetailPage = () => {
             <div className="post-container">
               <div className="user-info-container">
                 <div className="user-info-div">
-                  <img src={post.writer.picture} />
+                  <img src={`${url}${post.writer.profileImage.saveName}`} />
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">{RegBefore} ☀️</p>
@@ -194,7 +172,10 @@ const PostDetailPage = () => {
             </div>
           </div>
           <div className="user-content-input-div">
-            <img className="user-icon" src={post.writer.picture} />
+            <img
+              className="user-icon"
+              src={`${url}${post.writer.profileImage.saveName}`}
+            />
             <div className="comment-input-div">
               <input
                 className="comment-input"
@@ -205,7 +186,7 @@ const PostDetailPage = () => {
                 style={{ backgroundImage: `url(${sendCommentBtn})` }}
                 onClick={() =>
                   // commentInput( post.id, post.parentId, post.primitiveId)
-                  commentInput(post.id, null, null)
+                  commentInput(post.id, 0, 0, 0)
                 }
               ></button>
             </div>
