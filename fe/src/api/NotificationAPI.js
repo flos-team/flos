@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true;
  */
 const getNotification = async () => {
   let url = `/api/notification`;
-  let value = null;
+  let value = {};
   await axios
     .get(url)
     .then((response) => {
@@ -27,3 +27,24 @@ const getNotification = async () => {
 };
 
 export { getNotification };
+
+
+
+/////////* POST *///////////////////
+// 맹신 ㄴㄴ made by 범규입니다
+const checkNotification = async (id) => {
+  let url = `/api/notification`;
+  let axiosInfo = {
+    'id': id,
+  }
+  await axios
+    .post(url, axiosInfo)
+    .then(() => {
+      // console.dir(response);
+    })
+    .catch((err) => {
+      console.log("알림 POST 오류 발생");
+    });
+};
+
+export { checkNotification };

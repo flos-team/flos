@@ -130,6 +130,7 @@ const Home = () => {
   const [rainAnimation, setRainAnimation] = useState(null);
   const [changeFlowerNamemodal, setChangeFlowerNamemodal] = useState(false);
   const [isFlowering, setIsFlowering] = useState(false);
+  const [isPlay, setIsPlay] = useState(true);
   let backgroundImgUrl;
 
   const [elementImg, setElementImg] = useState(require("../../assets/HomeAsset/sun-img.png"));
@@ -371,6 +372,10 @@ const Home = () => {
     setChangeFlowerNamemodal(false);
   };
 
+  const onClickPlayMusicButton = () => {
+    setIsPlay((pre) => !pre)
+  }
+
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
@@ -406,6 +411,16 @@ const Home = () => {
             <Noti onClick={notiClick} />
           </Link>
         </div>
+        <div className={styles.musicBtn}>
+          {/* <button onClick={onClickPlayMusicButton}>{isPlay ? '⏹' : '▶'}</button> */}
+          
+          {/* <button id="play-icon"></button> */}
+          {/* {isPlay ?<audio
+            src='https://docs.google.com/uc?export=open&id=14JlzHWUE2TqAsN237ft43SOw02xDPori'
+            autoPlay={false} controls="controls" className={styles.audiocontrols}></audio> 
+            : null} */}
+        </div>
+      
         {flowerMessage}
         <div className={styles.FlowerInfo}>
           <div className={styles.FlowerName}>

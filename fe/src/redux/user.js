@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userId: "",
+  userData: [],
 };
 
 export const memberSlice = createSlice({
   name: "LoginUserId",
   initialState,
   reducers: {
-    setUserId: (state, action) => {
+    setUser: (state, action) => {
       //   const ID = action.payload;
-      console.log(action);
-      state.userId = action.payload;
+      state.userData = action.payload;
+      console.log(action.payload);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserId } = memberSlice.actions;
+export const { setUser } = memberSlice.actions;
 
 export default memberSlice.reducer;
 
