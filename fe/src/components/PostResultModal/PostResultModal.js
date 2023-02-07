@@ -26,18 +26,16 @@ import COLORS from "../../styles/colors";
 /* import css */
 import "./PostResultModal.css";
 
-const PostResultModal = ({ setVisible, moveMain }) => {
+const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
   const swiperRef = useRef(null);
   const imgList = [sunny128, cloudy128, rainy128];
   const [groomIdx, setGroomIdx] = useState(0);
   const groomList = [groomImg, groomGlassImg];
   const handleOnRightClick = () => {
     swiperRef.current.swiper.slideNext(500);
-    randGrooms();
   };
   const handleOnLeftClick = () => {
     swiperRef.current.swiper.slidePrev(500);
-    randGrooms();
   };
   const weatherList = imgList.map((e, i) => (
     <SwiperSlide key={i}>
@@ -62,6 +60,8 @@ const PostResultModal = ({ setVisible, moveMain }) => {
   useEffect(() => {
     const number = (Math.floor(Math.random() * 2) + 1) % 2;
     setGroomIdx(number);
+    //console.dir(swiperRef.current.swiper);
+    swiperRef.current.swiper.slideTo(weatherIdx, 500, false);
   }, []);
 
   return (
@@ -98,7 +98,6 @@ const PostResultModal = ({ setVisible, moveMain }) => {
               let idx = swiper.realIndex;
               setWeatherTextIdx(idx);
               setWeatherTextColorIdx(idx);
-              randGrooms();
             }}
             style={swiperClass}
             ref={swiperRef}
@@ -115,7 +114,7 @@ const PostResultModal = ({ setVisible, moveMain }) => {
         </div>
         <div
           className="confirm-btn"
-          onClick={(e) => {
+          onClick={async (e) => {
             moveMain();
           }}
         >
