@@ -45,8 +45,11 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerInfo() {
-        Member owner = SecurityManager.getCurrentMember();
-        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNull(owner));
+        Flower tempFlower = flowerRepository.findByOwnerAndBlossomAtIsNull(SecurityManager.getCurrentMember()).orElse(null);
+        if (tempFlower!=null)
+            return FlowerResponseDTO.toDto(tempFlower);
+        else
+            return null;
     }
 
     @Override
@@ -67,10 +70,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Transactional
     public FlowerResponseDTO giveWater() {
         Member member = SecurityManager.getCurrentMember();
-        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member);
-        if (flower == null) {
-            throw new BadRequestException("현재 키우고 있는 꽃이 없습니다.");
-        }
+        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
         // 제일 오래된 사용가능한 물 가져옴
         WeatherResource water = weatherResourceRepository.findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(member, WeatherType.RAINY)
@@ -90,10 +90,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Transactional
     public FlowerResponseDTO giveLight() {
         Member member = SecurityManager.getCurrentMember();
-        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member);
-        if (flower == null) {
-            throw new BadRequestException("현재 키우고 있는 꽃이 없습니다.");
-        }
+        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
         // 제일 오래된 사용가능한 물 가져옴
         WeatherResource light = weatherResourceRepository.findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(member, WeatherType.SUNNY)

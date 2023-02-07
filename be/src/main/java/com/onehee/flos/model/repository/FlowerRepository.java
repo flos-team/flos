@@ -8,11 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     // 회원이 키우는 꽃
-    Flower findByOwnerAndBlossomAtIsNull(Member owner);
+    Optional<Flower> findByOwnerAndBlossomAtIsNull(Member owner);
 
     // 회원의 가든에 있는 꽃
     Slice<Flower> findSliceByOwnerAndBlossomAtIsNotNull(Member owner, Pageable pageable);
