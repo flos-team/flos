@@ -344,7 +344,7 @@ const Flower = (props) => {
         setLeafElement(leafs[1]);
         setFlowerHeight("80px");
         setLeafHeight("250px");
-        props.makeFullfilled();
+        props.doFullGrown();
       }
       else {
         console.log("오류가 발생했습니다. 적절한 값이 아닙니다.");
