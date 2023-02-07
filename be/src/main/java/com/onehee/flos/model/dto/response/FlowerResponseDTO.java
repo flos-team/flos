@@ -20,7 +20,7 @@ public class FlowerResponseDTO {
     private MemberResponseDTO owner;
     private FlowerType flowerType;
     private String name;
-    private boolean isFullGrown;
+    private Boolean isFullGrown;
     private LocalDateTime createdAt;
     private Long capacity;
     private int currentGrowValue;
