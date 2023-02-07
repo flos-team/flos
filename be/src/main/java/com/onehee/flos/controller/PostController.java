@@ -124,23 +124,23 @@ public class PostController {
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
         postService.createPost(postCreateRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @Tag(name = "게시글API")
-    @Operation(summary = "게시글 수정", description = "게시글 내용을 수정합니다.")
-    @PutMapping("/modify")
-    public ResponseEntity<?> modifyPost(@RequestBody PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
-        postService.modifyPost(postModifyRequestDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @Tag(name = "게시글API")
+//    @Operation(summary = "게시글 수정", description = "게시글 내용을 수정합니다.")
+//    @PutMapping("/modify")
+//    public ResponseEntity<?> modifyPost(@RequestBody PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
+//        postService.modifyPost(postModifyRequestDTO);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable("id") Long id) throws BadRequestException {
         postService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

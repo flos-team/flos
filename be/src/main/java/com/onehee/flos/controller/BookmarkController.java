@@ -17,14 +17,14 @@ import java.util.List;
 @Tag(name = "북마크API", description = "게시글의 북마크를 활성/비활성화 합니다.")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/post")
+@RequestMapping("/book")
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 
     @Tag(name = "북마크API")
     @Operation(summary = "게시글 북마크 활성", description = "게시글의 북마크를 활성화합니다")
-    @PostMapping("/{id}/bookmark")
+    @PostMapping("/{id}")
     public ResponseEntity<?> createBookmark(@PathVariable("id") Long postId) throws BadRequestException {
         bookmarkService.createBookmark(postId);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -32,7 +32,7 @@ public class BookmarkController {
 
     @Tag(name = "북마크API")
     @Operation(summary = "게시글 북마크 비활성", description = "게시글의 북마크를 비활성화합니다")
-    @PostMapping("/{id}/unbookmark")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBookmark(@PathVariable("id") Long postId) throws BadRequestException {
         bookmarkService.deleteBookmark(postId);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

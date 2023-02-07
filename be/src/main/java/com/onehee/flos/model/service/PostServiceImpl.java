@@ -115,11 +115,12 @@ public class PostServiceImpl implements PostService {
             );
         }
 
-        for (TagRequestDTO e : postCreateRequestDTO.getTagList()) {
+        for (String e : postCreateRequestDTO.getTagList()) {
+            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
             postTagRepository.saveAndFlush(
                     PostTag.builder()
                             .post(tempPost)
-                            .tag(tagRepository.saveAndFlush(e.toEntity()))
+                            .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
                             .build()
             );
         }
@@ -157,13 +158,15 @@ public class PostServiceImpl implements PostService {
             );
         }
 
-        for (TagRequestDTO e : postModifyRequestDTO.getTagList()) {
-            postTagRepository.save(
-                    PostTag.builder()
-                            .post(tempPost)
-                            .tag(tagRepository.saveAndFlush(e.toEntity()))
-                            .build()
-            );
+        for (String e : postModifyRequestDTO.getTagList()) {
+            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
+            if (tempTag == null || !postTagRepository.existsByTagAndPost(tempPost, tempTag))
+                postTagRepository.saveAndFlush(
+                        PostTag.builder()
+                                .post(tempPost)
+                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
+                                .build()
+                );
         }
 
 

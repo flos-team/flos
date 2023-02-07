@@ -22,7 +22,7 @@ public class PostCreateRequestDTO {
     private String content;
     private WeatherType weather;
     private List<MultipartFile> attachFiles;
-    private List<TagRequestDTO> tagList;
+    private List<String> tagList;
 
     public Post toEntity(Member writer) {
         return Post.builder()
