@@ -62,7 +62,7 @@ public class CommentController {
 
     @Tag(name = "댓글API")
     @Operation(summary = "댓글 생성", description = "댓글을 생성합니다.")
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createComment(@RequestBody CommentCreateRequestDTO commentCreateRequestDTO) throws BadRequestException {
         commentService.createComment(commentCreateRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -70,7 +70,7 @@ public class CommentController {
 
     @Tag(name = "댓글API")
     @Operation(summary = "댓글 수정", description = "댓글을 수정합니다.")
-    @PutMapping("/modify")
+    @PutMapping("")
     public ResponseEntity<?> modifyComment(@RequestBody CommentModifyRequestDTO commentModifyRequestDTO) throws BadRequestException {
         commentService.modifyComment(commentModifyRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -78,7 +78,7 @@ public class CommentController {
 
     @Tag(name = "댓글API")
     @Operation(summary = "댓글 삭제", description = "댓글을 삭제합니다.")
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") Long commentId) throws BadRequestException {
         commentService.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

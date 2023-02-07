@@ -19,8 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.NoSuchAlgorithmException;
-
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -57,6 +55,7 @@ public class CommentServiceImpl implements CommentService {
         Member writer = SecurityManager.getCurrentMember();
         Comment tempParentComment = commentRepository.findById(commentCreateRequestDTO.getParentId()).orElse(null);
         Comment tempPrimitiveComment = commentRepository.findById(commentCreateRequestDTO.getParentId()).orElse(null);
+
         commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
 
         // 알람 갈 사람

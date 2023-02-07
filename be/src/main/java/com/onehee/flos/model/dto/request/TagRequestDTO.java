@@ -1,6 +1,7 @@
 package com.onehee.flos.model.dto.request;
 
 import com.onehee.flos.model.entity.Tag;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,4 +15,5 @@ public class TagRequestDTO {
                 .tagName(this.getTagName())
                 .build();
     }
+
 }

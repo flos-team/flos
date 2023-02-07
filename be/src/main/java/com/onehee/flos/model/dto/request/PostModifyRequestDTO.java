@@ -22,7 +22,7 @@ public class PostModifyRequestDTO {
     private String content;
     private LocalDateTime modifiedAt;
     private List<MultipartFile> attachFiles;
-    private List<TagRequestDTO> tagList;
+    private List<String> tagList;
     @JsonIgnore
     private Member writer;
 
