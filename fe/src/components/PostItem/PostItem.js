@@ -45,7 +45,7 @@ const PostItem = ({ post }) => {
   const [weatherImg, setWeatherImg] = useState(<div></div>);
 
   // console.log(post.postRelationDTO.attachFiles);
-  const imgs = post.postRelationDTO.attachFiles.map(({ saveName }) => (
+  const imgs = post.relation.attachFiles.map(({ saveName }) => (
     <div
       className="img-div"
       style={{
@@ -58,10 +58,10 @@ const PostItem = ({ post }) => {
   // console.log(post.postRelationDTO.attachFiles[0]);
   let thumbNailURL = "";
   let thumbNail = null;
-  if (post.postRelationDTO.attachFiles[0]) {
+  if (post.relation.attachFiles[0]) {
     thumbNailURL =
       "https://i8b210.p.ssafy.io/api/file/" +
-      post.postRelationDTO.attachFiles[0].saveName;
+      post.relation.attachFiles[0].saveName;
     thumbNail = (
       <div
         className="img-container hide-scroll"
@@ -72,7 +72,7 @@ const PostItem = ({ post }) => {
     );
   }
 
-  const tags = post.postRelationDTO.tagList.map(({ key, tagName }) => (
+  const tags = post.relation.tagList.map(({ key, tagName }) => (
     <div className="tag">
       {key}
       {tagName}
