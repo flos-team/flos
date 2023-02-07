@@ -1,0 +1,114 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.post-top-component {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem;
+  gap: 0.25rem;
+  width: 100%;
+  height: 25.8%;
+  /* yellow100 */
+  border-radius: 0.75rem 0.75rem 0 0;
+  order: 0;
+}
+.post-top-component .user-info-div {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.25rem 0;
+  gap: 1rem;
+  width: 100%;
+  flex-grow: 3;
+}
+.post-top-component .user-info-div .user-img {
+  box-sizing: border-box;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-position: center;
+  background-size: contain;
+  border-radius: 1.75rem;
+  flex-shrink: 1;
+}
+.post-top-component .user-info-div .post-info-div {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  flex-grow: 4;
+  font-size: 16px;
+  height: 100%;
+}
+.post-top-component .user-info-div .post-info-div .time-log {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  height: max-content;
+  position: relative;
+  padding-right: 1.5rem;
+}
+.post-top-component .user-info-div .post-info-div .time-log img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  align-self: center;
+  width: 1rem;
+  height: 1rem;
+}
+.post-top-component .tag-container {
+  /* Auto layout */
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  padding: 0px;
+  gap: 0.25rem;
+  width: 100%;
+  flex-grow: 1;
+  overflow: scroll;
+}
+.post-top-component .tag-container .tag {
+  /* Auto layout */
+  width: max-content;
+  height: max-content;
+  padding: 0.3125rem 0.625rem 0.3125rem 0.625rem;
+  /* white */
+  background: #ffffff;
+  border-radius: 0.75rem;
+  font-size: 0.625rem;
+  color: #443d3d;
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+/*# sourceMappingURL=PostTopComponent.css.map */

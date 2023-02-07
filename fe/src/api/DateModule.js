@@ -7,6 +7,7 @@ import dayjs from "dayjs";
  */
 const getTimeDiffText = (postDay, curDay) => {
   const milliSeconds = curDay.diff(postDay);
+  //console.log(`post : ${postDay} / cur : ${curDay}`);
   const seconds = milliSeconds / 1000;
   if (seconds < 60) return `방금 전`;
   const minutes = seconds / 60;
