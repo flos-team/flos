@@ -24,7 +24,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Slice<Post> findSliceBy(Pageable pageable);
 
     // 작성자에 해당하는 포스트
-    Slice<Post> findSliceByWriter(Member writer, Pageable pageable);
+    @Query("select p from Post p where p.writer.nickname = ?1")
+    Slice<Post> findSliceByNickname(String nickName, Pageable pageable);
 
     // 게시글 댓글 많은순 검색
     @Query(value = "select p.* from post p left join (select post_id, count(*) as cnt from comment group by post_id) as pc on p.post_id = pc.post_id order by pc.cnt desc, p.created_at desc", nativeQuery = true)
@@ -33,5 +34,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 태그 기준으로 검색
     @Query(value = "select p.* from post p where p.post_id in (select pt.post_id from post_tag pt where pt.tag_id in (select tag_id from tag where tag_name = ?1))", nativeQuery = true)
     Slice<Post> findSliceByTagName(String tagName, Pageable pageable);
+
+    // 북마크한 작성자 포스트
+    @Query(value = "select p.* from post p where p.post_id in (select bm.post_id from bookmark bm where bm.members_id = ?1.members_id)", nativeQuery = true)
+    Slice<Post> findSliceByBookmark(Member writer, Pageable pageable);
+
+    // 팔로우한 사람 게시글 리스트
+    @Query(value = "select p.* from post p where p.members_id in (select flw.owner_id from follow flw where flw.follower_id = ?1.members_id)", nativeQuery = true)
+    Slice<Post> findSliceByFollow(Member member, Pageable pageable);
 
 }

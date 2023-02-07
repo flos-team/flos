@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
@@ -16,12 +17,9 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     // 게시글별 북마크 상태 리스트 - not use...
     List<Bookmark> findAllByPost(Post post);
 
-    // 회원별 북마크 상태 리스트
-    Slice<Bookmark> findSliceByMember(Member member, Pageable pageable);
-
     // 회원이 게시글을 북마크 했는지
     boolean existsByPostAndMember(Post post, Member member);
 
     // 회원의 북마크 정보
-    Bookmark findByPostAndMember(Post post, Member member);
+    Optional<Bookmark> findByPostAndMember(Post post, Member member);
 }

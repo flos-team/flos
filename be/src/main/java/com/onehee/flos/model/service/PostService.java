@@ -21,7 +21,7 @@ public interface PostService {
     SliceResponseDTO getLatestPostList(Pageable pageable);
 
     // 게시글 사람별 검색
-    Slice<PostResponseDTO> getPostListByWriter(String nickName, Pageable pageable);
+    SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable);
 
     // 북마크한 게시글 검색
     SliceResponseDTO getBookmarkedListByMember(Pageable pageable);
@@ -31,6 +31,9 @@ public interface PostService {
 
     // 태그 기준으로 검색
     SliceResponseDTO getPostListByTagName(String tagName, Pageable pageable);
+
+    // 팔로우 기준으로 검색
+    SliceResponseDTO getPostListByFollow(Pageable pageable);
 
     // 단일 게시글 정보 검색
     PostResponseDTO getPost(Long id) throws BadRequestException;
