@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { setUserId } from "../../../redux/user";
+import { useSelector } from "react-redux";
 
 /* import css */
 import "./MainPage.css";
@@ -26,10 +24,10 @@ function Main() {
   // }, [isToast]);
 
   const position = useSelector((state) => state.page.value);
-  const userId = useSelector((state) => state.user.userId);
-
-  console.log(userId);
   // console.log(position + " in Main")
+  // const user = useSelector((state) => state.user.userData);
+  // console.log(user);
+
   let currentPage;
   if (position === "feed") {
     currentPage = <Feed setIsToast={setIsToast} />;
