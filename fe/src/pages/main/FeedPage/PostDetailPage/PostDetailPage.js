@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import { useParams } from "react-router-dom";
 import { getPost } from "../../../../api/PostAPI";
 import {
@@ -26,6 +28,7 @@ import HeaderComponent from "../../../../components/HeaderComponent/HeaderCompon
 import "./PostDetailPage.css";
 
 const PostDetailPage = () => {
+  const user = useSelector((state) => state.user.userData);
   const params = useParams();
   const url = "https://i8b210.p.ssafy.io/api/file/";
 
@@ -52,7 +55,7 @@ const PostDetailPage = () => {
       setComments(response);
       setCommentLoading(true);
     });
-  },[]);
+  });
 
   if (postLoading && commentLoading) {
     console.log(comments);
@@ -173,7 +176,7 @@ const PostDetailPage = () => {
           <div className="user-content-input-div">
             <img
               className="user-icon"
-              src={`${url}${post.writer.profileImage.saveName}`}
+              src={`${url}${user.profileImage.saveName}`}
             />
             <div className="comment-input-div">
               <input
