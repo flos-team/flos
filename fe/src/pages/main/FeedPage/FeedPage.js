@@ -23,12 +23,16 @@ function Feed() {
       SetFriendsLoading(true);
     });
   }, []);
-  console.log(posts)
+  console.log(posts);
   if (isPostsLoading && isFriendsLoading) {
-    const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
+    const postList = posts.map((EachPost) => (
+      <PostItem post={EachPost}></PostItem>
+    ));
 
     const friendList = friends.map((EachFriend) => {
-      let url = "https://i8b210.p.ssafy.io/api/file/" + EachFriend.profileImage.saveName;
+      let url =
+        "https://i8b210.p.ssafy.io/api/file/" +
+        EachFriend.profileImage.saveName;
       // console.log(url);
       const result = (
         <div className={`${styles.friendThumbnail}`}>

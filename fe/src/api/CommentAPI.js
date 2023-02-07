@@ -5,7 +5,9 @@ import axios from "axios";
  * @copyright 2023
  */
 // 엑시오스 기본 세팅
+// axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
 axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
+axios.defaults.withCredentials = true;
 
 /**
  * getCommentList : 게시글의 댓글 리스트
@@ -36,7 +38,12 @@ const getCommentList = async (id, page = 2) => {
  * @param {*} primitiveId
  * @returns
  */
-const createComment = async (content, parentId, postId, primitiveId) => {
+const createComment = async (
+  content,
+  postId,
+  parentId = 0,
+  primitiveId = 0
+) => {
   let url = `/api/comment/`;
   let newComment = {
     content: content,
@@ -44,7 +51,7 @@ const createComment = async (content, parentId, postId, primitiveId) => {
     postId: postId,
     primitiveId: primitiveId,
   };
-  console.log(newComment)
+  console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -60,20 +67,41 @@ const createComment = async (content, parentId, postId, primitiveId) => {
   return isCreated;
 };
 
-const commentApprove = async(commentId) =>{
+const commentApprove = async (commentId) => {
   let url = `/api/comment/approve`;
-  console.log(commentId)
+  console.log(commentId);
   const data = {
-    "id" : commentId
-  }
-  await axios.post(url, data).then((response) =>{
-    if(response.status === 200 ){
-      console.dir(response);
-    }
-  }).catch(error => {
-    console.log(error)
-  })
-}
+    id: commentId,
+  };
+  await axios
+    .post(url, data)
+    .then((response) => {
+      if (response.status === 200) {
+        console.dir(response);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
+const modifyComment = async (content, id, postId) => {
+  const url = `/api/comment`;
+  const data = {
+    content: content,
+    id: id,
+    postId: postId,
+  };
+  await axios
+    .put(url, data)
+    .then((response) => {
+      if (response.status === 200) {
+        return true;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-export { getCommentList, createComment, commentApprove };
+export { getCommentList, createComment, commentApprove, modifyComment };
