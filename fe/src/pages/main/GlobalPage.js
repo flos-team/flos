@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getPostList, getPostListByWeather, getPostListByComment, getPostListByNickname } from "../../api/PostAPI"
+import { getPostList, getPostListByWeather, getPostListByComment, getPostListByNickname, getPostListByTagName } from "../../api/PostAPI"
 
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../components/PostItem/PostItem";
@@ -77,11 +77,33 @@ function Global() {
   // 검색기능
   // 입력값이 변경할 때마다 발동하는 함수
   const searchValue = (e) => {
-    getPostListByNickname(e.target.value, 0).then((response) => {
-      setPosts(response)
-      setSearchInput(e.target.value)
-      setIsSearching(true)
-    })
+    console.log(e.target.value)
+    if ((e.target.value.substr(0, 1) === '#') && e.target.value.length > 1) {
+      getPostListByTagName(e.target.value.substr(1))
+        .then((response) => {
+          // console.dir(response.content)
+          setIsSearching(true)
+          setSearchInput(e.target.value)
+          setPosts(response.content)
+        })
+    }
+    else if ((!e.target.value.includes('#')) && e.target.value.length > 1) {
+      getPostListByNickname(e.target.value)
+      .then((response) => {
+        console.dir(response)
+        // console.dir(postList)
+        // setPosts(response.content)
+        setSearchInput(e.target.value)
+        // console.log(searchInput)
+        // setIsSearching(true)
+      })
+    } else if (e.target.value.length===0) {
+      getPostList()
+        .then((response) => {
+        setPosts(response.postList)
+        setIsSearching(false)
+      })
+    }
   }
 
   const noPost = <div>게시물이 없습니다.</div>
@@ -92,34 +114,8 @@ function Global() {
     </div>
   const noSearchResult = <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>
 
-  // {isSearching ?
-  //   posts.length === 0 ? noSearchResult : searchResult
-  // : posts.length === 0 ? noPost : postList}
-
-
-  // const searchMsg = () => {
-  //     if (isSearching === true) {
-  //       // 검색중인 상태, 검색결과가 없는 경우
-  //       if (posts.length === 0) {
-  //         return (<div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>)}
-  //       // 검색중인 상태, 검색결과가 있는 경우
-  //       else {
-  //         return (
-  //         <div>
-  //           <div>"{searchInput}"에 대한 검색 결과입니다.</div>
-  //           <div>{postList}</div>
-  //         </div>
-  //       )}
-  //     } 
-  //     // 검색중이 아닌 경우
-  //     else {
-  //       if(posts.length === 0){
-  //         return (<div>게시물이 없습니다.</div>)
-  //       } else{
-  //         return (<div>{postList}</div>)
-  //       }
-  //     }
-  //   }
+  // 태그 검색기능
+  // 입력값이 변경할 때마다 발동하는 함수
 
 
 
