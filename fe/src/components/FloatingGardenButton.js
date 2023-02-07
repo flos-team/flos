@@ -12,6 +12,7 @@ const Button = styled.button`
     border-radius: 100%;
     border: none;
     background-color: #69BE94;
+    z-index: 30;
 `;
 
 
