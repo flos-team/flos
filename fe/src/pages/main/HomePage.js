@@ -415,10 +415,10 @@ const Home = () => {
           {/* <button onClick={onClickPlayMusicButton}>{isPlay ? '⏹' : '▶'}</button> */}
           
           {/* <button id="play-icon"></button> */}
-          {isPlay ?<audio
+          {/* {isPlay ?<audio
             src='https://docs.google.com/uc?export=open&id=14JlzHWUE2TqAsN237ft43SOw02xDPori'
             autoPlay={false} controls="controls" className={styles.audiocontrols}></audio> 
-            : null}
+            : null} */}
         </div>
       
         {flowerMessage}
