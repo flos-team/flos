@@ -87,8 +87,8 @@ const getBookMarkList = async (page = 0) => {
  * @param {number} page 페이지번호 (0 ~ N)
  * @returns {Promise} A Promise Object contains UserPostListObject
  */
-const getPostListByNickname = async (page = 0, nickName) => {
-  let url = `/api/post/list/member/${nickName}?page=${page}`;
+const getPostListByNickname = async (nickName) => {
+  let url = `/api/post/list/member/${nickName}`;
   let userPostListObject = {};
   await axios
     .get(url)
@@ -98,6 +98,7 @@ const getPostListByNickname = async (page = 0, nickName) => {
       }
     })
     .catch((error) => {
+      console.log(error);
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
   return userPostListObject;
@@ -152,9 +153,9 @@ const getPostListByComment = async (page = 0) => {
  * @param {number} page 페이지번호 (0 ~ N)
  * @returns  A Promise Object contains commentPostListObject
  */
-const getPostListByTagName = async (tagName, page = 0) => {
+const getPostListByTagName = async (tagName) => {
   let tagNamePostListObject = {};
-  let url = `/api/post/list/tag/${tagName}?page=${page}`;
+  let url = `/api/post/list/tag/${tagName}`;
   await axios
     .get(url)
     .then((response) => {

@@ -5,14 +5,14 @@ import axios from "axios";
  * @copyright 2023
  */
 // 엑시오스 기본 세팅
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
+axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
 
 /**
  * getCommentList : 게시글의 댓글 리스트
  * @param {id} page 게시물 아이디
  * @returns
  */
-const getCommentList = async (id) => {
+const getCommentList = async (id, page = 2) => {
   // let url = `/post/list?page=${page}`;
   let url = `/api/comment/list/post/${id}`;
   let commentList = [];
@@ -31,19 +31,20 @@ const getCommentList = async (id) => {
 /**
  * 해당 게시글에 댓글을 추가 각 인자 머임?
  * @param {*} content
- * @param {*} parentId
+ * @param {*} parentId :
  * @param {*} postId
  * @param {*} primitiveId
  * @returns
  */
-const createCommentById = async (content, parentId, postId, primitiveId) => {
-  let url = `/api/comment/create`;
+const createComment = async (content, parentId, postId, primitiveId) => {
+  let url = `/api/comment/`;
   let newComment = {
-    content,
-    parentId,
-    postId,
-    primitiveId,
+    content: content,
+    parentId: parentId,
+    postId: postId,
+    primitiveId: primitiveId,
   };
+  console.log(newComment)
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -59,4 +60,20 @@ const createCommentById = async (content, parentId, postId, primitiveId) => {
   return isCreated;
 };
 
-export { getCommentList };
+const commentApprove = async(commentId) =>{
+  let url = `/api/comment/approve`;
+  console.log(commentId)
+  const data = {
+    "id" : commentId
+  }
+  await axios.post(url, data).then((response) =>{
+    if(response.status === 200 ){
+      console.dir(response);
+    }
+  }).catch(error => {
+    console.log(error)
+  })
+}
+
+
+export { getCommentList, createComment, commentApprove };
