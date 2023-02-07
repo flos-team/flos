@@ -2,6 +2,7 @@ package com.onehee.flos.controller;
 
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.request.CommentApproveRequestDTO;
 import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
@@ -81,5 +82,13 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(@PathVariable("id") Long commentId) throws BadRequestException {
         commentService.deleteComment(commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Tag(name = "댓글API")
+    @Operation(summary = "댓글 채택", description = "댓글을 채택합니다.(좋아요)")
+    @PostMapping("/approve")
+    public ResponseEntity<?> approveComment(@RequestBody CommentApproveRequestDTO commentApproveRequestDTO) {
+        commentService.approveComment(commentApproveRequestDTO.getId());
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
