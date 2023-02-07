@@ -23,6 +23,8 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
 import PostAPI, { getPost, getPostList } from "../../../api/PostAPI";
+import { getFile } from "../../../api/FileAPI";
+
 
 /* import css */
 import "./ProfilePage.css";
@@ -77,17 +79,24 @@ const ProfilePage = ({ setIsToast }) => {
   useEffect(() => {
     doLogin("seongtae@ssafy.com", "tjdxo1234"); // 로그인 구현되면 삭제 필요
     // 사용자 정보 세팅
-    let userData = getMemberInfo();
-    userData.then((res) => {
-      setUserinfo({
-        nickname: res.nickname,
-        userProfileInfo: {
-          followingNumber: 1000,
-          followerNumber: 1000,
-          postCount: 1000,
-          flowerNumber: 1000,
-        },
-      });
+    setTimeout(() => {
+      let userData = getMemberInfo();
+      userData.then((res) => {
+        setUserinfo({
+          nickname: res.nickname,
+          userProfileInfo: {
+            followingNumber: 1000,
+            followerNumber: 1000,
+            postCount: 1000,
+            flowerNumber: 1000,
+          },
+        });
+        let post = getPost(40);
+        post.then((e) => {
+          console.dir(e);
+        })        
+      }, 1000);
+
     });
 
     // // 북마크 포스트 요청
@@ -136,6 +145,8 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 글작성 모달 on/off 조정하는 함수
   const [isVisible, setIsVisible] = useState(false);
+  const [imgUrl, setImgUrl] = useState("");
+  const [testPost, setTestPost] = useState(null);
 
   return (
     <>
@@ -170,10 +181,27 @@ const ProfilePage = ({ setIsToast }) => {
             display: "block",
             margin: "0 auto",
           }}
-          onClick={(e) => {}}
+          onClick={async (e) => {
+            let data = getPost(40);
+            let url = "";
+            await data.then((res) => {
+              url = res.writer.profileImage.saveName;
+              setTestPost(res);
+              // console.dir(res);
+            })
+            let baseUrl = "https://i8b210.p.ssafy.io/api/file/";
+            //setImgUrl(`${baseUrl}${url}`);
+            
+
+        //     let test = getFile();
+        // test.then((res) => {
+        //   console.dir(res);
+        // })
+          }}
         >
           기능테스트
         </button>
+        <img src={imgUrl} />
         <div className="profile-tab-menu">
           <div
             className="post-tab focus-tab"
@@ -189,6 +217,7 @@ const ProfilePage = ({ setIsToast }) => {
         </div>
         <div className="post-container hide-scroll">
           {isVisible ? <PostResultModal setVisible={setIsVisible}></PostResultModal> : <></>}
+          {/* <PostItem post={testPost!==null?testPost:null}></PostItem> */}
         </div>
       </div>
     </>
