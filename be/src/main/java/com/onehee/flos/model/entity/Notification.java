@@ -1,5 +1,6 @@
 package com.onehee.flos.model.entity;
 
+import com.onehee.flos.model.entity.type.MessageType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -27,6 +28,9 @@ public class Notification {
     private Member member;
 
     private String message;
+
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType;
 
     @ColumnDefault("now()")
     private LocalDateTime createdAt;

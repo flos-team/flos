@@ -1,25 +1,23 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
-import com.onehee.flos.model.dto.request.TagRequestDTO;
-import com.onehee.flos.model.dto.response.TagResponseDTO;
 import com.onehee.flos.model.dto.response.FileResponseDTO;
-import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +36,7 @@ public class PostServiceImpl implements PostService {
     private final BookmarkRepository bookmarkRepository;
     private final CommentRepository commentRepository;
     private final FollowRepository followRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -124,6 +123,16 @@ public class PostServiceImpl implements PostService {
                             .build()
             );
         }
+        followRepository.findAllByOwner(writer)
+                .forEach(follower ->
+                        notificationRepository.save(
+                                Notification.builder()
+                                        .member(follower)
+                                        .messageType(MessageType.NEWFEED)
+                                        .message(String.format(MessageType.NEWFEED.getMessage(), writer.getNickname()))
+                                        .build()
+                )
+        );
     }
 
     @Override

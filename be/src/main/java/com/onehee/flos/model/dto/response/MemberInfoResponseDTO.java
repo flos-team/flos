@@ -26,12 +26,22 @@ public class MemberInfoResponseDTO {
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .profileImage(FileResponseDTO.toDTO(member.getProfileImage()))
+                .profileImage(getImage(member))
                 .introduction(member.getIntroduction())
                 .water(member.getWater())
                 .light(member.getLight())
                 .followerCount(member.getFollowerCount())
                 .followingCount(member.getFollowingCount())
+                .build();
+    }
+
+    private static FileResponseDTO getImage(Member member) {
+        if (member.getProfileImage() != null) {
+            return FileResponseDTO.toDTO(member.getProfileImage());
+        }
+        return FileResponseDTO.builder()
+                .originalName("profile_image.jpg")
+                .saveName("default/profile_image.jpg")
                 .build();
     }
 

@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class FlowerServiceImpl implements FlowerService {
@@ -74,6 +76,7 @@ public class FlowerServiceImpl implements FlowerService {
 
         // 물쓰기
         water.setFlower(flower);
+        water.setUsedAt(LocalDateTime.now());
 
         // 갱신
         flower = flowerRepository.saveAndFlush(flower);
@@ -94,6 +97,7 @@ public class FlowerServiceImpl implements FlowerService {
 
         // 물쓰기
         light.setFlower(flower);
+        light.setUsedAt(LocalDateTime.now());
 
         // 갱신
         flower = flowerRepository.saveAndFlush(flower);

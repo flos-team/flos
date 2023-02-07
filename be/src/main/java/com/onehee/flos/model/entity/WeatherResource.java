@@ -41,4 +41,6 @@ public class WeatherResource {
     @ColumnDefault("now()")
     private LocalDateTime createdAt;
 
+    private LocalDateTime usedAt;
+
 }

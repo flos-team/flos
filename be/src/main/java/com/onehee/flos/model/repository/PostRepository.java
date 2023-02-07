@@ -1,7 +1,6 @@
 package com.onehee.flos.model.repository;
 
 
-import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
@@ -11,8 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -42,5 +40,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 팔로우한 사람 게시글 리스트
     @Query(value = "select p.* from post p where p.members_id in (select flw.owner_id from follow flw where flw.follower_id = ?1.members_id)", nativeQuery = true)
     Slice<Post> findSliceByFollow(Member member, Pageable pageable);
+
+    // 특정시간 이후에 작성한 게시글의 존재여부 확인
+    boolean existsByWriterAndCreatedAtIsAfter(Member writer, LocalDateTime createdAt);
+
+    // 가장 최근에 작성한 게시글을 반환
+    Post findFirstByWriterOrderByCreatedAtDesc(Member writer);
 
 }
