@@ -10,12 +10,14 @@ import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.FlowerRepository;
+import com.onehee.flos.model.repository.FollowRepository;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
@@ -32,6 +34,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Log4j2
 public class MemberServiceImpl implements MemberService {
+    private final FollowRepository followRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
@@ -141,11 +144,31 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberInfoResponseDTO getMemberInfo(MemberSelectRequestDTO memberSelectRequestDTO) {
-        Member member = memberRepository.findById(memberSelectRequestDTO.getId())
-                .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
 
-        return MemberInfoResponseDTO.toDto(member);
+        Member other = memberRepository.findById(memberSelectRequestDTO.getId())
+                .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
+        Member me = SecurityManager.getCurrentMember();
+        boolean isFollower = followRepository.existsByOwnerAndFollower(me, other);
+        boolean isFollowing = followRepository.existsByOwnerAndFollower(other, me);
+
+        MemberRelation memberRelation;
+
+        if (isFollower && isFollowing) {
+            memberRelation = MemberRelation.FRIEND;
+        } else if (isFollower) {
+            memberRelation = MemberRelation.FOLLOWER;
+        } else if (isFollowing) {
+            memberRelation = MemberRelation.FOLLOWED;
+        } else {
+            memberRelation = MemberRelation.OTHER;
+        }
+
+        MemberInfoResponseDTO memberInfoResponseDTO = MemberInfoResponseDTO.toDto(other);
+        memberInfoResponseDTO.setMemberRelation(memberRelation);
+
+        return memberInfoResponseDTO;
     }
 
 }

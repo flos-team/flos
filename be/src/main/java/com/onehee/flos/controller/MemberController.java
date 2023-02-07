@@ -7,6 +7,7 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.util.CookieUtil;
@@ -68,7 +69,9 @@ public class MemberController {
     @Tag(name = "멤버API")
     public ResponseEntity<?> getMyInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
         Member member = memberDetails.getMember();
-        return new ResponseEntity<MemberInfoResponseDTO>(MemberInfoResponseDTO.toDto(member), HttpStatus.OK);
+        MemberInfoResponseDTO info = MemberInfoResponseDTO.toDto(member);
+        info.setMemberRelation(MemberRelation.ME);
+        return new ResponseEntity<MemberInfoResponseDTO>(info, HttpStatus.OK);
     }
 
     @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
