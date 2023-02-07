@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { feed, global, home, garden, profile, test } from "../../redux/pageComponent";
+import { feed, global, home, garden, profile, test } from "../../redux/page";
 
 import { Link } from "react-router-dom";
 
