@@ -15,25 +15,28 @@ import GlobalPage from "../GlobalPage";
 import GardenPage from "../GardenPage";
 
 function Main() {
-  const [isToast, setIsToast] = useState(true);
+  const [isToast, setIsToast] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  useEffect(() => {
-    if (!isChecked) {
-      setIsToast(true);
-    }
-  }, [isToast]);
+  // useEffect(() => {
+  //   if (!isChecked) {
+  //     setIsToast(false);
+  //   }
+  // }, [isToast]);
 
   const position = useSelector((state) => state.page.value);
   // console.log(position + " in Main")
+  // const user = useSelector((state) => state.user.userData);
+  // console.log(user);
+
   let currentPage;
   if (position === "feed") {
-    currentPage = <Feed />;
+    currentPage = <Feed setIsToast={setIsToast} />;
   } else if (position === "global") {
-    currentPage = <GlobalPage></GlobalPage>;
+    currentPage = <GlobalPage setIsToast={setIsToast}></GlobalPage>;
   } else if (position === "home") {
-    currentPage = <HomePage />;
+    currentPage = <HomePage setIsToast={setIsToast} />;
   } else if (position === "garden") {
-    currentPage = <GardenPage />;
+    currentPage = <GardenPage setIsToast={setIsToast} />;
   } else if (position === "profile") {
     currentPage = <ProfilePage setIsToast={setIsToast}></ProfilePage>;
   } else {

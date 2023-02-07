@@ -35,7 +35,7 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains PostListObject
  */
-const getPostList = async (page = 3) => {
+const getPostList = async (page = 2) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
@@ -178,21 +178,23 @@ const getPostListByTagName = async (tagName) => {
  * @param {Array:ImageBitmap} attachFiles 게시글에 첨부한 비트맵 리소스 배열
  * @returns {Promise} A Promise object containing Boolean
  */
-const createPost = async (content, weather, tagList, attachFiles) => {
-  let url = `/api/post/create`;
-  // weather 감정 string 아마 enum?
+const createPost = async (content, weather, tagList = [], attachFiles = []) => {
+  let url = "/api/post";
   let newPost = {
-    attachFiles,
     content,
-    tagList,
     weather,
+    tagList,
+    attachFiles,
   };
+  console.dir(newPost); /////////
   let isCreated = false;
   await axios
     .post(url, newPost)
     .then((response) => {
       console.dir(response);
-      isCreated = true;
+      if (response.status === 201) {
+        isCreated = true;
+      }
     })
     .catch((res) => {
       console.log("글쓰기 중 오류가 발생했습니다.");

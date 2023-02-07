@@ -12,7 +12,7 @@ import { gsap } from "gsap";
 import rainObjectData from "../../assets/HomeAsset/53484-digital-clouds-rain.json";
 import rainAnimationData from "../../assets/HomeAsset/81756-rain.json";
 import sunObjectData from "../../assets/HomeAsset/22190-sunny-day.json";
-import congratulationData from "../../assets/HomeAsset/76411-confetti-effects-lottie-animation.json"
+import congratulationData from "../../assets/HomeAsset/76411-confetti-effects-lottie-animation.json";
 import Lottie from "react-lottie";
 import ChangeFlowerNamemodal from "../../components/homepage/ChangeFlowerNamemodal";
 import DayBackground from "../../assets/HomeAsset/day.png";
@@ -72,30 +72,31 @@ const FlowerMessageText = styled.div`
 `;
 
 const FloweringButton = styled.button`
-    width: 40%;
-    height: 50px;
-    position: absolute;
-    z-index: 49;
-    text-align: center;
-    border: 0px;
-    border-radius: 10px;
+  width: 40%;
+  height: 50px;
+  position: absolute;
+  z-index: 49;
+  text-align: center;
+  border: 0px;
+  border-radius: 10px;
 
-    &:hover {
-      background-color: gray;
-    }
+  &:hover {
+    background-color: gray;
+  }
 `;
 
 const Flowering = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 `;
 
 const Congratulation = styled.div`
-pointer-events: none;`;
+  pointer-events: none;
+`;
 
 // 낮인지 확인하는 메소드
 const isDay = (hour) => {
@@ -129,24 +130,24 @@ const Home = () => {
   const [rainAnimation, setRainAnimation] = useState(null);
   const [changeFlowerNamemodal, setChangeFlowerNamemodal] = useState(false);
   const [isFlowering, setIsFlowering] = useState(false);
+  const [isPlay, setIsPlay] = useState(true);
   let backgroundImgUrl;
 
   const [elementImg, setElementImg] = useState(require("../../assets/HomeAsset/sun-img.png"));
   const [flowerInfo, setFlowerInfo] = useState({
-    existence: "", // 존재 여부
+    isFullGrown: false, // 존재 여부
     name: "", // 이름
     sunElementCount: 0,
     rainElementCount: 0,
     CurrentGrowthValue: 0,
-    MaxGrowthValue: 100,
+    MaxGrowthValue: 50,
   });
 
-  const makeFullfilled = () => {
-    console.log("fulfilled 됨!");
-    flowerInfo.existence = "fullfilled";
+  const doFullGrown = () => {
+    flowerInfo.isFullGrown = true;
     console.log("개화 시작");
     setIsFlowering(true);
-  }
+  };
 
   const flowerMessageArr = ["안녕~", "졸리다~", "기분짱!"];
 
@@ -166,30 +167,30 @@ const Home = () => {
 
   useEffect(() => {
     console.log("왜 않되");
-    // --------------------- 꽃 상태 받아옴 (normal / fullfilled) 시작 ---------------------
+    // --------------------- 꽃 상태 받아옴 (false / true) 시작 ---------------------
     getFlowerInfo()
-    .then((info) => {
-      console.log(info);
-    })
-    .catch((e) => {
-      console.log("[홈 꽃 정보 오류]", e);
-    });
+      .then((res) => {
+        console.dir(res);
+      })
+      .catch((e) => {
+        console.log("[홈 꽃 정보 오류]", e);
+      });
 
     setFlowerInfo({
-      existence: "fulfilled", // 존재 여부
+      isFullGrown: true, // 존재 여부
       name: "명식이", // 이름
       sunElementCount: 20, // 태양 요소 개수
       rainElementCount: 1000, // 빗물 요소 개수
-      CurrentGrowthValue: 0, // 현재 고정 값
+      CurrentGrowthValue: 50, // 현재 고정 값
       MaxGrowthValue: 50, // 최대 값
-    }, ); // flower 상태 일반 상태로 부여
+    }); // flower 상태 일반 상태로 부여
 
     // ---------------------- 노래 틀기
 
     // var audio = new Audio('button-16.mp3');
     // audio.play();
 
-    // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 끝 ---------------------
+    // --------------------- 꽃 상태 받아옴 (false/ true) 끝 ---------------------
 
     let interval = setInterval(function () {
       const value = Math.floor(Math.random() * 2);
@@ -221,13 +222,12 @@ const Home = () => {
         setFlowerMessageIsVisible(!flowerMessageIsVisible);
         setFlowerMessage(null);
       }, 7000);
-
     }, 10000);
 
     return () => {
       clearInterval(interval);
       clearTimeout(timer);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -276,7 +276,6 @@ const Home = () => {
       setElementStatus("");
     }
   }, [elementStatus]);
-
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
@@ -373,22 +372,28 @@ const Home = () => {
     setChangeFlowerNamemodal(false);
   };
 
+  const onClickPlayMusicButton = () => {
+    setIsPlay((pre) => !pre)
+  }
+
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
-        {
-          isFlowering == true ? (
-            <Flowering>
-              <FloweringButton>개화</FloweringButton>
-              <Congratulation>
-                <Lottie options={{
+        {isFlowering == true ? (
+          <Flowering>
+            <FloweringButton>개화</FloweringButton>
+            <Congratulation>
+              <Lottie
+                options={{
                   autoplay: true,
                   animationData: congratulationData,
-                }} height={800} width={800} />
-              </Congratulation>
-            </Flowering>
-          ) : null
-        }
+                }}
+                height={800}
+                width={800}
+              />
+            </Congratulation>
+          </Flowering>
+        ) : null}
         {changeFlowerNamemodal == true ? (
           <ChangeFlowerNamemodal
             oldName={flowerInfo.name}
@@ -406,6 +411,16 @@ const Home = () => {
             <Noti onClick={notiClick} />
           </Link>
         </div>
+        <div className={styles.musicBtn}>
+          {/* <button onClick={onClickPlayMusicButton}>{isPlay ? '⏹' : '▶'}</button> */}
+          
+          {/* <button id="play-icon"></button> */}
+          {/* {isPlay ?<audio
+            src='https://docs.google.com/uc?export=open&id=14JlzHWUE2TqAsN237ft43SOw02xDPori'
+            autoPlay={false} controls="controls" className={styles.audiocontrols}></audio> 
+            : null} */}
+        </div>
+      
         {flowerMessage}
         <div className={styles.FlowerInfo}>
           <div className={styles.FlowerName}>
@@ -421,15 +436,19 @@ const Home = () => {
         <div className={styles.FlowerItem}>
           <div className={styles.RainDiv} onClick={rainClick}>
             <img className={styles.SunRainImg} src={require("../../assets/HomeAsset/rain-img.png")} />
-            <div className={styles.SunRainText}>{(flowerInfo.rainElementCount > 999 ? "999+" : flowerInfo.rainElementCount)}</div>
+            <div className={styles.SunRainText}>
+              {flowerInfo.rainElementCount > 999 ? "999+" : flowerInfo.rainElementCount}
+            </div>
           </div>
           <div className={styles.SunDiv} onClick={sunClick}>
             <img className={styles.SunRainImg} src={require("../../assets/HomeAsset/sun-img.png")} />
-            <div className={styles.SunRainText}>{(flowerInfo.sunElementCount > 999 ? "999+" : flowerInfo.sunElementCount)}</div>
+            <div className={styles.SunRainText}>
+              {flowerInfo.sunElementCount > 999 ? "999+" : flowerInfo.sunElementCount}
+            </div>
           </div>
         </div>
         <div className={styles.Flowerpot}>
-          <Flower flowerInfo={flowerInfo} makeFullfilled={makeFullfilled}></Flower>
+          <Flower flowerInfo={flowerInfo} doFullGrown={doFullGrown}></Flower>
         </div>
       </div>
     </HomePageDiv>

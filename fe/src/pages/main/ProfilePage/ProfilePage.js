@@ -10,6 +10,9 @@ import dayjs from "dayjs";
 import React from "react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+/* import react-redux */
+import { useSelector, useDispatch } from "react-redux";
+import { setIsToastValue } from "../../../redux/toast";
 
 /* import img */
 import userImg from "../../../assets/GlobalAsset/user-img.png";
@@ -24,7 +27,6 @@ import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, doLogin } from "../../../api/MemberAPI";
 import PostAPI, { getPost, getPostList } from "../../../api/PostAPI";
 import { getFile } from "../../../api/FileAPI";
-
 
 /* import css */
 import "./ProfilePage.css";
@@ -75,6 +77,16 @@ const ProfilePage = ({ setIsToast }) => {
     return postList;
   };
 
+  // redux-toolkit
+  const toastValue = useSelector((state) => state.toast.value.isToast);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // console.dir(toastValue);
+    setIsToast(toastValue);
+    // user();
+    // dispatch(setIsToast({ isToast: true }));
+  }, []);
+
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
   useEffect(() => {
     doLogin("seongtae@ssafy.com", "tjdxo1234"); // 로그인 구현되면 삭제 필요
@@ -94,9 +106,8 @@ const ProfilePage = ({ setIsToast }) => {
         let post = getPost(40);
         post.then((e) => {
           console.dir(e);
-        })        
-      }, 1000);
-
+        });
+      });
     });
 
     // // 북마크 포스트 요청
@@ -188,15 +199,14 @@ const ProfilePage = ({ setIsToast }) => {
               url = res.writer.profileImage.saveName;
               setTestPost(res);
               // console.dir(res);
-            })
+            });
             let baseUrl = "https://i8b210.p.ssafy.io/api/file/";
             //setImgUrl(`${baseUrl}${url}`);
-            
 
-        //     let test = getFile();
-        // test.then((res) => {
-        //   console.dir(res);
-        // })
+            //     let test = getFile();
+            // test.then((res) => {
+            //   console.dir(res);
+            // })
           }}
         >
           기능테스트
@@ -217,7 +227,7 @@ const ProfilePage = ({ setIsToast }) => {
         </div>
         <div className="post-container hide-scroll">
           {isVisible ? <PostResultModal setVisible={setIsVisible}></PostResultModal> : <></>}
-          {testPost?<PostItem post={testPost}></PostItem>:<></>}
+          {testPost ? <PostItem post={testPost}></PostItem> : <></>}
         </div>
       </div>
     </>
