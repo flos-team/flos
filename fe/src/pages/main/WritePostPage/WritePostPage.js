@@ -108,6 +108,14 @@ const WritePostPage = () => {
           //     // 여기서 모달을 닫는다.
           //   });
           setIsVisible(true);
+          let data = {
+            content: content,
+            weather:"CLOUDY"
+          }
+          let data2 = createPost(data.content, data.weather);
+          data2.then((e) => {
+            console.dir(e);
+          })
         }}
       ></HeaderComponent>
       <div className="post-write-container">
