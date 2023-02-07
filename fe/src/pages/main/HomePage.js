@@ -134,17 +134,16 @@ const Home = () => {
 
   const [elementImg, setElementImg] = useState(require("../../assets/HomeAsset/sun-img.png"));
   const [flowerInfo, setFlowerInfo] = useState({
-    existence: "", // 존재 여부
+    isFullGrown: false, // 존재 여부
     name: "", // 이름
     sunElementCount: 0,
     rainElementCount: 0,
     CurrentGrowthValue: 0,
-    MaxGrowthValue: 100,
+    MaxGrowthValue: 50,
   });
 
-  const makeFullfilled = () => {
-    console.log("fulfilled 됨!");
-    flowerInfo.existence = "fullfilled";
+  const doFullGrown = () => {
+    flowerInfo.isFullGrown = true;
     console.log("개화 시작");
     setIsFlowering(true);
   };
@@ -167,21 +166,21 @@ const Home = () => {
 
   useEffect(() => {
     console.log("왜 않되");
-    // --------------------- 꽃 상태 받아옴 (normal / fullfilled) 시작 ---------------------
+    // --------------------- 꽃 상태 받아옴 (false / true) 시작 ---------------------
     getFlowerInfo()
-      .then((info) => {
-        console.log(info);
+      .then((res) => {
+        console.dir(res);
       })
       .catch((e) => {
         console.log("[홈 꽃 정보 오류]", e);
       });
 
     setFlowerInfo({
-      existence: "fulfilled", // 존재 여부
+      isFullGrown: true, // 존재 여부
       name: "명식이", // 이름
       sunElementCount: 20, // 태양 요소 개수
       rainElementCount: 1000, // 빗물 요소 개수
-      CurrentGrowthValue: 0, // 현재 고정 값
+      CurrentGrowthValue: 50, // 현재 고정 값
       MaxGrowthValue: 50, // 최대 값
     }); // flower 상태 일반 상태로 부여
 
@@ -190,7 +189,7 @@ const Home = () => {
     // var audio = new Audio('button-16.mp3');
     // audio.play();
 
-    // --------------------- 꽃 상태 받아옴 (empty/ normal / fullfilled) 끝 ---------------------
+    // --------------------- 꽃 상태 받아옴 (false/ true) 끝 ---------------------
 
     let interval = setInterval(function () {
       const value = Math.floor(Math.random() * 2);
@@ -434,7 +433,7 @@ const Home = () => {
           </div>
         </div>
         <div className={styles.Flowerpot}>
-          <Flower flowerInfo={flowerInfo} makeFullfilled={makeFullfilled}></Flower>
+          <Flower flowerInfo={flowerInfo} doFullGrown={doFullGrown}></Flower>
         </div>
       </div>
     </HomePageDiv>
