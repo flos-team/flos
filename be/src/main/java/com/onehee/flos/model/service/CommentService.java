@@ -33,6 +33,6 @@ public interface CommentService {
     void deleteComment(Long id) throws BadRequestException;
 
     // 댓글 채택됨
-    void approveComment(Long id) throws BadRequestException, NoSuchAlgorithmException;
+    void approveComment(Long id) throws BadRequestException;
 
 }
