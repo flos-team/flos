@@ -1,6 +1,7 @@
 package com.onehee.flos.model.repository;
 
 
+import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -47,4 +49,18 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 가장 최근에 작성한 게시글을 반환
     Post findFirstByWriterOrderByCreatedAtDesc(Member writer);
 
+    @Query(value = "select t.tag_name from tag t where t.tag_id in (select tag_id from post_tag where post_id = ?1.post_id)", nativeQuery = true)
+    List<String> getTagListByPost(Post post);
+
+    @Query(value = "select * from file_entity f where f.files_id in (select files_id from post_file where post_id = ?1.post_id)", nativeQuery = true)
+    List<FileEntity> getFileListByPost(Post post);
+
+    @Query(value = "select count(1) from bookmark bm where bm.post_id = ?1.post_id and bm.members_id = ?2.members_id", nativeQuery = true)
+    Boolean isBookmarked(Post post, Member member);
+
+    @Query(value = "select count(1) from follow f where f.owner_id = ?1.writer.members_id and f.follower_id = ?2.members_id", nativeQuery = true)
+    Boolean isFollowed(Post post, Member member);
+
+    @Query(value = "select count(c) from comment c where c.post_id = ?1.post_id", nativeQuery = true)
+    Long countCommentByPost(Post post);
 }
