@@ -240,9 +240,7 @@ const Flower = (props) => {
     }, []);
 
     useEffect(() => {
-      console.log("Flower UseEffect", leafHeight);
       const percent = props.flowerInfo.CurrentGrowthValue / props.flowerInfo.MaxGrowthValue * 100;
-      console.log(percent+"% 만큼 나옴");
       if(percent >= 0 && percent < 25){
         setIsFlowerAvailable(false);
         setLeafElement(leafs[0]);
@@ -347,7 +345,10 @@ const Flower = (props) => {
         props.doFullGrown();
       }
       else {
-        console.log("오류가 발생했습니다. 적절한 값이 아닙니다.");
+        setIsFlowerAvailable(false);
+        setLeafElement(leafs[0]);
+        setLeafHeight("20px");
+        setColor("green");
       }
     }, [props.flowerInfo.CurrentGrowthValue]);
 
