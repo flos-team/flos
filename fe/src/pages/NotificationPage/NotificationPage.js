@@ -11,53 +11,34 @@ import AlarmItem from "../../components/AlarmItem/AlarmItem";
 import "./NotificationPage.css";
 
 import { getNotification } from "../../api/NotificationAPI"
+import { getTimeDiffText } from '../../api/DateModule'
 
-// const NotificationPage = () => {
-//   let testText = (
-//     <>
-//       <b>김채원</b>님이 <b>사쿠라</b> 님의 댓글에 좋아요를 누르셨습니다.
-//     </>
-//   );
-//   let testTimeLog = "23시간 전";
-//   const [AlarmItemList, setAlarmItemList] = useState([<></>]);
-
-//   let n = 5;
-//   let commonAlarmItemList = [...Array(n)].map((e, i) => (
-//     <AlarmItem AlarmImg={userImg} AlarmTextJSX={testText} AlarmTimeLog={testTimeLog}></AlarmItem>
-//   ));
-//   let dummy = ["SUNNY", "CLOUDY", "RAINY", "SUNNY", "CLOUDY", "RAINY", "SUNNY", "CLOUDY", "RAINY"];
-//   let newAlarmItemList = commonAlarmItemList.concat(
-//     dummy.map((e) => (
-//       <AlarmItem AlarmImg={userImg} AlarmTextJSX={testText} AlarmTimeLog={testTimeLog} weather={e}></AlarmItem>
-//     ))
-//   );
-  // useEffect(() => {
-  //   setAlarmItemList(newAlarmItemList);
-  // }, []);
-
-//   return (
-//     <div style={{ backgroundColor: "#e8e8e8" }}>
-//       <HeaderComponent backVisible={true} pageName={"알림"} optType={0}></HeaderComponent>
-//       <div className="alarm-container">{AlarmItemList}</div>
-//     </div>
-//   );
-// };
-
-// export default NotificationPage;
+import dayjs from "dayjs";
 
 const NotificationPage = () => {
 
   const [notiList, setNotiList] = useState([]);
+
+  // let notiDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
+  // let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
+  // let RegBefore = getTimeDiffText(notiDay, curDay);
 
   useEffect(() => {
     getNotification().then((res) => {
       setNotiList(res) 
     })
   }, [])
+  
+  let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
 
-  const notiItemList = notiList.map(({message, createdAt}) => (
-    <AlarmItem AlarmImg={sampleImg} AlarmTextJSX={message} AlarmTimeLog={createdAt}></AlarmItem>
-  ));
+  const notiItemList = notiList.map(({message, createdAt}) => {
+
+    let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
+    let RegBefore = getTimeDiffText(postDay, curDay);
+
+    return <AlarmItem AlarmImg={sampleImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore}></AlarmItem>;
+    }
+  );
 
   
   return (
