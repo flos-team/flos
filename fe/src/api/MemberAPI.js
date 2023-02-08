@@ -72,20 +72,20 @@ const getMemberInfo = async () => {
  * @param {number} id 사용자의 id
  * @returns {Promise} A Promise object containing a UserInfoObject
  */
-const getOtherMemberInfo = async (id) => { 
+const getOtherMemberInfo = async (id) => {
   let url = `/api/member/info/${id}`;
   let userObject = {};
   await axios
     .get(url)
     .then((response) => {
       //userObject = { ...response.data }
-      userObject  = { ...response.data };
+      userObject = { ...response.data };
     })
     .catch((err) => {
       console.log("회원정보 가져오는 중 에러 발생");
     });
   return userObject;
-}
+};
 
 /**
  * logout : 사용자 로그아웃 메서드
@@ -152,6 +152,7 @@ const doLogin = async (email, password) => {
   await axios
     .post("/api/member/login", loginInfo)
     .then((response) => {
+      //console.dir(response);
       if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
       // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정

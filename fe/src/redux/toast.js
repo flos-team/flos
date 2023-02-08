@@ -3,20 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 export const toastSlice = createSlice({
   name: "toast",
   initialState: {
-    value: {
-      isToast: false,
-    },
+    isToast: false,
+    toastMessage: "",
   },
   reducers: {
     setIsToastValue: (state, action) => {
-      state.value = action.payload;
-      console.dir(action.payload);
+      state.isToast = action.payload;
+      // console.dir("IsToast PayLoad : ", action.payload);
+      // console.dir(state);
+      // console.dir(action);
+    },
+    setToastMessage: (state, action) => {
+      state.toastMessage = action.payload;
+      // console.dir("toastMessage PayLoad : ", action.payload);
+      // console.dir(state);
+      // console.dir(action);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setIsToastValue } = toastSlice.actions;
+export const { setIsToastValue, setToastMessage } = toastSlice.actions;
 
 export default toastSlice.reducer;
 

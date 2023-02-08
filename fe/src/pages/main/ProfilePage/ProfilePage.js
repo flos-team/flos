@@ -55,7 +55,7 @@ const ProfilePage = ({ setIsToast }) => {
   const [userImgURL, setUserImgURL] = useState("");
 
   // redux-toolkit
-  const toastValue = useSelector((state) => state.toast.value.isToast);
+  const toastValue = useSelector((state) => state.toast.isToast);
   const dispatch = useDispatch();
 
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
@@ -67,24 +67,20 @@ const ProfilePage = ({ setIsToast }) => {
     let userData = getMemberInfo();
     userData.then((res) => {
       setUserinfo({
-        nickname: res.nickname,         
-        introduction: res.introduction        
+        nickname: res.nickname,
+        introduction: res.introduction,
       });
       setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`);
       let list = [res.followerCount, res.followingCount, res.postCount, res.blossomCount];
-      setUserInfoList(list.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>))        
+      setUserInfoList(list.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
       let myPostList = getPostListByNickname(res.nickname);
       myPostList.then((res) => {
         // console.dir(res);
         // res.content
-        setPostList(res.content.map((e) => (<PostItem post={e}></PostItem>)));
+        setPostList(res.content.map((e) => <PostItem post={e}></PostItem>));
       });
-
     });
-    
-    }, []);
-
-
+  }, []);
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
@@ -99,7 +95,6 @@ const ProfilePage = ({ setIsToast }) => {
 
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
-
 
   return (
     <>
@@ -127,7 +122,7 @@ const ProfilePage = ({ setIsToast }) => {
           <ul className="social-info-title">{titleList}</ul>
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
-        <button
+        {/* <button
           style={{
             width: "160px",
             height: "30px",
@@ -139,21 +134,21 @@ const ProfilePage = ({ setIsToast }) => {
           }}
         >
           기능테스트
-        </button>
+        </button> */}
         <div className="profile-tab-menu">
-          <div
-            className="post-tab focus-tab"
-            onClick={(e)=>{}}
-          >
+          <div className="post-tab focus-tab" onClick={(e) => {}}>
             <p>내 포스트</p>
           </div>
-          <div className="book-tab" onClick={(e)=>{setIsToast(true)}}>
+          <div
+            className="book-tab"
+            onClick={(e) => {
+              setIsToast(true);
+            }}
+          >
             <p>북마크</p>
           </div>
         </div>
-        <div className="post-container hide-scroll">
-          {postList}
-        </div>
+        <div className="post-container hide-scroll">{postList}</div>
       </div>
     </>
   );
