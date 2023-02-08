@@ -21,8 +21,8 @@ spring:
   jwt:
     key: seeeeeeeeeeeecret-keeeeeeeeeeeeeeeeeeeeeey
     expire:
-      atk: 600000
-      rtk: 3000000
+      atk: 60000000
+      rtk: 300000000
   mail:
     host: smtp.gmail.com
     port: 587
