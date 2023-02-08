@@ -3,7 +3,7 @@ import { useState } from "react";
 /* import css */
 import "./PostDeletAlertModal.css";
 
-const PostDeletAlertModal = () => {
+const DangerAlertModal = () => {
   return (
     <>
       <div className="post-delete-modal">
@@ -23,4 +23,4 @@ const PostDeletAlertModal = () => {
   );
 };
 
-export default PostDeletAlertModal;
+export default DangerAlertModal;

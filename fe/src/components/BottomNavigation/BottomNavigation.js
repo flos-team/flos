@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { feed, global, home, garden, profile, test } from "../../redux/page";
-
 import { Link } from "react-router-dom";
+import { setIsToastValue } from "../../redux/toast";
 
 /* img assets import */
 import feedIcon from "../../assets/NavBar/feed-icon.png";
@@ -60,24 +60,28 @@ const BottomNavigation = ({ isToast, setIsToast, isChecked, setIsChecked }) => {
     },
   ]);
 
+  const toastValue = useSelector((state) => state.toast.isToast);
+  const toastText = useSelector((state) => state.toast.toastMessage);
   useEffect(() => {
-    setToastItem(isToast ? toastDivUp : toastDiv);
-  }, [isToast]);
+    //console.log(toastValue, toastText);
+    setToastItem(toastValue ? toastDivUp : toastDiv);
+  }, [toastValue]);
   const [toastItem, setToastItem] = useState();
   const toastDiv = (
     <div className="toast-message-div">
-      <div className="toast-message">{"글을 불러올 수 없음"}</div>
+      <div className="toast-message">{toastText}</div>
       <div className="check-btn">확인</div>
     </div>
   );
   const toastDivUp = (
     <div className="toast-message-div toast-up ">
-      <div className="toast-message">{"글을 불러올 수 없음"}</div>
+      <div className="toast-message">{toastText}</div>
       <div
         className="check-btn"
         onClick={(e) => {
-          setIsToast(false);
-          setIsChecked(true);
+          // setIsToast(false);
+          // setIsChecked(true);
+          dispatch(setIsToastValue(false));
         }}
       >
         확인

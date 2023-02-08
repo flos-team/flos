@@ -1,10 +1,12 @@
+import axios from "axios";
+
 /* import react */
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 // redux/toolkit
 import { useSelector, useDispatch } from "react-redux";
-import { setIsToastValue } from "../../../redux/toast";
+import { setIsToastValue, setToastMessage } from "../../../redux/toast";
 
 /* import img */
 import pictureIcon from "../../../assets/GlobalAsset/picture-btn.png";
@@ -14,7 +16,6 @@ import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
-
 /* import module */
 import { createPost } from "../../../api/PostAPI";
 import { getSentimentResult } from "../../../api/SentimentAPI";
@@ -23,16 +24,6 @@ import { getSentimentResult } from "../../../api/SentimentAPI";
 import "./WritePostPage.css";
 
 const WritePostPage = () => {
-  // redux-toolkit
-  const toastValue = useSelector((state) => state.toast.value.isToast);
-  //
-  const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(toastValue);
-    // user();
-    // dispatch(setIsToastValue({ isToast: true }));
-  }, []);
-
   // 글작성 모달 on/off 조정하는 함수
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
@@ -65,7 +56,7 @@ const WritePostPage = () => {
         break;
     }
   };
-  const [taglist, setTagList] = useState([<></>]);
+  const [tagList, setTagList] = useState([<></>]);
   const [tagTextList, setTagTextList] = useState([]);
   const handleKeyPress = (e) => {
     let value = tagRef.current.value;
@@ -73,10 +64,10 @@ const WritePostPage = () => {
       let text = value.slice(1, value.length - 1);
       if (e.code === "Space") {
         if (value.length - 3 > 0) {
-          const nextList = taglist.concat(<span className="tag-span">{text}</span>);
+          const nextList = tagList.concat(<span className="tag-span">{text}</span>);
           setTagList(nextList);
           const nextTag = tagTextList.concat(text);
-          setTagTextList(nextTag);          
+          setTagTextList(nextTag);
         }
         tagRef.current.value = "";
       }
@@ -86,6 +77,39 @@ const WritePostPage = () => {
     console.dir(tagTextList);
   };
 
+  const [imgBase64, setImgBase64] = useState([]); // 파일 base64
+  const [imgFile, setImgFile] = useState(null); //파일
+  const handleOnChange = (event) => {
+    console.log(event.target.files);
+    setImgFile(event.target.files);
+    //fd.append("file", event.target.files)
+    setImgBase64([]);
+    for (var i = 0; i < event.target.files.length; i++) {
+      if (event.target.files[i]) {
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[i]); // 1. 파일을 읽어 버퍼에 저장합니다.
+        // 파일 상태 업데이트
+        reader.onloadend = () => {
+          // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+          const base64 = reader.result;
+          // console.log(base64);
+          if (base64) {
+            //  images.push(base64.toString())
+            var base64Sub = base64.toString();
+            setImgBase64((imgBase64) => [...imgBase64, base64Sub]);
+            //  setImgBase64(newObj);
+            // 파일 base64 상태 업데이트
+            //  console.log(images)
+          }
+        };
+      }
+    }
+  };
+  // redux-toolkit
+  const toastValue = useSelector((state) => state.toast.isToast);
+  const toastMessage = useSelector((state) => state.toast.toastMessage);
+  const dispatch = useDispatch();
+
   return (
     <>
       <HeaderComponent
@@ -94,29 +118,20 @@ const WritePostPage = () => {
         menuOpt2={"CHECK"}
         menuOpt2Func={async () => {
           //judgeWeatherIdx("negative");
-          let result = getSentimentResult(content);
-          let resultText = "CLOUDY";
-          // 빙글거리는 모달을 잠시 보여주고,
-          await result
-            .then((res) => {
-              console.dir(res);
-              resultText = res.data.document.sentiment;
-              judgeWeatherIdx(resultText); // 결과 세팅해주고
-              // data.document.sentiment / "positive", "neutral", "negative"
-            })
-            .finally(() => {
-              // 여기서 모달을 닫는다.
-            });
+          // let result = getSentimentResult(content);
+          // let resultText = "CLOUDY";
+          // // 빙글거리는 모달을 잠시 보여주고,
+          // await result
+          //   .then((res) => {
+          //     console.dir(res);
+          //     resultText = res.data.document.sentiment;
+          //     judgeWeatherIdx(resultText); // 결과 세팅해주고
+          //     // data.document.sentiment / "positive", "neutral", "negative"
+          //   })
+          //   .finally(() => {
+          //     // 여기서 모달을 닫는다.
+          //   });
           setIsVisible(true);
-          let data = {
-            content: content,
-            weather: resultText,
-            tagTextList,            
-          }
-          let data2 = createPost(data.content, data.weather, tagTextList);
-          data2.then((e) => {
-            console.dir(e);
-          })
         }}
       ></HeaderComponent>
       <div className="post-write-container">
@@ -132,7 +147,7 @@ const WritePostPage = () => {
               }}
             />
             <div className="post-tag-input-div">
-              {taglist}
+              {tagList}
               <input
                 className="post-tag-input"
                 placeholder="#태그를 입력하세요"
@@ -144,21 +159,21 @@ const WritePostPage = () => {
           <div className="post-option-container">
             <label htmlFor="photo-input">
               <div className="photo-add-btn">
-                <input type="file" id="photo-input" multiple accept="image/jpg, image/jpeg, image/png" ref={imgInputRef} onChange={(e) => {
-                  console.dir(imgInputRef.current);
-                }}></input>
+                <input
+                  type="file"
+                  id="photo-input"
+                  multiple
+                  accept="image/jpg, image/jpeg, image/png"
+                  ref={imgInputRef}
+                  onChange={handleOnChange}
+                ></input>
                 <img src={pictureIcon} />
               </div>
             </label>
             <div className="toggle-btn-container">
               <p className="toggle-text">공개설정</p>
               {/* <div className="toggle-btn"></div> */}
-              <div
-                onClick={(e) => {
-                  checkTagList();
-                  //console.dir(locationData);
-                }}
-              >
+              <div onClick={(e) => {}}>
                 <ToggleBtn></ToggleBtn>
               </div>
             </div>
@@ -172,19 +187,35 @@ const WritePostPage = () => {
             }}
             weatherIdx={weatherIndex}
             createPost={async () => {
-              let data = createPost(content, weatherText);
-              await data.then((res) => {
-                if (res) {
-                  alert("글작성이 완료되었습니다.");
-                  dispatch(setIsToastValue({ isToast: true }));
-                }
-              });
+              let postObj = {
+                content: content,
+                tagList: tagTextList,
+                weather: weatherText,
+                //attachFiles: [...Object.values(imgFile)],
+                attachFiles: [...imgBase64],
+              };
+              // console.dir(postObj);
+              // axios.post("https://i8b210.p.ssafy.io/api/post", postObj).then((res) => {});
+              let ans = createPost(postObj.content, postObj.weather, postObj.tagList)
+                .then((res) => {
+                  //console.dir(res);
+                  dispatch(setToastMessage("글 작성이 완료되었습니다."));
+                  dispatch(setIsToastValue(true));
+                })
+                .catch((err) => {
+                  console.dir(err);
+                });
             }}
           ></PostResultModal>
         ) : (
           <></>
         )}
       </div>
+      {imgBase64.map((item) => {
+        return (
+          <img className="d-block w-100" src={item} alt="First slide" style={{ width: "100%", height: "550px" }} />
+        );
+      })}
     </>
   );
 };

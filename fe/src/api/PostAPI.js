@@ -186,7 +186,6 @@ const createPost = async (content, weather, tagList = [], attachFiles = []) => {
     tagList,
     attachFiles,
   };
-  console.dir(newPost); /////////
   let isCreated = false;
   await axios
     .post(url, newPost)
@@ -197,6 +196,7 @@ const createPost = async (content, weather, tagList = [], attachFiles = []) => {
       }
     })
     .catch((res) => {
+      console.dir(res);
       console.log("글쓰기 중 오류가 발생했습니다.");
     });
   return isCreated;

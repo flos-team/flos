@@ -115,8 +115,8 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
         <div
           className="confirm-btn"
           onClick={async (e) => {
+            await createPost();
             moveMain();
-            createPost();
           }}
         >
           <p>작성완료</p>
