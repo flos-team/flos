@@ -61,6 +61,7 @@ const DateDetailText = styled.div`
 
 
 const DetailData = (props) => {
+    console.log("props", props);
     return (
         <Detail>
             <SubDetailBox>
@@ -73,7 +74,7 @@ const DetailData = (props) => {
             </SubDetailBox>
             <SubDetailBox>
                 <DescriptionText> 성장 기간 </DescriptionText>
-                <DateCountText> 30일 </DateCountText>
+                <DateCountText> 30일 </DateCountText>/
                 <DateDetailText>( {props.flowerData.startDate} ~ {props.flowerData.endDate} )</DateDetailText>
             </SubDetailBox>
         </Detail>

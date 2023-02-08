@@ -21,24 +21,13 @@ const FullItem = styled.div`
 `;
 
 const FlowerFullItem = (props) => {
-    let flowerInfo = props.flowerInfo;
-    let flowerImgData = {
-        flowerColor: "red"
-    }
-    let flowerData = {
-        state: "은은한",
-        name: "춘식",
-        length: 15,
-        startDate: "2022-10-11",
-        endDate: "2022-10-30"
-    }
     return (
         <FullItem>
             <FlowerView>
                 <FlowerGlassBottle></FlowerGlassBottle>
             </FlowerView>
             <FlowerDetailData>
-                <GardenFullComponentDetailData flowerData={flowerData} />
+                <GardenFullComponentDetailData flowerData={props.flowerInfo} />
             </FlowerDetailData>
         </FullItem>
     );

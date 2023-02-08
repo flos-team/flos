@@ -20,6 +20,7 @@ import NightBackground from "../../assets/HomeAsset/night.png";
 import "./HomePage.css";
 import { motion } from "framer-motion";
 import { getFlowerInfo } from "../../api/FlowerAPI";
+import { getMemberInfo } from "../../api/MemberAPI";
 
 const Title = styled.h1`
   color: #007bff;
@@ -166,26 +167,23 @@ const Home = () => {
   let timer;
 
   useEffect(() => {
-    console.log("왜 않되");
     // --------------------- 꽃 상태 받아옴 (false / true) 시작 ---------------------
-    getFlowerInfo()
-      .then((res) => {
-        console.dir(res);
-      })
-      .catch((e) => {
-        console.log("[홈 꽃 정보 오류]", e);
-      });
+    let flowerInfoValue = getFlowerInfo();
+    let sunElementValue, rainElementValue;
+    let elementValue = getMemberInfo().then((res) => {
+      console.log(res);
+    });
+
+    console.log(elementValue);
 
     setFlowerInfo({
-      isFullGrown: true, // 존재 여부
-      name: "명식이", // 이름
-      sunElementCount: 20, // 태양 요소 개수
-      rainElementCount: 1000, // 빗물 요소 개수
-      CurrentGrowthValue: 50, // 현재 고정 값
-      MaxGrowthValue: 50, // 최대 값
-    }); // flower 상태 일반 상태로 부여
-
-    // ---------------------- 노래 틀기
+      isFullGrown: flowerInfoValue.isFullGrown,
+      name: flowerInfoValue.name,
+      sunElementCount: 0,
+      rainElementCount: 0,
+      CurrentGrowthValue: flowerInfoValue.CurrentGrowthValue,
+      MaxGrowthValue: flowerInfoValue.MaxGrowthValue,
+    });
 
     // var audio = new Audio('button-16.mp3');
     // audio.play();
