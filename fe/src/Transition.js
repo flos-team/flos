@@ -16,7 +16,7 @@ import PwFindPage from "./pages/password/FindPage";
 
 import UserStatisticsPage from "./pages/main/ProfilePage/UserStatisticsPage/UserStatisticsPage";
 import ProfileModifyPage from "./pages/main/ProfilePage/ProfileModifyPage/ProfileModifyPage";
-import OtherProfilePage from "./components/OtherProfilePage/OtherProfilePage";
+import OtherProfilePage from "./components/OtherProfilePage/OtherProfilePage-mod";
 import FollowerViewPage from "./components/FollowerViewPage/FollowerViewPage";
 
 import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage";
@@ -38,8 +38,9 @@ function Transition() {
 
           <Route path="/main" element={<MainPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/main/post/:id" element={<PostDetailPage />}></Route>
+          
           {/* <Link to ={`/post/${1}`} > 로 전달 */}
+          <Route path="/main/post/:id" element={<PostDetailPage />}></Route>
           <Route path="/main/write" element={<WritePostPage />}></Route>
 
           <Route path="/register/fill" element={<FillPage />}></Route>

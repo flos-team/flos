@@ -25,8 +25,8 @@ function Main() {
 
   const position = useSelector((state) => state.page.value);
   // console.log(position + " in Main")
-  // const user = useSelector((state) => state.user.userData);
-  // console.log(user);
+  const user = useSelector((state) => state.user.userData);
+  console.log(user);
 
   let currentPage;
   if (position === "feed") {
