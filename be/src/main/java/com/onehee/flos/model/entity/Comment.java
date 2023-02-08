@@ -7,6 +7,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -49,4 +51,10 @@ public class Comment {
 
     @ColumnDefault("0")
     private Boolean isApprove;
+
+//    @OneToMany(mappedBy="parent", fetch = FetchType.LAZY)
+//    private List<Comment> children = new ArrayList<>();
+
+    @OneToMany(mappedBy="primitive", fetch = FetchType.LAZY)
+    private List<Comment> descendants = new ArrayList<>();
 }
