@@ -4,7 +4,9 @@ import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
+import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.WeatherResource;
@@ -62,6 +64,16 @@ public class FlowerServiceImpl implements FlowerService {
         if (!flower.getOwner().equals(SecurityManager.getCurrentMember()))
             throw new BadRequestException("꽃 주인이 아닙니다.");
         return SliceResponseDTO.toDto(flowerRepository.findContributorByFlower(flower, pageable));
+    }
+
+    @Override
+    public BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException {
+        Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
+        return BestContributorResponseDTO.builder()
+                .flower(FlowerResponseDTO.toDto(flower))
+                .contributor(MemberResponseDTO.toDto(flowerRepository.findContributorByFlowerOrderByCount(flower).orElseThrow(() -> new BadRequestException("기여자가 없습니다."))))
+                .contributeCounter(flowerRepository.countByFlowerAndContributor(flower, SecurityManager.getCurrentMember()))
+                .build();
     }
 
     @Override
