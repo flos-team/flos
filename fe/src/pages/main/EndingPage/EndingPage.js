@@ -7,13 +7,18 @@
 
 /* import module */
 
+/* import component */
+import FlowerGlassBottle from "../../../components/GardenComponent/FlowerGlassBottleItem";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
+
 /* import css */
 import "./EndingPage.css";
 
 const EndingPage = () => {
 
     return (<>
-        <div>엔딩페이지</div>
+        <HeaderComponent backVisible={true}></HeaderComponent>
+        <FlowerGlassBottle></FlowerGlassBottle>
     </>)
 }
 

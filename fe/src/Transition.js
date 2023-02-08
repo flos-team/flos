@@ -22,6 +22,8 @@ import FollowerViewPage from "./components/FollowerViewPage/FollowerViewPage";
 import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
 import GuidePage from "./pages/GuidePage";
+import EndingPage from "./pages/main/EndingPage/EndingPage"
+
 import "./Transition.css";
 
 function Transition() {
@@ -54,6 +56,7 @@ function Transition() {
           <Route path="/profile-modify" element={<ProfileModifyPage />}></Route>
           <Route path="/other-profile-page" element={<OtherProfilePage />}></Route>
           <Route path="/follower-view-page" element={<FollowerViewPage />}></Route>
+          <Route path="/flower-end-page" element={<EndingPage/>}></Route>
 
           {/* <Route path="/product/*" element={<Product />}></Route> */}
           {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}

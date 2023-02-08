@@ -193,13 +193,14 @@ const ProfilePage = ({ setIsToast }) => {
             margin: "0 auto",
           }}
           onClick={async (e) => {
-            let data = getPost(40);
-            let url = "";
-            await data.then((res) => {
-              url = res.writer.profileImage.saveName;
-              setTestPost(res);
-              // console.dir(res);
-            });
+            navigate("/flower-end-page");
+            // let data = getPost(40);
+            // let url = "";
+            // await data.then((res) => {
+            //   url = res.writer.profileImage.saveName;
+            //   setTestPost(res);
+            //   // console.dir(res);
+            // });
             let baseUrl = "https://i8b210.p.ssafy.io/api/file/";
             //setImgUrl(`${baseUrl}${url}`);
 
