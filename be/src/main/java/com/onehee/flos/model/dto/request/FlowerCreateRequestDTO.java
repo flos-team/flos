@@ -3,6 +3,7 @@ package com.onehee.flos.model.dto.request;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.FlowerType;
+import com.onehee.flos.util.RandomHeightSelector;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ public class FlowerCreateRequestDTO {
                 .owner(owner)
                 .name(this.getName())
                 .flowerType(this.getFlowerType())
+                .height(RandomHeightSelector.getRandomWeather())
                 .build();
     }
 
