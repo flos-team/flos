@@ -31,8 +31,8 @@ public class FollowController {
         return followService.follow(followRequestDTO);
     }
 
-    @PutMapping
-    public List<MemberResponseDTO> unfollow(@RequestBody UnfollowRequestDTO unfollowRequestDTO) {
-        return followService.unfollow(unfollowRequestDTO);
+    @DeleteMapping("/{id}")
+    public List<MemberResponseDTO> unfollow(@PathVariable("id") Long id) {
+        return followService.unfollow(new UnfollowRequestDTO(id));
     }
 }
