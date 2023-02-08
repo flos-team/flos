@@ -89,7 +89,7 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
   useEffect(() => {
-    doLogin("seongtae@ssafy.com", "tjdxo1234"); // 로그인 구현되면 삭제 필요
+    // doLogin("seongtae@ssafy.com", "tjdxo1234"); // 로그인 구현되면 삭제 필요
     // 사용자 정보 세팅
     setTimeout(() => {
       let userData = getMemberInfo();
