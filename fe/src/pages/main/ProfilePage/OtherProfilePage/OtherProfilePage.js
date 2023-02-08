@@ -17,7 +17,7 @@ import { getPostListByNickname } from "../../../../api/PostAPI";
 import "./OtherProfilePage.css";
 
 const OtherProfilePage = ({ userNickName }) => {
-  // 사용자 정보를 임시로 더미데이터로 맵핑...
+  // 사용자 정보를 init
   const [titleList, setTitleList] = useState(["팔로잉", "팔로우", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>));
 ;  const [userInfoList, setUserInfoList] = useState([0, 0, 0, 0].map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
     //userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
@@ -28,6 +28,8 @@ const OtherProfilePage = ({ userNickName }) => {
   
   // 사용자 정보에 따른 포스트 리스트 state
   const [postList, setPostList] = useState([<></>]);
+  // 사용지 프로필 이미지 정보 state
+  const [userImgURL, setUserImgURL] = useState("");
 
   // 팔로잉 버튼의 렌더링용 함수! 수정하면 안됌
   const [toggleFactor, setToggleFactor] = useState(false);
@@ -70,7 +72,7 @@ saveName
         // res.content
         setPostList(res.content.map((e) => (<PostItem post={e}></PostItem>)));
       })
-
+      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`)
     });
 
   },[])
@@ -80,7 +82,7 @@ saveName
       <HeaderComponent backVisible={true} pageName={userInfo.nickname}></HeaderComponent>
       <div className="other-profile-page hide-scroll">
         <div className="user-info-header">
-          <div className="user-img" style={{ backgroundImage: `url()` }}></div>
+          <div className="user-img" style={{ backgroundImage: `url(${userImgURL})` }}></div>
         </div>
         <div className="user-introduce-container">
           <div className="user-introduce-text">
