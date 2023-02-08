@@ -19,7 +19,9 @@ import java.time.temporal.ChronoUnit;
 public class FlowerResponseDTO {
     private Long id;
     private MemberResponseDTO owner;
-    private FlowerType flowerType;
+    private String flowerType;
+    private String flowerMeaning;
+    private String flowerColor;
     private String name;
     private Boolean isFullGrown;
     private LocalDateTime createdAt;
@@ -41,7 +43,9 @@ public class FlowerResponseDTO {
                     .isFullGrown(flower.getCapacity() <= (flower.getWater()+flower.getLight()))
                     .id(flower.getId())
                     .owner(MemberResponseDTO.toDto(flower.getOwner()))
-                    .flowerType(flower.getFlowerType())
+                    .flowerType(flower.getFlowerType().getFlowerType())
+                    .flowerMeaning(flower.getFlowerType().getFlowerMeaning())
+                    .flowerColor(flower.getFlowerType().getColor())
                     .name(flower.getName())
                     .currentGrowValue(flower.getWater() + flower.getLight())
                     .capacity(flower.getCapacity())
