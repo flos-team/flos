@@ -16,7 +16,7 @@ import PwFindPage from "./pages/password/FindPage";
 
 import UserStatisticsPage from "./pages/main/ProfilePage/UserStatisticsPage/UserStatisticsPage";
 import ProfileModifyPage from "./pages/main/ProfilePage/ProfileModifyPage/ProfileModifyPage";
-import OtherProfilePage from "./components/OtherProfilePage/OtherProfilePage-mod";
+import OtherProfilePage from "./pages/main/ProfilePage/OtherProfilePage/OtherProfilePage";
 import FollowerViewPage from "./components/FollowerViewPage/FollowerViewPage";
 
 import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage";
