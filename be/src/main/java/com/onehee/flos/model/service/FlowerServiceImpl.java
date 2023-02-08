@@ -82,6 +82,9 @@ public class FlowerServiceImpl implements FlowerService {
         Member member = SecurityManager.getCurrentMember();
         Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
+        if (flower.getCapacity() <= (flower.getLight()+flower.getWater()))
+            throw new BadRequestException("성장한 꽃에 물을 줄 수 없습니다.");
+
         // 제일 오래된 사용가능한 물 가져옴
         WeatherResource water = weatherResourceRepository.findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(member, WeatherType.RAINY)
                 .orElseThrow(() -> new BadRequestException("남은 물이 없습니다."));
@@ -103,6 +106,9 @@ public class FlowerServiceImpl implements FlowerService {
         Member member = SecurityManager.getCurrentMember();
         Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
+        if (flower.getCapacity() <= (flower.getLight()+flower.getWater()))
+            throw new BadRequestException("성장한 꽃에 햇빛을 줄 수 없습니다.");
+        
         // 제일 오래된 사용가능한 물 가져옴
         WeatherResource light = weatherResourceRepository.findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(member, WeatherType.SUNNY)
                 .orElseThrow(() -> new BadRequestException("남은 햇빛이 없습니다."));
