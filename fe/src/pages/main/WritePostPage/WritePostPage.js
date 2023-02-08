@@ -13,7 +13,8 @@ import pictureIcon from "../../../assets/GlobalAsset/picture-btn.png";
 import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
-//dd
+
+
 /* import module */
 import { createPost } from "../../../api/PostAPI";
 
