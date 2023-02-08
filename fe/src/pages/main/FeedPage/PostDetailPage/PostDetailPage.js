@@ -24,6 +24,11 @@ import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 
+import rainy from "../../../../assets/GlobalAsset/rainy.png";
+import sunny from "../../../../assets/GlobalAsset/sunny.png";
+import cloud from "../../../../assets/GlobalAsset/cloudy.png";
+import none from "../../../../assets/ProfileAsset/question-mark.png";
+
 /* css import */
 import "./PostDetailPage.css";
 
@@ -58,8 +63,24 @@ const PostDetailPage = () => {
   });
 
   if (postLoading && commentLoading) {
-    console.log(comments);
+    // console.log(comments);
     // console.log(post);
+
+    let emotionWeather = none;
+    switch (post.weather) {
+      case "SUNNY":
+        emotionWeather = sunny;
+        break;
+      case "RAINY":
+        emotionWeather = rainy;
+        break;
+      case "CLOUDY":
+        emotionWeather = cloud;
+        break;
+      default:
+        emotionWeather = none;
+        break;
+    }
 
     let postDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
@@ -73,15 +94,8 @@ const PostDetailPage = () => {
     ));
 
     const UpdateBtn = (commentId) => {
-      console.log(commentId);
       return (
         <div>
-          <span
-            className="comment-header-right"
-            onClick={() => updateComment(commentId)}
-          >
-            수정
-          </span>
           <span
             className="comment-header-right"
             onClick={() => deleteComment(commentId)}
@@ -90,10 +104,6 @@ const PostDetailPage = () => {
           </span>
         </div>
       );
-    };
-
-    const updateComment = (e) => {
-      console.log("in cb : " + e);
     };
 
     // 수정 버튼 구현 + 기능 구현
@@ -183,7 +193,10 @@ const PostDetailPage = () => {
                   <img src={`${url}${post.writer.profileImage.saveName}`} />
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
-                    <p className="time-log">{RegBefore} ☀️</p>
+                    <p className="time-log">
+                      {RegBefore}{" "}
+                      <img className="post-emotion" src={emotionWeather}></img>
+                    </p>
                   </div>
                 </div>
               </div>
