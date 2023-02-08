@@ -5,7 +5,7 @@ import styles from "./LoginPage.module.css";
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
 
 import { useDispatch, useSelector } from "react-redux";
-import {setUser} from "../redux/user"
+import { setUser } from "../redux/user";
 
 import loginlogo from "../assets/LoginAsset/groom-icon.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
@@ -30,12 +30,11 @@ function Login() {
     doLogin(inputId, inputPw)
       .then(() => {
         navigate("/main");
-      }).then(() =>{
-        // console.log(); 
-        getMemberInfo().then((response)=>{
-          // console.log(response)
-          dispatch(setUser(response))
-        })
+      })
+      .then(() => {
+        getMemberInfo().then((response) => {
+          dispatch(setUser(response));
+        });
       })
       .catch((error) => {
         console.log(error);

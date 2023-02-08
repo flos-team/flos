@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.letter-step3-component {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  gap: 32px;
+  position: relative;
+  width: 100%;
+  height: 67.5vh;
+  background: #f9f9f9;
+  border-radius: 16px;
+}
+.letter-step3-component .letter-user-nickname-div {
+  /* letter-user-nickname-div */
+  width: 100%;
+  flex-grow: 1;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.letter-step3-component .lettter-content-div {
+  /* lettter-content-div */
+  width: 296px;
+  height: 70%;
+  flex-grow: 4;
+  /* white2 */
+  background: #ffffff;
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+.letter-step3-component .lettter-content-div .lettter-content-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 1rem;
+  outline: none;
+  border-radius: 0.3125rem;
+}
+.letter-step3-component .lettter-content-div .lettter-content-input:focus {
+  outline: 1px solid #bfbfbf;
+}
+.letter-step3-component .letter-flower-name-div {
+  /* letter-flower-name-div */
+  width: 100%;
+  flex-grow: 1;
+  /* Inside auto layout */
+  flex: none;
+  order: 2;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.letter-step3-component .letter-flower-name-div p {
+  width: 100%;
+  text-align: right;
+}
+
+/*# sourceMappingURL=LetterStep3Component.css.map */

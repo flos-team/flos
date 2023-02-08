@@ -7,6 +7,7 @@ import {
   getCommentList,
   createComment,
   commentApprove,
+  deleteComment,
 } from "../../../../api/CommentAPI";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
@@ -22,7 +23,6 @@ import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
 import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
-
 
 /* css import */
 import "./PostDetailPage.css";
@@ -59,7 +59,7 @@ const PostDetailPage = () => {
 
   if (postLoading && commentLoading) {
     console.log(comments);
-    console.log(post);
+    // console.log(post);
 
     let postDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
@@ -71,6 +71,30 @@ const PostDetailPage = () => {
         {tagName}
       </div>
     ));
+
+    const UpdateBtn = (commentId) => {
+      console.log(commentId);
+      return (
+        <div>
+          <span
+            className="comment-header-right"
+            onClick={() => updateComment(commentId)}
+          >
+            수정
+          </span>
+          <span
+            className="comment-header-right"
+            onClick={() => deleteComment(commentId)}
+          >
+            삭제
+          </span>
+        </div>
+      );
+    };
+
+    const updateComment = (e) => {
+      console.log("in cb : " + e);
+    };
 
     // 수정 버튼 구현 + 기능 구현
     const commentList = comments.map((e) => {
@@ -91,12 +115,13 @@ const PostDetailPage = () => {
                 <span className="comment-header-left">{e.writer.nickname}</span>
                 <span className="comment-header-left">{RegBefore}</span>
               </div>
-              <div>
-                <span className="comment-header-right">수정</span>
-                <span className="comment-header-right">삭제</span>
-              </div>
+              {!e.isApprove && e.isMine && !e.isCommented
+                ? UpdateBtn(e.id)
+                : ""}
+              {/* {!e.isApprove ? UpdateBtn : ""} */}
             </div>
             <div className="comment-main">{e.content}</div>
+            <div className="comment-addComment">댓글달기</div>
           </div>
           <img
             className="check-btn"
@@ -124,10 +149,10 @@ const PostDetailPage = () => {
         </Carousel>
       );
     }
-    
+
     // function Update (props) {
     //   const [content, setContent] = useState(props.setComments)
-      
+
     //   return (
     //     <>
     //     <form onSubmit={(e) => {

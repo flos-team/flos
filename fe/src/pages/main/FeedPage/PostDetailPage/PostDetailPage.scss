@@ -141,10 +141,17 @@
           .comment-header {
             width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-flow: row nowrap;
+            justify-content: space-between;
             gap: 8 * $rpx1;
+            div{
+              width: max-content;
+              gap: 8px;
+              display: flex;
+            }
             p:first-child {
               font-size: 14 * $rpx1;
+              
             }
             p:last-child {
               font-size: 10 * $rpx1;
@@ -155,6 +162,11 @@
             width: 100%;
             min-height: 20 * $rpx1;
             height: max-content;
+          }
+          .comment-addComment{
+            width: 100%;
+            text-align: right;
+            font-size: 12px;
           }
         }
         .check-btn {

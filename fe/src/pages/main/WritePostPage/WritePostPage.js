@@ -14,10 +14,10 @@ import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
+
 /* import module */
-// import { getSentimentResult } from "../../../api/SentiMentAPI";
-import { getSentimentResult } from "../../../api/sentimentAPI";
 import { createPost } from "../../../api/PostAPI";
+import { getSentimentResult } from "../../../api/SentimentAPI";
 
 /* import css */
 import "./WritePostPage.css";
@@ -65,7 +65,7 @@ const WritePostPage = () => {
     }
   };
   const [taglist, setTagList] = useState([<></>]);
-  const [tagObjList, setTagObjList] = useState([]);
+  const [tagTextList, setTagTextList] = useState([]);
   const handleKeyPress = (e) => {
     let value = tagRef.current.value;
     if (value.includes("#")) {
@@ -74,15 +74,15 @@ const WritePostPage = () => {
         if (value.length - 3 > 0) {
           const nextList = taglist.concat(<span className="tag-span">{text}</span>);
           setTagList(nextList);
-          const nextTag = tagObjList.concat({ tagName: text });
-          setTagObjList(nextTag);
+          const nextTag = tagTextList.concat(text);
+          setTagTextList(nextTag);          
         }
         tagRef.current.value = "";
       }
     }
   };
   const checkTagList = () => {
-    console.dir(tagObjList);
+    console.dir(tagTextList);
   };
 
   return (
@@ -111,9 +111,10 @@ const WritePostPage = () => {
           setIsVisible(true);
           let data = {
             content: content,
-            weather:"CLOUDY"
+            weather: "CLOUDY",
+            tagTextList,            
           }
-          let data2 = createPost(data.content, data.weather);
+          let data2 = createPost(data.content, data.weather, tagTextList);
           data2.then((e) => {
             console.dir(e);
           })

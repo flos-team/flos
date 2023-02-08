@@ -20,8 +20,14 @@ const getFlowerInfo = async () => {
   let value = null;
   await axios
     .get(url)
-    .then((response) => {
-      console.dir(response);
+    .then(({data}) => {
+      value = {
+        name: data.name,
+        isFullGrown: data.isFullGrown,
+        flowerType: data.flowerType,
+        currentGrowthValue: data.currentGrowValue,
+        maxGrowthValue: data.capacity
+      };
     })
     .catch((err) => {
       console.log(err, "꽃 정보 가져오는 중 오류 발생");

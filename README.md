@@ -1,25 +1,135 @@
-## [FLOS] 깃랩 커밋 켄벤션 규칙
+# 🌺  FLOS - 감정 공유 SNS
 
-- [기능 추가] feat: 추가한 기능 명 
-- [버그 수정] fix: 수정한 버그 명 
-- [문서 수정] docs: 수정한 문서명
-- [코드 formatting] style: 변경된 코드 부분 
-- [CSS 등 사용자 UI 디자인 변경] design: 변경된 부분 
-- [주석 추가 및 변경] comment: 주석 추가한 부분
-- [파일 수정/이동/삭제] file: 수정/이동/삭제한 파일 
-- [치명적인 버그 수정] !HOTFIX: 버그명
-- [리팩토링] refactor : 코드의 리팩터링
-- [기타] chore : 빌드 혹은 패키지 매니저 수정사항
-- [테스트] test : test 코드 삽입 및 수정
+![](assets/flos-landing.png)
 
-예시 )
-git commit -m "refactor : 로그인 서버 통신 코드 리펙토링"
+## FLOS 링크 : https://i8b210.p.ssafy.io
 
-## `develop` 브랜치 라이브 빌드    
-#  
-## 페이지
-### https://i8b210.p.ssafy.io
-## 젠킨스
-### http://i8b210.p.ssafy.io:2080
-## 스웨거
-### https://i8b210.p.ssafy.io/api/swagger-ui/
+## UCC 링크 : 
+
+## 🎬 프로젝트 기간
+
+　2023. 01. 03. (화) ~ 2023. 02. 17. (금)
+
+　SSAFY 8기 2학기 공통프로젝트 - FLOS
+
+<br>
+
+## 🌺 개요
+---
+
+*- 한 마디로 쓸거 -*
+
+이 편지는 영국에서부터 시작하여...
+
+<br>
+
+## 🌺 주요 기능
+---
+### * **가든**
+
+  - 어쩌구
+  - 저쩌구
+
+<br>
+
+## 🛠 주요 기술
+---
+
+
+**Back-end : Spring Boot**
+```
+- Springboot 2.7.8
+- Spring Data JPA
+- Spring Security
+- Redis
+- OAuth2
+- Swagger 3.0.0
+- MariaDB
+```
+**Front-end : REACT**
+```
+- 몰루?
+```
+**CI/CD**
+```
+- Jenkins
+- Docker
+- Nginx
+- Letsencrypt
+```
+
+<br>
+
+## 🚩 파일 구조
+
+### back
+```
+  flos
+  ├── auth
+  │    └── model
+  │         ├── dto
+  │         ├── repository
+  │         └── service
+  ├── config
+  ├── controller
+  ├── exception
+  ├── model
+  │    ├── dto
+  │    │    ├── request
+  │    │    └── response
+  │    ├── entity
+  │    │    └── type
+  │    ├── repository
+  │    └── service
+  └── util
+```
+### front
+```
+  fe
+  └── src
+       ├── api
+       ├── assets
+       ├── components
+       ├── constants
+       ├── hooks
+       ├── pages
+       ├── redux
+       └── styles
+```
+
+## 🚀 협업 방식
+
+  ### **Matter Most**
+  - 평상시 소통을 위한 도구
+  - 짧은 코드나 참조 url 공유
+  ### **Notion**
+  - Config 정리
+  - 회의록 저장
+  - 피드백 공유
+  ### **Git lab**
+  - 개발 코드 저장
+  - 메인, 작업 브랜치와 개인 브랜치 구분
+  ### **Figma**
+  - 기획 회의
+  - 와이어 프레임 구성
+  - 직접 화면을 구성하면서 회의
+  ### **Jira**
+  - 일정 관리
+
+
+<br>
+
+## 📋 팀원 역할 분배
+
+![](assets/team-role.png)
+
+<br>
+
+## 🌺 결과물
+ - [컨벤션](assets/convention.md)
+ - [ERD]()
+
+## 🌺 이하 사용법 자세히
+
+- gif 넣는게 좋아보임
+- 말그대로 튜토리얼처럼
