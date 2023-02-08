@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useOutlet } from "react-router-dom";
 
 /**
  * @author 1-hee
@@ -64,6 +65,27 @@ const getMemberInfo = async () => {
     });
   return userObject;
 };
+
+// /api/member/info/{id}
+/**
+ * getMemberInfo : 사용자 정보 요청 메서드
+ * @param {number} id 사용자의 id
+ * @returns {Promise} A Promise object containing a UserInfoObject
+ */
+const getOtherMemberInfo = async (id) => { 
+  let url = `/api/member/info/${id}`;
+  let userObject = {};
+  await axios
+    .get(url)
+    .then((response) => {
+      //userObject = { ...response.data }
+      userObject  = { ...response.data };
+    })
+    .catch((err) => {
+      console.log("회원정보 가져오는 중 에러 발생");
+    });
+  return userObject;
+}
 
 /**
  * logout : 사용자 로그아웃 메서드
@@ -271,6 +293,7 @@ export {
   getCheckEmail,
   getCheckNickname,
   getMemberInfo,
+  getOtherMemberInfo,
   logout,
   sendCodeToEmail,
   doLogin,

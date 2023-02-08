@@ -93,25 +93,23 @@ const WritePostPage = () => {
         menuOpt2={"CHECK"}
         menuOpt2Func={async () => {
           //judgeWeatherIdx("negative");
-          // let data = getSentimentResult(content);
-          // // 빙글거리는 모달을 잠시 보여주고,
-          // await data
-          //   .then((res) => {
-          //     console.dir(res);
-          //     let result = res.data.document.sentiment;
-          //     judgeWeatherIdx(result); // 결과 세팅해주고
-          //     // data.document.sentiment
-          //     // "positive"
-          //     // "neutral"
-          //     // negative
-          //   })
-          //   .finally(() => {
-          //     // 여기서 모달을 닫는다.
-          //   });
+          let result = getSentimentResult(content);
+          let resultText = "CLOUDY";
+          // 빙글거리는 모달을 잠시 보여주고,
+          await result
+            .then((res) => {
+              console.dir(res);
+              resultText = res.data.document.sentiment;
+              judgeWeatherIdx(resultText); // 결과 세팅해주고
+              // data.document.sentiment / "positive", "neutral", "negative"
+            })
+            .finally(() => {
+              // 여기서 모달을 닫는다.
+            });
           setIsVisible(true);
           let data = {
             content: content,
-            weather: "CLOUDY",
+            weather: resultText,
             tagTextList,            
           }
           let data2 = createPost(data.content, data.weather, tagTextList);
@@ -129,7 +127,7 @@ const WritePostPage = () => {
               ref={contentRef}
               onChange={(e) => {
                 setContent(contentRef.current.value);
-                console.log(content);
+                // console.log(content);
               }}
             />
             <div className="post-tag-input-div">
@@ -145,7 +143,7 @@ const WritePostPage = () => {
           <div className="post-option-container">
             <label htmlFor="photo-input">
               <div className="photo-add-btn">
-                <input type="file" id="photo-input"></input>
+                <input type="file" id="photo-input" multiple={true} accept="image"></input>
                 <img src={pictureIcon} />
               </div>
             </label>

@@ -55,7 +55,7 @@ function Transition() {
           <Route path="/guide" element={<GuidePage />}></Route>
 
           <Route path="/profile-modify" element={<ProfileModifyPage />}></Route>
-          <Route path="/other-profile-page" element={<OtherProfilePage />}></Route>
+          <Route path="/other-profile-page/:id" element={<OtherProfilePage />}></Route>
           <Route path="/follower-view-page" element={<FollowerViewPage />}></Route>
           <Route path="/flower-end-page" element={<EndingPage/>}></Route>
 
