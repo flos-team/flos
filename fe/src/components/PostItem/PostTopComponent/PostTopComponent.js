@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 
 /* import react */
 import { useState, useEffect, useCallback, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 /* import img */
 import sunnyImg from "../../../assets/GlobalAsset/sunny.png"
@@ -27,11 +28,13 @@ import "./PostTopComponent.css";
  * @param {Date} date 게시글 작성 일자
  * @param {Enum} weather 날씨 정보
  * @param {Array} tagList 포스트의 태그 리스트
+ * @param {function} moveProfile 다른사람 프로필로 이동하는 함수
  * @returns 
  */
 // userImg, userNickname, timeLog, weather, tagList
-const PostTopComponent = ({userImgURL, userNickname, date, weather, tagList}) => {
+const PostTopComponent = ({userImgURL, userNickname, date, weather, tagList, moveProfile}) => {
     let testWeather = "SUNNY"; 
+    const navigate = useNavigate();
     // RAINY, CLOUDY
 
     let testTagList = ["기쁨", "슬픔","기쁨", "슬픔","기쁨", "슬픔","기쁨", "슬픔","기쁨", "슬픔","기쁨", "슬픔"];
@@ -76,7 +79,8 @@ const PostTopComponent = ({userImgURL, userNickname, date, weather, tagList}) =>
     return (<>
         <div className="post-top-component" style={{background:postColor}}>
             <div className="user-info-div">
-                <div className="user-img" style={{backgroundImage:`url(${userImgURL})`}}></div>
+                <div className="user-img" style={{ backgroundImage: `url(${userImgURL})` }} onClick={(e) => { moveProfile(); }}>                    
+                </div>
                 <div className="post-info-div">
                     <p>{userNickname}</p>
                     <p className="time-log">{postTimeDiffText} <img src={postImg} /></p>
