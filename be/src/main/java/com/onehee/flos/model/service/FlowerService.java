@@ -4,6 +4,7 @@ import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
+import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public interface FlowerService {
     SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException;
 
     SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
+
+    BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException;
 
     // 물주기
     FlowerResponseDTO giveWater();

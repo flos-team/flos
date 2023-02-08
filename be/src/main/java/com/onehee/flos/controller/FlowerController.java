@@ -4,6 +4,7 @@ import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
+import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.service.FlowerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +46,7 @@ public class FlowerController {
 
     @Tag(name = "꽃API")
     @Operation(summary = "꽃 생성", description = "이름과 종류로 꽃을 생성합니다.")
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<?> createFlower(@RequestBody FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
         flowerService.createFlower(flowerCreateRequestDTO); // [DELAY] 이 때 종류로 이미지 파일 연결해야함(안되어있음)
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -53,7 +54,7 @@ public class FlowerController {
 
     @Tag(name = "꽃API")
     @Operation(summary = "꽃 수정", description = "꽃 이름을 수정합니다.")
-    @PutMapping("/modify")
+    @PutMapping("")
     public ResponseEntity<?> modifyFlower(@RequestBody FlowerModifyRequestDTO flowerModifyRequestDTO) throws BadRequestException {
         flowerService.modifyFlower(flowerModifyRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -61,14 +62,21 @@ public class FlowerController {
 
     @Tag(name = "꽃API")
     @Operation(summary = "꽃 기여자 리스트", description = "꽃의 성장에 기여한 회원 리스트를 반환합니다.")
-    @GetMapping("/contributor")
-    public ResponseEntity<?> getContributorByFlower(@RequestParam(value="page", required = false) Integer page, @RequestParam("flowerId") Long flowerId){
+    @GetMapping("/{flowerId}")
+    public ResponseEntity<?> getContributorByFlower(@RequestParam(value="page", required = false) Integer page, @PathVariable("flowerId") Long flowerId){
         PageRequest pageRequest = null;
         if (page==null)
             pageRequest = PageRequest.of(0, size);
         else
             pageRequest = PageRequest.of(page, size);
         return new ResponseEntity<SliceResponseDTO>(flowerService.getContributorByFlower(flowerId, pageRequest), HttpStatus.OK);
+    }
+
+    @Tag(name = "꽃API")
+    @Operation(summary = "꽃 최고 기여자", description = "꽃의 성장에 가장 많이 기여한 회원 정보와 횟수를 반환합니다.")
+    @GetMapping("/best/{flowerId}")
+    public ResponseEntity<?> getBestContributor(@PathVariable("flowerId") Long flowerId){
+        return new ResponseEntity<BestContributorResponseDTO>(flowerService.getBestContributorByFlower(flowerId), HttpStatus.OK);
     }
 
     @Tag(name = "꽃API")
