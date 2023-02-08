@@ -12,13 +12,13 @@ axios.defaults.withCredentials = true;
 /////////* GET *///////////////////
 /**
  */
-const getNotification = () => {
+const getNotification = async () => {
   let url = `/api/notification`;
   let value = {};
-  axios
+  await axios
     .get(url)
     .then((response) => {
-      value = response
+      value = response.data
     })
     .catch((err) => {
       console.log("알림 가져오는 중 오류 발생");
@@ -30,21 +30,29 @@ export { getNotification };
 
 
 
-/////////* POST *///////////////////
+/////////* DELETE *///////////////////
 // 맹신 ㄴㄴ made by 범규입니다
-const checkNotification = async (id) => {
-  let url = `/api/notification`;
-  let axiosInfo = {
-    'id': id,
-  }
+const deleteNotification = async (id) => {
+  let url = `/api/notification/${id}`;
+  let isDeleted = false;
   await axios
-    .post(url, axiosInfo)
-    .then(() => {
-      // console.dir(response);
+    .delete(url)
+    .then((response) => {
+      console.dir(response);
+      if (response.status === 200) {
+        console.log("알림 삭제 완료");
+        isDeleted = true;
+      } else if (response.status === 204) {
+        // console.log("해당 글이 존재하지 않습니다");
+        // isDeleted = false;
+        console.log("글 삭제 완료");
+        isDeleted = true;
+      }
     })
     .catch((err) => {
-      console.log("알림 POST 오류 발생");
+      console.log("해당 알림이 존재하지 않습니다");
     });
+  return isDeleted;
 };
 
-export { checkNotification };
+export { deleteNotification };
