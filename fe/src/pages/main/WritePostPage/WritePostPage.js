@@ -15,7 +15,7 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
 /* import module */
-import { getSentimentResult } from "../../../api/SentiMentAPI";
+// import { SentimentResult } from "../../../api/SentiMentAPI";
 import { createPost } from "../../../api/PostAPI";
 
 /* import css */
@@ -111,6 +111,7 @@ const WritePostPage = () => {
           let data = {
             content: content,
             weather:"CLOUDY"
+            
           }
           let data2 = createPost(data.content, data.weather);
           data2.then((e) => {
