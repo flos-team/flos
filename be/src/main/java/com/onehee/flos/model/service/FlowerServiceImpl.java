@@ -10,6 +10,7 @@ import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.WeatherResource;
+import com.onehee.flos.model.entity.type.FlowerState;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.FlowerRepository;
 import com.onehee.flos.model.repository.WeatherResourceRepository;
@@ -89,6 +90,9 @@ public class FlowerServiceImpl implements FlowerService {
         WeatherResource water = weatherResourceRepository.findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(member, WeatherType.RAINY)
                 .orElseThrow(() -> new BadRequestException("남은 물이 없습니다."));
 
+        if (flower.getCapacity() >= (flower.getLight()+flower.getWater()+1))
+            calIsFullGrown(flower, flower.getWater()+1, flower.getLight());
+
         // 물쓰기
         water.setFlower(flower);
         water.setUsedAt(LocalDateTime.now());
@@ -108,10 +112,13 @@ public class FlowerServiceImpl implements FlowerService {
 
         if (flower.getCapacity() <= (flower.getLight()+flower.getWater()))
             throw new BadRequestException("성장한 꽃에 햇빛을 줄 수 없습니다.");
-        
+
         // 제일 오래된 사용가능한 물 가져옴
         WeatherResource light = weatherResourceRepository.findFirstByOwnerAndWeatherTypeIsAndFlowerIsNull(member, WeatherType.SUNNY)
                 .orElseThrow(() -> new BadRequestException("남은 햇빛이 없습니다."));
+
+        if (flower.getCapacity() >= (flower.getLight()+flower.getWater()+1))
+            calIsFullGrown(flower, flower.getWater(), flower.getLight()+1);
 
         // 물쓰기
         light.setFlower(flower);
@@ -122,5 +129,28 @@ public class FlowerServiceImpl implements FlowerService {
 
         // 반환
         return FlowerResponseDTO.toDto(flower);
+    }
+
+    private void calIsFullGrown(Flower flower, Integer water, Integer light) {
+        FlowerState level = FlowerState.S1R1;
+        if (flower.getCapacity() == (light + water)) {
+            if (light == 0)
+                level = FlowerState.S1R3;
+            else if (water == 0)
+                level = FlowerState.S3R1;
+            if (light < water) {
+                if ((float)light/(float)flower.getCapacity() < 0.25)
+                    level = FlowerState.S1R3;
+                else if ((float)light/(float)flower.getCapacity() < 0.333333)
+                    level = FlowerState.S1R2;
+            }
+            else {
+                if ((float)water/(float)flower.getCapacity() < 0.25)
+                    level = FlowerState.S3R1;
+                else if ((float)water/(float)flower.getCapacity() < 0.333333)
+                    level = FlowerState.S2R1;
+            }
+        }
+        flower.setState(level);
     }
 }
