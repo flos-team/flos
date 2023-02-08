@@ -14,10 +14,10 @@ import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
+
 /* import module */
-// import { getSentimentResult } from "../../../api/SentiMentAPI";
-import { getSentimentResult } from "../../../api/sentimentAPI";
 import { createPost } from "../../../api/PostAPI";
+import { getSentimentResult } from "../../../api/SentimentAPI";
 
 /* import css */
 import "./WritePostPage.css";
@@ -65,7 +65,7 @@ const WritePostPage = () => {
     }
   };
   const [taglist, setTagList] = useState([<></>]);
-  const [tagObjList, setTagObjList] = useState([]);
+  const [tagTextList, setTagTextList] = useState([]);
   const handleKeyPress = (e) => {
     let value = tagRef.current.value;
     if (value.includes("#")) {
@@ -74,15 +74,15 @@ const WritePostPage = () => {
         if (value.length - 3 > 0) {
           const nextList = taglist.concat(<span className="tag-span">{text}</span>);
           setTagList(nextList);
-          const nextTag = tagObjList.concat({ tagName: text });
-          setTagObjList(nextTag);
+          const nextTag = tagTextList.concat(text);
+          setTagTextList(nextTag);          
         }
         tagRef.current.value = "";
       }
     }
   };
   const checkTagList = () => {
-    console.dir(tagObjList);
+    console.dir(tagTextList);
   };
 
   return (
@@ -93,27 +93,26 @@ const WritePostPage = () => {
         menuOpt2={"CHECK"}
         menuOpt2Func={async () => {
           //judgeWeatherIdx("negative");
-          // let data = getSentimentResult(content);
-          // // 빙글거리는 모달을 잠시 보여주고,
-          // await data
-          //   .then((res) => {
-          //     console.dir(res);
-          //     let result = res.data.document.sentiment;
-          //     judgeWeatherIdx(result); // 결과 세팅해주고
-          //     // data.document.sentiment
-          //     // "positive"
-          //     // "neutral"
-          //     // negative
-          //   })
-          //   .finally(() => {
-          //     // 여기서 모달을 닫는다.
-          //   });
+          let result = getSentimentResult(content);
+          let resultText = "CLOUDY";
+          // 빙글거리는 모달을 잠시 보여주고,
+          await result
+            .then((res) => {
+              console.dir(res);
+              resultText = res.data.document.sentiment;
+              judgeWeatherIdx(resultText); // 결과 세팅해주고
+              // data.document.sentiment / "positive", "neutral", "negative"
+            })
+            .finally(() => {
+              // 여기서 모달을 닫는다.
+            });
           setIsVisible(true);
           let data = {
             content: content,
-            weather:"CLOUDY"
+            weather: resultText,
+            tagTextList,            
           }
-          let data2 = createPost(data.content, data.weather);
+          let data2 = createPost(data.content, data.weather, tagTextList);
           data2.then((e) => {
             console.dir(e);
           })
@@ -128,7 +127,7 @@ const WritePostPage = () => {
               ref={contentRef}
               onChange={(e) => {
                 setContent(contentRef.current.value);
-                console.log(content);
+                // console.log(content);
               }}
             />
             <div className="post-tag-input-div">
@@ -144,7 +143,7 @@ const WritePostPage = () => {
           <div className="post-option-container">
             <label htmlFor="photo-input">
               <div className="photo-add-btn">
-                <input type="file" id="photo-input"></input>
+                <input type="file" id="photo-input" multiple={true} accept="image"></input>
                 <img src={pictureIcon} />
               </div>
             </label>
