@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +23,8 @@ public class FlowerResponseDTO {
     private String name;
     private Boolean isFullGrown;
     private LocalDateTime createdAt;
+    private LocalDateTime blossomAt;
+    private Long duration;
     private Long capacity;
     private int currentGrowValue;
     @JsonIgnore
@@ -34,16 +37,19 @@ public class FlowerResponseDTO {
             return FlowerResponseDTO.builder()
                     .isFullGrown(false)
                     .build();
-        else
+        else {
             return FlowerResponseDTO.builder()
                     .isFullGrown(true)
                     .id(flower.getId())
                     .owner(MemberResponseDTO.toDto(flower.getOwner()))
                     .flowerType(flower.getFlowerType())
                     .name(flower.getName())
-                    .currentGrowValue(flower.getWater()+flower.getLight())
+                    .currentGrowValue(flower.getWater() + flower.getLight())
                     .capacity(flower.getCapacity())
                     .createdAt(flower.getCreatedAt())
+                    .blossomAt(flower.getBlossomAt())
+                    .duration(flower.getBlossomAt() == null ? null : ChronoUnit.DAYS.between(flower.getCreatedAt(), flower.getBlossomAt()))
                     .build();
+        }
     }
 }
