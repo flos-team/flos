@@ -61,7 +61,6 @@ const DateDetailText = styled.div`
 
 
 const DetailData = (props) => {
-    console.log("props", props);
     return (
         <Detail>
             <SubDetailBox>
