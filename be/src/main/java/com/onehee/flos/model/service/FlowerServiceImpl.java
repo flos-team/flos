@@ -98,6 +98,7 @@ public class FlowerServiceImpl implements FlowerService {
         water.setUsedAt(LocalDateTime.now());
 
         // 갱신
+        weatherResourceRepository.saveAndFlush(water);
         flower = flowerRepository.saveAndFlush(flower);
 
         // 반환
@@ -125,6 +126,7 @@ public class FlowerServiceImpl implements FlowerService {
         light.setUsedAt(LocalDateTime.now());
 
         // 갱신
+        weatherResourceRepository.saveAndFlush(light);
         flower = flowerRepository.saveAndFlush(flower);
 
         // 반환
