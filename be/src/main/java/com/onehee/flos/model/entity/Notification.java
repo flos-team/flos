@@ -35,5 +35,7 @@ public class Notification {
     @ColumnDefault("now()")
     private LocalDateTime createdAt;
 
+    private Long referenceKey;
+
     private LocalDateTime checkedAt;
 }

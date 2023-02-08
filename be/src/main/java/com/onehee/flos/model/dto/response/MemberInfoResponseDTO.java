@@ -19,6 +19,8 @@ public class MemberInfoResponseDTO {
     private int light;
     private int followerCount;
     private int followingCount;
+    private int postCount;
+    private int blossomCount;
     private MemberRelation memberRelation;
 
     public static MemberInfoResponseDTO toDto(Member member) {
@@ -32,6 +34,8 @@ public class MemberInfoResponseDTO {
                 .light(member.getLight())
                 .followerCount(member.getFollowerCount())
                 .followingCount(member.getFollowingCount())
+                .postCount(member.getPostCount())
+                .blossomCount(member.getBlossomCount())
                 .build();
     }
 

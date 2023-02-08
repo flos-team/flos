@@ -65,6 +65,7 @@ public class FollowServiceImpl implements FollowService {
                 .member(target)
                 .messageType(MessageType.FOLLOW)
                 .message(String.format(MessageType.FOLLOW.getMessage(), me.getNickname()))
+                .referenceKey(me.getId())
                 .build()
         );
 
