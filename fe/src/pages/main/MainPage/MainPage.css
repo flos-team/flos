@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /* rem unit */
 /* red-tokens */
 /* sky-blue-tokens */
@@ -23,10 +24,16 @@
   display: flex;
   flex-direction: column;
 }
+
+.main-page::-webkit-scrollbar {
+  display: none;
+}
+
 .main-page .main {
   order: 1;
   flex-grow: 1;
 }
+
 .main-page .footer {
   position: absolute;
   left: 0;

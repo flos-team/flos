@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258.38 128.99">
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258.38 258.38">
   <defs>
     <style>
-      .head {
+      .head1 {
         fill: #f7d16c;
       }
     </style>
   </defs>
   <g id="_레이어_1-2" data-name="레이어 1">
-    <path class="head" d="m258.38,128.99C258.27,57.73,200.47,0,129.19,0S.11,57.73,0,128.99h258.38Z"/>
+    <circle class="head1" cx="129.19" cy="129.19" r="129.19"/>
   </g>
 </svg>

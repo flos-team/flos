@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
+
+import { doLogin, getMemberInfo } from "../api/MemberAPI";
+
+import { useDispatch, useSelector } from "react-redux";
+import {setUser} from "../redux/user"
 
 import loginlogo from "../assets/LoginAsset/groom-icon.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
 
-import axios from "axios";
-
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-// axios.defaults.baseURL = "http://localhost:8080/";
-axios.defaults.withCredentials = true;
-
 function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
 
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -27,63 +26,30 @@ function Login() {
 
   // 로그인 버튼 클릭 이벤트
   const onClickLogin = () => {
-    const loginInfo = {
-      email: inputId,
-      password: inputPw,
-    };
-    // console.log(loginInfo)
-    axios
-      .post("/member/login", loginInfo)
-      .then((response) => {
-        // console.log(response)
-        const accessToken = response.data.atk;
-        // console.log(accessToken)
-        // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-        console.dir(axios.defaults);
-      })
+    // console.log(inputId, inputPw)
+    doLogin(inputId, inputPw)
       .then(() => {
-        axios
-          .get("/member/info")
-          .then((response) => {
-            console.log(response);
-            navigate("/main");
-          })
-          .catch((error) => {
-            console.log("error : " + error);
-            console.dir(axios.defaults);
-          });
+        navigate("/main");
+      }).then(() =>{
+        // console.log(); 
+        getMemberInfo().then((response)=>{
+          // console.log(response)
+          dispatch(setUser(response))
+        })
       })
       .catch((error) => {
         console.log(error);
-        console.dir(axios.defaults);
       });
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    // const REST_API_KEY = "9a9f7ea0fc0478260c22ccf4d7c2a796";
-    // const REDIRECT_URI = "http://localhost:3000/kakaoLogin"
-    // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
-    // window.location.href = KAKAO_AUTH_URL;
-    // navigate("http://i8b210.p.ssafy.io:8080/oauth2/authorization/kakao")
-    // const KAKAO_CODE = location.search.split('=')[1];
-    // console.log(KAKAO_CODE);
+    console.log("카카오 로그인");
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
     console.log("네이버 로그인");
   };
-
-  // // 페이지 렌더링 후 가장 처음 호출되는 함수
-  // useEffect(() => {
-  //     axios.get('')
-  //     .then(res => console.log(res))
-  //     .catch()
-  // },
-  // // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
-  // [])
-
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
@@ -139,7 +105,7 @@ function Login() {
           <span className={styles.socialline}>소셜 로그인</span>
           <br></br>
           <div className={styles.socialbtn}>
-            <a href="http://i8b210.p.ssafy.io:8080/oauth2/authorization/kakao">
+            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/kakao">
               {/* <button onClick={onClickKakaoLogin} className={styles.kakaobtn}> */}
               <button onClick={onClickKakaoLogin} className={styles.kakaobtn}>
                 <img src={kakaologo} alt=""></img>
@@ -148,7 +114,7 @@ function Login() {
             </a>
           </div>
           <div className={styles.socialbtn}>
-            <a href="http://i8b210.p.ssafy.io:8080/oauth2/authorization/naver.com">
+            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/naver">
               {/* <button onClick={onClickNaverLogin} className={styles.naverbtn}> */}
               <button onClick={onClickNaverLogin} className={styles.naverbtn}>
                 <img src={naverlogo} alt=""></img>

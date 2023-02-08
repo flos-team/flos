@@ -3,7 +3,7 @@
 
 
     width: 100%;
-    height: 90vh;
+    height: 100vh;
 
     display: flex;
     justify-content: center;
@@ -35,10 +35,11 @@
 
     box-sizing: border-box;
 
-    position: absolute;
-    width: 216px;
-    height: 100px;
-    bottom: 45px;
+    width: 50%;
+    height: 10vh;
+
+    position: fixed;
+    bottom: 90px;
 
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid #FFFFFF;
@@ -63,25 +64,18 @@
 
 .FlowerItem {
     /* flower-item-div */
-
-
     position: absolute;
     width: 168px;
     height: 70px;
-    bottom: 150px;
+    bottom: 190px;
     z-index: 20;
-
 }
 
 .Flowerpot {
     /* flowerpot-div */
 
-    position: absolute;
-    width: 294px;
-    height: 223px;
-    bottom: 250px;
-
-    border-radius: 5px;
+    position: fixed;
+    bottom: -5px;
 }
 
 .SunDiv {
@@ -176,4 +170,17 @@
     width: 300px;
     height: calc(100vh - 300px);
     position: absolute;
+}
+
+.musicBtn{
+    position: absolute;
+    background-color: white;
+    color: red;
+    top: 60px;
+    right: 20px;
+    z-index: 20;
+}
+
+.audiocontrols{
+    width: 100px;
 }

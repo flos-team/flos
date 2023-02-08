@@ -7,7 +7,7 @@ import axios from "axios";
  */
 
 // 엑시오스 기본 세팅
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
+axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
 axios.defaults.withCredentials = true;
 
 /////////* GET *///////////////////
@@ -17,7 +17,7 @@ axios.defaults.withCredentials = true;
  * @returns {Promise} A Promise object containing a boolean value
  */
 const getCheckEmail = async (email) => {
-  let url = `/member/check/email?email=${email}`;
+  let url = `/api/member/check/email?email=${email}`;
   let value = null;
   await axios
     .get(url)
@@ -36,7 +36,7 @@ const getCheckEmail = async (email) => {
  * @returns {Promise} A Promise object containing a boolean value
  */
 const getCheckNickname = async (nickname) => {
-  let url = `/member/check/nickname?nickname=${nickname}`;
+  let url = `/api/member/check/nickname?nickname=${nickname}`;
   let value = null;
   await axios
     .get(url)
@@ -54,7 +54,7 @@ const getCheckNickname = async (nickname) => {
  * @returns {Promise} A Promise object containing a UserInfoObject
  */
 const getMemberInfo = async () => {
-  let url = "/member/info";
+  let url = "/api/member/info";
   let userObject = {};
   await axios
     .get(url)
@@ -72,12 +72,14 @@ const getMemberInfo = async () => {
  */
 // TODO....
 const logout = async () => {
-  let url = "/member/logout";
+  let url = "/api/member/logout";
   let isLogout = false;
   await axios
     .get(url)
     .then((response) => {
-      console.dir(response);
+      if (response.status === 204) {
+        isLogout = true;
+      }
     })
     .catch((err) => {
       console.log("로그아웃 중 오류 발생");
@@ -92,7 +94,7 @@ const logout = async () => {
  */
 // AFTER : 회원가입 페이지 등에서 사용한 후에 데이터 처리되면 콘솔 찍히는거 수정해야함.
 const sendCodeToEmail = async (email) => {
-  let url = `/email/reset-password?email=${email}`;
+  let url = `/api/email/reset-password?email=${email}`;
   let isComplete = false;
   await axios
     .get(url)
@@ -126,7 +128,7 @@ const doLogin = async (email, password) => {
     password,
   };
   await axios
-    .post("/member/login", loginInfo)
+    .post("/api/member/login", loginInfo)
     .then((response) => {
       if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
@@ -147,7 +149,7 @@ const doLogin = async (email, password) => {
  * @param {string} password
  */
 const signUpUser = async (code, email, nickname, password) => {
-  let url = "/member/sign-up";
+  let url = "/api/member/sign-up";
   let newUser = {
     code,
     email,
@@ -168,19 +170,20 @@ const signUpUser = async (code, email, nickname, password) => {
 /**
  * modifyUserInfo : 회원정보 수정 메서드
  * @param {string} nickname 사용자 이름
+ * @param {string} introduction 사용자 소개
  * @param {ImageBitmap} profileImage 이미지 비트맵 파일
  * @returns {Promise} A Promise object containing a boolean value
  */
-// TODO....
-// 스웨거 보면서 파라미터 등을 어떻게 보내줄지?
-// Stringify 안해도 되는지? JSON으로 보내야 할텐데 어케할지?
-const modifyUserInfo = async (nickname, profileImage) => {
-  let url = "/member/info";
+const modifyUserInfo = async (nickname, introduction, profileImage) => {
+  let url = `/api/member/info?nickname=${nickname}&introduction=${introduction}`;
   let isUpdated = false;
   await axios
     .put(url, {})
     .then((response) => {
-      console.dir(response);
+      // response.data
+      if (response.status === 201) {
+        isUpdated = true;
+      }
     })
     .catch((err) => {
       console.log("회원정보 수정 중 오류 발생");
@@ -198,7 +201,7 @@ const modifyUserInfo = async (nickname, profileImage) => {
  */
 // TODO....
 const resetUserPassword = async (code, email, password) => {
-  let url = "/member/reset-password";
+  let url = "/api/member/reset-password";
   let modifiedUserInfo = {
     code,
     email,
@@ -222,7 +225,7 @@ const resetUserPassword = async (code, email, password) => {
 // TODO...
 // 성태형한테 로직 물어보기
 const withdrawalUser = async () => {
-  let url = "/member/quit";
+  let url = "/api/member/quit";
   await axios
     .delete(url)
     .then((response) => {

@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
 import GardenFullComponentDetailData from "./GardenFullComponentDetail"
+import FlowerGlassBottle from "./FlowerGlassBottleItem";
 
 const FlowerView = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 30px;
 `;
 
 const FlowerDetailData = styled.div`
@@ -33,9 +35,7 @@ const FlowerFullItem = (props) => {
     return (
         <FullItem>
             <FlowerView>
-                이미지
-                이미지
-                이미지
+                <FlowerGlassBottle></FlowerGlassBottle>
             </FlowerView>
             <FlowerDetailData>
                 <GardenFullComponentDetailData flowerData={flowerData} />

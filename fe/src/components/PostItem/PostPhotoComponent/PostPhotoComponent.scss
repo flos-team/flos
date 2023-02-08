@@ -1,0 +1,10 @@
+@import "../../../styles/commons.scss";
+
+.post-img-container{
+    width: 272*$rpx1;
+    height: 292*$rpx1;
+    order: 1;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 12*$rpx1 12*$rpx1;
+}
