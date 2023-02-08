@@ -36,8 +36,9 @@ const WritePostPage = () => {
   // 글작성 모달 on/off 조정하는 함수
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  const contentRef = useRef(1);
-  const tagRef = useRef(2);
+  const contentRef = useRef(1); // 텍스트 입력 폼 ref
+  const tagRef = useRef(2); // 태그 입력 폼 ref
+  const imgInputRef = useRef(3); // 이미지 인풋 태그 ref
   // 글 내용 입력받는 메서드
   const [content, setContent] = useState("");
   // 감정 결과를 모달에서 보여주기 위해 사용할 화면용 Index
@@ -143,7 +144,9 @@ const WritePostPage = () => {
           <div className="post-option-container">
             <label htmlFor="photo-input">
               <div className="photo-add-btn">
-                <input type="file" id="photo-input" multiple={true} accept="image"></input>
+                <input type="file" id="photo-input" multiple accept="image/jpg, image/jpeg, image/png" ref={imgInputRef} onChange={(e) => {
+                  console.dir(imgInputRef.current);
+                }}></input>
                 <img src={pictureIcon} />
               </div>
             </label>
