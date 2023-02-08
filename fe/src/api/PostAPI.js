@@ -174,7 +174,7 @@ const getPostListByTagName = async (tagName) => {
  * createPost : 게시글 생성
  * @param {string} content 게시글 본문
  * @param {Enum} weather 날씨에 대한 Enum값 [ SUNNY | CLOUDY | RAINY ]
- * @param {Array:Object} tagList 게시글 태그 리스트, 자바스크립트 객체 배열 [{tagName:value}...]
+ * @param {Array:string} tagList 게시글 태그 리스트, 자바스크립트 객체 배열 [{tagName:value}...]
  * @param {Array:ImageBitmap} attachFiles 게시글에 첨부한 비트맵 리소스 배열
  * @returns {Promise} A Promise object containing Boolean
  */
