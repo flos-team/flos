@@ -47,7 +47,7 @@ public class CommentResponseDTO {
                 .postId(comment.getPost().getId())
                 .parentId(parent)
                 .primitiveId(primitive)
-                .writer(MemberResponseDTO.toDto(comment.getWriter()))
+                .writer(comment.getContent()==null ? null : MemberResponseDTO.toDto(comment.getWriter()))
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
 //                .modifyAt(comment.getModifiedAt())
