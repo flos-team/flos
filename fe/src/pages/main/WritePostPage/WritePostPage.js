@@ -16,7 +16,7 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 
 /* import module */
 // import { getSentimentResult } from "../../../api/SentiMentAPI";
-import { getSentimentResult } from "../../../api/1234";
+import { getSentimentResult } from "../../../api/sentimentAPI";
 import { createPost } from "../../../api/PostAPI";
 
 /* import css */
