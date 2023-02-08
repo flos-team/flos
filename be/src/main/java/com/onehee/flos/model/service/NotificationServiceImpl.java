@@ -38,4 +38,8 @@ public class NotificationServiceImpl implements NotificationService {
         notificationRepository.flush();
         return getNotification();
     }
+
+    private Object getReference(Notification notification) {
+        return null;
+    }
 }

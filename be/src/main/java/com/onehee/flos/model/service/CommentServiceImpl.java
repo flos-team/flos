@@ -76,6 +76,7 @@ public class CommentServiceImpl implements CommentService {
                         .member(receiver)
                         .messageType(messageType)
                         .message(String.format(messageType.getMessage(), writer))
+                        .referenceKey(tempPost.getId())
                         .build()
         );
 
@@ -131,6 +132,7 @@ public class CommentServiceImpl implements CommentService {
                         .member(tempComment.getWriter())
                         .messageType(MessageType.COMMENTCHOSEN)
                         .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
+                        .referenceKey(post.getId())
                         .build()
         );
 

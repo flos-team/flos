@@ -130,6 +130,7 @@ public class PostServiceImpl implements PostService {
                                         .member(follower)
                                         .messageType(MessageType.NEWFEED)
                                         .message(String.format(MessageType.NEWFEED.getMessage(), writer.getNickname()))
+                                        .referenceKey(writer.getId())
                                         .build()
                 )
         );

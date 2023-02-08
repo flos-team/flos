@@ -26,15 +26,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 @Log4j2
 public class MemberServiceImpl implements MemberService {
+
     private final FlowerRepository flowerRepository;
     private final NotificationRepository notificationRepository;
     private final FollowRepository followRepository;
-
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -68,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public TokenDTO login(LoginRequestDTO loginRequestDTO) throws JsonProcessingException {
         Member member = memberRepository.findByEmailAndProviderType(loginRequestDTO.getEmail(), ProviderType.LOCAL)
                 .orElseThrow(() -> new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다."));

@@ -64,6 +64,14 @@ public class Member {
     @Formula("(SELECT COUNT(1) FROM follow f WHERE f.follower_id = members_id)")
     private int followingCount;
 
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM post p WHERE p.members_id = members_id)")
+    private int postCount;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM flower f WHERE f.members_id = members_id AND f.blossom_at IS NOT NULL)")
+    private int blossomCount;
+
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
     private MemberStatus status;
