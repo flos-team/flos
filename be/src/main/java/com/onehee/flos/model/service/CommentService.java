@@ -18,10 +18,10 @@ public interface CommentService {
     // 특정 댓글 정보
     CommentResponseDTO getCommentById(Long commentId) throws BadRequestException;
     // 게시글의 댓글 리스트
-    SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException;
+    List<CommentResponseDTO> getCommentListByPost(Long postId) throws BadRequestException;
 
     // 회원의 댓글 리스트
-    SliceResponseDTO getCommentListByMember(Pageable pageable);
+    List<CommentResponseDTO> getCommentListByMember();
 
     // 댓글 등록
     void createComment(CommentCreateRequestDTO commentCreateRequestDTO) throws BadRequestException;

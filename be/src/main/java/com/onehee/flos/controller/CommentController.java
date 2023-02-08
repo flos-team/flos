@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "댓글API", description = "댓글 기능을 담당합니다.")
 @RestController
 @RequiredArgsConstructor
@@ -32,25 +34,15 @@ public class CommentController {
     @Tag(name = "댓글API")
     @Operation(summary = "게시글의 댓글 리스트", description = "게시글의 댓글 리스트를 반환합니다.")
     @GetMapping("/list/post/{id}")
-    public ResponseEntity<?> getListByPost(@RequestParam(value="page", required = false) Integer page, @PathVariable("id") Long postId) throws BadRequestException {
-        PageRequest pageRequest = null;
-        if (page==null)
-            pageRequest = PageRequest.of(0, size);
-        else
-            pageRequest = PageRequest.of(page, size);
-        return new ResponseEntity<SliceResponseDTO>(commentService.getCommentListByPost(postId, pageRequest), HttpStatus.OK);
+    public ResponseEntity<?> getListByPost(@PathVariable("id") Long postId) throws BadRequestException {
+        return new ResponseEntity<List<CommentResponseDTO>>(commentService.getCommentListByPost(postId), HttpStatus.OK);
     }
 
     @Tag(name = "댓글API")
     @Operation(summary = "회원의 댓글 리스트", description = "게시글의 댓글 리스트를 반환합니다.")
     @GetMapping("/list/member")
-    public ResponseEntity<?> getListByMember(@RequestParam(value="page", required = false) Integer page){
-        PageRequest pageRequest = null;
-        if (page==null)
-            pageRequest = PageRequest.of(0, size);
-        else
-            pageRequest = PageRequest.of(page, size);
-        return new ResponseEntity<SliceResponseDTO>(commentService.getCommentListByMember(pageRequest), HttpStatus.OK);
+    public ResponseEntity<?> getListByMember(){
+        return new ResponseEntity<List<CommentResponseDTO>>(commentService.getCommentListByMember(), HttpStatus.OK);
     }
 
     @Tag(name = "댓글API")
