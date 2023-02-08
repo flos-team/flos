@@ -1,7 +1,6 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
-import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
@@ -15,7 +14,6 @@ import com.onehee.flos.model.repository.WeatherResourceRepository;
 import com.onehee.flos.util.RandomWeatherSelector;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,27 +72,27 @@ public class CommentServiceImpl implements CommentService {
 
         commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
 
-//        // 알람 갈 사람
-//        Member receiver;
-//        MessageType messageType;
-//
-//        if (tempParentComment == null) {
-//            receiver = tempPost.getWriter();
-//            messageType = MessageType.NEWCOMMENT;
-//        } else {
-//            receiver = tempParentComment.getWriter();
-//            messageType = MessageType.NEWREPLY;
-//        }
-//
-//        // 알람 보내기
-//        notificationRepository.save(
-//                Notification.builder()
-//                        .member(receiver)
-//                        .messageType(messageType)
-//                        .message(String.format(messageType.getMessage(), writer))
-//                        .referenceKey(tempPost.getId())
-//                        .build()
-//        );
+        // 알람 갈 사람
+        Member receiver;
+        MessageType messageType;
+
+        if (tempParentComment == null) {
+            receiver = tempPost.getWriter();
+            messageType = MessageType.NEWCOMMENT;
+        } else {
+            receiver = tempParentComment.getWriter();
+            messageType = MessageType.NEWREPLY;
+        }
+
+        // 알람 보내기
+        notificationRepository.save(
+                Notification.builder()
+                        .member(receiver)
+                        .messageType(messageType)
+                        .message(String.format(messageType.getMessage(), writer))
+                        .referenceKey(tempPost.getId())
+                        .build()
+        );
 
     }
 
@@ -147,14 +145,14 @@ public class CommentServiceImpl implements CommentService {
         tempComment.setIsApprove(true);
 
         // 선택된 사용자에게 알람 보내기
-//        notificationRepository.save(
-//                Notification.builder()
-//                        .member(tempComment.getWriter())
-//                        .messageType(MessageType.COMMENTCHOSEN)
-//                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
-//                        .referenceKey(post.getId())
-//                        .build()
-//        );
+        notificationRepository.save(
+                Notification.builder()
+                        .member(tempComment.getWriter())
+                        .messageType(MessageType.COMMENTCHOSEN)
+                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
+                        .referenceKey(post.getId())
+                        .build()
+        );
 
     }
 }

@@ -123,17 +123,17 @@ public class PostServiceImpl implements PostService {
                             .build()
             );
         }
-//        followRepository.findAllByOwner(writer)
-//                .forEach(follower ->
-//                        notificationRepository.save(
-//                                Notification.builder()
-//                                        .member(follower)
-//                                        .messageType(MessageType.NEWFEED)
-//                                        .message(String.format(MessageType.NEWFEED.getMessage(), writer.getNickname()))
-//                                        .referenceKey(writer.getId())
-//                                        .build()
-//                )
-//        );
+        followRepository.findAllByOwner(writer)
+                .forEach(follower ->
+                        notificationRepository.save(
+                                Notification.builder()
+                                        .member(follower)
+                                        .messageType(MessageType.NEWFEED)
+                                        .message(String.format(MessageType.NEWFEED.getMessage(), writer.getNickname()))
+                                        .referenceKey(tempPost.getId())
+                                        .build()
+                )
+        );
     }
 
     @Override
