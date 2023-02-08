@@ -11,6 +11,9 @@ import WeatherBtnComponent from "./WeatherBtnComponent/WeatherBtnComponent";
 import "./AlarmItem.css";
 import { jsx } from "@emotion/react";
 
+// axios
+import {deleteNotification} from '../../api/NotificationAPI'
+
 /**
  * @param {ImageBitmap} AlarmImg 알람 왼쪽에 배치될 이미지 비트맵 파일
  * @param {jsx} AlarmTextJSX 알람 내용 jsx
@@ -20,7 +23,7 @@ import { jsx } from "@emotion/react";
  *
  * @returns  {void}
  */
-const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather }) => {
+const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather, id }) => {
   const [weatherBtnComponent, setWeatherBtnComponent] = useState(<></>);
   useEffect(() => {
     switch (weather) {
@@ -38,11 +41,17 @@ const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather }) => {
         break;
     }
   }, [weather]);
+
+  const deleteNoti = () => {
+    deleteNotification(id).then((res) => {
+      console.log(res)
+    })
+  }
   return (
     <div className="alarm-item">
       <AlarmItemHeader AlarmImg={AlarmImg} AlarmTextJSX={AlarmTextJSX} AlarmTimeLog={AlarmTimeLog}></AlarmItemHeader>
       <div className="close-btn">
-        <img src={closeIcon} />
+        <img src={closeIcon} onClick={deleteNoti}/>
       </div>
       {weatherBtnComponent}
     </div>
