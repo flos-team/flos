@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 /* import img */
-import userImg from "../../assets/DummyData/dummy-sample.jpg";
+import userImg from "../../../../assets/DummyData/dummy-sample.jpg"
 
 /* import component */
-import HeaderComponent from "../HeaderComponent/HeaderComponent";
-import PostItem from "../PostItem/PostItem";
+import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
+import PostItem from "../../../../components/PostItem/PostItem";
 
 /* import modules */
 import { getOtherMemberInfo } from "../../api/MemberAPI";

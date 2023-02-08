@@ -1,6 +1,6 @@
 import axios from "axios";
 /**
- * @author 1-hee
+ * @author 1-hee, tykimdream
  *
  * @copyright 2023
  */
@@ -104,4 +104,16 @@ const modifyComment = async (content, id, postId) => {
     });
 };
 
-export { getCommentList, createComment, commentApprove, modifyComment };
+const deleteComment = async (id) => {
+  const url = `/api/comment/${id}`;
+  axios
+    .delete(url)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export { getCommentList, createComment, commentApprove, modifyComment, deleteComment };

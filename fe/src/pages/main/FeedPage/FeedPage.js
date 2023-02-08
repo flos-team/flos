@@ -33,7 +33,7 @@ function Feed() {
       let url =
         "https://i8b210.p.ssafy.io/api/file/" +
         EachFriend.profileImage.saveName;
-      // console.log(url);
+      // console.log(EachFriend);
       const result = (
         <div className={`${styles.friendThumbnail}`}>
           <img src={url} alt="test" className={styles.friendProfileImg}></img>

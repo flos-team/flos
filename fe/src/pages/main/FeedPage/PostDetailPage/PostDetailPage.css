@@ -155,8 +155,14 @@
 .post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  justify-content: space-between;
   gap: 0.5rem;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header div {
+  width: max-content;
+  gap: 8px;
+  display: flex;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header p:first-child {
   font-size: 0.875rem;
@@ -169,6 +175,11 @@
   width: 100%;
   min-height: 1.25rem;
   height: max-content;
+}
+.post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-addComment {
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
 }
 .post-detail-page .user-content-input-div {
   width: 100vw;
@@ -219,16 +230,4 @@
   background-color: #e8e8e8;
 }
 
-.comment-header-left{
-  margin-right: 12px;
-}
-.comment-header-right{
-  margin: 0 4px;
-  font-size: 14px;
-}
-
-.comment-header{
-  display: flex;
-  justify-content: space-between;
-}
 /*# sourceMappingURL=PostDetailPage.css.map */
