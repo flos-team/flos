@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import sampleImg from '../../assets/HomeAsset/send-letter.png'
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 /* import img css */
 import userImg from "../../assets/DummyData/writerProfileSample.png";
@@ -18,27 +17,24 @@ import dayjs from "dayjs";
 const NotificationPage = () => {
 
   const [notiList, setNotiList] = useState([]);
-
-  // let notiDay = dayjs(post.regDate, "YYYY-MM-DD HH:mm:ss");
-  // let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
-  // let RegBefore = getTimeDiffText(notiDay, curDay);
+  const url = "https://i8b210.p.ssafy.io/api/file/"
 
   useEffect(() => {
     getNotification().then((res) => {
-      setNotiList(res) 
+      setNotiList(res)
     })
   }, [])
   
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
 
-  const notiItemList = notiList.map(({message, createdAt}) => {
+  const notiItemList = notiList.map(({message, createdAt, data}) => {
 
     let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
     let RegBefore = getTimeDiffText(postDay, curDay);
-
-    return <AlarmItem AlarmImg={sampleImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore}></AlarmItem>;
-    }
-  );
+    let profileImg = `${url}${data.writer.profileImage.saveName}`
+  
+    return <AlarmItem AlarmImg={profileImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore}></AlarmItem>;
+  });
 
   
   return (
