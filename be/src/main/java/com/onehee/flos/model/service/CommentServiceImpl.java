@@ -74,27 +74,27 @@ public class CommentServiceImpl implements CommentService {
 
         commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
 
-        // 알람 갈 사람
-        Member receiver;
-        MessageType messageType;
-
-        if (tempParentComment == null) {
-            receiver = tempPost.getWriter();
-            messageType = MessageType.NEWCOMMENT;
-        } else {
-            receiver = tempParentComment.getWriter();
-            messageType = MessageType.NEWREPLY;
-        }
-
-        // 알람 보내기
-        notificationRepository.save(
-                Notification.builder()
-                        .member(receiver)
-                        .messageType(messageType)
-                        .message(String.format(messageType.getMessage(), writer))
-                        .referenceKey(tempPost.getId())
-                        .build()
-        );
+//        // 알람 갈 사람
+//        Member receiver;
+//        MessageType messageType;
+//
+//        if (tempParentComment == null) {
+//            receiver = tempPost.getWriter();
+//            messageType = MessageType.NEWCOMMENT;
+//        } else {
+//            receiver = tempParentComment.getWriter();
+//            messageType = MessageType.NEWREPLY;
+//        }
+//
+//        // 알람 보내기
+//        notificationRepository.save(
+//                Notification.builder()
+//                        .member(receiver)
+//                        .messageType(messageType)
+//                        .message(String.format(messageType.getMessage(), writer))
+//                        .referenceKey(tempPost.getId())
+//                        .build()
+//        );
 
     }
 
@@ -147,14 +147,14 @@ public class CommentServiceImpl implements CommentService {
         tempComment.setIsApprove(true);
 
         // 선택된 사용자에게 알람 보내기
-        notificationRepository.save(
-                Notification.builder()
-                        .member(tempComment.getWriter())
-                        .messageType(MessageType.COMMENTCHOSEN)
-                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
-                        .referenceKey(post.getId())
-                        .build()
-        );
+//        notificationRepository.save(
+//                Notification.builder()
+//                        .member(tempComment.getWriter())
+//                        .messageType(MessageType.COMMENTCHOSEN)
+//                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
+//                        .referenceKey(post.getId())
+//                        .build()
+//        );
 
     }
 }
