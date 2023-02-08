@@ -1125,16 +1125,6 @@ insert into `weather_resource` (`weather_id`, `owner_id`, `contributor_id`, `wea
 insert into `weather_resource` (`weather_id`, `owner_id`, `contributor_id`, `weather_type`) VALUE (998, 4, 1, "RAINY");
 insert into `weather_resource` (`weather_id`, `owner_id`, `contributor_id`, `weather_type`) VALUE (999, 4, 1, "SUNNY");
 insert into `weather_resource` (`weather_id`, `owner_id`, `contributor_id`, `weather_type`) VALUE (1000, 4, 1, "RAINY");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (1, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (2, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (3, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (4, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (5, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (6, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (7, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (8, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (9, 1, null, null, 1, "정신나갈거같애");
-insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (10, 1, null, null, 1, "정신나갈거같애");
 insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (11, 1, null, null, 1, "정신나갈거같애");
 insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (12, 1, null, null, 1, "정신나갈거같애");
 insert into `comment` (`comment_id`, `post_id`, `par_comment_id`, `pri_comment_id`, `members_id`, `content`) VALUE (13, 1, null, null, 1, "정신나갈거같애");
