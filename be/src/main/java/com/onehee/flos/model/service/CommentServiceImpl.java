@@ -92,10 +92,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(Long id) throws BadRequestException {
+    @Transactional
+    public void deleteComment(Long id) {
         Comment tempComment = commentRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        if (tempComment.getIsApprove())
+            throw new BadRequestException("추천한 댓글은 삭제할 수 없습니다.");
         if (tempComment.getWriter().getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
+        tempComment.setContent(null);
         commentRepository.delete(tempComment);
     }
 
