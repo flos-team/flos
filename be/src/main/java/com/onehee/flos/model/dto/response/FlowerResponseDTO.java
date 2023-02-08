@@ -38,7 +38,7 @@ public class FlowerResponseDTO {
                     .build();
         else {
             return FlowerResponseDTO.builder()
-                    .isFullGrown(flower.getCapacity() > (flower.getWater()+flower.getLight()))
+                    .isFullGrown(flower.getCapacity() <= (flower.getWater()+flower.getLight()))
                     .id(flower.getId())
                     .owner(MemberResponseDTO.toDto(flower.getOwner()))
                     .flowerType(flower.getFlowerType())
