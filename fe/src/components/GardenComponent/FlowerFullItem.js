@@ -24,7 +24,7 @@ const FlowerFullItem = (props) => {
     return (
         <FullItem>
             <FlowerView>
-                <FlowerGlassBottle></FlowerGlassBottle>
+                <FlowerGlassBottle width={"200px"} height={"200px"}></FlowerGlassBottle>
             </FlowerView>
             <FlowerDetailData>
                 <GardenFullComponentDetailData flowerData={props.flowerInfo} />
