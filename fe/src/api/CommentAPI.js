@@ -14,19 +14,20 @@ axios.defaults.withCredentials = true;
  * @param {id} page 게시물 아이디
  * @returns
  */
-const getCommentList = async (id, page = 2) => {
+const getCommentList = async (id) => {
   // let url = `/post/list?page=${page}`;
   let url = `/api/comment/list/post/${id}`;
   let commentList = [];
   await axios
     .get(url)
     .then((response) => {
-      if (response.status === 200) {
-        commentList = [...response.data.content];
+      if (response.status === 200 && response.data) {
+        commentList = [...response.data];
       }
     })
     .catch((error) => {
-      console.log("게시글 리스트가 존재하지 않습니다.");
+      console.log("댓글이 존재하지 않습니다.");
+      console.log(error)
     });
   return commentList;
 };
@@ -60,6 +61,7 @@ const createComment = async (
         console.dir(response);
         isCreated = true;
       }
+      console.log(response)
     })
     .catch((error) => {
       console.log(error);

@@ -29,11 +29,10 @@ function Login() {
     // console.log(inputId, inputPw)
     doLogin(inputId, inputPw)
       .then(() => {
-        navigate("/main");
-      })
-      .then(() => {
         getMemberInfo().then((response) => {
+          console.log(response);
           dispatch(setUser(response));
+          navigate("/main");
         });
       })
       .catch((error) => {

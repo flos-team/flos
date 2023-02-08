@@ -68,6 +68,11 @@
   width: 10rem;
   height: 4rem;
 }
+.post-detail-page .post-detail-container .post-container .user-info-container .user-info-div .text-div .post-emotion {
+  display: inline;
+  width: 16px;
+  height: 16px;
+}
 .post-detail-page .post-detail-container .post-container .img-container {
   width: 22.5rem;
   height: 22.5rem;
