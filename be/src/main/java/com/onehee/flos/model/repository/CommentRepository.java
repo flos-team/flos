@@ -16,10 +16,10 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 게시글별 댓글 리스트
-    List<Comment> findAllByPost(Post post);
+    List<Comment> findAllByPostAndPrimitiveIsNull(Post post);
 
     // 회원의 댓글 리스트
-    List<Comment> findAllByWriter(Member writer);
+    List<Comment> findAllByWriterAndPrimitiveIsNull(Member writer);
 
     // 특정 댓글이 조상인 댓글 리스트
     List<Comment> findAllByPrimitive(Comment primitive);
