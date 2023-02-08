@@ -1,0 +1,65 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.letter-step1-component {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 2rem;
+  position: relative;
+  width: 100%;
+  height: 67.5vh;
+  background: #f9f9f9;
+  border-radius: 1rem;
+  /* flower-container */
+}
+.letter-step1-component .end-result-text-container {
+  /* end-result-text-container */
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 1rem;
+  width: 100%;
+  flex-grow: 1;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+.letter-step1-component .end-result-text-container p {
+  text-align: center;
+}
+.letter-step1-component .flower-container {
+  width: 18.5rem;
+  height: 18.5rem;
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*# sourceMappingURL=LetterStep1Component.css.map */

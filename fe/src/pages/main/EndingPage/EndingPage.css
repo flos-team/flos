@@ -16,4 +16,14 @@
   box-sizing: border-box;
 }
 
+.ending-page {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 90vh;
+  padding: 16px;
+}
+
 /*# sourceMappingURL=EndingPage.css.map */
