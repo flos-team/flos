@@ -1,0 +1,87 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.danger-alert-modal-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.danger-alert-modal-container .danger-alert-modal-bg {
+  z-index: 1;
+  background-color: #141414;
+  opacity: 30%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.danger-alert-modal-container .danger-alert-modal {
+  z-index: 5;
+  position: absolute;
+  top: 30vh;
+  width: 15rem;
+  height: 7.5rem;
+  background-color: #ffffff;
+  border-radius: 0.625rem;
+  border: 0.0625rem solid #d3d3d3;
+  font-size: 0.875rem;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-header {
+  width: 80%;
+  height: 50%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 3.75rem;
+  border-bottom: 0.0625rem solid #aaa8a8;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer {
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer .positive-btn,
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer .negative-btn {
+  width: 50%;
+  height: 100%;
+  line-height: 3.75rem;
+  text-align: center;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer .positive-btn {
+  color: #96c6e0;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer .negative-btn {
+  color: #ff6666;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer div:first-child {
+  border-bottom-left-radius: 0.625rem;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer div:last-child {
+  border-bottom-right-radius: 0.625rem;
+}
+.danger-alert-modal-container .danger-alert-modal .danger-alert-modal-footer div:hover {
+  background-color: #e8e8e8;
+}
+
+/*# sourceMappingURL=DangerAlertModal.css.map */

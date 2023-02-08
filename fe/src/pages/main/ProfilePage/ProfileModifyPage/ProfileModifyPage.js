@@ -9,6 +9,8 @@ import { setIsToastValue, setToastMessage } from "../../../../redux/toast";
 import userImg from "../../../../assets/DummyData/dummy-sample.jpg";
 /* import component */
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
+import DangerAlertModal from "../../../../components/DangerAlertModal/DangerAlertModal";
+
 /* import modules */
 import { getMemberInfo, modifyUserInfo } from "../../../../api/MemberAPI";
 
@@ -17,17 +19,21 @@ import "./ProfileModifyPage.css";
 
 const ProfileModifyPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   // state
   const [userInfo, setUserInfo] = useState({ email: "", profileURL: "" });
   const [nickname, setNickname] = useState("");
   const [introduction, setIntroduction] = useState("");
   // intro, nickname, profileImage ~
+  // 삭제 알람창 보이기 옵션을 위한 state
+  const [isOpen, setIsOpen] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
 
   // init Data
   useEffect(() => {
     let data = getMemberInfo();
     data.then((res) => {
-      console.dir(res);
+      //console.dir(res);
       let userData = {
         email: res.email,
         // nickname: res.nickname,
@@ -45,21 +51,22 @@ const ProfileModifyPage = () => {
   }, []);
 
   const imgInputRef = useRef(1);
+  const nicknameRef = useRef(2);
+  const introRef = useRef(3);
 
   // functions;
   const modifyMemberInfoFunc = async () => {
     let data = modifyUserInfo(nickname, introduction);
     await data.then((res) => {
-      console.log(res); // true
-      setIsToastValue(true);
-      setToastMessage("회원정보 수정이 완료되었습니다.");
+      // console.log(res); // true
+      dispatch(setIsToastValue(true));
+      dispatch(setToastMessage("회원정보 수정이 완료되었습니다."));
     });
   };
 
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.isToast);
   const toastMessage = useSelector((state) => state.toast.toastMessage);
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -68,7 +75,9 @@ const ProfileModifyPage = () => {
         pageName={"프로필 편집"}
         menuOpt2={"CHECK"}
         menuOpt2Func={async () => {
-          await modifyMemberInfoFunc();
+          if (isChanged) {
+            await modifyMemberInfoFunc();
+          } else console.log("값이 비어서 수정 안함");
           navigate("/main");
         }}
       />
@@ -103,8 +112,10 @@ const ProfileModifyPage = () => {
               type="text"
               id="nickname-input"
               placeholder={nickname}
+              ref={nicknameRef}
               onChange={(e) => {
                 setNickname(e.target.value);
+                setIsChanged(true);
               }}
             />
           </div>
@@ -117,8 +128,10 @@ const ProfileModifyPage = () => {
               type="text"
               id="introduce-input"
               placeholder={introduction}
+              ref={introRef}
               onChange={(e) => {
                 setIntroduction(e.target.value);
+                setIsChanged(true);
               }}
             />
           </div>
@@ -128,12 +141,29 @@ const ProfileModifyPage = () => {
                 <p>비밀번호 변경</p>
               </div>
             </Link>
-            <div className="user-exit-btn">
+            <div
+              className="user-exit-btn"
+              onClick={(e) => {
+                setIsOpen(true);
+              }}
+            >
               <p>회원 탈퇴</p>
             </div>
           </div>
         </div>
       </div>
+      {isOpen ? (
+        <DangerAlertModal
+          message={"정말 FLOS를 떠나시겠어요?"}
+          positive={"취소"}
+          negative={"탈퇴"}
+          setIsOpen={(e) => {
+            setIsOpen(false);
+          }}
+        ></DangerAlertModal>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
