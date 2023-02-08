@@ -217,19 +217,27 @@ public class PostServiceImpl implements PostService {
     }
 
     // 게시글 관계테이블 정보
+//    private PostRelationDTO getPostRelation(Post post) {
+//        return PostRelationDTO.builder()
+//                .tagList(postRepository.getTagListByPost(post))
+//                .attachFiles(postRepository.getFileListByPost(post)
+//                        .stream()
+//                        .map(FileResponseDTO::toDTO)
+//                        .collect(Collectors.toList()))
+//                .isBookmarked(postRepository.isBookmarked(post, SecurityManager.getCurrentMember()))
+//                .isFollowed(postRepository.isFollowed(post, SecurityManager.getCurrentMember()))
+//                .countComment(postRepository.countCommentByPost(post))
+//                .build();
+//    }
     private PostRelationDTO getPostRelation(Post post) {
         return PostRelationDTO.builder()
-                .tagList(postRepository.getTagListByPost(post))
-                .attachFiles(postRepository.getFileListByPost(post)
-                        .stream()
-                        .map(FileResponseDTO::toDTO)
-                        .collect(Collectors.toList()))
-                .isBookmarked(postRepository.isBookmarked(post, SecurityManager.getCurrentMember()))
-                .isFollowed(postRepository.isFollowed(post, SecurityManager.getCurrentMember()))
-                .countComment(postRepository.countCommentByPost(post))
+                .tagList(getTagListByPost(post))
+                .attachFiles(getFileListByPost(post))
+                .isBookmarked(isBookmarked(post))
+                .isFollowed(isFollowed(post))
+                .countComment(countCommentByPost(post))
                 .build();
     }
-
     // 게시글의 태그 리스트
     private List<String> getTagListByPost(Post post) {
         return postTagRepository.findAllByPost(post)
