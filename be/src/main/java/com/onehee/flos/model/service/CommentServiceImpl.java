@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentResponseDTO> getCommentListByPost(Long postId) throws BadRequestException {
         Post post = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
-        return commentRepository.findAllByPost(post)
+        return commentRepository.findAllByPostAndPrimitiveIsNull(post)
                 .stream()
                 .map(CommentResponseDTO::toDto)
                 .collect(Collectors.toList());
@@ -48,7 +48,16 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDTO> getCommentListByMember() {
-        return commentRepository.findAllByWriter(SecurityManager.getCurrentMember())
+        return commentRepository.findAllByWriterAndPrimitiveIsNull(SecurityManager.getCurrentMember())
+                .stream()
+                .map(CommentResponseDTO::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentResponseDTO> getCommentListByPrimitive(Long primitiveId) throws BadRequestException {
+        return commentRepository.findAllByPrimitive(
+                commentRepository.findById(primitiveId).orElseThrow(() -> new BadRequestException("해당 댓글이 존재하지 않습니다.")))
                 .stream()
                 .map(CommentResponseDTO::toDto)
                 .collect(Collectors.toList());

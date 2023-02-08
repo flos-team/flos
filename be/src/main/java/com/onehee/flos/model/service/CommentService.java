@@ -5,6 +5,7 @@ import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
+import com.onehee.flos.model.entity.Comment;
 import com.onehee.flos.model.entity.Post;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -19,9 +20,10 @@ public interface CommentService {
     CommentResponseDTO getCommentById(Long commentId) throws BadRequestException;
     // 게시글의 댓글 리스트
     List<CommentResponseDTO> getCommentListByPost(Long postId) throws BadRequestException;
-
     // 회원의 댓글 리스트
     List<CommentResponseDTO> getCommentListByMember();
+
+    List<CommentResponseDTO> getCommentListByPrimitive(Long primitiveId) throws BadRequestException;
 
     // 댓글 등록
     void createComment(CommentCreateRequestDTO commentCreateRequestDTO) throws BadRequestException;
