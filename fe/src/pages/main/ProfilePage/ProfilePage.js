@@ -43,40 +43,16 @@ const ProfilePage = ({ setIsToast }) => {
   const [bookPostList, setBookPostList] = useState([]);
   const [isBookScrollable, setIsBookScrollable] = useState(true);
 
-  // 사용자 정보를 임시로 더미데이터로 맵핑...
+  // 사용자 정보 init
   const titles = ["팔로잉", "팔로우", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
   const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
 
   // 사용자 정보를 다루는 state
-  let [userInfo, setUserinfo] = useState({});
-
-  // 포스트 리스트를 불러오는 함수
-  const requestPostList = async (pageIdx) => {
-    // 포스트 요청
-    let postList = <></>;
-    let postListProm = getPostList(pageIdx);
-    await postListProm
-      .then((res) => {
-        setPostIdx(pageIdx);
-        // postList = res.postList.map(({ id, content, writer, regDate, weather }) => (
-        //   <PostItem
-        //     key={id}
-        //     postId={id}
-        //     content={content}
-        //     writerNickname={writer.nickname}
-        //     regDate={regDate}
-        //     weather={weather}
-        //   ></PostItem>
-        // ));
-        postList = res.map((EachPost) => <PostItem post={EachPost}></PostItem>);
-      })
-      .catch((err) => {
-        setIsScrollable(false);
-      });
-    return postList;
-  };
+  const [userInfo, setUserinfo] = useState({});
+  // 사용자 이미지 state
+  const [userImgURL, setUserImgURL] = useState("");
 
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.value.isToast);
@@ -92,13 +68,14 @@ const ProfilePage = ({ setIsToast }) => {
     userData.then((res) => {
       setUserinfo({
         nickname: res.nickname,         
-        introduction: res.introduction
+        introduction: res.introduction        
       });
+      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`);
       let list = [res.followerCount, res.followingCount, res.postCount, res.blossomCount];
       setUserInfoList(list.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>))        
       let myPostList = getPostListByNickname(res.nickname);
       myPostList.then((res) => {
-        console.dir(res);
+        // console.dir(res);
         // res.content
         setPostList(res.content.map((e) => (<PostItem post={e}></PostItem>)));
       });
@@ -150,9 +127,6 @@ const ProfilePage = ({ setIsToast }) => {
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
 
-  // 글작성 모달 on/off 조정하는 함수
-  const [imgUrl, setImgUrl] = useState("");
-  const [testPost, setTestPost] = useState(null);
 
   return (
     <>
@@ -164,7 +138,7 @@ const ProfilePage = ({ setIsToast }) => {
       ></HeaderComponent>
       <div className="profile-page-container hide-scroll">
         <div className="user-info-header">
-          <div className="user-img" style={{ backgroundImage: `url(${userImg})` }}></div>
+          <div className="user-img" style={{ backgroundImage: `url(${userImgURL})` }}></div>
           <div className="profile-edit-nav-container">
             <Link to="/profile-modify">
               <div className="profile-edit-btn">
@@ -193,7 +167,6 @@ const ProfilePage = ({ setIsToast }) => {
         >
           기능테스트
         </button>
-        <img src={imgUrl} />
         <div className="profile-tab-menu">
           <div
             className="post-tab focus-tab"
