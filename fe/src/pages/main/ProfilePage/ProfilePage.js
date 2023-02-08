@@ -201,7 +201,7 @@ const ProfilePage = ({ setIsToast }) => {
             //   setTestPost(res);
             //   // console.dir(res);
             // });
-            let baseUrl = "https://i8b210.p.ssafy.io/api/file/";
+            // let baseUrl = "https://i8b210.p.ssafy.io/api/file/";
             //setImgUrl(`${baseUrl}${url}`);
 
             //     let test = getFile();
@@ -216,13 +216,11 @@ const ProfilePage = ({ setIsToast }) => {
         <div className="profile-tab-menu">
           <div
             className="post-tab focus-tab"
-            onClick={(e) => {
-              navigate("/other-profile-page");
-            }}
+            onClick={(e)=>{}}
           >
             <p>내 포스트</p>
           </div>
-          <div className="book-tab" onClick={setIsToast}>
+          <div className="book-tab" onClick={(e)=>{setIsToast(true)}}>
             <p>북마크</p>
           </div>
         </div>
