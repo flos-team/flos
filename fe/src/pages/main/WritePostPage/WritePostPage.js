@@ -15,7 +15,8 @@ import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 
 /* import module */
-import { getSentimentResult } from "../../../api/SentiMentAPI";
+// import { getSentimentResult } from "../../../api/SentiMentAPI";
+import { getSentimentResult } from "../../../api/1234";
 import { createPost } from "../../../api/PostAPI";
 
 /* import css */
