@@ -3,16 +3,15 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 /* import img */
-import userImg from "../../../../assets/DummyData/dummy-sample.jpg"
 
 /* import component */
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../../components/PostItem/PostItem";
 
 /* import modules */
-import { getOtherMemberInfo } from "../../api/MemberAPI";
-import { getPostListByNickname } from "../../api/PostAPI";
-
+import { getOtherMemberInfo } from "../../../../api/MemberAPI";
+import { getPostListByNickname } from "../../../../api/PostAPI";
+// import {}
 
 /* import css */
 import "./OtherProfilePage.css";
@@ -81,7 +80,7 @@ saveName
       <HeaderComponent backVisible={true} pageName={userInfo.nickname}></HeaderComponent>
       <div className="other-profile-page hide-scroll">
         <div className="user-info-header">
-          <div className="user-img" style={{ backgroundImage: `url(${userImg})` }}></div>
+          <div className="user-img" style={{ backgroundImage: `url()` }}></div>
         </div>
         <div className="user-introduce-container">
           <div className="user-introduce-text">
