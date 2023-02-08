@@ -219,11 +219,14 @@ public class PostServiceImpl implements PostService {
     // 게시글 관계테이블 정보
     private PostRelationDTO getPostRelation(Post post) {
         return PostRelationDTO.builder()
-                .tagList(getTagListByPost(post))
-                .attachFiles(getFileListByPost(post))
-                .isBookmarked(isBookmarked(post))
-                .isFollowed(isFollowed(post))
-                .countComment(countCommentByPost(post))
+                .tagList(postRepository.getTagListByPost(post))
+                .attachFiles(postRepository.getFileListByPost(post)
+                        .stream()
+                        .map(FileResponseDTO::toDTO)
+                        .collect(Collectors.toList()))
+                .isBookmarked(postRepository.isBookmarked(post, SecurityManager.getCurrentMember()))
+                .isFollowed(postRepository.isFollowed(post, SecurityManager.getCurrentMember()))
+                .countComment(postRepository.countCommentByPost(post))
                 .build();
     }
 
