@@ -2,6 +2,7 @@ package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.NotificationDTO;
+import com.onehee.flos.model.dto.request.MemberSelectRequestDTO;
 import com.onehee.flos.model.dto.request.NotificationCheckRequestDTO;
 import com.onehee.flos.model.dto.response.NotificationResponseDTO;
 import com.onehee.flos.model.entity.Member;
@@ -21,12 +22,22 @@ import java.util.stream.Collectors;
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
+    private final PostService postService;
+    private final MemberService memberService;
 
     @Override
     public NotificationResponseDTO getNotification() {
         Member member = SecurityManager.getCurrentMember();
         List<Notification> notifications = notificationRepository.findAllByMemberAndCheckedAtIsNull(member);
-        return new NotificationResponseDTO(notifications.stream().map(NotificationDTO::toDTO).collect(Collectors.toList()));
+        return new NotificationResponseDTO(
+                notifications.stream()
+                        .map(notification -> {
+                            NotificationDTO notificationDTO = NotificationDTO.toDTO(notification);
+                            notificationDTO.setData(getReference(notification));
+                            return notificationDTO;
+                        })
+                        .collect(Collectors.toList())
+        );
     }
 
     @Override
@@ -40,6 +51,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private Object getReference(Notification notification) {
-        return null;
+        return switch (notification.getMessageType().ordinal()) {
+            // FOLLOW : 0
+            case 0 -> memberService.getMemberInfo(new MemberSelectRequestDTO(notification.getReferenceKey()));
+            // NEWFEED : 1
+            // NEWCOMMENT : 2
+            // NEWREPLY : 3
+            // COMMENTCHOSEN : 6
+            case 1, 2, 3, 6 -> postService.getPost(notification.getReferenceKey());
+            default -> null;
+        };
     }
 }
