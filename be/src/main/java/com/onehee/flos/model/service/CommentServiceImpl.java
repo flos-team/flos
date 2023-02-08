@@ -19,6 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -35,16 +38,20 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public SliceResponseDTO getCommentListByPost(Long postId, Pageable pageable) throws BadRequestException {
+    public List<CommentResponseDTO> getCommentListByPost(Long postId) throws BadRequestException {
         Post post = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
-        return SliceResponseDTO.toDto(commentRepository.findSliceByPost(post, pageable)
-                .map(CommentResponseDTO::toDto));
+        return commentRepository.findAllByPost(post)
+                .stream()
+                .map(CommentResponseDTO::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public SliceResponseDTO getCommentListByMember(Pageable pageable) {
-        return SliceResponseDTO.toDto(commentRepository.findSliceByWriter(SecurityManager.getCurrentMember(), pageable)
-                .map(CommentResponseDTO::toDto));
+    public List<CommentResponseDTO> getCommentListByMember() {
+        return commentRepository.findAllByWriter(SecurityManager.getCurrentMember())
+                .stream()
+                .map(CommentResponseDTO::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
