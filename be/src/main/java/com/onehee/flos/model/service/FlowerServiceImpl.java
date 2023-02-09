@@ -52,6 +52,7 @@ public class FlowerServiceImpl implements FlowerService {
     public void gardeningFlower(FlowerGardeningRequestDTO flowerGardeningRequestDTO) throws BadRequestException {
         Flower flower = flowerRepository.findById(flowerGardeningRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당 꽃이 존재하지 않습니다."));
         flower.setGardening(true);
+        flower.setBlossomAt(LocalDateTime.now());
         flowerRepository.saveAndFlush(flower);
     }
 
@@ -69,7 +70,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
-        return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(owner, pageable)
+        return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrueOrderByBlossomAtDesc(owner, pageable)
                 .map(FlowerResponseDTO::toDto));
     }
 

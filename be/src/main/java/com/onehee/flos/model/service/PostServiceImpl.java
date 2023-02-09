@@ -153,17 +153,6 @@ public class PostServiceImpl implements PostService {
         if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
-        postFileRepository.deleteAll(
-                postFileRepository.findAllByPost(
-                        tempPost
-                )
-        );
-
-        postTagRepository.deleteAll(
-                postTagRepository.findAllByPost(
-                        tempPost
-                )
-        );
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
             FileEntity tempFile = filesHandler.saveFile(e);
             postFileRepository.save(
@@ -200,24 +189,6 @@ public class PostServiceImpl implements PostService {
 
         if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
-
-        postFileRepository.deleteAll(
-                postFileRepository.findAllByPost(
-                        tempPost
-                )
-        );
-
-        postTagRepository.deleteAll(
-                postTagRepository.findAllByPost(
-                        tempPost
-                )
-        );
-
-        bookmarkRepository.deleteAll(
-                bookmarkRepository.findAllByPost(
-                        tempPost
-                )
-        );
 
         postRepository.delete(tempPost);
     }
