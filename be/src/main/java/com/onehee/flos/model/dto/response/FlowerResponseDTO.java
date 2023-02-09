@@ -22,6 +22,8 @@ public class FlowerResponseDTO {
     private String flowerType;
     private String flowerMeaning;
     private String flowerColor;
+    private String flowerState;
+    private Long height;
     private String name;
     private Boolean isFullGrown;
     private Boolean gardening;
@@ -45,6 +47,8 @@ public class FlowerResponseDTO {
                 .flowerType(flower.getFlowerType().getFlowerType())
                 .flowerMeaning(flower.getFlowerType().getFlowerMeaning())
                 .flowerColor(flower.getFlowerType().getColor())
+                .flowerState(flower.getState()==null?null:flower.getState().getState())
+                .height(flower.getHeight())
                 .name(flower.getName())
                 .currentGrowValue(flower.getWater() + flower.getLight())
                 .capacity(flower.getCapacity())
