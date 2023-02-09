@@ -25,33 +25,40 @@ const NotificationPage = () => {
     getNotification().then((res) => {
       setNotiList(res.notifications)
     })
-  }, [])
+  }, [notiList])
 
+  // console.log(notiList)
   
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
   
-  const notiItemList = notiList.map(({message, createdAt, data, messageType}) => {
-    let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
-    let RegBefore = getTimeDiffText(postDay, curDay);
-    let profileImg = ''
-    switch (messageType) {
-      case "NEWFEED":
-      case "NEWCOMMENT":
-      case "NEWREPLY":
-      case "COMMENTCHOSEN":
-        profileImg = `${url}${data.writer.profileImage.saveName}`
-        break;
-      case "FOLLOW":
-        profileImg = `${url}${data.profileImage.saveName}`
-        break;
-      default:
-        profileImg = {userImg}
-        break;
+  const notiItemList = () => {
+    if (notiList.length >= 1) {
+      notiList.map(({id, message, createdAt, data, messageType}) => {
+        let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
+        let RegBefore = getTimeDiffText(postDay, curDay);
+        let profileImg = ''
+        switch (messageType) {
+          case "NEWFEED":
+          case "NEWCOMMENT":
+          case "NEWREPLY":
+          case "COMMENTCHOSEN":
+            profileImg = `${url}${data.writer.profileImage.saveName}`
+            break;
+          case "FOLLOW":
+            profileImg = `${url}${data.profileImage.saveName}`
+            break;
+          default:
+            profileImg = {userImg}
+            break;
+        }
+        let notiId = id
+        
+        return <AlarmItem AlarmImg={profileImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore} id={notiId}></AlarmItem>;
+      });
+    } else {
+      return <div>알림 존재 ㄴㄴ</div>
     }
-    let notiId = data.id
-
-    return <AlarmItem AlarmImg={profileImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore} id={notiId}></AlarmItem>;
-  });
+  }
 
   // 알림이 1개라도 있으면 점찍기
   // const isHaveNotification = () => {
