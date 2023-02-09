@@ -14,6 +14,7 @@ import com.onehee.flos.model.entity.WeatherResource;
 import com.onehee.flos.model.entity.type.FlowerState;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.FlowerRepository;
+import com.onehee.flos.model.repository.FollowRepository;
 import com.onehee.flos.model.repository.WeatherResourceRepository;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class FlowerServiceImpl implements FlowerService {
 
     private final FlowerRepository flowerRepository;
     private final WeatherResourceRepository weatherResourceRepository;
+    private final FollowRepository followRepository;
 
     @Override
     public void createFlower(FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
@@ -109,8 +111,8 @@ public class FlowerServiceImpl implements FlowerService {
         water.setUsedAt(LocalDateTime.now());
 
         // 갱신
-        weatherResourceRepository.saveAndFlush(water);
-        flower = flowerRepository.saveAndFlush(flower);
+        flower = flowerRepository.save(flower);
+        flower.setWater(flower.getWater() + 1);
 
         // 반환
         return FlowerResponseDTO.toDto(flower);
@@ -137,8 +139,8 @@ public class FlowerServiceImpl implements FlowerService {
         light.setUsedAt(LocalDateTime.now());
 
         // 갱신
-        weatherResourceRepository.saveAndFlush(light);
-        flower = flowerRepository.saveAndFlush(flower);
+        flower = flowerRepository.save(flower);
+        flower.setLight(flower.getLight() + 1);
 
         // 반환
         return FlowerResponseDTO.toDto(flower);
