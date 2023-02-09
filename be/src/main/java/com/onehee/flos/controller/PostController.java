@@ -8,10 +8,12 @@ import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.WeatherType;
+import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.model.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
+@Log4j2
 public class PostController {
+    private final PostRepository postRepository;
 
     private final PostService postService;
 
@@ -130,6 +134,7 @@ public class PostController {
     @PostMapping(value = "")
     public ResponseEntity<?> createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
         postService.createPost(postCreateRequestDTO);
+        log.info("content: {}, weather: {}, tagList: {}, files: {}", postCreateRequestDTO.getContent(), postCreateRequestDTO.getWeather(), postCreateRequestDTO.getTagList(), postCreateRequestDTO.getAttachFiles());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
