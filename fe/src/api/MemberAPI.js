@@ -200,13 +200,18 @@ const signUpUser = async (code, email, nickname, password) => {
  * @returns {Promise} A Promise object containing a boolean value
  */
 const modifyUserInfo = async (nickname, introduction, profileImage) => {
-  let url = `/api/member/info?nickname=${nickname}&introduction=${introduction}`;
+  const formData = new FormData();
+  formData.append("profileImage", profileImage[0]);
+  formData.append("nickname", nickname);
+  formData.append("introduction", introduction);
+
+  let url = `/api/member/info`;
   let isUpdated = false;
-  console.dir(profileImage);
   await axios
-    .put(url)
+    .put(url, formData)
     .then((response) => {
       // response.data
+      console.dir(response);
       if (response.status === 201) {
         isUpdated = true;
       }
@@ -216,11 +221,6 @@ const modifyUserInfo = async (nickname, introduction, profileImage) => {
       console.log("회원정보 수정 중 오류 발생");
     });
   return isUpdated;
-
-  // const formData = new FormData();
-  // formData.append("profileImage", profileImage[0]);
-  // formData.append("nickname", nickname);
-  // formData.append("introduction", introduction);
 
   // let data = JSON.stringify({
   //   nickname: nickname,
@@ -238,10 +238,10 @@ const modifyUserInfo = async (nickname, introduction, profileImage) => {
   //   },
   // })
   //   .then((response) => {
-  //     console.log(response.data);
+  //     console.dir(response.data);
   //   })
   //   .catch((error) => {
-  //     console.error(error);
+  //     console.dir(error);
   //   });
 };
 
