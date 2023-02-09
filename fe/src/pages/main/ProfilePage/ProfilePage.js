@@ -15,7 +15,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsToastValue } from "../../../redux/toast";
 
 /* import img */
-import userImg from "../../../assets/GlobalAsset/user-img.png";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
