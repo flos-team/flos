@@ -9,16 +9,38 @@ import { getTimeDiffText } from "../../../../api/DateModule";
 import dayjs from "dayjs";
 import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
 import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
-import { getCommentList, getPriComment, commentApprove, deleteComment } from "../../../../api/CommentAPI";
+import {
+  getCommentList,
+  getPriComment,
+  commentApprove,
+  deleteComment,
+  createReply,
+} from "../../../../api/CommentAPI";
 
 import "./PostDetailPage.css";
 
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
 const CommentComponent = ({ comment }) => {
+  console.log(comment);
   const user = useSelector((state) => state.user.userData);
+
   const [inputFocus, setInputFocus] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+
+  const [replyList, setReplyList] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getPriComment(comment.id).then((response) => {
+      console.log(response);
+    });
+  });
+
+  const handleCommentInputValue = (e) => {
+    setInputValue(e.target.value);
+  };
 
   // 자신의 댓글 삭제를 누르면 삭제하는 함수
   const commentDeleteBtn = (commentId) => {
@@ -51,13 +73,32 @@ const CommentComponent = ({ comment }) => {
   );
 
   const replyInput = (
-    <input
-      autoFocus
-      onBlur={() => {
-        setInputFocus(false);
-        console.log(123);
-      }}
-    ></input>
+    <div>
+      <input
+        className="comment-input"
+        autoFocus
+        value={inputValue}
+        onChange={handleCommentInputValue}
+        onBlur={() => {
+          setInputFocus(false);
+          if (inputValue) {
+            // 입력된 값이 있으면
+            createReply(inputValue, comment.postId, comment.id, comment.id).then((response) => {
+              console.log(response);
+              setReplyList(response);
+            });
+          }
+          setInputValue("");
+        }}
+        onKeyDown={(e) => {
+          if (e.key == "Enter" && inputValue) {
+            createReply(inputValue, comment.postId, comment.id, comment.id);
+            setInputValue("");
+          }
+        }}
+      ></input>
+      <button>제출</button>
+    </div>
   );
 
   let commentDay = dayjs(comment.createdAt, "YYYY-MM-DD HH:mm:ss");
@@ -79,7 +120,9 @@ const CommentComponent = ({ comment }) => {
             <span className="comment-header-left">{comment.writer.nickname}</span>
             <span className="comment-header-left">{RegBefore}</span>
           </div>
-          {!comment.isApprove && comment.isMine && !comment.isCommented ? commentDeleteBtn(comment.id) : ""}
+          {!comment.isApprove && comment.isMine && !comment.isCommented
+            ? commentDeleteBtn(comment.id)
+            : ""}
         </div>
         <div className="comment-main">{comment.content}</div>
         {inputFocus ? replyInput : addComment}

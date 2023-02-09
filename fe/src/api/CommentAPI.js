@@ -57,17 +57,37 @@ const getPriComment = async (id) => {
  * @param {*} primitiveId
  * @returns
  */
-const createComment = async (
-  content,
-  postId,
-  parentId = 0,
-  primitiveId = 0
-) => {
+const createComment = async (content, postId, parentId = 0, primitiveId = 0) => {
   let url = `/api/comment/`;
   let newComment = {
     content: content,
     parentId: parentId,
     postId: postId,
+    primitiveId: primitiveId,
+  };
+  console.log(newComment);
+  let isCreated = false;
+  await axios
+    .post(url, newComment)
+    .then((response) => {
+      if (response.status === 200) {
+        console.dir(response);
+        isCreated = true;
+      }
+      // console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return isCreated;
+};
+
+const createReply = async (content, postId, primitiveId, parentId) => {
+  let url = `/api/comment/`;
+  let newComment = {
+    content: content,
+    postId: postId,
+    parentId: parentId,
     primitiveId: primitiveId,
   };
   console.log(newComment);
@@ -142,5 +162,6 @@ export {
   commentApprove,
   modifyComment,
   deleteComment,
-  getPriComment
+  getPriComment,
+  createReply,
 };

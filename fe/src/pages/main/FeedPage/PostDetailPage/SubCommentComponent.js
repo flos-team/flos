@@ -25,14 +25,13 @@ const SubCommentComponent = ({ parentId }) => {
     });
   }, []);
 
+  useEffect(() => {}, [comments]);
+
   // 자신의 댓글 삭제를 누르면 삭제하는 함수
   const commentDeleteBtn = (commentId) => {
     return (
       <div>
-        <span
-          className="comment-header-right"
-          onClick={() => deleteComment(commentId)}
-        >
+        <span className="comment-header-right" onClick={() => deleteComment(commentId)}>
           삭제
         </span>
       </div>
@@ -60,9 +59,7 @@ const SubCommentComponent = ({ parentId }) => {
         <div className="comment-container">
           <div className="comment-header">
             <div>
-              <span className="comment-header-left">
-                {comment.writer.nickname}
-              </span>
+              <span className="comment-header-left">{comment.writer.nickname}</span>
               <span className="comment-header-left">{RegBefore}</span>
             </div>
             {!comment.isApprove && comment.isMine && !comment.isCommented
