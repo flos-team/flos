@@ -24,6 +24,7 @@ public class FlowerResponseDTO {
     private String flowerColor;
     private String name;
     private Boolean isFullGrown;
+    private Boolean gardening;
     private LocalDateTime createdAt;
     private LocalDateTime blossomAt;
     private Long duration;
@@ -38,6 +39,7 @@ public class FlowerResponseDTO {
 
         return FlowerResponseDTO.builder()
                 .isFullGrown(flower.getCapacity() <= (flower.getWater() + flower.getLight()))
+                .gardening(flower.getGardening())
                 .id(flower.getId())
                 .owner(MemberResponseDTO.toDto(flower.getOwner()))
                 .flowerType(flower.getFlowerType().getFlowerType())

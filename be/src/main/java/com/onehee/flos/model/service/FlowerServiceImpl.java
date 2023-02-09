@@ -3,6 +3,7 @@ package com.onehee.flos.model.service;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
+import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
@@ -32,7 +33,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public void createFlower(FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
-        if (flowerRepository.findByOwnerAndBlossomAtIsNull(owner).orElse(null) != null)
+        if (flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(owner).orElse(null) != null)
             throw new BadRequestException("이미 키우는 꽃이 있습니다.");
         flowerRepository.saveAndFlush(flowerCreateRequestDTO.toEntity(owner));
     }
@@ -45,6 +46,13 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
+    public void gardeningFlower(FlowerGardeningRequestDTO flowerGardeningRequestDTO) throws BadRequestException {
+        Flower flower = flowerRepository.findById(flowerGardeningRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당 꽃이 존재하지 않습니다."));
+        flower.setGardening(true);
+        flowerRepository.saveAndFlush(flower);
+    }
+
+    @Override
     public FlowerResponseDTO getFlowerInfoById(Long flowerId) throws BadRequestException {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당 꽃이 존재하지 않습니다."));
         return FlowerResponseDTO.toDto(flower);
@@ -52,13 +60,13 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerInfo() {
-        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNull(SecurityManager.getCurrentMember()).orElseThrow(() -> new BadRequestException("현재 키우는 꽃이 존재하지 않습니다.")));
+        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(SecurityManager.getCurrentMember()).orElseThrow(() -> new BadRequestException("현재 키우는 꽃이 존재하지 않습니다.")));
     }
 
     @Override
     public SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
-        return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNull(owner, pageable)
+        return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(owner, pageable)
                 .map(FlowerResponseDTO::toDto));
     }
 
@@ -84,7 +92,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Transactional
     public FlowerResponseDTO giveWater() {
         Member member = SecurityManager.getCurrentMember();
-        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
+        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
         if (flower.getCapacity() <= (flower.getLight()+flower.getWater()))
             throw new BadRequestException("성장한 꽃에 물을 줄 수 없습니다.");
@@ -112,7 +120,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Transactional
     public FlowerResponseDTO giveLight() {
         Member member = SecurityManager.getCurrentMember();
-        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
+        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
         if (flower.getCapacity() <= (flower.getLight()+flower.getWater()))
             throw new BadRequestException("성장한 꽃에 햇빛을 줄 수 없습니다.");
