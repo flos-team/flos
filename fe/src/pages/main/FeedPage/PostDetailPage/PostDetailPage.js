@@ -43,6 +43,7 @@ const PostDetailPage = () => {
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);
+  const [commentOnChange, setCommentOnChange] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
   const [postLoading, setPostLoading] = useState(false);
@@ -66,18 +67,21 @@ const PostDetailPage = () => {
       setComments(response);
       setCommentLoading(true);
     });
-  }, []);
+  }, [commentOnChange]);
 
   if (postLoading && commentLoading) {
     // console.log(comments);
     // console.log(post);
     const commentList = comments.map((key) => {
-      console.log(key);
+      // console.log(key);
       return (
         <>
           <CommentComponent comment={key}></CommentComponent>
-          {key.id ? <SubCommentComponent parentId={key.id}></SubCommentComponent> : ""}
-          
+          {key.id ? (
+            <SubCommentComponent parentId={key.id}></SubCommentComponent>
+          ) : (
+            ""
+          )}
         </>
       );
     });
@@ -171,11 +175,24 @@ const PostDetailPage = () => {
                 className="comment-input"
                 value={inputValue}
                 onChange={handleCommentInputValue}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter" && inputValue) {
+                    createComment(inputValue, post.id).then(() => {
+                      setCommentOnChange(!commentOnChange);
+                      setInputValue("");
+                    });
+                  }
+                }}
               />
               <button
                 style={{ backgroundImage: `url(${sendCommentBtn})` }}
                 onClick={() => {
-                  createComment(inputValue, post.id);
+                  if (inputValue) {
+                    createComment(inputValue, post.id).then(() => {
+                      setCommentOnChange(!commentOnChange);
+                      setInputValue("");
+                    });
+                  }
                 }}
               />
             </div>

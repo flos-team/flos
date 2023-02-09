@@ -20,17 +20,10 @@ import "./PostDetailPage.css";
 
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
-const CommentComponent = ({ type, comment }) => {
+const CommentComponent = ({ comment }) => {
   const user = useSelector((state) => state.user.userData);
-  const [comments, setComments] = useState([]);
-  const params = useParams();
+  const [inputFocus, setInputFocus] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getCommentList(params.id).then((response) => {
-      setComments(response);
-    });
-  }, []);
 
   // 자신의 댓글 삭제를 누르면 삭제하는 함수
   const commentDeleteBtn = (commentId) => {
@@ -50,6 +43,28 @@ const CommentComponent = ({ type, comment }) => {
   const toProfile = (userId) => {
     navigate(`/other-profile-page/${userId}`);
   };
+
+  const addComment = (
+    <div
+      className="comment-addComment"
+      onClick={() => {
+        // 댓글 달기 누르면 입력 폼이 나오도록
+        setInputFocus(true);
+      }}
+    >
+      댓글달기
+    </div>
+  );
+
+  const replyInput = (
+    <input
+      autoFocus
+      onBlur={() => {
+        setInputFocus(false);
+        console.log(123);
+      }}
+    ></input>
+  );
 
   let commentDay = dayjs(comment.createdAt, "YYYY-MM-DD HH:mm:ss");
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
@@ -77,7 +92,7 @@ const CommentComponent = ({ type, comment }) => {
             : ""}
         </div>
         <div className="comment-main">{comment.content}</div>
-        <div className="comment-addComment">댓글달기</div>
+        {inputFocus ? replyInput : addComment}
       </div>
       <img
         className="check-btn"
@@ -87,7 +102,6 @@ const CommentComponent = ({ type, comment }) => {
         }}
         src={comment.isApprove ? sunnyActivate : sunnyDeActivate}
       />
-      {/* {ddd} */}
     </div>
   );
 
