@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useOutlet } from "react-router-dom";
+// redux/toolkit
+import { useSelector, useDispatch } from "react-redux";
+import { setIsToastValue, setToastMessage } from "../redux/toast";
 
 /**
  * @author 1-hee
@@ -194,14 +196,15 @@ const signUpUser = async (code, email, nickname, password) => {
  * modifyUserInfo : 회원정보 수정 메서드
  * @param {string} nickname 사용자 이름
  * @param {string} introduction 사용자 소개
- * @param {ImageBitmap} profileImage 이미지 비트맵 파일
+ * @param {File} profileImage file 객체?
  * @returns {Promise} A Promise object containing a boolean value
  */
 const modifyUserInfo = async (nickname, introduction, profileImage) => {
   let url = `/api/member/info?nickname=${nickname}&introduction=${introduction}`;
   let isUpdated = false;
+  console.dir(profileImage);
   await axios
-    .put(url, {})
+    .put(url)
     .then((response) => {
       // response.data
       if (response.status === 201) {
@@ -209,9 +212,37 @@ const modifyUserInfo = async (nickname, introduction, profileImage) => {
       }
     })
     .catch((err) => {
+      console.dir(err);
       console.log("회원정보 수정 중 오류 발생");
     });
   return isUpdated;
+
+  // const formData = new FormData();
+  // formData.append("profileImage", profileImage[0]);
+  // formData.append("nickname", nickname);
+  // formData.append("introduction", introduction);
+
+  // let data = JSON.stringify({
+  //   nickname: nickname,
+  //   introduction: introduction,
+  //   profileImage: profileImage[0],
+  // });
+
+  // await axios({
+  //   baseURL: "https://i8b210.p.ssafy.io",
+  //   url: `/api/member/info`,
+  //   method: "PUT",
+  //   data: data,
+  //   headers: {
+  //     "Content-Type": "multipart/form-data",
+  //   },
+  // })
+  //   .then((response) => {
+  //     console.log(response.data);
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
 };
 
 /**

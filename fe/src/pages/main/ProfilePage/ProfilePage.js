@@ -25,8 +25,7 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, getOtherMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, { getPost, getPostList, getPostListByNickname } from "../../../api/PostAPI";
-import {getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList, cancelFollowing, doFollowing} from "../../../api/FollowAPI"
+import PostAPI, { getPostListByNickname } from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -34,6 +33,7 @@ import "./ProfilePage.css";
 const ProfilePage = ({ setIsToast }) => {
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.userData);
 
   // 사용자가 작성한 포스트의 세팅을 위한 state
   const [postIdx, setPostIdx] = useState(1);
@@ -50,49 +50,48 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로워", "팔로잉", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));  
+  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
 
   // 사용자 정보를 다루는 state
   const [userInfo, setUserinfo] = useState({});
   // 사용자 이미지 state
   const [userImgURL, setUserImgURL] = useState("");
-
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.isToast);
   // 현재 로그인한 사람의 정보
-  const user = useSelector((state) => state.user.userData);
-
   const dispatch = useDispatch();
 
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
   useEffect(() => {
     setIsToast(toastValue);
-    // doLogin("seongtae@ssafy.com", "tjdxo1234"); // 로그인 구현되면 삭제 필요
-    // 사용자 정보 세팅
-    // getOtherMemberInfo
-    let userData = getMemberInfo();
-    userData.then((res) => {
-      console.dir(res);
-      setUserinfo({
-        nickname: res.nickname,
-        introduction: res.introduction,
-      });      
-      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`);
-      let list = [res.followerCount, res.followingCount, res.postCount, res.blossomCount];
-      setUserInfoList(list.map((e, i) => { 
+    setUserinfo({
+      nickname: user.nickname,
+      introduction: user.introduction,
+    });
+    setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${user.profileImage.saveName}`);
+    let list = [user.followerCount, user.followingCount, user.postCount, user.blossomCount];
+    setUserInfoList(
+      list.map((e, i) => {
         //console.log(`e : ${e}`, `i : ${i}`);
-        let liEle = <></>;          
+        let liEle = <></>;
         if (i == 0 || i == 1) {
-          liEle = <li key={i} onClick={(e)=>{navigate(`/follower-view-page/${user.id}/${i}`)}}>{e > 999 ? "999+" : e}</li>;
-        }else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>
+          liEle = (
+            <li
+              key={i}
+              onClick={(e) => {
+                navigate(`/follower-view-page/${user.id}/${i}`);
+              }}
+            >
+              {e > 999 ? "999+" : e}
+            </li>
+          );
+        } else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>;
         return liEle;
-      }));
-      let myPostList = getPostListByNickname(res.nickname);
-      myPostList.then((res) => {
-        // console.dir(res);
-        // res.content
-        setPostList(res.content.map((e) => <PostItem post={e}></PostItem>));
-      });
+      })
+    );
+    let myPostList = getPostListByNickname(user.nickname);
+    myPostList.then((res) => {
+      setPostList(res.content.map((e) => <PostItem post={e}></PostItem>));
     });
   }, []);
 
@@ -103,7 +102,16 @@ const ProfilePage = ({ setIsToast }) => {
     if (bottom && isScrollable) {
       console.log("스크롤 끝 감지");
       // renderPostList(postIdx + 1);
-      setPostIdx(postIdx + 1);
+      let nextData = getPostListByNickname(user.nickname, postIdx + 1);
+      nextData.then((res) => {
+        if (res.hasNext) {
+          setPostIdx(postIdx + 1);
+          let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+          setPostList(newPostList);
+        } else {
+          console.log("불러올 데이터가 없습니다.");
+        }
+      });
     }
   };
 
@@ -140,8 +148,7 @@ const ProfilePage = ({ setIsToast }) => {
             display: "block",
             margin: "0 auto",
           }}
-          onClick={async (e) => {
-          }}
+          onClick={async (e) => {}}
         >
           기능테스트
         </button>
@@ -158,7 +165,9 @@ const ProfilePage = ({ setIsToast }) => {
             <p>북마크</p>
           </div>
         </div>
-        <div className="post-container hide-scroll">{postList}</div>
+        <div className="post-container hide-scroll" onScroll={handleScroll}>
+          {postList}
+        </div>
       </div>
     </>
   );
