@@ -21,6 +21,7 @@ import "./HomePage.css";
 import { motion } from "framer-motion";
 import { getFlowerInfo, giveSun, giveRain, modifyFlower } from "../../api/FlowerAPI";
 import { getMemberInfo } from "../../api/MemberAPI";
+import { getNotification } from '../../api/NotificationAPI'
 import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
 
 const Title = styled.h1`
@@ -134,6 +135,7 @@ const Home = () => {
   const [makeFlowermodal, setMakeFlowerModal] = useState(false);
   const [isFlowering, setIsFlowering] = useState(false);
   const [isPlay, setIsPlay] = useState(true);
+  const [haveNoti, setHaveNoti] = useState(false);
   const [backgroundImgUrl, setBackgroundImgUrl] = useState(0);
 
   const [elementImg, setElementImg] = useState(require("../../assets/HomeAsset/sun-img.png"));
@@ -365,18 +367,6 @@ const Home = () => {
     );
   };
 
-  const guideClick = () => {
-    // info 버튼을 클릭 했을 경우,
-    // 도움말 페이지로 라우팅
-    console.log("clicked - info");
-  };
-
-  const notiClick = () => {
-    // noti 버튼을 클릭 했을 경우,
-    // 알림 페이지로 라우팅
-    console.log("clicked - noti");
-  };
-
   const flowerNameClick = () => {
     console.log("clicked - name");
     setSunAnimation(null);
@@ -419,6 +409,21 @@ const Home = () => {
     setIsPlay((pre) => !pre)
   }
 
+  const isHaveNoti = () => {
+    getNotification().then((res) => {
+      if (res.length===0){
+        setHaveNoti(false)
+      } else {
+        setHaveNoti(true)
+      }
+    })
+  }
+  
+  useEffect(() => {
+    isHaveNoti()
+  }, [])
+
+
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
@@ -453,11 +458,12 @@ const Home = () => {
         {rainAnimation}
         <div className={styles.HomeHeader}>
           <Link to="/guide">
-            <Info onClick={guideClick} />
+            <Info/>
           </Link>
           <Link to="/notification">
-            <Noti onClick={notiClick} />
+            <Noti/>
           </Link>
+          { haveNoti ? <span className={styles.redpoint}>˙</span> : null }
         </div>
         <div className={styles.musicBtn}>
           {/* <button onClick={onClickPlayMusicButton}>{isPlay ? '⏹' : '▶'}</button> */}
