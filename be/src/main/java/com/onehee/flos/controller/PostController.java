@@ -8,10 +8,12 @@ import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.WeatherType;
+import com.onehee.flos.model.repository.PostRepository;
 import com.onehee.flos.model.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/post")
 public class PostController {
+    private final PostRepository postRepository;
 
     private final PostService postService;
 
@@ -128,7 +131,7 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping(value = "")
-    public ResponseEntity<?> createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
+    public ResponseEntity<?> createPost(@RequestPart PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
         postService.createPost(postCreateRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
