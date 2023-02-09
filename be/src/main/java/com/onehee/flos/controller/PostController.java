@@ -127,9 +127,9 @@ public class PostController {
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
-    @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO, @RequestPart List<MultipartFile> multipartFileList) throws BadRequestException, IOException {
-        postService.createPost(postCreateRequestDTO, multipartFileList);
+    @PostMapping(value = "")
+    public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
+        postService.createPost(postCreateRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
