@@ -27,10 +27,28 @@ const getCommentList = async (id) => {
     })
     .catch((error) => {
       console.log("댓글이 존재하지 않습니다.");
-      console.log(error)
+      console.log(error);
     });
   return commentList;
 };
+
+const getPriComment = async (id) => {
+  let url = `/api/comment/list/pri/${id}`;
+  let commentList = [];
+  await axios
+    .get(url)
+    .then((response) => {
+      if (response.status === 200 && response.data) {
+        commentList = [...response.data];
+      }
+    })
+    .catch((error) => {
+      console.log("댓글이 존재하지 않습니다.");
+      console.log(error);
+    });
+  return commentList;
+};
+
 /**
  * 해당 게시글에 댓글을 추가 각 인자 머임?
  * @param {*} content
@@ -61,7 +79,7 @@ const createComment = async (
         console.dir(response);
         isCreated = true;
       }
-      console.log(response)
+      console.log(response);
     })
     .catch((error) => {
       console.log(error);
@@ -118,4 +136,11 @@ const deleteComment = async (id) => {
     });
 };
 
-export { getCommentList, createComment, commentApprove, modifyComment, deleteComment };
+export {
+  getCommentList,
+  createComment,
+  commentApprove,
+  modifyComment,
+  deleteComment,
+  getPriComment
+};
