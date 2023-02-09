@@ -1,6 +1,7 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.FollowDTO;
 import com.onehee.flos.model.dto.request.FollowRequestDTO;
 import com.onehee.flos.model.dto.request.UnfollowRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
@@ -27,16 +28,18 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberResponseDTO> getFollowerList() {
-        Member member = SecurityManager.getCurrentMember();
+    public List<MemberResponseDTO> getFollowerList(FollowDTO followDTO) {
+        Member member = memberRepository.findById(followDTO.getId())
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
         List<Member> followers = followRepository.findAllByOwner(member);
         return followers.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberResponseDTO> getFollowingList() {
-        Member member = SecurityManager.getCurrentMember();
+    public List<MemberResponseDTO> getFollowingList(FollowDTO followDTO) {
+        Member member = memberRepository.findById(followDTO.getId())
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
         List<Member> followings = followRepository.findAllByFollower(member);
         return followings.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
@@ -69,7 +72,7 @@ public class FollowServiceImpl implements FollowService {
                 .build()
         );
 
-        return getFollowingList();
+        return getFollowingList(new FollowDTO(me.getId()));
     }
 
     @Override
@@ -87,7 +90,7 @@ public class FollowServiceImpl implements FollowService {
         followRepository.delete(follow);
         followRepository.flush();
 
-        return getFollowingList();
+        return getFollowingList(new FollowDTO(me.getId()));
     }
 
 }
