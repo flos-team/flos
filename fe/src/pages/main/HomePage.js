@@ -313,11 +313,10 @@ const Home = () => {
     };
     // 서버랑 통신해서 sun이 소진되었다고 전송
     giveSun().then((res) => {
-      flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
+      flowerInfo.CurrentGrowthValue = res.currentGrowValue;
       flowerInfo.isFullGrown = res.isFullGrown;
     });
     flowerInfo.sunElementCount--;
-    flowerInfo.CurrentGrowthValue++;
     setSunAnimation(
       <>
         <div ref={sunBox}>
@@ -348,11 +347,10 @@ const Home = () => {
     };
     // 서버랑 통신해서 rain이 소진되었다고 전송
     giveRain().then((res) => {
-      flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
+      flowerInfo.CurrentGrowthValue = res.currentGrowValue;
       flowerInfo.isFullGrown = res.isFullGrown;
     });
     flowerInfo.rainElementCount--;
-    flowerInfo.CurrentGrowthValue++;
     const rainObjectOptions = {
       autoplay: true,
       animationData: rainObjectData,
@@ -386,6 +384,9 @@ const Home = () => {
     setChangeFlowerNamemodal(true);
   };
 
+  /*
+  * 이름 변경 함수
+  */
   const ChangeFlowerNameOnclick = (newName) => {
     console.log("바꾸기 시작");
     console.log("새로운 이름", newName);
@@ -398,6 +399,9 @@ const Home = () => {
     setChangeFlowerNamemodal(false);
   };
 
+  /*
+  * 꽃 생성 함수
+  */
   const MakeFlowerOnclick = () => {
     getFlowerInfo().then((res) => {
       console.log()
