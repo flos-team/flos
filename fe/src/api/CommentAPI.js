@@ -79,7 +79,7 @@ const createComment = async (
         console.dir(response);
         isCreated = true;
       }
-      console.log(response);
+      // console.log(response);
     })
     .catch((error) => {
       console.log(error);
