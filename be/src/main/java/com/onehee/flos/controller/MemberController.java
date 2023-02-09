@@ -7,9 +7,11 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.StatisticsResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
+import com.onehee.flos.model.service.StatisticsService;
 import com.onehee.flos.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +35,7 @@ public class MemberController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
+    private final StatisticsService statisticsService;
 
     @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.")
     @PostMapping("/sign-up")
@@ -132,5 +135,13 @@ public class MemberController {
     public ResponseEntity<?> quitMember() {
         memberService.deleteMember();
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @Operation(summary = "이용 통계 메서드", description = "이용 통계 보고서를 반환합니다.")
+    @GetMapping("/report")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getReport() {
+        return new ResponseEntity<StatisticsResponseDTO>(statisticsService.getReport(), HttpStatus.OK);
     }
 }
