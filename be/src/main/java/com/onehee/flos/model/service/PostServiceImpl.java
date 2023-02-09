@@ -14,6 +14,7 @@ import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PostServiceImpl implements PostService {
 
     private final MemberRepository memberRepository;
@@ -105,7 +107,11 @@ public class PostServiceImpl implements PostService {
         Post tempPost = postRepository.saveAndFlush(postCreateRequestDTO.toEntity(writer));
 
         for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
+            if (e == null)
+                continue;
             FileEntity tempFile = filesHandler.saveFile(e);
+            log.info("{}", tempFile);
+            tempFile.setMember(writer);
             postFileRepository.saveAndFlush(
                     PostFile.builder()
                             .post(tempPost)
