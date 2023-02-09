@@ -3,7 +3,7 @@ package com.onehee.flos.model.dto.request;
 import lombok.*;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class FollowRequestDTO {
     private Long id;
 }

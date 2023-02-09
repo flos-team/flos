@@ -114,6 +114,18 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "비밀번호 변경 메서드", description = "비밀번호를 변경합니다.")
+    @PutMapping("/update-password")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> updatePassword(@RequestBody MemberPasswordUpdateRequestDTO memberPasswordUpdateRequestDTO, @AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization", required = false) String atk) {
+        log.info("{}", memberDetails);
+        memberService.updatePassword(memberPasswordUpdateRequestDTO);
+        if (memberDetails != null) {
+            memberService.logout(LogoutDTO.builder().atk(atk.substring("Bearer ".length())).email(memberDetails.getMember().getEmail()).build());
+        }
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
     @Operation(summary = "회원 탈퇴 메서드", description = "회원을 비활성화 상태로 만듭니다.")
     @DeleteMapping("/quit")
     @Tag(name = "멤버API")
