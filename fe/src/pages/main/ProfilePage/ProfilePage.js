@@ -32,6 +32,9 @@ import { getFile } from "../../../api/FileAPI";
 import "./ProfilePage.css";
 
 const ProfilePage = ({ setIsToast }) => {
+  // temp, 다른사람 페이지로 이동하는 메서드
+  const navigate = useNavigate();
+
   // 사용자가 작성한 포스트의 세팅을 위한 state
   const [postIdx, setPostIdx] = useState(1);
   // 사용자 정보에 따른 포스트 리스트 state
@@ -47,7 +50,7 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로잉", "팔로우", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
+  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));  
 
   // 사용자 정보를 다루는 state
   const [userInfo, setUserinfo] = useState({});
@@ -66,13 +69,21 @@ const ProfilePage = ({ setIsToast }) => {
     // getOtherMemberInfo
     let userData = getMemberInfo();
     userData.then((res) => {
+      console.dir(res);
       setUserinfo({
         nickname: res.nickname,
         introduction: res.introduction,
-      });
+      });      
       setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`);
       let list = [res.followerCount, res.followingCount, res.postCount, res.blossomCount];
-      setUserInfoList(list.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
+      setUserInfoList(list.map((e, i) => { 
+        //console.log(`e : ${e}`, `i : ${i}`);
+        let liEle = <></>;          
+        if (i == 0 || i == 1) {
+          liEle = <li key={i} onClick={(e)=>{navigate(`/follower-view-page/${1}`)}}>{e > 999 ? "999+" : e}</li>;
+        }else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>
+        return liEle;
+      }));
       let myPostList = getPostListByNickname(res.nickname);
       myPostList.then((res) => {
         // console.dir(res);
@@ -92,9 +103,6 @@ const ProfilePage = ({ setIsToast }) => {
       setPostIdx(postIdx + 1);
     }
   };
-
-  // temp, 다른사람 페이지로 이동하는 메서드
-  const navigate = useNavigate();
 
   return (
     <>
