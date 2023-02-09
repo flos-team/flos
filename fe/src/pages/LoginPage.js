@@ -28,12 +28,8 @@ function Login() {
   const onClickLogin = () => {
     // console.log(inputId, inputPw)
     doLogin(inputId, inputPw)
-      .then(() => {
-        getMemberInfo().then((response) => {
-          console.log(response);
-          dispatch(setUser(response));
-          navigate("/main");
-        });
+    .then(() => {
+        navigate("/main");
       })
       .catch((error) => {
         console.log(error);
