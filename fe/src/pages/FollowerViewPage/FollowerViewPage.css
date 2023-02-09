@@ -64,7 +64,7 @@
 .focus-tab {
   /* skyblue300 */
   border-bottom: 0.0625rem solid #96c6e0;
-  transition: 0.5s;
+  transition: 1s;
 }
 .focus-tab p {
   color: #96c6e0;
