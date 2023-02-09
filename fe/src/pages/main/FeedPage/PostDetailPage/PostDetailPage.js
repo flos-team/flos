@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPost } from "../../../../api/PostAPI";
 import {
   getCommentList,
@@ -48,8 +48,15 @@ const PostDetailPage = () => {
     setInputValue(e.target.value);
   };
 
+  const navigate = useNavigate();
+  const [postWriterId, setPostWriterId] = useState(0);
+
   useEffect(() => {
     getPost(params.id).then((response) => {
+      // console.dir(response.writer.id);
+      setPostWriterId(response.writer.id);
+      //         // navigate(`/other-profile-page/${post.writer.id}`)
+
       setPost(response);
       setPostLoading(true);
     });
@@ -190,7 +197,7 @@ const PostDetailPage = () => {
             <div className="post-container">
               <div className="user-info-container">
                 <div className="user-info-div">
-                  <img src={`${url}${post.writer.profileImage.saveName}`} />
+                  <img src={`${url}${post.writer.profileImage.saveName}`} onClick={(e)=>{navigate(`/other-profile-page/${postWriterId}`)}} />
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
