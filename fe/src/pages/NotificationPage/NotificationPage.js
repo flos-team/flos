@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 /* import img css */
 import userImg from "../../assets/DummyData/writerProfileSample.png";
+import defaultImg from '../../assets/GlobalAsset/groom-glass-img.png'
 
 /* import component */
 import AlarmItem from "../../components/AlarmItem/AlarmItem";
@@ -17,7 +18,6 @@ import dayjs from "dayjs";
 const NotificationPage = () => {
 
   const [notiList, setNotiList] = useState([]);
-  // const [redPoint, setRedPoint] = useState(false)
 
   const url = "https://i8b210.p.ssafy.io/api/file/"
 
@@ -26,13 +26,14 @@ const NotificationPage = () => {
       setNotiList(res.notifications)
     })
   }, [notiList])
-
-  // console.log(notiList)
   
   let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
-  
-  const notiItemList = () => {
-    if (notiList.length >= 1) {
+
+  let notiItemList = null;
+
+  if (notiList !== undefined) {
+    notiItemList =
+    
       notiList.map(({id, message, createdAt, data, messageType}) => {
         let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
         let RegBefore = getTimeDiffText(postDay, curDay);
@@ -51,29 +52,23 @@ const NotificationPage = () => {
             profileImg = {userImg}
             break;
         }
-        let notiId = id
         
-        return <AlarmItem AlarmImg={profileImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore} id={notiId}></AlarmItem>;
+        return <AlarmItem AlarmImg={profileImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore} id={id}></AlarmItem>;
       });
-    } else {
-      return <div>알림 존재 ㄴㄴ</div>
     }
-  }
 
-  // 알림이 1개라도 있으면 점찍기
-  // const isHaveNotification = () => {
-  //   if (notiList.length >= 1) {
-  //     setRedPoint(true)
-  //   } else {
-  //     setRedPoint(false)
-  //   }
-  // }
+  const noItem =
+    <div>
+      <img src={defaultImg} alt='' className="defaultimg"></img>
+      <p className="no-noti-text">알림이 없습니다.</p>
+    </div>
 
-  
   return (
     <div style={{ backgroundColor: "#e8e8e8" }}>
       <HeaderComponent backVisible={true} pageName={"알림"}></HeaderComponent>
-      <div className="alarm-container">{notiItemList}</div>
+      {notiList===undefined ? 
+      <div className="noalarm-container">{noItem}</div> :
+      <div className="alarm-container">{notiItemList}</div>}
     </div>
   );
 };

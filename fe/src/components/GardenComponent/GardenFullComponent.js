@@ -4,10 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import 'swiper/css';
 import 'swiper/less/effect-coverflow';
 import 'swiper/css/scrollbar';
+import 'swiper/less/effect-fade';
 import styled from "@emotion/styled";
 import FlowerFullItem from "./FlowerFullItem";
 import { getGardenList } from "../../api/FlowerAPI"
-// import SwiperCore, { Scrollbar } from "swiper/core"
+import Lottie from 'react-lottie';
+import LoadingIcon from "./../../assets/GardenAsset/8640-loading.json"
+import FloweringData from "../../assets/GardenAsset/77809-falling-leaf.json"
 
 const FullConponent = styled.div`
     display: flex;
@@ -25,6 +28,10 @@ const FlowerCountData = styled.div`
     border: 1px solid #FEFEFE;
     background-color: pink;
     color: white;
+`;
+
+const Effect = styled.div`
+    position: fixed;
 `;
 
 const FlowerViewSwiper = styled.div`
@@ -47,107 +54,103 @@ const Footer = styled.div`
 `;
 
 const FlowerDateData = styled.div`
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     padding: 5px;
     border-radius: 10px;
     border: 1px solid #FEFEFE;
-    background-color: pink;
     color: white;
 `;
 
+const Loading = styled.div`
+    width: 100%;
+    height: calC(100vh - 160px);
+    background-color:rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.3rem;
+    align-items: center;
+    position: fixed;
+    Z-index: 49;
+`;
+
+let page;
+let hasNext;
 
 const GardenFullComponent = () => {
-
-    //     const sampleData = [{
-    //         state: "은은한",
-    //         name: "춘식1",
-    //         length: 15,
-    //         startDate: "2022-10-11",
-    //         endDate: "2022-10-30"
-    //     },{
-    //         state: "은은한",
-    //         name: "춘식2",
-    //         length: 15,
-    //         startDate: "2028-09-11",
-    //         endDate: "2022-10-30"
-    //     },{
-    //         state: "은은한",
-    //         name: "춘식3",
-    //         length: 15,
-    //         startDate: "2022-08-11",
-    //         endDate: "2022-10-30"
-    //     }
-    //     ,{
-    //         state: "은은한",
-    //         name: "춘식4",
-    //         length: 15,
-    //         startDate: "2019-07-11",
-    //         endDate: "2022-10-30"
-    //     }
-    //     ,{
-    //         state: "은은한",
-    //         name: "춘식5",
-    //         length: 15,
-    //         startDate: "2022-06-11",
-    //         endDate: "2022-10-30"
-    //     }
-    //     ,{
-    //         state: "은은한",
-    //         name: "춘식6",
-    //         length: 15,
-    //         startDate: "2020-05-11",
-    //         endDate: "2022-10-30"
-    //     }
-    //     ,{
-    //         state: "은은한",
-    //         name: "춘식7",
-    //         length: 15,
-    //         startDate: "2021-04-11",
-    //         endDate: "2022-10-30"
-    //     }
-    //     ,{
-    //         state: "은은한",
-    //         name: "춘식8",
-    //         length: 15,
-    //         startDate: "2021-04-11",
-    //         endDate: "2022-10-30"
-    //     }
-    // ];
-
-    const [gardenList, setGardenList] = useState([]);
-    const [presentCount, setPresentCount] = useState(0);
-    const [totalCount, setTotalCount] = useState(0);
+    const [gardenListData, setGardenListData] = useState([]);
+    const [presentCount, setPresentCount] = useState(1);
     const [presentYear, setPresentYear] = useState("...");
-
-    const flowerFullList = [...gardenList].map((e, i) => <SwiperSlide key={i}><FlowerFullItem flowerInfo={e}></FlowerFullItem></SwiperSlide>);
+    const [gardenList, setGardenList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const SwiperRef = useRef();
 
-    console.log("ffl", flowerFullList);
-
     const refreshDate = () => {
-        if (flowerFullList.length > 0) {
-            const startDateData = gardenList[SwiperRef.current.swiper.activeIndex].startDate.split("-");
-            setPresentYear(startDateData[0] + "년 " + startDateData[1] + "월");
+        if (gardenListData.length > 0) {
+            const startDateData = gardenListData[SwiperRef.current.swiper.activeIndex].createdAt.split("-");
+            setPresentYear(startDateData[0] + " / " + startDateData[1]);
         }
     }
 
-    useEffect(() => {
-        getGardenList(0).then((e) => {
+    const getGardenListFunc = () => {
+        setIsLoading(true);
+        getGardenList(page).then((e) => {
             console.log(e);
-            refreshDate();
+            hasNext = e.hasNext;
+            setGardenListData(gardenListData.concat(e.content));
+            setIsLoading(false);
         });
+    }
+
+    useEffect(() => {
+        page = 0;
+        hasNext = false;
+        getGardenListFunc();
     }, []);
+
+    useEffect(() => {
+        if (gardenListData.length > 0 && presentCount == gardenListData.length) {
+            console.log("끝에 도달", presentCount, page);
+            if (hasNext) {
+                page++;
+                getGardenListFunc();
+            }
+            else {
+                alert("더 이상의 자료가 없어요!")
+            }
+        }
+    }, [presentCount]);
+
+    useEffect(() => {
+        setGardenList([...gardenListData].map((e, i) => <SwiperSlide key={i}><FlowerFullItem flowerInfo={e}></FlowerFullItem></SwiperSlide>));
+    }, [gardenListData])
 
     console.dir(SwiperRef.current);
 
     return (
         <>
+            {isLoading ? <Loading>
+                <Lottie
+                    options={{
+                        autoplay: true,
+                        animationData: LoadingIcon,
+                    }}
+                    height={350}
+                    width={350}
+                />
+            </Loading> : null}
+            <Effect>
+                <Lottie
+                    options={{
+                        autoplay: true,
+                        animationData: FloweringData,
+                    }}
+                    height={550}
+                    width={400}
+                    isClickToPauseDisabled
+                />
+            </Effect>
             <FullConponent>
-                <Header>
-                    <FlowerCountData>
-                        {presentCount} / {totalCount}
-                    </FlowerCountData>
-                </Header>
                 <FlowerViewSwiper>
                     <Swiper
                         spaceBetween={5}
@@ -157,7 +160,6 @@ const GardenFullComponent = () => {
                         effect="coverflow"
                         onSlideChange={(swiper) => {
                             refreshDate();
-                            console.dir(swiper);
                             setPresentCount(swiper.activeIndex + 1);
                         }}
                         onSwiper={(swiper) => {
@@ -168,8 +170,9 @@ const GardenFullComponent = () => {
                         centeredSlides={true}
                         pagination={{ clickable: true }}
                         scrollbar={{ draggable: true, dragSize: 30 }}
+
                     >
-                        {(flowerFullList.length == 0 ? "등록된 꽃이 없어요. 꽃을 피워볼까요?" : flowerFullList)}
+                        {(gardenList.length == 0 ? "등록된 꽃이 없어요. 꽃을 피워볼까요?" : gardenList)}
                     </Swiper>
                 </FlowerViewSwiper>
                 <Footer>
