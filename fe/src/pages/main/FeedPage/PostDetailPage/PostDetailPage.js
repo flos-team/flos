@@ -49,14 +49,9 @@ const PostDetailPage = () => {
   };
 
   const navigate = useNavigate();
-  const [postWriterId, setPostWriterId] = useState(0);
 
   useEffect(() => {
     getPost(params.id).then((response) => {
-      // console.dir(response.writer.id);
-      setPostWriterId(response.writer.id);
-      //         // navigate(`/other-profile-page/${post.writer.id}`)
-
       setPost(response);
       setPostLoading(true);
     });
@@ -73,6 +68,7 @@ const PostDetailPage = () => {
     // console.log(comments);
     // console.log(post);
 
+    // 게시글의 weather Enum 값을 읽어 이미지로 변환하는 분기
     let emotionWeather = none;
     switch (post.weather) {
       case "SUNNY":
@@ -93,14 +89,8 @@ const PostDetailPage = () => {
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
     let RegBefore = getTimeDiffText(postDay, curDay);
 
-    const tags = post.relation.tagList.map(({ key, tagName }) => (
-      <div className="post-tag">
-        {key}
-        {tagName}
-      </div>
-    ));
-
-    const UpdateBtn = (commentId) => {
+    // 자신의 댓글 삭제를 누르면 삭제하는 함수
+    const commentDeleteBtn = (commentId) => {
       return (
         <div>
           <span
@@ -113,18 +103,30 @@ const PostDetailPage = () => {
       );
     };
 
-    // 수정 버튼 구현 + 기능 구현
+    // 타인의 프로필로 이동하는 함수
+    const toProfile = (userId) => {
+      navigate(`/other-profile-page/${userId}`);
+    };
+
+    // 게시물에 저장된 해시태그 출력
+    const tags = post.relation.tagList.map((key) => {
+      return <div className="post-tag">{key}</div>;
+    });
+
+    // 댓글 화면에 출력
     const commentList = comments.map((e) => {
       let commentKey = e.key;
       let commentDay = dayjs(e.createdAt, "YYYY-MM-DD HH:mm:ss");
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
       let RegBefore = getTimeDiffText(commentDay, curDay);
-
       const result = (
         <div className="comment-item">
           <img
             className="user-img"
             src={`${url}${e.writer.profileImage.saveName}`}
+            onClick={() => {
+              toProfile(e.writer.id);
+            }}
           />
           <div className="comment-container">
             <div className="comment-header">
@@ -133,9 +135,8 @@ const PostDetailPage = () => {
                 <span className="comment-header-left">{RegBefore}</span>
               </div>
               {!e.isApprove && e.isMine && !e.isCommented
-                ? UpdateBtn(e.id)
+                ? commentDeleteBtn(e.id)
                 : ""}
-              {/* {!e.isApprove ? UpdateBtn : ""} */}
             </div>
             <div className="comment-main">{e.content}</div>
             <div className="comment-addComment">댓글달기</div>
@@ -153,6 +154,7 @@ const PostDetailPage = () => {
       return result;
     });
 
+    // 사진 영역 : 사진이 있으면 사진들을 화면에 출력한다.
     let imgs = "";
     if (post.relation.attachFiles.length >= 1) {
       imgs = post.relation.attachFiles.map(({ key, saveName }) => (
@@ -197,7 +199,12 @@ const PostDetailPage = () => {
             <div className="post-container">
               <div className="user-info-container">
                 <div className="user-info-div">
-                  <img src={`${url}${post.writer.profileImage.saveName}`} onClick={(e)=>{navigate(`/other-profile-page/${postWriterId}`)}} />
+                  <img
+                    src={`${url}${post.writer.profileImage.saveName}`}
+                    onClick={(e) => {
+                      navigate(`/other-profile-page/${post.writer.id}`);
+                    }}
+                  />
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
