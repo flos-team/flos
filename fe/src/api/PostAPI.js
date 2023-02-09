@@ -87,8 +87,8 @@ const getBookMarkList = async (page = 0) => {
  * @param {number} page 페이지번호 (0 ~ N)
  * @returns {Promise} A Promise Object contains UserPostListObject
  */
-const getPostListByNickname = async (nickName) => {
-  let url = `/api/post/list/member/${nickName}`;
+const getPostListByNickname = async (nickName, page = 0) => {
+  let url = `/api/post/list/member/${nickName}?page=${page}`;
   let userPostListObject = {};
   await axios
     .get(url)
@@ -216,7 +216,7 @@ const createPost = async (content, weather, tagList = [], attachFiles = []) => {
  */
 const modifyPost = async (postId, content, writerId, tagList, attachFiles, modifiedAt = new Date()) => {
   let url = "/api/post/modify";
-  let modfiedPost = {
+  let modifiedPost = {
     attachFiles,
     content,
     id: postId,
@@ -226,7 +226,7 @@ const modifyPost = async (postId, content, writerId, tagList, attachFiles, modif
   };
   let isModified = false;
   await axios
-    .put(url, modfiedPost)
+    .put(url, modifiedPost)
     .then((response) => {
       console.dir(response);
     })

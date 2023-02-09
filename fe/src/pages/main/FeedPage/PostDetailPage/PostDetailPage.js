@@ -77,11 +77,7 @@ const PostDetailPage = () => {
       return (
         <>
           <CommentComponent comment={key}></CommentComponent>
-          {key.id ? (
-            <SubCommentComponent parentId={key.id}></SubCommentComponent>
-          ) : (
-            ""
-          )}
+          {key.id ? <SubCommentComponent parentId={key.id}></SubCommentComponent> : ""}
         </>
       );
     });
@@ -130,11 +126,7 @@ const PostDetailPage = () => {
     return (
       <>
         <div className="post-detail-page">
-          <HeaderComponent
-            backVisible={true}
-            pageName={"피드"}
-            optType={0}
-          ></HeaderComponent>
+          <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
               <div className="user-info-container">
@@ -142,14 +134,15 @@ const PostDetailPage = () => {
                   <img
                     src={`${url}${post.writer.profileImage.saveName}`}
                     onClick={(e) => {
-                      navigate(`/other-profile-page/${post.writer.id}`);
+                      if (post.writer.id !== user.id) {
+                        navigate(`/other-profile-page/${post.writer.id}`);
+                      }
                     }}
                   />
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
-                      {RegBefore}{" "}
-                      <img className="post-emotion" src={emotionWeather}></img>
+                      {RegBefore} <img className="post-emotion" src={emotionWeather}></img>
                     </p>
                   </div>
                 </div>
@@ -166,10 +159,7 @@ const PostDetailPage = () => {
             </div>
           </div>
           <div className="user-content-input-div">
-            <img
-              className="user-icon"
-              src={`${url}${user.profileImage.saveName}`}
-            />
+            <img className="user-icon" src={`${url}${user.profileImage.saveName}`} />
             <div className="comment-input-div">
               <input
                 className="comment-input"

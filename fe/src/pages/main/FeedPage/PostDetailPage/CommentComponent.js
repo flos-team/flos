@@ -9,12 +9,7 @@ import { getTimeDiffText } from "../../../../api/DateModule";
 import dayjs from "dayjs";
 import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
 import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
-import {
-  getCommentList,
-  getPriComment,
-  commentApprove,
-  deleteComment,
-} from "../../../../api/CommentAPI";
+import { getCommentList, getPriComment, commentApprove, deleteComment } from "../../../../api/CommentAPI";
 
 import "./PostDetailPage.css";
 
@@ -29,10 +24,7 @@ const CommentComponent = ({ comment }) => {
   const commentDeleteBtn = (commentId) => {
     return (
       <div>
-        <span
-          className="comment-header-right"
-          onClick={() => deleteComment(commentId)}
-        >
+        <span className="comment-header-right" onClick={() => deleteComment(commentId)}>
           삭제
         </span>
       </div>
@@ -41,7 +33,9 @@ const CommentComponent = ({ comment }) => {
 
   // 타인의 프로필로 이동하는 함수
   const toProfile = (userId) => {
-    navigate(`/other-profile-page/${userId}`);
+    if (user.id !== userId) {
+      navigate(`/other-profile-page/${userId}`);
+    }
   };
 
   const addComment = (
@@ -82,14 +76,10 @@ const CommentComponent = ({ comment }) => {
       <div className="comment-container">
         <div className="comment-header">
           <div>
-            <span className="comment-header-left">
-              {comment.writer.nickname}
-            </span>
+            <span className="comment-header-left">{comment.writer.nickname}</span>
             <span className="comment-header-left">{RegBefore}</span>
           </div>
-          {!comment.isApprove && comment.isMine && !comment.isCommented
-            ? commentDeleteBtn(comment.id)
-            : ""}
+          {!comment.isApprove && comment.isMine && !comment.isCommented ? commentDeleteBtn(comment.id) : ""}
         </div>
         <div className="comment-main">{comment.content}</div>
         {inputFocus ? replyInput : addComment}

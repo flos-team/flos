@@ -23,7 +23,8 @@ const ProfileModifyPage = () => {
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.isToast);
   const toastMessage = useSelector((state) => state.toast.toastMessage);
-  
+  const user = useSelector((state) => state.user.userData);
+
   // state
   const [userInfo, setUserInfo] = useState({ email: "", profileURL: "" });
   const [nickname, setNickname] = useState("");
@@ -33,45 +34,10 @@ const ProfileModifyPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
 
-  // init Data
-  useEffect(() => {
-    let data = getMemberInfo();
-    data.then((res) => {
-      //console.dir(res);
-      let userData = {
-        email: res.email,
-        // nickname: res.nickname,
-        // introduction: res.introduction,
-        profileURL: `https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`,
-      };
-      setNickname(res.nickname);
-      setIntroduction(res.introduction);
-      setUserInfo(userData);
-      // res.email
-      // res.nickname;
-      // res.introduction
-      // res.profileImage.saveName
-    });
-  }, []);
-
-  const imgInputRef = useRef(1);
-  const nicknameRef = useRef(2);
-  const introRef = useRef(3);
-
-  // functions;
-  const modifyMemberInfoFunc = async () => {
-    let data = modifyUserInfo(nickname, introduction);
-    await data.then((res) => {
-      // console.log(res); // true
-      dispatch(setIsToastValue(true));
-      dispatch(setToastMessage("회원정보 수정이 완료되었습니다."));
-    });
-  };
-
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null); //파일
   const handleOnChange = (event) => {
-    console.log(event.target.files);
+    //console.log(event.target.files);
     setImgFile(event.target.files);
     //fd.append("file", event.target.files)
     setImgBase64([]);
@@ -97,6 +63,46 @@ const ProfileModifyPage = () => {
     }
   };
 
+  // init Data
+  useEffect(() => {
+    let data = getMemberInfo();
+    data.then((res) => {
+      //console.dir(res);
+      let userData = {
+        email: res.email,
+        // nickname: res.nickname,
+        // introduction: res.introduction,
+        profileURL: `https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`,
+      };
+      setNickname(res.nickname);
+      setIntroduction(res.introduction);
+      setUserInfo(userData);
+      // res.email
+      // res.nickname;
+      // res.introduction
+      // res.profileImage.saveName
+    });
+  }, []);
+
+  // ref
+  const imgInputRef = useRef(1);
+  const nicknameRef = useRef(2);
+  const introRef = useRef(3);
+
+  // functions;
+  const modifyMemberInfoFunc = async () => {
+    let data = modifyUserInfo(nickname, introduction, imgFile);
+
+    await data
+      .then((res) => {
+        // console.log(res); // true
+      })
+      .catch((err) => {
+        dispatch(setIsToastValue(true));
+        dispatch(setToastMessage("회원정보 수정 중 오류 발생"));
+        console.dir("오류발생");
+      });
+  };
 
   return (
     <>
@@ -113,16 +119,19 @@ const ProfileModifyPage = () => {
       />
       <div className="profiile-edit-page-conatiner">
         <div className="profile-photo-edit-container">
-          <div className="user-img" style={{ backgroundImage: `url(${userInfo.profileURL})` }}></div>
+          <div
+            className="user-img"
+            style={{ backgroundImage: `url(${imgBase64.length ? imgBase64 : userInfo.profileURL})` }}
+          ></div>
           <div className="profile-photo-edit-btn">
             <label htmlFor="photo-input">프로필 사진 수정</label>
             <input
               type="file"
               id="photo-input"
-              multiple
               accept="image/jpg, image/jpeg, image/png"
               ref={imgInputRef}
               style={{ display: "none" }}
+              onChange={handleOnChange}
             />
           </div>
         </div>
