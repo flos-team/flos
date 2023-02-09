@@ -5,11 +5,11 @@ import com.onehee.flos.model.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.time.LocalDate;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
-    List<Attendance> findAllByMember(Member member);
+    Integer countByMemberAndLoginDateBetween(Member member, LocalDate start, LocalDate end);
 
 }
