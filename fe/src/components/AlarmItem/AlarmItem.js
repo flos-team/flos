@@ -42,7 +42,8 @@ const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather, id }) => {
     }
   }, [weather]);
 
-  const deleteNoti = () => {
+  const deleteNoti = (id) => {
+    // console.log(id)
     deleteNotification(id).then((res) => {
       console.log(res)
     })
@@ -51,7 +52,7 @@ const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather, id }) => {
     <div className="alarm-item">
       <AlarmItemHeader AlarmImg={AlarmImg} AlarmTextJSX={AlarmTextJSX} AlarmTimeLog={AlarmTimeLog}></AlarmItemHeader>
       <div className="close-btn">
-        <img src={closeIcon} onClick={deleteNoti}/>
+        <img alt = "" src={closeIcon} onClick={() => deleteNoti(id)}/>
       </div>
       {weatherBtnComponent}
     </div>
