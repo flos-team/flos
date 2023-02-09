@@ -206,4 +206,13 @@ public class MemberServiceImpl implements MemberService {
         return memberInfoResponseDTO;
     }
 
+    @Override
+    public void updatePassword(MemberPasswordUpdateRequestDTO memberPasswordUpdateRequestDTO) {
+        Member member = SecurityManager.getCurrentMember();
+        if (!passwordEncoder.matches(memberPasswordUpdateRequestDTO.getCurrentPassword(), member.getPassword())) {
+            throw new BadRequestException("현재 비밀번호가 일치하지 않습니다.");
+        }
+        member.setPassword(passwordEncoder.encode(memberPasswordUpdateRequestDTO.getNewPassword()));
+        memberRepository.save(member);
+    }
 }

@@ -31,5 +31,6 @@ public interface MemberService {
 
     MemberInfoResponseDTO getMemberInfo(MemberSelectRequestDTO memberSelectRequestDTO);
 
+    void updatePassword(MemberPasswordUpdateRequestDTO memberPasswordUpdateRequestDTO);
 
 }
