@@ -99,7 +99,7 @@ public class MemberServiceImpl implements MemberService {
                 !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
                 && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
         ) {
-            Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNull(member).orElse(null);
+            Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(member).orElse(null);
             if (flower != null) {
                 Notification notification = Notification.builder()
                         .member(member)
