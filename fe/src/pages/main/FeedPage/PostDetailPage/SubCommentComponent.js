@@ -49,7 +49,7 @@ const SubCommentComponent = ({ parentId }) => {
     let RegBefore = getTimeDiffText(commentDay, curDay);
 
     const result = (
-      <div className="comment-item">
+      <div className="comment-item-reply">
         <img
           className="user-img"
           src={`${url}${comment.writer.profileImage.saveName}`}
@@ -70,7 +70,6 @@ const SubCommentComponent = ({ parentId }) => {
               : ""}
           </div>
           <div className="comment-main">{comment.content}</div>
-          <div className="comment-addComment">댓글달기</div>
         </div>
       </div>
     );

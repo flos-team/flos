@@ -11,8 +11,6 @@ import {
   deleteComment,
 } from "../../../../api/CommentAPI";
 
-import { seeMore } from "./subComment";
-
 import CommentComponent from "./CommentComponent";
 import SubCommentComponent from "./SubCommentComponent";
 
