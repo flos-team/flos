@@ -5,8 +5,9 @@ import styled from "@emotion/styled";
 const Detail = styled.div`
     box-sizing: border-box;
 
-    background: linear-gradient(360deg, #FFFFFF 0%, rgba(255, 255, 255, 0.0572917) 99.99%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(360deg, #FFFFFF 0%, rgba(255, 255, 255, 0.0572917) 50.99%, rgba(255, 255, 255, 0) 100%);
     border: 1px solid #FBFBFB;
+    border-radius: 10%;
 
     width: 270px;
     margin: 20px;
@@ -35,7 +36,7 @@ const FlowerName = styled.div`
     align-items: center;
     text-align: center;
 
-    color: #000000;
+    color: #FFFFFF;
 `;
 
 // 설명 속성 Tag

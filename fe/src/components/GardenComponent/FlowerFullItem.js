@@ -6,7 +6,7 @@ const FlowerView = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 `;
 
 const FlowerDetailData = styled.div`

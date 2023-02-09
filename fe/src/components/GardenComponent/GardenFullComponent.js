@@ -4,11 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import 'swiper/css';
 import 'swiper/less/effect-coverflow';
 import 'swiper/css/scrollbar';
+import 'swiper/less/effect-fade';
 import styled from "@emotion/styled";
 import FlowerFullItem from "./FlowerFullItem";
 import { getGardenList } from "../../api/FlowerAPI"
 import Lottie from 'react-lottie';
 import LoadingIcon from "./../../assets/GardenAsset/8640-loading.json"
+import FloweringData from "../../assets/GardenAsset/77809-falling-leaf.json"
 
 const FullConponent = styled.div`
     display: flex;
@@ -26,6 +28,10 @@ const FlowerCountData = styled.div`
     border: 1px solid #FEFEFE;
     background-color: pink;
     color: white;
+`;
+
+const Effect = styled.div`
+    position: fixed;
 `;
 
 const FlowerViewSwiper = styled.div`
@@ -48,11 +54,10 @@ const Footer = styled.div`
 `;
 
 const FlowerDateData = styled.div`
-    font-size: 0.8rem;
+    font-size: 1.1rem;
     padding: 5px;
     border-radius: 10px;
     border: 1px solid #FEFEFE;
-    background-color: pink;
     color: white;
 `;
 
@@ -83,7 +88,7 @@ const GardenFullComponent = () => {
     const refreshDate = () => {
         if (gardenListData.length > 0) {
             const startDateData = gardenListData[SwiperRef.current.swiper.activeIndex].createdAt.split("-");
-            setPresentYear(startDateData[0] + "년 " + startDateData[1] + "월");
+            setPresentYear(startDateData[0] + " / " + startDateData[1]);
         }
     }
 
@@ -134,6 +139,17 @@ const GardenFullComponent = () => {
                     width={350}
                 />
             </Loading> : null}
+            <Effect>
+                <Lottie
+                    options={{
+                        autoplay: true,
+                        animationData: FloweringData,
+                    }}
+                    height={550}
+                    width={400}
+                    isClickToPauseDisabled
+                />
+            </Effect>
             <FullConponent>
                 <FlowerViewSwiper>
                     <Swiper

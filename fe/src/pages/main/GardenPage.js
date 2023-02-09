@@ -3,10 +3,14 @@ import GardenFullComponent from "../../components/GardenComponent/GardenFullComp
 import backgroundData from "../../assets/GardenAsset/110535-spring-background-1.json";
 import styled from "@emotion/styled"
 import Lottie from "react-lottie";
-
+import background from "../../assets/GardenAsset/garden-background-img.jpg"
 const GardenPage = styled.div`
     width: 100%;
     height: 100vh;
+    overflow: hidden;
+    background-image: url(${(p) => p.url});
+    background-repeat: no-repeat;
+    background-size: cover;
     overflow: hidden;
 `;
 
@@ -29,7 +33,7 @@ const Background = styled.div`
 
 const Garden = () => {
     return (
-        <GardenPage>
+        <GardenPage url={background}>
             <Header>
                 MY FLOS
             </Header>
