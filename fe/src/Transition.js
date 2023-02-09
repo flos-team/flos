@@ -62,6 +62,8 @@ function Transition() {
           <Route path="/flower-end-page" element={<EndingPage />}></Route>
           <Route path="/follower-view-page/:id" element={<FollowerViewPage/>}></Route>
 
+          <Route path="*" element={<NotFoundPage/>}></Route>
+
           {/* <Route path="/product/*" element={<Product />}></Route> */}
           {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}
         </Routes>
