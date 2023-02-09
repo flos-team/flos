@@ -126,8 +126,12 @@ public class CommentServiceImpl implements CommentService {
         if (commentRepository.existsByWriterAndPostAndIsApproveIs(tempComment.getWriter(), post, true)) {
             throw new BadRequestException("이미 채택된 댓글이 존재합니다.");
         }
-        if (SecurityManager.getCurrentMember().getId() != post.getWriter().getId()) {
+        Member me = SecurityManager.getCurrentMember();
+        if (me.getId() != post.getWriter().getId()) {
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
+        }
+        if (me.getId() == tempComment.getWriter().getId()) {
+            throw new BadRequestException("게시글 주인이 본인의 댓글을 채택할 수 없습니다.");
         }
 
         WeatherType weatherType = post.getWeather().equals(WeatherType.CLOUDY) ? RandomWeatherSelector.getRandomWeather() : post.getWeather();
