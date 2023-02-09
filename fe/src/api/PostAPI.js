@@ -35,7 +35,7 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains PostListObject
  */
-const getPostList = async (page = 0) => {
+const getPostList = async (page = 31) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
