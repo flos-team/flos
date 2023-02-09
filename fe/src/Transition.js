@@ -24,6 +24,8 @@ import GuidePage from "./pages/GuidePage";
 import EndingPage from "./pages/main/EndingPage/EndingPage"
 import FollowerViewPage from "./pages/FollowerViewPage/FollowerViewPage";
 
+import NotFoundPage from "./pages/NotFoundPage"
+
 import "./Transition.css";
 
 function Transition() {

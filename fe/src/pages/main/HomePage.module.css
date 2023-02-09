@@ -184,3 +184,14 @@
 .audiocontrols{
     width: 100px;
 }
+
+.redpoint{
+    position: absolute;
+    font-size: 32px;
+    color: red;
+    top: 0px;
+    right: 36px;
+    z-index: -1;
+    width: 1px;
+    height: 1px;
+}
