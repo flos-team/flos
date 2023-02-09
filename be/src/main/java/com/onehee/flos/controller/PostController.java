@@ -29,7 +29,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/post")
-@Log4j2
 public class PostController {
     private final PostRepository postRepository;
 
@@ -132,9 +131,8 @@ public class PostController {
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping(value = "")
-    public ResponseEntity<?> createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
+    public ResponseEntity<?> createPost(@RequestParam PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
         postService.createPost(postCreateRequestDTO);
-        log.info("content: {}, weather: {}, tagList: {}, files: {}", postCreateRequestDTO.getContent(), postCreateRequestDTO.getWeather(), postCreateRequestDTO.getTagList(), postCreateRequestDTO.getAttachFiles());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
