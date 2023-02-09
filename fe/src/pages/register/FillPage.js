@@ -79,10 +79,6 @@ function FillPage() {
       setEmailMsg("이메일 주소가 올바르지 않습니다.");
       setEmailMsgColor(false);
     }
-    // else if (DB에 있으면) {
-    // setEmailMsg('이미 사용 중인 이메일입니다.')
-    // setEmailMsgColor(false)
-    // }
     else {
       setEmailMsg("해당 이메일로 인증을 받습니다.");
       setEmailMsgColor(true);
@@ -111,20 +107,6 @@ function FillPage() {
     }
   };
 
-  // 2. 닉네임 유효성 검사 로직
-  // const checkNickname = () => {
-  //   if (isValidNicknameLength === false || isValidNicknameForm === false) {
-  //     setNicknameMsg("사용할 수 없는 닉네임입니다");
-  //     setNicknameMsgColor(false);
-  //   }
-  //   else if (DB에 같은 닉네임이 존재하면){
-  //   setNicknameMsg('이미 사용중인 닉네임입니다.')
-  //   setNicknameMsgColor(false)
-  //   else {
-  //     setNicknameMsg("사용 가능한 닉네임입니다");
-  //     setNicknameMsgColor(true);
-  //   }
-  // };
 
   // 3. 다음 페이지로 이동할지 확인
   const navigate = useNavigate();
@@ -148,7 +130,7 @@ function FillPage() {
     } else if (!canUseNickname) {
       alert('닉네임 중복 확인?')
     } else if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
-      axios.post('/member/sign-up', axiosInfo, {withCredentials: false})
+      axios.post('api/member/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
         console.log(res)
         alert('회원가입 성공')
@@ -315,6 +297,7 @@ const xBtnAppear = () =>{
       })
       .catch((err) => {
         console.log(err)
+        console.log('여기에러')
       })
     }
   }
@@ -334,7 +317,6 @@ const xBtnAppear = () =>{
           ] = `Bearer ${accessToken}`;
           // accessToken을 localStorage, cookie 등에 저장하지 않는다!
           console.log("input Nickname: ", inputNickname)
-          console.log(res.data)
           if (res.data === true) {
             setCanUseNickname(false)
             setNicknameMsgColor(false);
@@ -353,8 +335,6 @@ const xBtnAppear = () =>{
         })
       }
   }
-
-
   return (
     <>
     {/* 모달 켜졌을 때 바깥 부분 어둡게 하는 설정 */}
@@ -379,7 +359,7 @@ const xBtnAppear = () =>{
               className={styles.inputdiv}
               disabled={verifyedId}
             />
-            <img id = "emailXBtn" alt='' onClick={cancelIdValue} className={styles.icon}></img>
+            {verifyedId ? null : <img id = "emailXBtn" alt='' onClick={cancelIdValue} className={styles.icon}></img>}
           </div>
           <p className={styles.spacebetween}>
           <span className={emailMsgColor ? styles.canuse : styles.cannotuse}>{emailMsg}</span>
