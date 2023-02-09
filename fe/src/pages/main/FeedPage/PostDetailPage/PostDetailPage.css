@@ -73,6 +73,19 @@
   width: 16px;
   height: 16px;
 }
+.post-detail-page .post-detail-container .post-container .user-info-container .bookmark-btn,
+.post-detail-page .post-detail-container .post-container .user-info-container .dot-btn {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.post-detail-page .post-detail-container .post-container .user-info-container .bookmark-btn img,
+.post-detail-page .post-detail-container .post-container .user-info-container .dot-btn img {
+  width: 24px;
+  height: fit-content;
+}
 .post-detail-page .post-detail-container .post-container .img-container {
   width: 22.5rem;
   height: 22.5rem;

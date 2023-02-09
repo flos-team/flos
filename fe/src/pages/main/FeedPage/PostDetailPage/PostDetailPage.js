@@ -27,6 +27,15 @@ import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
 import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
+import bookMarkIcon from "../../../../assets/GlobalAsset/book-mark-icon.png";
+import bookMarkActive from "../../../../assets/GlobalAsset/book-mark-active.png";
+import dotMarkIcon from "../../../../assets/GlobalAsset/dot-mark-icon.png";
+
+/*
+book-mark-active
+book-mark-icon
+dot-mark-icon
+*/
 
 import rainy from "../../../../assets/GlobalAsset/rainy.png";
 import sunny from "../../../../assets/GlobalAsset/sunny.png";
@@ -68,6 +77,9 @@ const PostDetailPage = () => {
       setCommentLoading(true);
     });
   }, [commentOnChange]);
+
+  // 북마크 토글에 대한 state 및 function
+  const [isBookmark, setIsBookmark] = useState(false);
 
   if (postLoading && commentLoading) {
     // console.log(comments);
@@ -145,6 +157,17 @@ const PostDetailPage = () => {
                       {RegBefore} <img className="post-emotion" src={emotionWeather}></img>
                     </p>
                   </div>
+                </div>
+                <div
+                  className="bookmark-btn"
+                  onClick={(e) => {
+                    setIsBookmark(!isBookmark);
+                  }}
+                >
+                  <img src={isBookmark ? bookMarkActive : bookMarkIcon} />
+                </div>
+                <div className="dot-btn">
+                  <img src={dotMarkIcon} />
                 </div>
               </div>
               {imgs}

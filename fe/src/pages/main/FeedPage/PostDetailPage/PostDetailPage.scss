@@ -52,11 +52,23 @@
             }
             .time-log {
             }
-            .post-emotion{
+            .post-emotion {
               display: inline;
               width: 16px;
               height: 16px;
             }
+          }
+        }
+        .bookmark-btn,
+        .dot-btn {
+          width: 48 * $rpx1;
+          height: 48 * $rpx1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 24px;
+            height: fit-content;
           }
         }
       }
@@ -149,7 +161,7 @@
             flex-flow: row nowrap;
             justify-content: space-between;
             gap: 8 * $rpx1;
-            div{
+            div {
               width: max-content;
               gap: 8px;
               display: flex;
@@ -161,14 +173,13 @@
               font-size: 10 * $rpx1;
               line-height: 14 * $rpx1;
             }
-
           }
           .comment-main {
             width: 100%;
             min-height: 20 * $rpx1;
             height: max-content;
           }
-          .comment-addComment{
+          .comment-addComment {
             width: 100%;
             text-align: right;
             font-size: 12px;
@@ -210,12 +221,12 @@
             flex-flow: row nowrap;
             justify-content: space-between;
             gap: 8 * $rpx1;
-            div{
+            div {
               width: max-content;
               gap: 8px;
               display: flex;
             }
-            .comment-header-right{
+            .comment-header-right {
               color: $red200;
             }
           }
@@ -224,7 +235,7 @@
             min-height: 20 * $rpx1;
             height: max-content;
           }
-          .comment-addComment{
+          .comment-addComment {
             width: 100%;
             text-align: right;
             font-size: 12px;

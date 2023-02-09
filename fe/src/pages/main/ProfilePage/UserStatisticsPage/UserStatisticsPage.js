@@ -5,7 +5,6 @@ import userActiveGraph from "../../../../assets/ProfileAsset/user-active-graph.p
 import sunnyImg from "../../../../assets/GlobalAsset/sunny.png";
 import cloudyImg from "../../../../assets/GlobalAsset/cloudy.png";
 import rainyImg from "../../../../assets/GlobalAsset/rainy.png";
-import pha from "../../../../assets/GlobalAsset/pha.png";
 
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 /* import CSS */
@@ -34,11 +33,11 @@ const UserStatisticsPage = () => {
   });
 
   const [plantItem, setPlantItem] = useState([
-    { plantId: 1, plantImg: pha },
-    { plantId: 2, plantImg: pha },
-    { plantId: 3, plantImg: pha },
-    { plantId: 4, plantImg: pha },
-    { plantId: 5, plantImg: pha },
+    { plantId: 1, plantImg: "" },
+    { plantId: 2, plantImg: "" },
+    { plantId: 3, plantImg: "" },
+    { plantId: 4, plantImg: "" },
+    { plantId: 5, plantImg: "" },
   ]);
 
   const plantList = plantItem.map(({ plantId, plantImg }) => {
@@ -54,10 +53,7 @@ const UserStatisticsPage = () => {
   return (
     <>
       <div className="user-static-page">
-        <HeaderComponent
-          backVisible={true}
-          pageName={"나의 투쟁"}
-        ></HeaderComponent>
+        <HeaderComponent backVisible={true} pageName={"나의 투쟁"}></HeaderComponent>
         <div className="user-active-static-item">
           <div className="user-active-div">
             <div className="user-info-div">
