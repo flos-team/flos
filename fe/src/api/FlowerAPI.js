@@ -21,6 +21,8 @@ const getFlowerInfo = async () => {
   await axios
     .get(url)
     .then(({data}) => {
+      console.log("데이터");
+      console.log(data);
       value = {
         id: data.id,
         name: data.name,
@@ -30,8 +32,8 @@ const getFlowerInfo = async () => {
         maxGrowthValue: data.capacity
       };
     })
-    .catch((err) => {
-      console.log(err, "꽃 정보 가져오는 중 오류 발생");
+    .catch(({response}) => {
+      console.log(response.status, "꽃 정보 가져오는 중 오류 발생");
     });
   return value;
 };
