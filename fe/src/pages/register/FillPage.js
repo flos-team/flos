@@ -257,12 +257,12 @@ const xBtnAppear = () =>{
 
 
   // API
-  axios.defaults.baseURL = 'http://i8b210.p.ssafy.io:8080'                                                                                                                                                                                                                                                           
+  axios.defaults.baseURL = 'https://i8b210.p.ssafy.io'                                                                                                                                                                                                                                                           
 
   // 아이디 중복 확인 API
   const isSameId = () => {
     if (isValidId) {
-      axios.get('/member/check/email?email=' + inputId, {withCredentials : false})
+      axios.get('api/member/check/email?email=' + inputId, {withCredentials : false})
         .then((res) => {
           const { accessToken } = res.data;
           // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
@@ -285,7 +285,7 @@ const xBtnAppear = () =>{
 
   // 메일 전송 API
   const mailSend = () => {
-      axios.get('/email/sign-up?email=' + inputId, {withCredentials : false})
+      axios.get('api/email/sign-up?email=' + inputId, {withCredentials : false})
       .then((res) => {
         console.log(res)
         alert('메일 발송되었습니다.')
@@ -305,7 +305,7 @@ const xBtnAppear = () =>{
       "email" : inputId
     }
     if (isMailSend) {
-      axios.post('/email/sign-up', axiosInfo, {withCredentials: false})
+      axios.post('api/email/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
         console.log(res)
         console.log('성공')
@@ -325,7 +325,7 @@ const xBtnAppear = () =>{
       setNicknameMsg("사용할 수 없는 닉네임입니다");
       setNicknameMsgColor(false);
     } else {
-      axios.get('/member/check/nickname?nickname=' + inputNickname, {withCredentials : false})
+      axios.get('api/member/check/nickname?nickname=' + inputNickname, {withCredentials : false})
         .then((res) => {
           const { accessToken } = res.data;
           // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
