@@ -30,6 +30,9 @@ public class Flower {
 
     private Long height;
 
+    @ColumnDefault("false")
+    private Boolean gardening;
+
     @ColumnDefault("50")
     private Long capacity;
 

@@ -3,6 +3,7 @@ package com.onehee.flos.controller;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
+import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
@@ -57,6 +58,14 @@ public class FlowerController {
     @PutMapping("")
     public ResponseEntity<?> modifyFlower(@RequestBody FlowerModifyRequestDTO flowerModifyRequestDTO) throws BadRequestException {
         flowerService.modifyFlower(flowerModifyRequestDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Tag(name = "꽃API")
+    @Operation(summary = "플라워링", description = "꽃을 가든으로 보냅니다.")
+    @PostMapping("/gardening")
+    public ResponseEntity<?> modifyFlower(@RequestBody FlowerGardeningRequestDTO flowerGardeningRequestDTO) throws BadRequestException {
+        flowerService.gardeningFlower(flowerGardeningRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
