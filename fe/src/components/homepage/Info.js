@@ -4,9 +4,9 @@ import styled from "@emotion/styled";
 const Selection = styled.div`
   `;
 
-const Info = (props) => {
+const Info = () => {
     return (
-        <Selection onClick={props.onClick}>
+        <Selection>
             <img src={InfoImg}/>
         </Selection>
     )
