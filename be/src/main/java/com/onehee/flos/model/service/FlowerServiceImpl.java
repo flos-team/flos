@@ -1,6 +1,7 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.exception.FlowerNotExistsException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
@@ -62,7 +63,7 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerInfo() {
-        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(SecurityManager.getCurrentMember()).orElseThrow(() -> new BadRequestException("현재 키우는 꽃이 존재하지 않습니다.")));
+        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(SecurityManager.getCurrentMember()).orElseThrow(FlowerNotExistsException::new));
     }
 
     @Override
