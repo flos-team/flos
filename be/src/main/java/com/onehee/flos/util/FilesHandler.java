@@ -71,6 +71,11 @@ public class FilesHandler {
 
         // 실제 파일 저장
 
+        File saveFolder = new File(fileDir + uploadDate);
+        if (!saveFolder.exists()) {
+            saveFolder.mkdirs();
+        }
+
         file.transferTo(new File(savedPath));
 
         // DB에 등록
