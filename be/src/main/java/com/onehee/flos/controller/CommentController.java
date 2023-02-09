@@ -46,7 +46,7 @@ public class CommentController {
     }
 
     @Tag(name = "댓글API")
-    @Operation(summary = "상위 댓글 리스트", description = "게시글의 상위 댓글 리스트를 반환합니다.")
+    @Operation(summary = "하위 댓글 리스트", description = "특정 댓글의 하위 댓글 리스트를 반환합니다.")
     @GetMapping("/list/pri/{id}")
     public ResponseEntity<?> getListByPrimitive(@PathVariable("id") Long primitiveId){
         return new ResponseEntity<List<CommentResponseDTO>>(commentService.getCommentListByPrimitive(primitiveId), HttpStatus.OK);
