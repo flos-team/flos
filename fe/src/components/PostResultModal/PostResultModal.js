@@ -2,7 +2,6 @@ import axios from "axios";
 
 // /* libraray */
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import "swiper/css";
 import styled from "@emotion/styled";
 

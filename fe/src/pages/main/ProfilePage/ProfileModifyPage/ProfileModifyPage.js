@@ -95,13 +95,9 @@ const ProfileModifyPage = () => {
 
     await data
       .then((res) => {
-        // console.log(res); // true
+        console.dir(res); // true
       })
-      .catch((err) => {
-        dispatch(setIsToastValue(true));
-        dispatch(setToastMessage("회원정보 수정 중 오류 발생"));
-        console.dir("오류발생");
-      });
+      .catch((err) => {});
   };
 
   return (

@@ -148,7 +148,9 @@ const ProfilePage = ({ setIsToast }) => {
             display: "block",
             margin: "0 auto",
           }}
-          onClick={async (e) => {}}
+          onClick={async (e) => {
+            navigate("/flower-end-page");
+          }}
         >
           기능테스트
         </button>
