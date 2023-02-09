@@ -7,6 +7,8 @@ import com.onehee.flos.model.dto.request.UnfollowRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.service.FollowService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,26 +23,34 @@ public class FollowController {
     private final FollowService followService;
 
     @GetMapping( value = {"/follower", "/follower/{id}"})
-    public List<MemberResponseDTO> getFollowerList(@PathVariable(name = "id", required = false) Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getFollowerList(@PathVariable(name = "id", required = false) Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
         id = Objects.requireNonNullElse(id, memberDetails.getMember().getId());
         FollowDTO followDTO = new FollowDTO(id);
-        return followService.getFollowerList(followDTO);
+        List<MemberResponseDTO> body = followService.getFollowerList(followDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 
     @GetMapping(value = {"/following", "/following/{id}"})
-    public List<MemberResponseDTO> getFollowingList(@PathVariable(name = "id", required = false) Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getFollowingList(@PathVariable(name = "id", required = false) Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
         id = Objects.requireNonNullElse(id, memberDetails.getMember().getId());
         FollowDTO followDTO = new FollowDTO(id);
-        return followService.getFollowingList(followDTO);
+        List<MemberResponseDTO> body = followService.getFollowingList(followDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 
     @PostMapping
-    public List<MemberResponseDTO> follow(@RequestBody FollowRequestDTO followRequestDTO) {
-        return followService.follow(followRequestDTO);
+    public ResponseEntity<?> follow(@RequestBody FollowRequestDTO followRequestDTO) {
+        List<MemberResponseDTO> body = followService.follow(followRequestDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 
     @DeleteMapping("/{id}")
-    public List<MemberResponseDTO> unfollow(@PathVariable("id") Long id) {
-        return followService.unfollow(new UnfollowRequestDTO(id));
+    public ResponseEntity<?> unfollow(@PathVariable("id") Long id) {
+        List<MemberResponseDTO> body = followService.unfollow(new UnfollowRequestDTO(id));
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 }
