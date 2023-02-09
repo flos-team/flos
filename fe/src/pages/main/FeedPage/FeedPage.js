@@ -17,30 +17,31 @@ function Feed() {
     getPostList().then((response) => {
       setPosts(response.postList);
       setIsPostsLoading(true);
-    });
+    }, []);
     getFollowerList().then((response) => {
       setFriends(response);
       SetFriendsLoading(true);
     });
   }, []);
-  console.log(posts);
-  if (isPostsLoading && isFriendsLoading) {
-    const postList = posts.map((EachPost) => (
-      <PostItem post={EachPost}></PostItem>
-    ));
 
-    const friendList = friends.map((EachFriend) => {
-      let url =
-        "https://i8b210.p.ssafy.io/api/file/" +
-        EachFriend.profileImage.saveName;
-      // console.log(EachFriend);
-      const result = (
-        <div className={`${styles.friendThumbnail}`}>
-          <img src={url} alt="test" className={styles.friendProfileImg}></img>
-        </div>
-      );
-      return result;
-    });
+  // console.log(posts);
+
+  if (isPostsLoading && isFriendsLoading) {
+    const postList = posts.map((key) => <PostItem post={key}></PostItem>);
+    let friendList = "";
+    if (friends) {
+      friendList = friends.map((key) => {
+        let url =
+          "https://i8b210.p.ssafy.io/api/file/" + key.profileImage.saveName;
+        // console.log(EachFriend);
+        const result = (
+          <div className={`${styles.friendThumbnail}`}>
+            <img src={url} alt="test" className={styles.friendProfileImg}></img>
+          </div>
+        );
+        return result;
+      });
+    }
 
     const noPost = <div>게시물이 없습니다.</div>;
 

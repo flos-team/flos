@@ -19,8 +19,6 @@ import { ReactComponent as Flower1 } from "../../../assets/HomeAsset/flower/flow
 import { ReactComponent as Flower2 } from "../../../assets/HomeAsset/flower/flower2.svg";
 
 
-
-
 const COLORS = {
     green: {
         face: "#F1F9F6",

@@ -18,7 +18,7 @@ const Detail = styled.div`
 `;
 
 const SubDetailBox = styled.div`
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,6 +52,7 @@ const StateText = styled.div`
 // 날짜 속성 Tag
 const DateCountText = styled.div`
     font-size: 20px;
+    margin-bottom: 5px;
 `;
 
 // 날짜 세부 속성 Tag
@@ -73,8 +74,8 @@ const DetailData = (props) => {
             </SubDetailBox>
             <SubDetailBox>
                 <DescriptionText> 성장 기간 </DescriptionText>
-                <DateCountText> 30일 </DateCountText>/
-                <DateDetailText>( {props.flowerData.startDate} ~ {props.flowerData.endDate} )</DateDetailText>
+                <DateCountText> {props.flowerData.duration}일 </DateCountText>
+                <DateDetailText>( {props.flowerData.createdAt.split("T")[0]} ~ {props.flowerData.blossomAt.split("T")[0]})</DateDetailText>
             </SubDetailBox>
         </Detail>
     );
