@@ -36,6 +36,24 @@ const getFlowerInfo = async () => {
   return value;
 };
 
+/**
+ * getGardenList : 홈페이지의 꽃 정보를 가져옴
+ * @returns
+ */
+const getGardenList = async (page) => {
+  let url = `/api/flower/garden?page=${page}`;
+  let value = null;
+  await axios
+    .get(url)
+    .then(({data}) => {
+      value = data;
+    })
+    .catch((err) => {
+      console.log(err, "꽃 정보 가져오는 중 오류 발생");
+    });
+  return value;
+};
+
 /////////* POST *///////////////////
 /**
  * createFlower : 꽃 정보를 줌
@@ -45,6 +63,7 @@ const getFlowerInfo = async () => {
 const createFlower = async (flowerType, name) => {
   let url = `/api/flower`;
   let value = null;
+  console.log(name);
   await axios
     .post(url, {flowerType,name})
     .then(({data}) => {
@@ -118,4 +137,4 @@ const modifyFlower = async (id, name) => {
   return value;
 };
 
-export { getFlowerInfo, createFlower, giveSun, giveRain, modifyFlower };
+export { getFlowerInfo, getGardenList, createFlower, giveSun, giveRain, modifyFlower };

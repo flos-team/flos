@@ -71,7 +71,7 @@ const Background = styled.div`
 `;
 
 const MakeFlowerModal = (props) => {
-    const [type, setType] = useState("F001");
+    const [type, setType] = useState("Tulip");
     const [name, setName] = useState("");
 
 
@@ -101,7 +101,7 @@ const MakeFlowerModal = (props) => {
                             꽃 종류 선택
                         </div>
                         <select value={type} onChange={typeOnChange}>
-                            <option value="F001">튤립</option>
+                            <option value="Tulip">튤립</option>
                         </select>
                     </FlowerSelector>
                     <FlowerNameInputContainer>
