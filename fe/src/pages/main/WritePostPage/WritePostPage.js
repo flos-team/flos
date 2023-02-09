@@ -117,20 +117,20 @@ const WritePostPage = () => {
         pageName={"나의 마음 포스트 작성하기"}
         menuOpt2={"CHECK"}
         menuOpt2Func={async () => {
-          //judgeWeatherIdx("negative");
-          // let result = getSentimentResult(content);
-          // let resultText = "CLOUDY";
-          // // 빙글거리는 모달을 잠시 보여주고,
-          // await result
-          //   .then((res) => {
-          //     console.dir(res);
-          //     resultText = res.data.document.sentiment;
-          //     judgeWeatherIdx(resultText); // 결과 세팅해주고
-          //     // data.document.sentiment / "positive", "neutral", "negative"
-          //   })
-          //   .finally(() => {
-          //     // 여기서 모달을 닫는다.
-          //   });
+          judgeWeatherIdx("negative");
+          let result = getSentimentResult(content);
+          let resultText = "CLOUDY";
+          // 빙글거리는 모달을 잠시 보여주고,
+          await result
+            .then((res) => {
+              console.dir(res);
+              resultText = res.data.document.sentiment;
+              judgeWeatherIdx(resultText); // 결과 세팅해주고
+              // data.document.sentiment / "positive", "neutral", "negative"
+            })
+            .finally(() => {
+              // 여기서 모달을 닫는다.
+            });
           setIsVisible(true);
         }}
       ></HeaderComponent>

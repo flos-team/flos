@@ -26,7 +26,7 @@ import PostResultModal from "../../../components/PostResultModal/PostResultModal
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, getOtherMemberInfo, doLogin } from "../../../api/MemberAPI";
 import PostAPI, { getPost, getPostList, getPostListByNickname } from "../../../api/PostAPI";
-import { getFile } from "../../../api/FileAPI";
+import {getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList, cancelFollowing, doFollowing} from "../../../api/FollowAPI"
 
 /* import css */
 import "./ProfilePage.css";
@@ -47,7 +47,7 @@ const ProfilePage = ({ setIsToast }) => {
   const [isBookScrollable, setIsBookScrollable] = useState(true);
 
   // 사용자 정보 init
-  const titles = ["팔로잉", "팔로우", "게시글", "꽃송이"];
+  const titles = ["팔로워", "팔로잉", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
   const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));  
@@ -59,6 +59,9 @@ const ProfilePage = ({ setIsToast }) => {
 
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.isToast);
+  // 현재 로그인한 사람의 정보
+  const user = useSelector((state) => state.user.userData);
+
   const dispatch = useDispatch();
 
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
@@ -80,7 +83,7 @@ const ProfilePage = ({ setIsToast }) => {
         //console.log(`e : ${e}`, `i : ${i}`);
         let liEle = <></>;          
         if (i == 0 || i == 1) {
-          liEle = <li key={i} onClick={(e)=>{navigate(`/follower-view-page/${1}`)}}>{e > 999 ? "999+" : e}</li>;
+          liEle = <li key={i} onClick={(e)=>{navigate(`/follower-view-page/${user.id}/${i}`)}}>{e > 999 ? "999+" : e}</li>;
         }else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>
         return liEle;
       }));
@@ -130,7 +133,7 @@ const ProfilePage = ({ setIsToast }) => {
           <ul className="social-info-title">{titleList}</ul>
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
-        {/* <button
+        <button
           style={{
             width: "160px",
             height: "30px",
@@ -138,11 +141,10 @@ const ProfilePage = ({ setIsToast }) => {
             margin: "0 auto",
           }}
           onClick={async (e) => {
-            navigate("/flower-end-page");
           }}
         >
           기능테스트
-        </button> */}
+        </button>
         <div className="profile-tab-menu">
           <div className="post-tab focus-tab" onClick={(e) => {}}>
             <p>내 포스트</p>
