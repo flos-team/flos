@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -124,7 +125,7 @@ public class PostController {
 
     @Tag(name = "게시글API")
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
-    @PostMapping("")
+    @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> createPost(@RequestBody PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
         postService.createPost(postCreateRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
