@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,4 +28,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     @Query(value = "select count(*) from weather_resource where flower_id = ?1.flower_id and contributor_id = ?2.members_id", nativeQuery = true)
     Long countByFlowerAndContributor(Flower flower, Member contributor);
+
+    // 회원의 모든 개화한꽃 인데 최근순으로 정렬한
+    List<Flower> findAllByOwnerAndBlossomAtIsNotNullOrderByBlossomAtDesc(Member owner);
 }
