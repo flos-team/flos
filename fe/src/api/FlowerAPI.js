@@ -33,6 +33,9 @@ const getFlowerInfo = async () => {
       };
     })
     .catch(({response}) => {
+      if(response.data.errorCode === "NO_FLOWER_EXISTS"){
+        value = "NO_FLOWER_EXISTS";
+      }
       console.log(response.status, "꽃 정보 가져오는 중 오류 발생");
     });
   return value;
@@ -118,6 +121,27 @@ const giveRain = async () => {
   return value;
 };
 
+/**
+ * flowering : 개화 진행
+ */
+
+const flowering = async (id) => {
+  let url = `/api/flower/gardening`;
+  let value = null;
+  console.log(id);
+  await axios
+    .post(url, {id})
+    .then(({data}) => {
+      console.log("개화 함!!");
+      console.log(data);
+      value = data;
+    })
+    .catch((err) => {
+      console.log(err, "개화 중 오류 발생");
+    });
+  return value;
+};
+
 /////////* PUT *///////////////////
 /**
  * modifyFlower : 꽃 이름 변경 줌
@@ -139,4 +163,4 @@ const modifyFlower = async (id, name) => {
   return value;
 };
 
-export { getFlowerInfo, getGardenList, createFlower, giveSun, giveRain, modifyFlower };
+export { getFlowerInfo, getGardenList, createFlower, giveSun, giveRain, flowering, modifyFlower };

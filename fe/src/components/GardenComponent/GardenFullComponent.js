@@ -106,6 +106,7 @@ const GardenFullComponent = () => {
         page = 0;
         hasNext = false;
         getGardenListFunc();
+        refreshDate();
     }, []);
 
     useEffect(() => {
