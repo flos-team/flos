@@ -52,7 +52,7 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerInfo() {
-        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNull(SecurityManager.getCurrentMember()).orElse(null));
+        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNull(SecurityManager.getCurrentMember()).orElseThrow(() -> new BadRequestException("현재 키우는 꽃이 존재하지 않습니다.")));
     }
 
     @Override

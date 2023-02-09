@@ -35,24 +35,21 @@ public class FlowerResponseDTO {
     private int light;
 
     public static FlowerResponseDTO toDto(Flower flower) {
-        if (flower==null)
-            return FlowerResponseDTO.builder()
-                    .build();
-        else {
-            return FlowerResponseDTO.builder()
-                    .isFullGrown(flower.getCapacity() <= (flower.getWater()+flower.getLight()))
-                    .id(flower.getId())
-                    .owner(MemberResponseDTO.toDto(flower.getOwner()))
-                    .flowerType(flower.getFlowerType().getFlowerType())
-                    .flowerMeaning(flower.getFlowerType().getFlowerMeaning())
-                    .flowerColor(flower.getFlowerType().getColor())
-                    .name(flower.getName())
-                    .currentGrowValue(flower.getWater() + flower.getLight())
-                    .capacity(flower.getCapacity())
-                    .createdAt(flower.getCreatedAt())
-                    .blossomAt(flower.getBlossomAt())
-                    .duration(flower.getBlossomAt() == null ? null : ChronoUnit.DAYS.between(flower.getCreatedAt(), flower.getBlossomAt()))
-                    .build();
-        }
+
+        return FlowerResponseDTO.builder()
+                .isFullGrown(flower.getCapacity() <= (flower.getWater() + flower.getLight()))
+                .id(flower.getId())
+                .owner(MemberResponseDTO.toDto(flower.getOwner()))
+                .flowerType(flower.getFlowerType().getFlowerType())
+                .flowerMeaning(flower.getFlowerType().getFlowerMeaning())
+                .flowerColor(flower.getFlowerType().getColor())
+                .name(flower.getName())
+                .currentGrowValue(flower.getWater() + flower.getLight())
+                .capacity(flower.getCapacity())
+                .createdAt(flower.getCreatedAt())
+                .blossomAt(flower.getBlossomAt())
+                .duration(flower.getBlossomAt() == null ? null : ChronoUnit.DAYS.between(flower.getCreatedAt(), flower.getBlossomAt()))
+                .build();
+
     }
 }
