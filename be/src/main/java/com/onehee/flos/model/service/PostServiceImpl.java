@@ -100,13 +100,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
+    public void createPost(PostCreateRequestDTO postCreateRequestDTO, List<MultipartFile> multipartFileList) throws BadRequestException, IOException {
 
         Member writer = SecurityManager.getCurrentMember();
 
         Post tempPost = postRepository.saveAndFlush(postCreateRequestDTO.toEntity(writer));
 
-        for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
+        for (MultipartFile e : multipartFileList) {
             if (e == null)
                 continue;
             FileEntity tempFile = filesHandler.saveFile(e);

@@ -9,8 +9,10 @@ import com.onehee.flos.model.entity.type.WeatherType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public interface PostService {
@@ -39,7 +41,7 @@ public interface PostService {
     PostResponseDTO getPost(Long id) throws BadRequestException;
 
     // 게시글 등록
-    void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException;
+    void createPost(PostCreateRequestDTO postCreateRequestDTO, List<MultipartFile> multipartFileList) throws BadRequestException, IOException;
 
     // 게시글 수정
     void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException;
