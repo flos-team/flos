@@ -59,7 +59,7 @@ saveName
     // console.dir(params);
     let data = getOtherMemberInfo(params.id);
     data.then((res) => {
-      console.dir(res);
+      // console.dir(res);
       // userInfo, setUserInfo
       // profileImage.saveName
       setUserInfo({ nickname: res.nickname, introduction: res.introduction });
@@ -68,7 +68,7 @@ saveName
       setUserInfoList(list.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
       let data = getPostListByNickname(res.nickname);
       data.then((res) => {
-        console.dir(res);
+        //console.dir(res);
         // res.content
         setPostList(res.content.map((e) => (<PostItem post={e}></PostItem>)));
       })
