@@ -67,8 +67,12 @@ public class CommentServiceImpl implements CommentService {
 
         Post tempPost = postRepository.findById(commentCreateRequestDTO.getPostId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         Member writer = SecurityManager.getCurrentMember();
-        Comment tempParentComment = commentRepository.findById(commentCreateRequestDTO.getParentId()).orElse(null);
-        Comment tempPrimitiveComment = commentRepository.findById(commentCreateRequestDTO.getParentId()).orElse(null);
+        Comment tempParentComment = null;
+        Comment tempPrimitiveComment = null;
+        if (commentCreateRequestDTO.getParentId() != null)
+            tempParentComment = commentRepository.findById(commentCreateRequestDTO.getParentId()).orElse(null);
+        if (commentCreateRequestDTO.getPrimitiveId() != null)
+            tempPrimitiveComment = commentRepository.findById(commentCreateRequestDTO.getPrimitiveId()).orElse(null);
 
         commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
 
