@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./FillPage.module.css";
 import kakaologo from "../../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../../assets/LoginAsset/naver-logo.png";
@@ -44,7 +44,6 @@ function FillPage() {
   const [openModal, setOpenModal] = useState(false); // 모달 띄울까?
   const [emailInputMsg, setEmailInputMsg] = useState('해당 이메일로 인증 메일을 보냈습니다.');
   const [isMailSend, setIsMailSend] = useState(false);
-  // const [canUseId, setCanUseId] = useState(false);
   const [canUseNickname, setCanUseNickname] = useState(false);
   const [verifyedId, setVerifyedId] = useState(false); // 이메일인증까지 마친 이메일인가?
   const [showPw, setShowPw] = useState(false); // 비밀번호 보이기 
@@ -109,6 +108,7 @@ function FillPage() {
 
 
   // 3. 다음 페이지로 이동할지 확인
+  const onFocus = useRef([]);
   const navigate = useNavigate();
   const checkFill = () => {
     const axiosInfo = {
@@ -118,21 +118,25 @@ function FillPage() {
       "password": inputPw
     }
     if (!verifyedId) {
-      alert('아이디 확인')
+      alert('사용할 아이디 입력 후 인증을 완료해주세요.')
+      onFocus.current[0].focus();
     } else if (!pwMsgColor) {
-      alert('비밀번호 확인')
+      alert('사용 가능하지 않은 비밀번호입니다.')
+      onFocus.current[1].focus();
     } else if (!pwCheckMsgColor) {
-      alert('비밀번호 확인 확인')
+      alert('동일한 비밀번호를 입력해주세요.')
+      onFocus.current[2].focus();
     } else if (!nicknameMsgColor) {
-      alert('닉네임 유효 확인?')
+      alert('사용할 수 없는 닉네임입니다.')
+      onFocus.current[3].focus();
     } else if (!useCheck) {
-      alert('약관동의 확인')
+      alert('필수 약관을 동의해주세요.')
     } else if (!canUseNickname) {
-      alert('닉네임 중복 확인?')
+      alert('이미 사용중인 닉네임입니다.')
+      onFocus.current[3].focus();
     } else if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
       axios.post('api/member/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
-        console.log(res)
         alert('회원가입 성공')
         navigate('/main', { state: res.data })
       })
@@ -252,9 +256,6 @@ const xBtnAppear = () =>{
             "Authorization"
           ] = `Bearer ${accessToken}`;
           // accessToken을 localStorage, cookie 등에 저장하지 않는다!
-          console.log("input id: ", inputId)
-          console.log(res)
-          // setCanUseId(true)
         })
         .catch((err) => {
           if(err.response.status === false){
@@ -276,7 +277,7 @@ const xBtnAppear = () =>{
       })
       .catch((err) => {
         console.log(err)
-        alert('중복이메일 / 서버쪽 문제로 메일 발송 실패')
+        alert('이미 가입된 이메일입니다.')
       })
 };
 
@@ -358,6 +359,7 @@ const xBtnAppear = () =>{
               onKeyUp={checkId}
               className={styles.inputdiv}
               disabled={verifyedId}
+              ref={(el) => (onFocus.current[0] = el)}
             />
             {verifyedId ? null : <img id = "emailXBtn" alt='' onClick={cancelIdValue} className={styles.icon}></img>}
           </div>
@@ -398,6 +400,7 @@ const xBtnAppear = () =>{
               onChange={handleInput}
               onKeyUp={checkPw}
               className={styles.inputdiv}
+              ref={(el) => (onFocus.current[1] = el)}
             />
             <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img>
           </div>
@@ -413,6 +416,7 @@ const xBtnAppear = () =>{
             onChange={handleInput}
             onKeyUp={reCheckPw}
             className={styles.inputdiv}
+            ref={(el) => (onFocus.current[2] = el)}
           />  
           <img src={showPwCheck ? showPwImg : noshowPwImg} alt='' onClick={pwCheckEyeIcon} className={styles.icon}></img>
         </div>
@@ -427,6 +431,7 @@ const xBtnAppear = () =>{
             onChange={handleInput}
             onKeyUp={isSameNickname}
             className={styles.inputdiv}
+            ref={(el) => (onFocus.current[3] = el)}
           />
           <span className={nicknameMsgColor ? styles.canuse : styles.cannotuse}>{nicknameMsg}</span>
         </div>
