@@ -69,7 +69,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
-        return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(owner, pageable)
+        return SliceResponseDTO.toDto(flowerRepository.findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrueOrderByBlossomAtDesc(owner, pageable)
                 .map(FlowerResponseDTO::toDto));
     }
 
