@@ -19,7 +19,7 @@ import DayBackground from "../../assets/HomeAsset/day.png";
 import NightBackground from "../../assets/HomeAsset/night.png";
 import "./HomePage.css";
 import { motion } from "framer-motion";
-import { getFlowerInfo, giveSun, giveRain, modifyFlower } from "../../api/FlowerAPI";
+import { getFlowerInfo, giveSun, giveRain, flowering, modifyFlower } from "../../api/FlowerAPI";
 import { getMemberInfo } from "../../api/MemberAPI";
 import { getNotification } from '../../api/NotificationAPI'
 import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
@@ -167,86 +167,67 @@ const Home = () => {
 
   useEffect(() => {
 
-        /*
-    *   현재 시간을 가져와서 배경을 변환함
-    */
-        let currentHour = new Date().getHours();
-        if (isDay(currentHour)) {
-          setBackgroundImgUrl(DayBackground);
-        } else {
-          setBackgroundImgUrl(NightBackground);
-        }
+    /*
+*   현재 시간을 가져와서 배경을 변환함
+*/
+    let currentHour = new Date().getHours();
+    if (isDay(currentHour)) {
+      setBackgroundImgUrl(DayBackground);
+    } else {
+      setBackgroundImgUrl(NightBackground);
+    }
 
-        
-        /*
-     *   꽃 대화창 관련 interval
-     */
-        let interval = setInterval(function () {
-          const value = Math.floor(Math.random() * 2);
-          setFlowerMessageIsVisible(true);
-          setFlowerMessage(
-            <motion.div
-              className="flowerMessage"
+
+    /*
+ *   꽃 대화창 관련 interval
+ */
+    let interval = setInterval(function () {
+      const value = Math.floor(Math.random() * 2);
+      setFlowerMessageIsVisible(true);
+      setFlowerMessage(
+        <motion.div
+          className="flowerMessage"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={flowerMessageIsVisible ? show : hide}
+          transition={{ duration: 0.5 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <FlowerMessageText>
+            <motion.span
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={flowerMessageIsVisible ? show : hide}
-              transition={{ duration: 0.5 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.1 }}
             >
-              <FlowerMessageText>
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.1 }}
-                >
-                  {flowerMessageArr[value]}
-                </motion.span>
-              </FlowerMessageText>
-            </motion.div>
-          );
-    
-          /*
-          *   꽃이 대화창을 닫음
-          */
-          timer = setTimeout(() => {
-            setFlowerMessageIsVisible(!flowerMessageIsVisible);
-            setFlowerMessage(null);
-          }, 7000);
-        }, 10000);
-    
-        return () => {
-          clearInterval(interval);
-          clearTimeout(timer);
-        };
+              {flowerMessageArr[value]}
+            </motion.span>
+          </FlowerMessageText>
+        </motion.div>
+      );
+
+      /*
+      *   꽃이 대화창을 닫음
+      */
+      timer = setTimeout(() => {
+        setFlowerMessageIsVisible(!flowerMessageIsVisible);
+        setFlowerMessage(null);
+      }, 7000);
+    }, 10000);
+
+    /*
+    * 알림 확인
+    */
+    isHaveNoti();
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timer);
+    };
   }, []);
 
 
   useEffect(() => {
-    /*
-    *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
-    */
-
-    getFlowerInfo().then((res) => {
-      flowerInfo.id = res.id;
-      flowerInfo.isFullGrown = res.isFullGrown;
-      flowerInfo.name = res.name;
-      flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
-      flowerInfo.MaxGrowthValue = res.maxGrowthValue;
-      console.log("꽃 정보 가져옴");
-
-      getMemberInfo().then((res) => {
-        flowerInfo.sunElementCount = res.light;
-        flowerInfo.rainElementCount = res.water;
-
-        if (flowerInfo.name == null) {
-          setMakeFlowerModal(true);
-          console.log("꽃이 존재하지 않습니다.");
-        }
-
-      });
-
-    });
-
+    updateInfo();
   }, [flowerInfo]);
 
   useEffect(() => {
@@ -295,6 +276,31 @@ const Home = () => {
       setElementStatus("");
     }
   }, [elementStatus]);
+
+  const updateInfo = () => {
+    /*
+    *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
+    */
+    getFlowerInfo().then((res) => {
+      console.log(res);
+      if (res === "NO_FLOWER_EXISTS") {
+        setMakeFlowerModal(true);
+        console.log("꽃이 존재하지 않습니다.");
+        return;
+      }
+      flowerInfo.id = res.id;
+      flowerInfo.isFullGrown = res.isFullGrown;
+      flowerInfo.name = res.name;
+      flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
+      flowerInfo.MaxGrowthValue = res.maxGrowthValue;
+      console.log("꽃 정보 가져옴");
+    });
+    getMemberInfo().then((res) => {
+      flowerInfo.sunElementCount = res.light;
+      flowerInfo.rainElementCount = res.water;
+
+    });
+  }
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
@@ -383,6 +389,7 @@ const Home = () => {
     flowerInfo.name = newName;
     modifyFlower(flowerInfo.id, flowerInfo.name);
     setChangeFlowerNamemodal(false);
+    updateInfo();
   };
 
   const CancelChangingFlowerNameOnclick = () => {
@@ -393,17 +400,15 @@ const Home = () => {
   * 꽃 생성 함수
   */
   const MakeFlowerOnclick = () => {
-    getFlowerInfo().then((res) => {
-      console.log()
-      flowerInfo.id = res.id;
-      flowerInfo.isFullGrown = res.isFullGrown;
-      flowerInfo.name = res.name;
-      flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
-      flowerInfo.MaxGrowthValue = res.maxGrowthValue;
-      setMakeFlowerModal(false);
-      console.log("꽃 정보 가져옴");
-    });
+    setMakeFlowerModal(false);
+    updateInfo();
   }
+
+  const doFlowering = () => {
+    flowering(flowerInfo.id);
+    // updateInfo();
+    window.location.replace("/flower-end-page")
+  };
 
   const onClickPlayMusicButton = () => {
     setIsPlay((pre) => !pre)
@@ -411,25 +416,20 @@ const Home = () => {
 
   const isHaveNoti = () => {
     getNotification().then((res) => {
-      if (res.length===0){
+      if (res.length === 0) {
         setHaveNoti(false)
       } else {
         setHaveNoti(true)
       }
     })
   }
-  
-  useEffect(() => {
-    isHaveNoti()
-  }, [])
-
 
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
         {isFlowering == true ? (
           <Flowering>
-            <FloweringButton>개화</FloweringButton>
+              <FloweringButton onClick={() => { doFlowering() }}>개화</FloweringButton>
             <Congratulation>
               <Lottie
                 options={{
@@ -458,12 +458,12 @@ const Home = () => {
         {rainAnimation}
         <div className={styles.HomeHeader}>
           <Link to="/guide">
-            <Info/>
+            <Info />
           </Link>
           <Link to="/notification">
-            <Noti/>
+            <Noti />
           </Link>
-          { haveNoti ? <span className={styles.redpoint}>˙</span> : null }
+          {haveNoti ? <span className={styles.redpoint}>˙</span> : null}
         </div>
         <div className={styles.musicBtn}>
           {/* <button onClick={onClickPlayMusicButton}>{isPlay ? '⏹' : '▶'}</button> */}
