@@ -32,6 +32,8 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public void createFlower(FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
+        if (flowerRepository.findByOwnerAndBlossomAtIsNull(owner).orElse(null) != null)
+            throw new BadRequestException("이미 키우는 꽃이 있습니다.");
         flowerRepository.saveAndFlush(flowerCreateRequestDTO.toEntity(owner));
     }
 
