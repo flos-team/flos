@@ -190,6 +190,8 @@ public class PostServiceImpl implements PostService {
         if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
+        postRepository.deleteAllByPost(tempPost);
+
         postRepository.delete(tempPost);
     }
 
