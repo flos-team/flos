@@ -17,6 +17,9 @@ function Login() {
 
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
+
+  const [loginMsg, setLoginMsg] = useState('');
+
   const handleInputId = (e) => {
     setInputId(e.target.value);
   };
@@ -26,14 +29,25 @@ function Login() {
 
   // 로그인 버튼 클릭 이벤트
   const onClickLogin = () => {
-    // console.log(inputId, inputPw)
+    if (inputId.length === 0) {
+      setLoginMsg('아이디를 입력해주세요.')
+    } else if (inputPw.length === 0) {
+      setLoginMsg('비밀번호를 입력해주세요.')
+    }
+    else {
     doLogin(inputId, inputPw)
-    .then(() => {
-        navigate("/main");
-      })
-      .catch((error) => {
-        console.log(error);
+      .then((response) => {
+        if (response === false) {
+          setLoginMsg('아이디 또는 비밀번호를 확인해주세요.')
+        } else if (response === true) {
+          navigate("/main", { replace: true});
+        }})
+      .catch(() => {
+        console.log('서버 오류')
       });
+    }
+
+
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
@@ -44,6 +58,7 @@ function Login() {
   const onClickNaverLogin = () => {
     console.log("네이버 로그인");
   };
+
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
@@ -57,7 +72,7 @@ function Login() {
           <div className={styles.fullsize}>
             <input
               type="text"
-              name="input_id"
+              name="inputId"
               placeholder="flos@example.com"
               value={inputId}
               className={styles.inputdiv}
@@ -72,6 +87,9 @@ function Login() {
               className={styles.inputdiv}
               onChange={handleInputPw}
             />
+          </div>
+          <div className={styles.loginmsg}>
+            {loginMsg}
           </div>
           <div className={styles.loginbtndiv}>
             <button
@@ -88,9 +106,6 @@ function Login() {
             </Link>
             <Link to="/pwfind" className={styles.linktext}>
               비밀번호 찾기
-            </Link>
-            <Link to="/main" className={styles.linktext}>
-              홈으로
             </Link>
           </div>
         </div>
