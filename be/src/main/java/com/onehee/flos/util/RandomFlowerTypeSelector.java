@@ -6,29 +6,28 @@ import java.util.Random;
 
 public class RandomFlowerTypeSelector {
     public static FlowerType getRandomSunnyType() {
-        if (new Random().nextInt(100) % 4 == 1)
-            return FlowerType.TulipRed;
-        else if (new Random().nextInt(100) % 4 == 2)
-            return FlowerType.TulipYellow;
-        else if (new Random().nextInt(100) % 4 == 3)
-            return FlowerType.TulipGrapefruit;
-        else
-            return FlowerType.TulipPurple;
+        return switch (new Random().nextInt(100) % 4) {
+            case 0 -> FlowerType.TulipPurple;
+            case 1 -> FlowerType.TulipRed;
+            case 2 -> FlowerType.TulipYellow;
+            case 3 -> FlowerType.TulipGrapefruit;
+            default -> null;
+        };
     }
     public static FlowerType getRandomCloudyType() {
-        if (new Random().nextInt(100) % 3 == 1)
-            return FlowerType.TulipPink;
-        else if (new Random().nextInt(100) % 3 == 2)
-            return FlowerType.TulipBlue;
-        else
-            return FlowerType.TulipWhite;
+        return switch (new Random().nextInt(100) % 3) {
+            case 0 -> FlowerType.TulipPink;
+            case 1 -> FlowerType.TulipBlue;
+            case 2 -> FlowerType.TulipWhite;
+            default -> null;
+        };
     }
     public static FlowerType getRandomRainyType() {
-        if (new Random().nextInt(100) % 3 == 1)
-            return FlowerType.TulipOrange;
-        else if (new Random().nextInt(100) % 3 == 2)
-            return FlowerType.TulipMango;
-        else
-            return FlowerType.TulipGreen;
+        return switch (new Random().nextInt(100) % 3) {
+            case 0 -> FlowerType.TulipOrange;
+            case 1 -> FlowerType.TulipMango;
+            case 2 -> FlowerType.TulipGreen;
+            default -> null;
+        };
     }
 }
