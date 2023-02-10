@@ -112,7 +112,7 @@ const MakeFlowerModal = (props) => {
                     </FlowerNameInputContainer>
                 </Main>
                 <Footer>
-                    <SubmitButton onClick={submit}>
+                    <SubmitButton onClick={() => {submit();}}>
                         꽃 생성하기
                     </SubmitButton>
                 </Footer>

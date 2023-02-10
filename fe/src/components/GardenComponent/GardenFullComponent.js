@@ -55,10 +55,13 @@ const Footer = styled.div`
 
 const FlowerDateData = styled.div`
     font-size: 1.1rem;
-    padding: 5px;
+    padding: 5px 15px;
     border-radius: 10px;
     border: 1px solid #FEFEFE;
     color: white;
+    background-color: #D9C3C6;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;;
+    letter-spacing: -1px;
 `;
 
 const Loading = styled.div`

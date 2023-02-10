@@ -29,7 +29,8 @@ const getFlowerInfo = async () => {
         isFullGrown: data.isFullGrown,
         flowerType: data.flowerType,
         currentGrowthValue: data.currentGrowValue,
-        maxGrowthValue: data.capacity
+        maxGrowthValue: data.capacity,
+        color: data.flowerColor
       };
     })
     .catch(({response}) => {
