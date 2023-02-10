@@ -1,10 +1,8 @@
 package com.onehee.flos.model.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-@AllArgsConstructor
+@Data
 public class NotificationCheckRequestDTO {
-    private Long id;
+    private final Long id;
 }

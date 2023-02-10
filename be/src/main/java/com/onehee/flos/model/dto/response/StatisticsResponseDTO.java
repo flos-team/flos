@@ -1,13 +1,12 @@
 package com.onehee.flos.model.dto.response;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
 public class StatisticsResponseDTO {
     private LoginInfo loginInfo;
     private PostInfo postInfo;
@@ -41,22 +40,16 @@ public class StatisticsResponseDTO {
         this.flowers = flowers;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
+    @Data
+    @Builder(access = AccessLevel.PRIVATE)
     private static class LoginInfo {
         int month;
         int lengthOfMonth;
         int loginCount;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
+    @Data
+    @Builder(access = AccessLevel.PRIVATE)
     private static class PostInfo {
         int postCount;
         int sunny;
@@ -64,11 +57,9 @@ public class StatisticsResponseDTO {
         int rainy;
         Ratio ratio;
 
-        @Getter
-        @Setter
-        @NoArgsConstructor
-        @AllArgsConstructor
-        @Builder
+
+        @Data
+        @Builder(access = AccessLevel.PRIVATE)
         private static class Ratio {
             double sunny;
             double cloudy;

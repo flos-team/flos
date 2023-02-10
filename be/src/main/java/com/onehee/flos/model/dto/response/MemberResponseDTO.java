@@ -1,14 +1,13 @@
 package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.entity.Member;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
+import lombok.Setter;
 
-@Getter
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
+@Setter(AccessLevel.NONE)
 @Builder
 public class MemberResponseDTO {
     private Long id;
@@ -28,12 +27,6 @@ public class MemberResponseDTO {
     }
 
     private static FileResponseDTO getImage(Member member) {
-        if (member.getProfileImage() != null) {
-            return FileResponseDTO.toDTO(member.getProfileImage());
-        }
-        return FileResponseDTO.builder()
-                .originalName("profile_image.jpg")
-                .saveName("default/profile_image.jpg")
-                .build();
+        return FileResponseDTO.toDTO(member.getProfileImage());
     }
 }

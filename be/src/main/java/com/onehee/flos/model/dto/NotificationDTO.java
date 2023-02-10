@@ -3,16 +3,12 @@ package com.onehee.flos.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.onehee.flos.model.entity.Notification;
 import com.onehee.flos.model.entity.type.MessageType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
+@Setter(AccessLevel.NONE)
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotificationDTO {
@@ -21,6 +17,7 @@ public class NotificationDTO {
     private String message;
     private LocalDateTime createdAt;
 
+    @Setter
     private Object data;
 
     public static NotificationDTO toDTO(Notification notification) {

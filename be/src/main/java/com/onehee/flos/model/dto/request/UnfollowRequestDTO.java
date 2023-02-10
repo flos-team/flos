@@ -1,18 +1,9 @@
 package com.onehee.flos.model.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 public class UnfollowRequestDTO {
-    private Long id;
-    private Boolean orderByName;
-
-    public UnfollowRequestDTO() {
-        orderByName = false;
-    }
+    private final Long id;
+    private final boolean orderByName;
 }

@@ -57,6 +57,14 @@ public class Member {
     private int light;
 
     @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'RAINY')")
+    private int totalWater;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'SUNNY')")
+    private int totalLight;
+
+    @Basic(fetch = FetchType.LAZY)
     @Formula("(SELECT COUNT(1) FROM follow f WHERE f.owner_id = members_id)")
     private int followerCount;
 

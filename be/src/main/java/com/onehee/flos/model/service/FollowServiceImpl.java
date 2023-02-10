@@ -100,7 +100,7 @@ public class FollowServiceImpl implements FollowService {
         followRepository.delete(follow);
         followRepository.flush();
 
-        return getFollowingList(new FollowDTO(me.getId(), unfollowRequestDTO.getOrderByName()));
+        return getFollowingList(new FollowDTO(me.getId(), unfollowRequestDTO.isOrderByName()));
     }
 
 }

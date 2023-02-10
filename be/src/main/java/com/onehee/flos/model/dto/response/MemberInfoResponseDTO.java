@@ -2,12 +2,13 @@ package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Setter(AccessLevel.NONE)
 @Builder
 public class MemberInfoResponseDTO {
     private Long id;
@@ -21,6 +22,9 @@ public class MemberInfoResponseDTO {
     private int followingCount;
     private int postCount;
     private int blossomCount;
+    private int totalWater;
+    private int totalLight;
+    @Setter
     private MemberRelation memberRelation;
 
     public static MemberInfoResponseDTO toDto(Member member) {
@@ -32,6 +36,8 @@ public class MemberInfoResponseDTO {
                 .introduction(member.getIntroduction())
                 .water(member.getWater())
                 .light(member.getLight())
+                .totalWater(member.getTotalWater())
+                .totalLight(member.getTotalLight())
                 .followerCount(member.getFollowerCount())
                 .followingCount(member.getFollowingCount())
                 .postCount(member.getPostCount())
@@ -40,13 +46,7 @@ public class MemberInfoResponseDTO {
     }
 
     private static FileResponseDTO getImage(Member member) {
-        if (member.getProfileImage() != null) {
-            return FileResponseDTO.toDTO(member.getProfileImage());
-        }
-        return FileResponseDTO.builder()
-                .originalName("profile_image.jpg")
-                .saveName("default/profile_image.jpg")
-                .build();
+        return FileResponseDTO.toDTO(member.getProfileImage());
     }
 
 }
