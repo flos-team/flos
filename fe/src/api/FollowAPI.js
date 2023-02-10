@@ -1,6 +1,6 @@
 import axios from "axios";
 /**
- * @author tykimdream
+ * @author 1-hee, tykimdream
  *
  * @copyright 2023
  */

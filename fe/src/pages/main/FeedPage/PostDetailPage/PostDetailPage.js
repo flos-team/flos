@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import { useParams, useNavigate } from "react-router-dom";
-import { getPost } from "../../../../api/PostAPI";
-import {
-  getCommentList,
-  getPriComment,
-  createComment,
-  commentApprove,
-  deleteComment,
-} from "../../../../api/CommentAPI";
-
-import CommentComponent from "./CommentComponent";
-import SubCommentComponent from "./SubCommentComponent";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
+import { getPost } from "../../../../api/PostAPI";
+import { getCommentList, createComment } from "../../../../api/CommentAPI";
+import { setBookMark, deleteBookMark } from "../../../../api/BookmarkAPI";
+
+import CommentComponent from "./CommentComponent";
 
 import dayjs from "dayjs";
 
@@ -22,21 +15,11 @@ import dayjs from "dayjs";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
-/* img import */
-import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
-import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
-
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 import bookMarkIcon from "../../../../assets/GlobalAsset/book-mark-icon.png";
 import bookMarkActive from "../../../../assets/GlobalAsset/book-mark-active.png";
 import dotMarkIcon from "../../../../assets/GlobalAsset/dot-mark-icon.png";
-
-/*
-book-mark-active
-book-mark-icon
-dot-mark-icon
-*/
 
 import rainy from "../../../../assets/GlobalAsset/rainy.png";
 import sunny from "../../../../assets/GlobalAsset/sunny.png";
@@ -59,11 +42,14 @@ const PostDetailPage = () => {
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
 
+  // 북마크 토글에 대한 state 및 function
+  const [isBookmark, setIsBookmark] = useState(false);
+
+  const navigate = useNavigate();
+
   const handleCommentInputValue = (e) => {
     setInputValue(e.target.value);
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getPost(params.id).then((response) => {
@@ -79,16 +65,27 @@ const PostDetailPage = () => {
     });
   }, [commentOnChange]);
 
-  // 북마크 토글에 대한 state 및 function
-  const [isBookmark, setIsBookmark] = useState(false);
+  // useEffect(() => {
+  //   setBookMark(params.id).then((response) => {
+  //     setIsBookmark(response);
+  //     // setCommentLoading(true);
+  //   });
+  //   deleteBookMark(params.id).then((response) => {
+  //     setIsBookmark(response);
+  //     // setCommentLoading(true);
+  //   });
+  // }, [isBookmark]);
 
   if (postLoading && commentLoading) {
     // console.log(comments);
-    // console.log(post);
+    console.log(post);
     const commentList = comments.map((key) => {
       return (
         <>
-          <CommentComponent comment={key} postWriterId = {post.writer.id}></CommentComponent>
+          <CommentComponent
+            comment={key}
+            postWriterId={post.writer.id}
+          ></CommentComponent>
         </>
       );
     });
@@ -165,10 +162,25 @@ const PostDetailPage = () => {
                 <div
                   className="bookmark-btn"
                   onClick={(e) => {
-                    setIsBookmark(!isBookmark);
+                    // setIsBookmark(!isBookmark);
+                    if (!post.relation.bookmarked) {
+                      console.log("post id : " , post.id)
+                      setBookMark(post.id).then((response) => {
+                        console.log(response)
+                        setIsBookmark(response);
+                      });
+                    } else {
+                      deleteBookMark(post.id).then((response) => {
+                        setIsBookmark(response);
+                      });
+                    }
                   }}
                 >
-                  <img src={isBookmark ? bookMarkActive : bookMarkIcon} />
+                  <img
+                    src={
+                      post.relation.bookmarked ? bookMarkActive : bookMarkIcon
+                    }
+                  />
                 </div>
                 <div className="dot-btn">
                   <img src={dotMarkIcon} />
