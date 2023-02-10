@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StatisticsServiceImpl implements StatisticsService {
 
-    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final FlowerRepository flowerRepository;
     private final AttendanceRepository attendanceRepository;

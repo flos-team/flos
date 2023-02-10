@@ -23,18 +23,18 @@ public class FollowController {
     private final FollowService followService;
 
     @GetMapping( value = {"/follower", "/follower/{id}"})
-    public ResponseEntity<?> getFollowerList(@PathVariable(name = "id", required = false) Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getFollowerList(@PathVariable(name = "id", required = false) Long id, @RequestParam(name = "orderByName", defaultValue = "false") boolean orderByName,@AuthenticationPrincipal MemberDetails memberDetails) {
         id = Objects.requireNonNullElse(id, memberDetails.getMember().getId());
-        FollowDTO followDTO = new FollowDTO(id);
+        FollowDTO followDTO = new FollowDTO(id, orderByName);
         List<MemberResponseDTO> body = followService.getFollowerList(followDTO);
         HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 
     @GetMapping(value = {"/following", "/following/{id}"})
-    public ResponseEntity<?> getFollowingList(@PathVariable(name = "id", required = false) Long id, @AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getFollowingList(@PathVariable(name = "id", required = false) Long id, @RequestParam(name = "orderByName", defaultValue = "false") boolean orderByName, @AuthenticationPrincipal MemberDetails memberDetails) {
         id = Objects.requireNonNullElse(id, memberDetails.getMember().getId());
-        FollowDTO followDTO = new FollowDTO(id);
+        FollowDTO followDTO = new FollowDTO(id, orderByName);
         List<MemberResponseDTO> body = followService.getFollowingList(followDTO);
         HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
@@ -48,8 +48,8 @@ public class FollowController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> unfollow(@PathVariable("id") Long id) {
-        List<MemberResponseDTO> body = followService.unfollow(new UnfollowRequestDTO(id));
+    public ResponseEntity<?> unfollow(@PathVariable("id") Long id, @RequestParam(name = "orderByName", defaultValue = "false") boolean orderByName) {
+        List<MemberResponseDTO> body = followService.unfollow(new UnfollowRequestDTO(id, orderByName));
         HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }

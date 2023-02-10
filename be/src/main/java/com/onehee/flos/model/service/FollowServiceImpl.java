@@ -31,7 +31,12 @@ public class FollowServiceImpl implements FollowService {
     public List<MemberResponseDTO> getFollowerList(FollowDTO followDTO) {
         Member member = memberRepository.findById(followDTO.getId())
                 .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        List<Member> followers = followRepository.findAllByOwner(member);
+        List<Member> followers;
+        if (followDTO.isOrderByName()) {
+            followers = followRepository.findAllByOwnerByNickname(member);
+        } else {
+            followers = followRepository.findAllByOwnerOrderByLastLoginAtDesc(member);
+        }
         return followers.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 
@@ -40,7 +45,12 @@ public class FollowServiceImpl implements FollowService {
     public List<MemberResponseDTO> getFollowingList(FollowDTO followDTO) {
         Member member = memberRepository.findById(followDTO.getId())
                 .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        List<Member> followings = followRepository.findAllByFollower(member);
+        List<Member> followings;
+        if (followDTO.isOrderByName()) {
+            followings = followRepository.findAllByFollowerByName(member);
+        } else {
+            followings = followRepository.findAllByFollowerOrderByLastLoginAtDesc(member);
+        }
         return followings.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 
@@ -72,7 +82,7 @@ public class FollowServiceImpl implements FollowService {
                 .build()
         );
 
-        return getFollowingList(new FollowDTO(me.getId()));
+        return getFollowingList(new FollowDTO(me.getId(), followRequestDTO.getOrderByName()));
     }
 
     @Override
@@ -90,7 +100,7 @@ public class FollowServiceImpl implements FollowService {
         followRepository.delete(follow);
         followRepository.flush();
 
-        return getFollowingList(new FollowDTO(me.getId()));
+        return getFollowingList(new FollowDTO(me.getId(), unfollowRequestDTO.getOrderByName()));
     }
 
 }

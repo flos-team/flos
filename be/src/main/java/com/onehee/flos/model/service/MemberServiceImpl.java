@@ -43,6 +43,7 @@ public class MemberServiceImpl implements MemberService {
     private final FilesHandler filesHandler;
     private final PostRepository postRepository;
     private final WeatherResourceRepository weatherResourceRepository;
+    private final AttendanceRepository attendanceRepository;
 
     @Override
     @Transactional
@@ -77,11 +78,13 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다.");
         }
 
-        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+        LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime yesterday = now.minusDays(1);
 
         if (
                 !postRepository.existsByWriterAndCreatedAtIsAfter(member, yesterday)
-                && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
+                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
         ) {
             Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(member);
             if (lastPost != null) {
@@ -97,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
 
         if (
                 !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
-                && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
+                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
         ) {
             Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(member).orElse(null);
             if (flower != null) {
@@ -108,6 +111,16 @@ public class MemberServiceImpl implements MemberService {
                         .build();
                 notificationRepository.save(notification);
             }
+        }
+
+
+        member.setLastLoginAt(now);
+        if (!attendanceRepository.existsByMemberAndLoginDate(member, now.toLocalDate())) {
+                     attendanceRepository.save(Attendance.builder()
+                    .member(member)
+                    .loginDate(now.toLocalDate())
+                    .build()
+            );
         }
 
         return jwtTokenProvider.generateTokenByMember(member);
@@ -137,6 +150,7 @@ public class MemberServiceImpl implements MemberService {
         if (memberUpdateRequestDTO.getIntroduction() != null) {
             member.setIntroduction(memberUpdateRequestDTO.getIntroduction());
         }
+        member.setModifiedAt(LocalDateTime.now());
         member = memberRepository.saveAndFlush(member);
         return MemberInfoResponseDTO.toDto(member);
     }
@@ -166,6 +180,7 @@ public class MemberServiceImpl implements MemberService {
         member.setPassword(passwordEncoder.encode(memberResetPasswordDTO.getPassword()));
         redisRepository.deleteValue("approved_resetPassword:" + memberResetPasswordDTO.getCode());
         redisRepository.deleteValue("resetPassword:" + memberResetPasswordDTO.getCode());
+        member.setModifiedAt(LocalDateTime.now());
     }
 
     @Override
@@ -213,6 +228,7 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("현재 비밀번호가 일치하지 않습니다.");
         }
         member.setPassword(passwordEncoder.encode(memberPasswordUpdateRequestDTO.getNewPassword()));
+        member.setModifiedAt(LocalDateTime.now());
         memberRepository.save(member);
     }
 }

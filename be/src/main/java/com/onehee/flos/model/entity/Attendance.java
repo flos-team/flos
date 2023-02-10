@@ -21,6 +21,5 @@ public class Attendance {
     @JoinColumn(name = "members_id")
     private Member member;
 
-    @Column(unique = true)
     private LocalDate loginDate;
 }
