@@ -26,10 +26,10 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     @Query(value = "select contributor_id from weather_resource where flower_id = ?1.flower_id order by count(*) limit 1;", nativeQuery = true)
     Optional<Member> findContributorByFlowerOrderByCount(Flower flower);
 
-    @Query(value = "select count(*) from weather_resource where flower_id = ?1.flower_id and contributor_id = ?2.members_id", nativeQuery = true)
+    @Query(value = "select count(*) from weather_resource where flower_id = ?1.flower_id and contributor_id = ?2 ;", nativeQuery = true)
     Long countByFlowerAndContributor(Flower flower, Member contributor);
 
-    @Query(value = "select count(case when p.weather=\"CLOUDY\" then 1 end), count(case when p.weather=\"SUNNY\" then 1 end), count(case when p.weather=\"RAINY\" then 1 end) from (select p.weather from post p where p.members_id = ?1.members_id order by p.created_at desc limit 10) as p", nativeQuery = true)
+    @Query(value = "select count(case when p.weather=\"CLOUDY\" then 1 end) as cloudy, count(case when p.weather=\"RAINY\" then 1 end) as rainy, count(case when p.weather=\"SUNNY\" then 1 end) as sunny from (select p.weather from post p where p.members_id = ?1 order by p.created_at desc limit 10) as p", nativeQuery = true)
     List<Long> countWeatherByRecent10Post(Member member);
 
     // 회원의 모든 개화한꽃 인데 최근순으로 정렬한

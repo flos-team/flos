@@ -111,7 +111,7 @@ public class FlowerServiceImpl implements FlowerService {
 
         if (flower.getCapacity() >= (flower.getLight() + flower.getWater() + 1))
             calIsFullGrown(flower, flower.getWater() + 1, flower.getLight());
-        if ((float)flower.getCapacity() >= (flower.getLight() + flower.getWater() + 1)*0.7 && Objects.equals(flower.getFlowerType().getColor(), ""))
+        if ((float)flower.getCapacity() <= (flower.getLight() + flower.getWater() + 1)*0.7 && Objects.equals(flower.getFlowerType().getColor(), ""))
             flower.setFlowerType(getFlowerColor());
 
         // 물쓰기
@@ -141,7 +141,7 @@ public class FlowerServiceImpl implements FlowerService {
 
         if (flower.getCapacity() >= (flower.getLight() + flower.getWater() + 1))
             calIsFullGrown(flower, flower.getWater(), flower.getLight() + 1);
-        if ((float)flower.getCapacity() >= (flower.getLight() + flower.getWater() + 1)*0.7 && Objects.equals(flower.getFlowerType().getColor(), ""))
+        if ((float)flower.getCapacity() <= (flower.getLight() + flower.getWater() + 1)*0.7 && Objects.equals(flower.getFlowerType().getColor(), ""))
             flower.setFlowerType(getFlowerColor());
         // 물쓰기
         light.setFlower(flower);
@@ -180,6 +180,8 @@ public class FlowerServiceImpl implements FlowerService {
     private FlowerType getFlowerColor() {
         Member member = SecurityManager.getCurrentMember();
         List<Long> recentWeatherCount = flowerRepository.countWeatherByRecent10Post(member);
+        if (recentWeatherCount.size() == 0)
+            return FlowerType.Tulip;
         Long sunny = recentWeatherCount.get(1);
         Long rainy = recentWeatherCount.get(2);
         Long cloud = recentWeatherCount.get(0);
