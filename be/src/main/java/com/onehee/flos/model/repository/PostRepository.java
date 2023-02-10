@@ -37,11 +37,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Slice<Post> findSliceByTagName(String tagName, Pageable pageable);
 
     // 북마크한 작성자 포스트
-    @Query(value = "select p.* from post p where p.post_id in (select bm.post_id from bookmark bm where bm.members_id = ?1.members_id)", nativeQuery = true)
+    @Query(value = "select p.* from post p where p.post_id in (select bm.post_id from bookmark bm where bm.members_id = ?1)", nativeQuery = true)
     Slice<Post> findSliceByBookmark(Member writer, Pageable pageable);
 
     // 팔로우한 사람 게시글 리스트
-    @Query(value = "select p.* from post p where p.members_id in (select flw.owner_id from follow flw where flw.follower_id = ?1.members_id)", nativeQuery = true)
+    @Query(value = "select p.* from post p where p.members_id in (select flw.owner_id from follow flw where flw.follow_id = ?1)", nativeQuery = true)
     Slice<Post> findSliceByFollow(Member member, Pageable pageable);
 
     // 특정시간 이후에 작성한 게시글의 존재여부 확인
