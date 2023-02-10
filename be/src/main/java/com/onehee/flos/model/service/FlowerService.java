@@ -7,6 +7,7 @@ import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
+import com.onehee.flos.model.dto.response.GardenCountResponseDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public interface FlowerService {
 
     BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException;
 
-    long getCountInGarden();
+    GardenCountResponseDTO getCountInGarden();
     // 물주기
     FlowerResponseDTO giveWater();
 

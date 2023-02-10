@@ -8,6 +8,7 @@ import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
+import com.onehee.flos.model.dto.response.GardenCountResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
@@ -98,8 +99,8 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    public long getCountInGarden() {
-        return flowerRepository.countByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(SecurityManager.getCurrentMember());
+    public GardenCountResponseDTO getCountInGarden() {
+        return GardenCountResponseDTO.toDto(flowerRepository.countByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(SecurityManager.getCurrentMember()));
     }
 
     @Override

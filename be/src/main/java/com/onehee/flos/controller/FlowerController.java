@@ -7,6 +7,7 @@ import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
+import com.onehee.flos.model.dto.response.GardenCountResponseDTO;
 import com.onehee.flos.model.service.FlowerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,7 +50,7 @@ public class FlowerController {
     @Operation(summary = "가든 페이지 꽃 수량", description = "가든 페이지의 꽃 수량을 반환합니다.")
     @GetMapping("/garden/count")
     public ResponseEntity<?> getFlowerListCount(){
-        return new ResponseEntity<Long>(flowerService.getCountInGarden(), HttpStatus.OK);
+        return new ResponseEntity<GardenCountResponseDTO>(flowerService.getCountInGarden(), HttpStatus.OK);
     }
 
     @Tag(name = "꽃API")
