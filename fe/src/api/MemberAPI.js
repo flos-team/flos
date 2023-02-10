@@ -146,26 +146,31 @@ const sendCodeToEmail = async (email) => {
  * @param {string} email 
  * @param {string} password 
  */
+
+    
+
 const doLogin = async (email, password) => {
   let loginInfo = {
     email,
     password,
   };
+  let loginResult;
   await axios
     .post("/api/member/login", loginInfo)
     .then((response) => {
-      //console.dir(response);
       if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
       console.log(accessToken);
       // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
       axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-      // console.dir(axios.defaults)
+      loginResult = true
     })
     .catch((err) => {
-      console.log("로그인 중 에러가 발생하였습니다.");
-    });
-};
+      loginResult = false
+      }
+    )
+    return loginResult
+  };
 
 /**
  * signUpUser : 자체 회원가입 메서드
