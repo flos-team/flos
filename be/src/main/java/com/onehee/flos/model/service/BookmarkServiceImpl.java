@@ -21,12 +21,13 @@ public class BookmarkServiceImpl implements BookmarkService {
     private final PostRepository postRepository;
 
     @Override
+    @Transactional
     public void createBookmark(Long postId) throws BadRequestException {
         Post tempPost = postRepository.findById(postId).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         Member tempMember = SecurityManager.getCurrentMember();
         if (bookmarkRepository.existsByPostAndMember(tempPost, tempMember))
             throw new BadRequestException("이미 북마크한 게시글입니다.");
-        bookmarkRepository.saveAndFlush(Bookmark.builder()
+        bookmarkRepository.save(Bookmark.builder()
                 .post(tempPost)
                 .member(tempMember)
                 .build());
