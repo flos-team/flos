@@ -1,5 +1,5 @@
 import React from 'react'
-import groom from '../assets/HomeAsset/groomXVer.png'
+import groom from '../assets/GoormAsset/goorm-error.png';
 import { Link } from "react-router-dom";
 import styles from './NotFoundPage.module.css'
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 /* import img css */
 import userImg from "../../assets/DummyData/writerProfileSample.png";
-import defaultImg from '../../assets/GlobalAsset/groom-glass-img.png'
+import defaultImg from '../../assets/GoormAsset/goorm-sunglass.png';
 
 /* import component */
 import AlarmItem from "../../components/AlarmItem/AlarmItem";

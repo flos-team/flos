@@ -9,8 +9,9 @@ import styled from "@emotion/styled";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 /* import img */
-import groomImg from "../../assets/GlobalAsset/groom-img.png";
-import groomGlassImg from "../../assets/GlobalAsset/groom-glass-img.png";
+import groomSmile from "../../assets/GoormAsset/goorm-smile.png";
+import groomSoso from "../../assets/GoormAsset/goorm-soso.png";
+import goormSad from "../../assets/GoormAsset/goorm-sad.png"
 import sunny128 from "../../assets/GlobalAsset/sunny-128.png";
 import cloudy128 from "../../assets/GlobalAsset/cloudy-128.png";
 import rainy128 from "../../assets/GlobalAsset/rainy-128.png";
@@ -28,8 +29,6 @@ import "./PostResultModal.css";
 const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
   const swiperRef = useRef(null);
   const imgList = [sunny128, cloudy128, rainy128];
-  const [groomIdx, setGroomIdx] = useState(0);
-  const groomList = [groomImg, groomGlassImg];
   const handleOnRightClick = () => {
     swiperRef.current.swiper.slideNext(500);
   };
@@ -42,6 +41,7 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
     </SwiperSlide>
   ));
   const weatherTextList = ["햇살", "구름", "비구름"];
+  const weatherImgList = [groomSmile, groomSoso, goormSad];
   const [weatherTextIdx, setWeatherTextIdx] = useState(0);
   const [weatherTextColorIdx, setWeatherTextColorIdx] = useState(0);
   const weatherTextColorList = [COLORS.yellowP, COLORS.mono300, COLORS.skyBlueP];
@@ -51,14 +51,7 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
     height: "128px",
   };
 
-  const randGrooms = () => {
-    const number = (Math.floor(Math.random() * 2) + 1) % 2;
-    setGroomIdx(number);
-  };
-
   useEffect(() => {
-    const number = (Math.floor(Math.random() * 2) + 1) % 2;
-    setGroomIdx(number);
     //console.dir(swiperRef.current.swiper);
     swiperRef.current.swiper.slideTo(weatherIdx, 500, false);
   }, []);
@@ -66,7 +59,7 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
   return (
     <div className="post-result-modal-container">
       <div className="post-result-modal">
-        <div className="groom-img-cotainer" style={{ backgroundImage: `url(${groomList[groomIdx]})` }}>
+        <div className="groom-img-cotainer" style={{ backgroundImage: `url(${weatherImgList[weatherIdx]})` }}>
           <img />
         </div>
         <div className="result-text-div">

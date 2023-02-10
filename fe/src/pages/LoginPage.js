@@ -7,7 +7,7 @@ import { doLogin, getMemberInfo } from "../api/MemberAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/user";
 
-import loginlogo from "../assets/LoginAsset/groom-icon.png";
+import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
 

@@ -5,14 +5,14 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 /* import img */
-import flowerBlue from "../../../assets/GlobalAsset/flower-blue.png";
-import flowerGreen from "../../../assets/GlobalAsset/flower-green.png";
-import flowerOrange from "../../../assets/GlobalAsset/flower-orange.png";
-import flowerPink from "../../../assets/GlobalAsset/flower-pink.png";
-import flowerPurple from "../../../assets/GlobalAsset/flower-purple.png";
-import flowerRed from "../../../assets/GlobalAsset/flower-red.png";
-import flowerWhite from "../../../assets/GlobalAsset/flower-white.png";
-import flowerYellow from "../../../assets/GlobalAsset/flower-yellow.png";
+import flowerBlue from "../../../assets/EndingAsset/flower-blue.png";
+import flowerGreen from "../../../assets/EndingAsset/flower-green.png";
+import flowerOrange from "../../../assets/EndingAsset/flower-orange.png";
+import flowerPink from "../../../assets/EndingAsset/flower-pink.png";
+import flowerPurple from "../../../assets/EndingAsset/flower-purple.png";
+import flowerRed from "../../../assets/EndingAsset/flower-red.png";
+import flowerWhite from "../../../assets/EndingAsset/flower-white.png";
+import flowerYellow from "../../../assets/EndingAsset/flower-yellow.png";
 
 /* import compoents */
 import FlowerGlassBottle from "../../GardenComponent/FlowerGlassBottleItem";
