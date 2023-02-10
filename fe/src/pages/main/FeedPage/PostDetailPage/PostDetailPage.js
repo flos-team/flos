@@ -56,7 +56,7 @@ const PostDetailPage = () => {
       setPost(response);
       setPostLoading(true);
     });
-  }, []);
+  }, [isBookmark]);
 
   useEffect(() => {
     getCommentList(params.id).then((response) => {
@@ -66,14 +66,7 @@ const PostDetailPage = () => {
   }, [commentOnChange]);
 
   // useEffect(() => {
-  //   setBookMark(params.id).then((response) => {
-  //     setIsBookmark(response);
-  //     // setCommentLoading(true);
-  //   });
-  //   deleteBookMark(params.id).then((response) => {
-  //     setIsBookmark(response);
-  //     // setCommentLoading(true);
-  //   });
+
   // }, [isBookmark]);
 
   if (postLoading && commentLoading) {
@@ -183,7 +176,9 @@ const PostDetailPage = () => {
                   />
                 </div>
                 <div className="dot-btn">
-                  <img src={dotMarkIcon} />
+                  <img src={dotMarkIcon} onClick={() =>{
+                    console.log(post)
+                  }} />
                 </div>
               </div>
               {imgs}
