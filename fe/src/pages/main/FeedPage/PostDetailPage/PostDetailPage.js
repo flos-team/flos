@@ -25,6 +25,7 @@ import { Carousel } from "react-responsive-carousel";
 /* img import */
 import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
 import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
+
 import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png";
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 import bookMarkIcon from "../../../../assets/GlobalAsset/book-mark-icon.png";
@@ -85,11 +86,9 @@ const PostDetailPage = () => {
     // console.log(comments);
     // console.log(post);
     const commentList = comments.map((key) => {
-      // console.log(key);
       return (
         <>
-          <CommentComponent comment={key}></CommentComponent>
-          {key.id ? <SubCommentComponent parentId={key.id}></SubCommentComponent> : ""}
+          <CommentComponent comment={key} postWriterId = {post.writer.id}></CommentComponent>
         </>
       );
     });
@@ -138,7 +137,11 @@ const PostDetailPage = () => {
     return (
       <>
         <div className="post-detail-page">
-          <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
+          <HeaderComponent
+            backVisible={true}
+            pageName={"피드"}
+            optType={0}
+          ></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
               <div className="user-info-container">
@@ -154,7 +157,8 @@ const PostDetailPage = () => {
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
-                      {RegBefore} <img className="post-emotion" src={emotionWeather}></img>
+                      {RegBefore}{" "}
+                      <img className="post-emotion" src={emotionWeather}></img>
                     </p>
                   </div>
                 </div>
@@ -182,7 +186,10 @@ const PostDetailPage = () => {
             </div>
           </div>
           <div className="user-content-input-div">
-            <img className="user-icon" src={`${url}${user.profileImage.saveName}`} />
+            <img
+              className="user-icon"
+              src={`${url}${user.profileImage.saveName}`}
+            />
             <div className="comment-input-div">
               <input
                 className="comment-input"

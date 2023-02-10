@@ -160,6 +160,7 @@ const doLogin = async (email, password) => {
     .then((response) => {
       if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
+      console.log(accessToken);
       // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
       axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
       loginResult = true
@@ -201,53 +202,30 @@ const signUpUser = async (code, email, nickname, password) => {
  * modifyUserInfo : 회원정보 수정 메서드
  * @param {string} nickname 사용자 이름
  * @param {string} introduction 사용자 소개
- * @param {File} profileImage file 객체?
+ * @param {File} profileImage Image 소스를 담은 자바스크립트 파일 객체
  * @returns {Promise} A Promise object containing a boolean value
  */
-const modifyUserInfo = async (nickname, introduction, profileImage) => {
+const modifyUserInfo = async (nickname, introduction, imgFile) => {
   const formData = new FormData();
-  formData.append("profileImage", profileImage[0]);
   formData.append("nickname", nickname);
   formData.append("introduction", introduction);
-
+  formData.append("profileImage", imgFile);
   let url = `/api/member/info`;
+  
   let isUpdated = false;
   await axios
-    .put(url, formData)
+    .put(url, formData, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+        },})
     .then((response) => {
-      // response.data
-      console.dir(response);
-      if (response.status === 201) {
-        isUpdated = true;
-      }
+      isUpdated = true;
     })
     .catch((err) => {
       console.dir(err);
       console.log("회원정보 수정 중 오류 발생");
     });
   return isUpdated;
-
-  // let data = JSON.stringify({
-  //   nickname: nickname,
-  //   introduction: introduction,
-  //   profileImage: profileImage[0],
-  // });
-
-  // await axios({
-  //   baseURL: "https://i8b210.p.ssafy.io",
-  //   url: `/api/member/info`,
-  //   method: "PUT",
-  //   data: data,
-  //   headers: {
-  //     "Content-Type": "multipart/form-data",
-  //   },
-  // })
-  //   .then((response) => {
-  //     console.dir(response.data);
-  //   })
-  //   .catch((error) => {
-  //     console.dir(error);
-  //   });
 };
 
 /**

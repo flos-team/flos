@@ -191,12 +191,9 @@ const WritePostPage = () => {
                 content: content,
                 tagList: tagTextList,
                 weather: weatherText,
-                //attachFiles: [...Object.values(imgFile)],
-                attachFiles: [...imgBase64],
+                attachFiles: imgFile,
               };
-              // console.dir(postObj);
-              // axios.post("https://i8b210.p.ssafy.io/api/post", postObj).then((res) => {});
-              let ans = createPost(postObj.content, postObj.weather, postObj.tagList)
+              let ans = createPost(postObj.content, postObj.weather, postObj.tagList, postObj.attachFiles)
                 .then((res) => {
                   //console.dir(res);
                   dispatch(setToastMessage("글 작성이 완료되었습니다."));
