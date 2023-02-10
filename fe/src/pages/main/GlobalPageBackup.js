@@ -37,6 +37,17 @@ function Global() {
 
   // 입력값이 변경할 때마다 발동
   useEffect(() => {
+    onFilter()
+  }, [filterStandard])
+
+  // 필터를 위한 상태관리
+  // const changeFilterStandard = (num) => {
+  //   setFilterStandard(num)
+  //   console.log(filterStandard)
+  //   setIsSearching(false)
+  // }
+  // 상태관리에 따른 필터
+  const onFilter = () => {
     if (filterStandard === 1) {
       getPostList().then((response) => {
         setPosts(response.postList);
@@ -54,30 +65,21 @@ function Global() {
       });
     } else if (filterStandard === 4) {
       getPostListByWeather("CLOUDY").then((response) => {
-        // console.log(posts);
         setPosts(response.content);
+        console.log(posts);
         setIsSearching(false);
       });
     } else if (filterStandard === 5) {
       getPostListByWeather("RAINY").then((response) => {
-        // console.log(response);
+        console.log(response);
         setPosts(response.content);
         setIsSearching(false);
       });
     }
-    // console.log(posts)
-    postList = posts.map((key) => <PostItem post={key}></PostItem>);
-  }, [filterStandard]);
+  };
 
-  // 필터를 위한 상태관리
-  // const changeFilterStandard = (num) => {
-  //   setFilterStandard(num)
-  //   console.log(filterStandard)
-  //   setIsSearching(false)
-  // }
-
-  // console.log(posts);
-  let postList = posts.map((key) => <PostItem post={key}></PostItem>);
+  console.log(posts);
+  const postList = posts.map((key) => <PostItem post={key}></PostItem>);
 
   const clickFilterIcon = () => {
     setFiltering((pre) => !pre);
@@ -231,7 +233,7 @@ function Global() {
             : posts.length === 0
             ? noPost
             : postList} */}
-         {postList}
+            {posts.map((key) => <PostItem post={key}></PostItem>)}
         </div>
       </div>
 
