@@ -4,8 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 /* import img */
-import groomImg from "../../assets/GlobalAsset/groom-img.png";
-import groomGlassImg from "../../assets/GlobalAsset/groom-glass-img.png";
+import groomSmile from "../../assets/GoormAsset/goorm-smile.png";
 
 /* import component */
 
@@ -17,7 +16,7 @@ function Landing() {
     <>
       <Link to="/login">
         <div className="landing-page-container">
-          <div className="groom-img-cotainer" style={{backgroundImage:`url(${groomImg})`}}></div>
+          <div className="groom-img-cotainer" style={{backgroundImage:`url(${groomSmile})`}}></div>
           <div className="main-title-div">
             <p>FLOS</p>
             <p>당신의 마음이 꽃피는 곳</p>
