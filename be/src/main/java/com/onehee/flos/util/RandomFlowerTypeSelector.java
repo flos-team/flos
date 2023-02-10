@@ -30,4 +30,27 @@ public class RandomFlowerTypeSelector {
             default -> null;
         };
     }
+
+    public static FlowerType getRandomSCType() {
+        return switch (new Random().nextInt(100) % 2) {
+            case 0 -> RandomFlowerTypeSelector.getRandomSunnyType();
+            case 1 -> RandomFlowerTypeSelector.getRandomCloudyType();
+            default -> null;
+        };
+    }
+
+    public static FlowerType getRandomSRType() {
+        return switch (new Random().nextInt(100) % 2) {
+            case 0 -> RandomFlowerTypeSelector.getRandomSunnyType();
+            case 1 -> RandomFlowerTypeSelector.getRandomRainyType();
+            default -> null;
+        };
+    }
+    public static FlowerType getRandomCRType() {
+        return switch (new Random().nextInt(100) % 2) {
+            case 0 -> RandomFlowerTypeSelector.getRandomRainyType();
+            case 1 -> RandomFlowerTypeSelector.getRandomCloudyType();
+            default -> null;
+        };
+    }
 }
