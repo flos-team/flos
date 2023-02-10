@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList } from "../../api/FollowAPI";
 
 /* import img */
 import userImg from "../../assets/DummyData/dummy-sample.jpg";
@@ -13,6 +12,7 @@ import UserInfoItem from "./UserInfoItem/UserInfoItem";
 
 /* import module */
 import { getMemberInfo, getOtherMemberInfo } from "../../api/MemberAPI";
+import { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList } from "../../api/FollowAPI";
 
 /* import css */
 import "./FollowerViewPage.css";
@@ -31,7 +31,7 @@ const FollowerViewPage = () => {
 
   // 내 팔로워/팔로잉 정보 가져오는 메서드
   const setFollowerJSXList = async () => {
-    await getFollowerList()
+    await getFollowerList(true)
       .then((res) => {
         setUserInfoList(res.map((u) => <UserInfoItem userInfo={u} isFollow={param.acc === 0}></UserInfoItem>));
       })
@@ -39,8 +39,9 @@ const FollowerViewPage = () => {
   };
 
   const setFollowingJSXList = async () => {
-    await getFollowingList()
+    await getFollowingList(true)
       .then((res) => {
+        console.log(res)
         setUserInfoList(res.map((u) => <UserInfoItem userInfo={u} isFollow={param.acc !== 0}></UserInfoItem>));
       })
       .catch((err) => {});
@@ -66,7 +67,7 @@ const FollowerViewPage = () => {
     } else {
       // 여기에서 별도 로직 필요
       console.log("다른사람 페이지 입니다.");
-      let otherData = getOtherMemberInfo(param.id);
+      let otherData = getOtherMemberInfo(param.id, true);
       otherData.then((res) => {
         setUserInfo(res);
         let followerData = getOtherFollowerList();

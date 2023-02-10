@@ -24,22 +24,23 @@
 .main {
   margin-top: 0.25rem;
   /* margin-bottom: 0.25rem; */
-  width: 20rem;
-  height: 80rem;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  width: 100%;
+  height: 74vh;
+  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
+  overflow: scroll;
+  display: flex;
+  flex-flow: row wrap;
   scroll-behavior: smooth;
+  background: #ffffff;
 }
 
-.posts {
-  margin-bottom: 12.625rem !important;
-  /* margin-bottom: 212300px; */
+.scroll::-webkit-scrollbar {
+  display: none;
 }
-
 .globalroot {
   width: 80%;
 }
-
 
 .searchdiv {
   width: 100%;
@@ -87,7 +88,7 @@
 
 .filtertextstandard {
   margin: 0 8px;
-  color: #3BACE2;
+  color: #3bace2;
   /* padding-top: 4px; */
 }
 
@@ -97,6 +98,6 @@
 
 .filterweatherstandard {
   margin: 0 4px;
-  border: 1px solid #3BACE2;
+  border: 1px solid #3bace2;
   padding: 2px;
 }
