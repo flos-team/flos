@@ -20,6 +20,7 @@ import HeaderComponent from "../../../../components/HeaderComponent/HeaderCompon
 import bookMarkIcon from "../../../../assets/GlobalAsset/book-mark-icon.png";
 import bookMarkActive from "../../../../assets/GlobalAsset/book-mark-active.png";
 import dotMarkIcon from "../../../../assets/GlobalAsset/dot-mark-icon.png";
+import PostEditModal from "../../../../components/PostEditModal/PostEditModal";
 
 import rainy from "../../../../assets/GlobalAsset/rainy.png";
 import sunny from "../../../../assets/GlobalAsset/sunny.png";
@@ -44,6 +45,8 @@ const PostDetailPage = () => {
 
   // 북마크 토글에 대한 state 및 function
   const [isBookmark, setIsBookmark] = useState(false);
+
+  const [openModal, setOpenModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -177,8 +180,11 @@ const PostDetailPage = () => {
                 </div>
                 <div className="dot-btn">
                   <img src={dotMarkIcon} onClick={() =>{
-                    console.log(post)
+                    setOpenModal(true)
+                    // console.log(openModal)
+                    // console.log(post)
                   }} />
+                  {openModal ? <PostEditModal postId={post.id}/> : null}
                 </div>
               </div>
               {imgs}
