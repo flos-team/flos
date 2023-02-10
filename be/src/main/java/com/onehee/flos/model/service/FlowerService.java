@@ -30,6 +30,7 @@ public interface FlowerService {
 
     BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException;
 
+    long getCountInGarden();
     // 물주기
     FlowerResponseDTO giveWater();
 
