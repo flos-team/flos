@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getPostList, getPostListByWeather, getPostListByComment, getPostListByNickname, getPostListByTagName } from "../../api/PostAPI"
 
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
@@ -19,7 +19,8 @@ function Global() {
   const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
   const [searchInput, setSearchInput] = useState('') // 검색 : # 포함 -> 태그검색, # 미포함 -> 사용자검색
   const [isSearching, setIsSearching] = useState(false)
-  
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
   // 기본 렌더링 = 최신순
   useEffect(() => {
     getPostList().then((response) => {
@@ -34,10 +35,11 @@ function Global() {
   }, [filterStandard])
 
   // 필터를 위한 상태관리
-  const changeFilterStandard = (num) => {
-    setFilterStandard(num)
-    setIsSearching(false)
-  }
+  // const changeFilterStandard = (num) => {
+  //   setFilterStandard(num)
+  //   console.log(filterStandard)
+  //   setIsSearching(false)
+  // }
   // 상태관리에 따른 필터
   const onFilter = () => {
     if (filterStandard === 1) {
@@ -58,18 +60,21 @@ function Global() {
     )} else if (filterStandard === 4) {
       getPostListByWeather('CLOUDY').then((response) => {
         setPosts(response.content);
+        console.log(posts);
         setIsSearching(false)
       }
     )} else if (filterStandard === 5) {
       getPostListByWeather('RAINY').then((response) => {
+        console.log(response
+          );
         setPosts(response.content);
         setIsSearching(false)
     }
     )}
   }
 
-  const postList = posts.map((EachPost) => <PostItem post={EachPost}></PostItem>);
-
+  const postList = posts.map((key) => <PostItem post={key}></PostItem>);
+  console.log(posts)
   const clickFilterIcon = () => {
       setFiltering((pre) => !pre)
   };
@@ -144,7 +149,9 @@ function Global() {
                     : styles.filtertext
                 }
                 onClick={() => {
-                  changeFilterStandard(1);
+                  setFilterStandard(1)
+                  setIsSearching(false)
+
                 }}
               >
                 최신순
@@ -156,7 +163,8 @@ function Global() {
                     : styles.filtertext
                 }
                 onClick={() => {
-                  changeFilterStandard(2);
+                  setFilterStandard(2)
+                  setIsSearching(false)
                 }}
               >
                 댓글 많은 순
@@ -172,7 +180,8 @@ function Global() {
                     : styles.filterweathericon
                 }
                 onClick={() => {
-                  changeFilterStandard(3);
+                  setFilterStandard(3)
+                  setIsSearching(false)
                 }}
               ></img>
               <img
@@ -184,7 +193,8 @@ function Global() {
                     : styles.filterweathericon
                 }
                 onClick={() => {
-                  changeFilterStandard(4);
+                  setFilterStandard(4)
+                  setIsSearching(false)
                 }}
               ></img>
               <img
@@ -196,7 +206,8 @@ function Global() {
                     : styles.filterweathericon
                 }
                 onClick={() => {
-                  changeFilterStandard(5);
+                  setFilterStandard(5)
+                  setIsSearching(false)
                 }}
               ></img>
             </div>
