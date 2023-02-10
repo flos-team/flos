@@ -27,7 +27,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         Member tempMember = SecurityManager.getCurrentMember();
         if (bookmarkRepository.existsByPostAndMember(tempPost, tempMember))
             throw new BadRequestException("이미 북마크한 게시글입니다.");
-        bookmarkRepository.saveAndFlush(Bookmark.builder()
+        bookmarkRepository.save(Bookmark.builder()
                 .post(tempPost)
                 .member(tempMember)
                 .build());
