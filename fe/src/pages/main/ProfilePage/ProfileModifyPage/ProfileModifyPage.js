@@ -37,6 +37,7 @@ const ProfileModifyPage = () => {
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null); //파일
   const handleOnChange = (event) => {
+    setIsChanged(true);
     //console.log(event.target.files);
     setImgFile(event.target.files);
     //fd.append("file", event.target.files)

@@ -21,12 +21,8 @@ const getFollowerList = async (orderByName) => {
   await axios
     .get(url, { params: { orderByName: orderByName } })
     .then((response) => {
-      console.dir(response);
-      if (response.status === 200) {
-        // console.dir(response.data);
+      // console.dir(response);
         followList = response.data;
-        // console.log(post)
-      }
     })
     .catch((error) => {
       // console.log(error);
@@ -46,12 +42,8 @@ const getFollowingList = async (orderByName) => {
   await axios
     .get(url, { params: { orderByName: orderByName } })
     .then((response) => {
-      console.dir(response);
-      if (response.status === 200) {
-        // console.dir(response.data);
-        followList = response.data;
-        // console.log(post)
-      }
+      // console.dir(response);
+      followList = response.data;
     })
     .catch((error) => {
       console.log("나의 팔로잉 리스트를 불러오던 도중 오류가 발생하였습니다.");
@@ -73,11 +65,7 @@ const getOtherFollowerList = async (id) => {
     .get(url)
     .then((response) => {
       // console.dir(response);
-      if (response.status === 200) {
-        // console.dir(response.data);
-        followList = response.data;
-        // console.log(post)
-      }
+      followList = response.data;
     })
     .catch((error) => {
       console.log(
@@ -99,11 +87,7 @@ const getOtherFollowingList = async (id) => {
     .get(url)
     .then((response) => {
       // console.dir(response);
-      if (response.status === 200) {
-        // console.dir(response.data);
-        followList = response.data;
-        // console.log(post)
-      }
+      followList = response.data;
     })
     .catch((error) => {
       console.log(

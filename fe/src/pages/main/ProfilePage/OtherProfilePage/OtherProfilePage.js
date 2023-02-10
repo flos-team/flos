@@ -18,6 +18,8 @@ import "./OtherProfilePage.css";
 
 const OtherProfilePage = ({ userNickName }) => {
   // 사용자 정보를 init
+  // temp, 다른사람 페이지로 이동하는 메서드
+  const navigate = useNavigate();
   const [titleList, setTitleList] = useState(["팔로잉", "팔로우", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>));
 ;  const [userInfoList, setUserInfoList] = useState([0, 0, 0, 0].map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
     //userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
@@ -62,10 +64,27 @@ saveName
       // console.dir(res);
       // userInfo, setUserInfo
       // profileImage.saveName
+      console.dir(res);
       setUserInfo({ nickname: res.nickname, introduction: res.introduction });
       // .map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);      
       let list = [res.followingCount, res.followerCount, res.postCount, res.blossomCount];
-      setUserInfoList(list.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
+      setUserInfoList(list.map((e, i) => {    
+          let liEle = <></>;
+          if (i <= 1) {
+            liEle = (
+              <li
+                key={i}
+                onClick={(e) => {
+                  navigate(`/follower-view-page/${res.id}`);
+                }}
+              >
+                {e > 999 ? "999+" : e}
+              </li>
+            );
+          } else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>;
+          return liEle;
+        }
+      ));
       let data = getPostListByNickname(res.nickname);
       data.then((res) => {
         //console.dir(res);

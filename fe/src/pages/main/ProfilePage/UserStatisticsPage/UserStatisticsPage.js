@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 /* import img */
 import userActiveGraph from "../../../../assets/ProfileAsset/user-active-graph.png";
@@ -6,9 +7,16 @@ import sunnyImg from "../../../../assets/GlobalAsset/sunny.png";
 import cloudyImg from "../../../../assets/GlobalAsset/cloudy.png";
 import rainyImg from "../../../../assets/GlobalAsset/rainy.png";
 
+/* module */
+import {getMyStatisticData} from "../../../../api/MemberAPI"
+
+/* component */
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
+
+
 /* import CSS */
 import "./UserStatisticsPage.css";
+import { useEffect } from "react";
 
 const UserStatisticsPage = () => {
   const [castItem, setCastItem] = useState([
@@ -17,7 +25,9 @@ const UserStatisticsPage = () => {
     { castId: 3, castImg: rainyImg, className: "rainy-item-static-div" },
   ]);
 
-  const castItemList = castItem.map(({ castId, castImg, className }) => {
+  const user = useSelector((state) => state.user.userData);
+  
+  const [castItemList, setCastItemList ] = useState(castItem.map(({ castId, castImg, className }) => {
     let modifiedClassName = `cast-statistics-item-div ${className}`;
     let castItem = (
       <div key={castId} className={modifiedClassName}>
@@ -30,8 +40,9 @@ const UserStatisticsPage = () => {
       </div>
     );
     return castItem;
-  });
+  }));
 
+  // Will Remove...
   const [plantItem, setPlantItem] = useState([
     { plantId: 1, plantImg: "" },
     { plantId: 2, plantImg: "" },
@@ -49,16 +60,69 @@ const UserStatisticsPage = () => {
     );
     return plantItem;
   });
+  
+  // 사용자 통계 데이터
+  const [userData, setUserData] = useState({
+    flowers:[],
+    loginInfo: { month: 0, lengthOfMonth: 0, loginCount: 0 },
+    postInfo: {postCount: 0, sunny: 0, cloudy: 0, rainy: 0, ratio:{sunny: 0, cloudy: 0, rainy: 0}}
+  })
+
+  useEffect(() => {
+    /*
+flowers (arr)
+loginInfo {month: 2, lengthOfMonth: 28, loginCount: 0}
+postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloudy: 0.6, rainy: 0.1}}*/
+    
+    getMyStatisticData().then((res) => {
+      setUserData(res);      
+      let idx = 240;
+      setCastItemList(
+        castItem.map(({ castId, castImg, className }) => {
+          let modifiedClassName = `cast-statistics-item-div ${className}`;
+          let ratio = 0;
+          switch (castId) {
+            case 1:
+              ratio = res.postInfo.ratio.sunny
+              break;
+            case 2:
+              ratio = res.postInfo.ratio.cloudy
+              break;
+            case 3:
+              ratio = res.postInfo.ratio.rainy
+              break;
+            default:
+              break;
+          }
+
+          let itemStyle = {
+            width: `${idx*ratio}px`,
+          };
+          let castItem = (
+            <div key={castId} className={modifiedClassName}>
+              <div className="img-div">
+                <img src={castImg} />
+              </div>
+              <div className="graph-div">
+                <div className="graph-gage" style={itemStyle}></div>
+              </div>
+            </div>
+          );
+          return castItem;
+        })
+      );
+    });
+  },[])
 
   return (
     <>
       <div className="user-static-page">
-        <HeaderComponent backVisible={true} pageName={"나의 투쟁"}></HeaderComponent>
+        <HeaderComponent backVisible={true} pageName={`${user.nickname} 님의 활동 기록`}></HeaderComponent>
         <div className="user-active-static-item">
           <div className="user-active-div">
             <div className="user-info-div">
               <div className="user-name-div">
-                <p>wonny</p>
+                <p>{user.nickname}</p>
               </div>
               <div className="user-grade-div">
                 <p>베이직 화분</p>
@@ -69,7 +133,7 @@ const UserStatisticsPage = () => {
             </div>
           </div>
           <div className="user-month-div">
-            <p>20일 중 5일 포스트했어요</p>
+            <p>{userData.loginInfo.lengthOfMonth}일 중 {userData.loginInfo.loginCount}일 방문해주셨어요.</p>
           </div>
         </div>
         <div className="user-cast-static-item">
@@ -93,7 +157,7 @@ const UserStatisticsPage = () => {
               <p>작성 횟수</p>
             </div>
             <div className="post-count">
-              <p>999+</p>
+              <p>{userData.postInfo.postCount>999?"999+":userData.postInfo.postCount}</p>
             </div>
           </div>
           <div className="user-heart-share-div">

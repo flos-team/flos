@@ -25,7 +25,16 @@ const UserInfoItem = ({ userInfo, isFollow }) => {
   const [myFollowList, setMyFollowList] = useState(false);
 
   useEffect(() => {
-  },[])
+  }, [])
+  
+  let followingBtn = <div 
+  className={toggleFactor?"followed-btn":"follow-btn"}
+  onClick={(e) => {
+    toggleFunction();
+  }}
+>
+  <p>{toggleFactor?"팔로잉":"팔로우"}</p>
+</div>
 
 
   const toggleFunction = () => {
@@ -61,15 +70,7 @@ const UserInfoItem = ({ userInfo, isFollow }) => {
           <p>{userInfo.introduction}</p>
         </div>
       </div>
-      <div 
-        className={toggleFactor?"followed-btn":"follow-btn"}
-        onClick={(e) => {
-          toggleFunction();
-        }}
-      >
-        <p>{toggleFactor?"팔로잉":"팔로우"}</p>
-      </div>
-
+      {followingBtn}
     </div>
   );
 };
