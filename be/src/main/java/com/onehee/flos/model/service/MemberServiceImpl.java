@@ -9,6 +9,7 @@ import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.*;
 import com.onehee.flos.model.entity.type.MemberStatus;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -223,12 +225,19 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updatePassword(MemberPasswordUpdateRequestDTO memberPasswordUpdateRequestDTO) {
-        Member member = SecurityManager.getCurrentMember();
-        if (!passwordEncoder.matches(memberPasswordUpdateRequestDTO.getCurrentPassword(), member.getPassword())) {
+        Member me = SecurityManager.getCurrentMember();
+        if (!passwordEncoder.matches(memberPasswordUpdateRequestDTO.getCurrentPassword(), me.getPassword())) {
             throw new BadRequestException("현재 비밀번호가 일치하지 않습니다.");
         }
-        member.setPassword(passwordEncoder.encode(memberPasswordUpdateRequestDTO.getNewPassword()));
-        member.setModifiedAt(LocalDateTime.now());
-        memberRepository.save(member);
+        me.setPassword(passwordEncoder.encode(memberPasswordUpdateRequestDTO.getNewPassword()));
+        me.setModifiedAt(LocalDateTime.now());
+        memberRepository.save(me);
+    }
+
+    @Override
+    public List<MemberResponseDTO> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO) {
+        Member me = SecurityManager.getCurrentMember();
+        List<Member> memberList = memberRepository.findAllByNicknameStartsWith(memberSearchRequestDTO.getNickname());
+        return null;
     }
 }

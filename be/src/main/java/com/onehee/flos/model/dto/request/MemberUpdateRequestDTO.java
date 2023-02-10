@@ -1,13 +1,9 @@
 package com.onehee.flos.model.dto.request;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Data
 public class MemberUpdateRequestDTO {
     private final String nickname;
     private final String introduction;

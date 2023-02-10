@@ -7,8 +7,11 @@ import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface MemberService {
@@ -33,4 +36,5 @@ public interface MemberService {
 
     void updatePassword(MemberPasswordUpdateRequestDTO memberPasswordUpdateRequestDTO);
 
+    List<MemberResponseDTO> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO);
 }

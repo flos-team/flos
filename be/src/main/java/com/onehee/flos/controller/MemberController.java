@@ -7,6 +7,7 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.dto.response.StatisticsResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Tag(name = "멤버API", description = "멤버, 토큰 관련 처리를 담당합니다.")
 @RestController
@@ -143,5 +145,14 @@ public class MemberController {
     @Tag(name = "멤버API")
     public ResponseEntity<?> getReport() {
         return new ResponseEntity<StatisticsResponseDTO>(statisticsService.getReport(), HttpStatus.OK);
+    }
+
+    @Operation(summary = "닉네임으로 회원목록 검색", description = "닉네임으로 회원목록을 검색합니다. keyup이벤트 사용 컨트롤러로 의도되었습니다.")
+    @GetMapping("/search")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO) {
+        List<MemberResponseDTO> body = memberService.getMemberListByNickname(memberSearchRequestDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 }

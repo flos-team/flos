@@ -1,30 +1,33 @@
 package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.entity.FileEntity;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.Setter;
 
-import java.io.File;
 import java.time.format.DateTimeFormatter;
 
-@Getter
-@Builder
+@Data
+@Setter(AccessLevel.NONE)
+@Builder(access = AccessLevel.PRIVATE)
 public class FileResponseDTO {
     private String originalName;
     private String saveName;
 
-    @Builder
-    private FileResponseDTO(String originalName, String saveName) {
-        this.originalName = originalName;
-        this.saveName = saveName;
-    }
-
     public static FileResponseDTO toDTO(FileEntity fileEntity) {
-        if (fileEntity == null) return null;
+        if (fileEntity == null) return getDefaultDTO();
         String createDate = fileEntity.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         return FileResponseDTO.builder()
                 .originalName(fileEntity.getOriginalName())
                 .saveName(createDate + "/" + fileEntity.getSavedName())
+                .build();
+    }
+
+    private static FileResponseDTO getDefaultDTO() {
+        return FileResponseDTO.builder()
+                .originalName("profile_image.jpg")
+                .saveName("default/profile_image.jpg")
                 .build();
     }
 }

@@ -1,16 +1,11 @@
 package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.dto.NotificationDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class NotificationResponseDTO {
-    private List<NotificationDTO> notifications;
+    private final List<NotificationDTO> notifications;
 }
