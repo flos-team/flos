@@ -44,10 +44,14 @@ function Login() {
   const onClickNaverLogin = () => {
     console.log("네이버 로그인");
   };
+  const imgStyle = {
+    width:"143px"
+    
+  }
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
-        <img src={loginlogo} alt="hi" className={styles.groomimg}></img>
+        <img src={loginlogo} alt="no-image" className={styles.groomimg} style={imgStyle}></img>
         <br></br>
         <h1>Flos</h1>
         <br></br>
