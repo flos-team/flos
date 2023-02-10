@@ -129,7 +129,7 @@ public class PostServiceImpl implements PostService {
                             .build()
             );
         }
-        followRepository.findAllByOwner(writer)
+        followRepository.findAllByOwnerByNickname(writer)
                 .forEach(follower ->
                         notificationRepository.save(
                                 Notification.builder()

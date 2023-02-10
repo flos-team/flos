@@ -12,4 +12,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     Integer countByMemberAndLoginDateBetween(Member member, LocalDate start, LocalDate end);
 
+    boolean existsByMemberAndLoginDate(Member member, LocalDate localDate);
+
 }

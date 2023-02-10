@@ -87,7 +87,7 @@ spring:
     size: 10
 
 file:
-  extension-regex: \.(jpg|png|bmp|gif)
+  extension-regex: \.(?i)(jpg|png|bmp|gif)
 
 sentiment:
   url: 'https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze'

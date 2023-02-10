@@ -81,4 +81,6 @@ public class Member {
 
     private LocalDateTime modifiedAt;
 
+    private LocalDateTime lastLoginAt;
+
 }

@@ -12,11 +12,17 @@ import java.util.Optional;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
-    @Query("SELECT f.follower FROM Follow f WHERE f.owner = :member")
-    List<Member> findAllByOwner(@Param("member") Member member);
+    @Query("SELECT f.follower FROM Follow f WHERE f.owner = :member ORDER BY f.follower.nickname")
+    List<Member> findAllByOwnerByNickname(@Param("member") Member member);
 
-    @Query("SELECT f.owner FROM Follow f WHERE f.follower = :member")
-    List<Member> findAllByFollower(@Param("member")Member member);
+    @Query("SELECT f.owner FROM Follow f WHERE f.follower = :member ORDER BY f.follower.nickname")
+    List<Member> findAllByFollowerByName(@Param("member")Member member);
+
+    @Query("SELECT f.follower FROM Follow f WHERE f.owner = :member ORDER BY f.follower.lastLoginAt DESC")
+    List<Member> findAllByOwnerOrderByLastLoginAtDesc(@Param("member") Member member);
+
+    @Query("SELECT f.owner FROM Follow f WHERE f.follower = :member ORDER BY f.owner.lastLoginAt DESC")
+    List<Member> findAllByFollowerOrderByLastLoginAtDesc(@Param("member")Member member);
 
     boolean existsByOwnerAndFollower(Member owner, Member follower);
 
