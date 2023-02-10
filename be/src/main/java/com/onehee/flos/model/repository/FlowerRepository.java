@@ -30,13 +30,13 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     Long countByFlowerAndContributor(Flower flower, Member contributor);
 
     @Query(value = "select count(case when p.weather=\"CLOUDY\" then 1 end) from (select p.weather from post p where p.members_id = ?1 order by p.created_at desc limit 10) as p", nativeQuery = true)
-    Long countCloudyByRecent10Post(Member member);
+    Optional<Long> countCloudyByRecent10Post(Member member);
 
     @Query(value = "select count(case when p.weather=\"RAINY\" then 1 end) from (select p.weather from post p where p.members_id = ?1 order by p.created_at desc limit 10) as p", nativeQuery = true)
-    Long countRainyByRecent10Post(Member member);
+    Optional<Long> countRainyByRecent10Post(Member member);
 
     @Query(value = "select count(case when p.weather=\"SUNNY\" then 1 end) from (select p.weather from post p where p.members_id = ?1 order by p.created_at desc limit 10) as p", nativeQuery = true)
-    Long countSunnyByRecent10Post(Member member);
+    Optional<Long> countSunnyByRecent10Post(Member member);
 
     // 회원의 모든 개화한꽃 인데 최근순으로 정렬한
     List<Flower> findAllByOwnerAndBlossomAtIsNotNullOrderByBlossomAtDesc(Member owner);

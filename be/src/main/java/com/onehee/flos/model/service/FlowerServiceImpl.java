@@ -180,9 +180,9 @@ public class FlowerServiceImpl implements FlowerService {
 
     private FlowerType getFlowerColor() {
         Member member = SecurityManager.getCurrentMember();
-        Long sunny = flowerRepository.countSunnyByRecent10Post(member);
-        Long rainy = flowerRepository.countRainyByRecent10Post(member);
-        Long cloud = flowerRepository.countCloudyByRecent10Post(member);
+        Long sunny = flowerRepository.countSunnyByRecent10Post(member).orElse(0L);
+        Long rainy = flowerRepository.countRainyByRecent10Post(member).orElse(0L);
+        Long cloud = flowerRepository.countCloudyByRecent10Post(member).orElse(0L);
         if ((sunny == 0 && rainy == 0) || (sunny == 0 && cloud == 0) || (rainy == 0 && cloud == 0))
             return FlowerType.TulipBlue;
         if (sunny > cloud && sunny > rainy)
