@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         LocalDate endOfMonth = thisMonth.atEndOfMonth();
 
         int loginCount = attendanceRepository.countByMemberAndLoginDateBetween(me, beginOfMonth, endOfMonth);
-        List<Post> posts = postRepository.findAllByWriterAndCreatedAtBetween(me, beginOfMonth.atTime(0, 0, 0), endOfMonth.atTime(23, 59, 59));
+        List<Post> posts = postRepository.findAllByWriterAndCreatedAtBetween(me, LocalDate.now().minusDays(7).atTime(0,0,0), LocalDateTime.now());
         List<Flower> flowers = flowerRepository.findAllByOwnerAndBlossomAtIsNotNullOrderByBlossomAtDesc(me);
 
         int postCount = posts.size();
