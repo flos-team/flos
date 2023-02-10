@@ -63,19 +63,16 @@
 .main {
   margin-top: 0.25rem;
   /* margin-bottom: 0.25rem; */
-  width: 20rem;
-  height: 80rem;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  width: 100%;
+  height: 70vh;
+  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
+  overflow: scroll;display: flex;
+  flex-flow: row wrap;
   scroll-behavior: smooth;
   background: #ffffff;
-
 }
 
-.posts {
-  margin-bottom: 12.625rem !important;
-  /* margin-bottom: 212300px; */
-}
 
 .globalroot {
   width: 80%;
