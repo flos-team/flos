@@ -208,7 +208,7 @@ function Global() {
             </div>
           </div>
         ) : null}
-        <div className={styles.main} id = "postMain">
+        <div className={`${styles.main} ${styles.scroll}`} id = "postMain">
         {isSearching ?
           posts.length === 0 ? noSearchResult : searchResult
         : posts.length === 0 ? noPost : postList}
