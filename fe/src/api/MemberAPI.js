@@ -137,6 +137,22 @@ const sendCodeToEmail = async (email) => {
   return isComplete;
 };
 
+/**
+ * getMyStatisticData : 사용자 통계 정보 요청 메서드
+ * @returns {Promise} A Promise object containing a boolean value
+ */
+const getMyStatisticData = async () => {
+  let url = `/api/member/report`;
+  let statisticsObject = {}
+  await axios.get(url).then((res) => {
+    // console.dir(res);
+    statisticsObject = res.data;
+  }).catch((err) => {
+    console.log("통계 데이터를 가져오던 도중 오류가 발생하였습니다.");
+  })
+  return statisticsObject;
+}
+
 /////////* POST *//////////////////
 /**
  * doLogin : 로그인 메서드
@@ -154,7 +170,7 @@ const doLogin = async (email, password) => {
   await axios
     .post("/api/member/login", loginInfo)
     .then((response) => {
-      //console.dir(response);
+      console.dir(response);
       if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
       console.log(accessToken);
@@ -307,6 +323,7 @@ export {
   logout,
   sendCodeToEmail,
   doLogin,
+  getMyStatisticData,
   signUpUser,
   modifyUserInfo,
   resetUserPassword,

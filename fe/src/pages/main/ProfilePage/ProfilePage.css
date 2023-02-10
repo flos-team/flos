@@ -19,16 +19,17 @@
 .profile-page-container {
   /* Auto layout */
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row wrap;
   align-items: center;
   padding: 1rem;
   gap: 0.5rem;
   width: 100vw;
-  height: 88.6vh;
+  height: 88vh;
   overflow: hidden;
   overflow-y: scroll;
 }
 .profile-page-container .user-info-header {
+  flex-shrink: 0;
   /* Auto layout */
   display: flex;
   flex-flow: column wrap;
@@ -90,8 +91,10 @@
   text-align: center;
 }
 .profile-page-container .user-social-info-box {
-  width: 80%;
-  height: 25%;
+  flex-shrink: 0;
+  width: 90%;
+  height: 5rem;
+  margin: 0 auto;
   background: #f9f9f9;
   border-radius: 0.625rem;
   display: flex;
@@ -133,7 +136,7 @@
   padding: 0.5rem;
   gap: 1rem;
   width: 100%;
-  height: 6%;
+  height: 2.5rem;
   background: #ffffff;
 }
 .profile-page-container .profile-tab-menu .post-tab {
@@ -165,8 +168,8 @@
   overflow-y: scroll;
   gap: 1rem;
   width: 100%;
-  height: 90vh;
-  margin-bottom: 5.3125rem;
+  height: 60vh;
+  margin-bottom: 5rem;
 }
 .profile-page-container .post-container .post-item {
   margin: 0 auto;

@@ -7,6 +7,9 @@ import { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollow
 /* import img */
 import userImg from "../../assets/DummyData/dummy-sample.jpg";
 
+/* import lib */
+
+
 /* import component */
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import UserInfoItem from "./UserInfoItem/UserInfoItem";
@@ -18,11 +21,51 @@ import { getMemberInfo, getOtherMemberInfo } from "../../api/MemberAPI";
 import "./FollowerViewPage.css";
 import { setUser } from "../../redux/user";
 
+
+///// MUI ////////////////
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+
+
+
 const FollowerViewPage = () => {
   const param = useParams();
   const [userInfoList, setUserInfoList] = useState([<></>]);
+  const [myFollowingString, setMyFollowingString] = useState("");
+  const [isMine, setIsMine] = useState(true);
   const [userInfo, setUserInfo] = useState({ nickname: "" });
-  const [isFocus, setIsFocus] = useState(Number(param.acc) === 0 ? true : false);
   const [followerList, setFollowerList] = useState([<></>]);
   const [followingList, setFollowingList] = useState([<></>]);
 
@@ -30,88 +73,105 @@ const FollowerViewPage = () => {
   const user = useSelector((state) => state.user.userData);
 
   // 내 팔로워/팔로잉 정보 가져오는 메서드
-  const setFollowerJSXList = async () => {
+  const requestFollowerList = async () => {
     await getFollowerList()
       .then((res) => {
-        setUserInfoList(res.map((u) => <UserInfoItem userInfo={u} isFollow={param.acc === 0}></UserInfoItem>));
+        setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isFollow={false}></UserInfoItem>));        
       })
       .catch((err) => {});
   };
 
-  const setFollowingJSXList = async () => {
+  // 내팔로잉 정보 가져오는 메서드
+  const requestFollowingList = async () => {
     await getFollowingList()
       .then((res) => {
-        setUserInfoList(res.map((u) => <UserInfoItem userInfo={u} isFollow={param.acc !== 0}></UserInfoItem>));
+        setFollowingList(res.map((u) => <UserInfoItem userInfo={u} isFollow={true}></UserInfoItem>));
       })
       .catch((err) => {});
   };
 
-  const getFolllowerInfoList = async (id, acc) => {
-    if (id == user.id) {
-      console.log("아이디가 같습니다.");
-      setUserInfo(user);
-      // 팔로워로 왔는지 팔로잉으로 왔는지에 따라 분기
-      console.log(acc);
-      switch (Number(acc)) {
-        case 0: //  팔로워
-          setFollowerJSXList();
-          break;
-        case 1: // 팔로잉
-          setFollowingJSXList();
-          break;
-        default:
-          setUserInfoList(<></>);
-          break;
-      }
-    } else {
-      // 여기에서 별도 로직 필요
-      console.log("다른사람 페이지 입니다.");
-      let otherData = getOtherMemberInfo(param.id);
-      otherData.then((res) => {
-        setUserInfo(res);
-        let followerData = getOtherFollowerList();
-        followerData.then((res) => {
-          console.dir(res);
-        });
+  // 다른사람 팔로워 정보 가져오는 메서드
+  const requestOtherFollowerList = async () => {
+    await getOtherFollowerList(param.id).then((res) => {
+      // includes
+      setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isFollow={false}></UserInfoItem>));        
+    })
+  }
 
-        let followingData = getOtherFollowingList();
-        followingData.then((res) => {
-          console.dir(res);
-        });
-      });
+  // 다른사람 팔로잉 정보 가져오는 메서드
+  const requestOtherFollowingList = async () => {
+    let data = getOtherFollowingList(param.id);
+    data.then((res) => {
+      console.dlr(res);
+    })
+  }
+
+  // MUI
+  const [value, setValue] = useState(0);
+  const handleChange = (event, newValue) => {
+    //setValue(newValue);
+    //console.dir(event.target);
+    if (isMine) {
+      switch (Number(event.target.id.split("-")[2])) {
+        case 0:
+          requestFollowerList();
+          break;
+        case 1:
+          requestFollowingList();
+          break;
+      }      
+    } else {
+      switch (Number(event.target.id.split("-")[2])) {
+        case 0:
+          requestOtherFollowerList();
+          break;
+        case 1:
+          // requestOtherFollowingList();
+          break;
+      }      
     }
   };
 
-  let n = 8;
+  
+
   useEffect(() => {
-    getFolllowerInfoList(param.id, param.acc);
-    // setUserInfoList([...Array(5)].map((e, i) => <UserInfoItem></UserInfoItem>));
+    if (param.id == user.id) {
+      console.log("나의 팔로워/팔로잉 페이지 입니다.");
+      setIsMine(true);
+      setUserInfo(user);
+      requestFollowerList();    
+    } else {
+      console.log("타인의 팔로워/팔로잉 페이지 입니다.");
+      setIsMine(false);
+      getOtherMemberInfo(param.id).then((res) => {
+        setUserInfo(res);
+      })
+      requestOtherFollowerList();
+    }
+    
   }, []);
+
   return (
     <>
       <HeaderComponent backVisible={true} pageName={userInfo.nickname}></HeaderComponent>
       <div className="follower-view-container">
-        <div className="follower-view-nav">
-          <div
-            className={`follower-nav-btn ${isFocus ? "focus-tab" : ""}`}
-            onClick={(e) => {
-              setIsFocus(true);
-              setFollowerJSXList();
-            }}
-          >
-            <p>팔로워</p>
-          </div>
-          <div
-            className={`follower-nav-btn ${isFocus ? "" : "focus-tab"}`}
-            onClick={(e) => {
-              setIsFocus(false);
-              setFollowingJSXList();
-            }}
-          >
-            <p>팔로잉</p>
-          </div>
-        </div>
+
         <div className="follower-info-container">{userInfoList}</div>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', width:"100%" }} >
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered >
+              <Tab label="팔로워" {...a11yProps(0)} style={{ display: "block", width:"30vw"}} />
+            <Tab label="팔로잉" {...a11yProps(1)} style={{display:"block", width:"30vw"}} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+              {followerList}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {followingList}
+        </TabPanel>
+    </Box>
+
       </div>
     </>
   );

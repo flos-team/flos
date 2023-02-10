@@ -1,8 +1,5 @@
 @import "../../../../styles//commons.scss";
 
-body{
-}
-
 .user-static-page {
     display: flex;
     flex-direction: row;
@@ -148,7 +145,6 @@ body{
                 position: relative;
                 .graph-gage{
                     position: absolute;
-                    width: 156*$rpx1;
                     height: 16*$rpx1;
                     left: 0px;
                     top: 0px;

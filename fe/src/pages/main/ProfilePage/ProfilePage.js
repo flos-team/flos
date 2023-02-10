@@ -30,6 +30,21 @@ import PostAPI, { getPostListByNickname } from "../../../api/PostAPI";
 import "./ProfilePage.css";
 
 const ProfilePage = ({ setIsToast }) => {
+
+  let testBtn = <button
+  style={{
+    width: "160px",
+    height: "30px",
+    display: "block",
+    margin: "0 auto",
+  }}
+  onClick={async (e) => {
+    navigate("/flower-end-page");
+  }}
+>
+  기능테스트
+</button>
+
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userData);
@@ -71,14 +86,13 @@ const ProfilePage = ({ setIsToast }) => {
     let list = [user.followerCount, user.followingCount, user.postCount, user.blossomCount];
     setUserInfoList(
       list.map((e, i) => {
-        //console.log(`e : ${e}`, `i : ${i}`);
         let liEle = <></>;
-        if (i == 0 || i == 1) {
+        if (i <= 1) {
           liEle = (
             <li
               key={i}
               onClick={(e) => {
-                navigate(`/follower-view-page/${user.id}/${i}`);
+                navigate(`/follower-view-page/${user.id}`);
               }}
             >
               {e > 999 ? "999+" : e}
@@ -96,11 +110,12 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-
-    if (bottom && isScrollable) {
+    const bottom = (e.target.scrollHeight - e.target.scrollTop)+3 <= e.target.clientHeight;
+    // console.log(e.target.scrollHeight - e.target.scrollTop);
+    // console.log(e.target.clientHeight)
+    //console.log("스크롤 감지");
+    if (bottom) {
       console.log("스크롤 끝 감지");
-      // renderPostList(postIdx + 1);
       let nextData = getPostListByNickname(user.nickname, postIdx + 1);
       nextData.then((res) => {
         if (res.hasNext) {
@@ -139,20 +154,7 @@ const ProfilePage = ({ setIsToast }) => {
         <div className="user-social-info-box">
           <ul className="social-info-title">{titleList}</ul>
           <ul className="social-info-count">{userInfoList}</ul>
-        </div>
-        <button
-          style={{
-            width: "160px",
-            height: "30px",
-            display: "block",
-            margin: "0 auto",
-          }}
-          onClick={async (e) => {
-            navigate("/flower-end-page");
-          }}
-        >
-          기능테스트
-        </button>
+        </div>        
         <div className="profile-tab-menu">
           <div className="post-tab focus-tab" onClick={(e) => {}}>
             <p>내 포스트</p>
