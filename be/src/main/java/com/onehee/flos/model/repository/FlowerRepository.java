@@ -20,6 +20,8 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
     // 회원의 가든에 있는 꽃
     Slice<Flower> findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrueOrderByBlossomAtDesc(Member owner, Pageable pageable);
 
+    long countByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(Member owner);
+
     @Query("SELECT wr.contributor FROM WeatherResource wr WHERE wr.flower = :flower")
     Slice<Member> findContributorByFlower(Flower flower, Pageable pageable);
 

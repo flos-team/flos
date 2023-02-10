@@ -98,6 +98,11 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
+    public long getCountInGarden() {
+        return flowerRepository.countByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(SecurityManager.getCurrentMember());
+    }
+
+    @Override
     @Transactional
     public FlowerResponseDTO giveWater() {
         Member member = SecurityManager.getCurrentMember();

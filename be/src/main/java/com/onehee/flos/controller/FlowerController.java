@@ -46,6 +46,13 @@ public class FlowerController {
     }
 
     @Tag(name = "꽃API")
+    @Operation(summary = "가든 페이지 꽃 수량", description = "가든 페이지의 꽃 수량을 반환합니다.")
+    @GetMapping("/garden")
+    public ResponseEntity<?> getFlowerListCount(){
+        return new ResponseEntity<Long>(flowerService.getCountInGarden(), HttpStatus.OK);
+    }
+
+    @Tag(name = "꽃API")
     @Operation(summary = "꽃 생성", description = "이름과 종류로 꽃을 생성합니다.")
     @PostMapping("")
     public ResponseEntity<?> createFlower(@RequestBody FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
