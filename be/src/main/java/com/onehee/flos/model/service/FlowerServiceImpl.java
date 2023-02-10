@@ -181,7 +181,7 @@ public class FlowerServiceImpl implements FlowerService {
     private FlowerType getFlowerColor() {
         Member member = SecurityManager.getCurrentMember();
         List<Long> recentWeatherCount = flowerRepository.countWeatherByRecent10Post(member);
-        if (recentWeatherCount.size() == 0)
+        if (recentWeatherCount == null || recentWeatherCount.size() == 0)
             return FlowerType.Tulip;
         Long sunny = recentWeatherCount.get(1);
         Long rainy = recentWeatherCount.get(2);
