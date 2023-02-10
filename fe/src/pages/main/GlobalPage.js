@@ -24,15 +24,14 @@ function Global() {
   useEffect(() => {
     getPostList().then((response) => {
       setPosts(response.postList);
-      // setIsSearching(false)
+      console.log(posts)
     })
     },[]);
 
-  // 필터기준이 바뀌면 onFilter() 함수 실행
+  // 입력값이 변경할 때마다 발동
   useEffect(() => {
-    onFilter();
+    onFilter()
   }, [filterStandard])
-
 
   // 필터를 위한 상태관리
   const changeFilterStandard = (num) => {
@@ -119,11 +118,6 @@ function Global() {
       <div>{postList}</div>
     </div>
   const noSearchResult = <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>
-
-  // 태그 검색기능
-  // 입력값이 변경할 때마다 발동하는 함수
-
-
 
   return (
     <div className={styles.feedRoot}>
