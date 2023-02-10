@@ -273,7 +273,7 @@ const modifyPost = async (
  * @returns {Promise} A Promise object containing Boolean
  */
 const deletePost = async (postId) => {
-  let url = `/api/post/${postId}/delete`;
+  let url = `/api/post/${postId}`;
   let isDeleted = false;
   await axios
     .delete(url)

@@ -136,6 +136,7 @@ const PostDetailPage = () => {
             optType={0}
           ></HeaderComponent>
           <div className="post-detail-container">
+          {openModal ? <PostEditModal postId={post.id}/> : null}
             <div className="post-container">
               <div className="user-info-container">
                 <div className="user-info-div">
@@ -184,7 +185,6 @@ const PostDetailPage = () => {
                     // console.log(openModal)
                     // console.log(post)
                   }} />
-                  {openModal ? <PostEditModal postId={post.id}/> : null}
                 </div>
               </div>
               {imgs}
