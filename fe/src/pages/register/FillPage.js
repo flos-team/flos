@@ -226,7 +226,7 @@ const xBtnAppear = () =>{
         }
         if (parseInt(seconds) === 0) {
           if(parseInt(minutes) === 0) {
-            console.log('end')
+            setIsMailSend(false)
             clearInterval(countdown);
           } else {
             setMinutes(parseInt(minutes) - 1)
@@ -290,8 +290,6 @@ const xBtnAppear = () =>{
     if (isMailSend) {
       axios.post('api/email/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
-        console.log(res)
-        console.log('성공')
         setVerifyedId(true)
         setEmailMsg('')
         setEmailInputMsg('인증이 완료되었습니다.')
@@ -384,7 +382,7 @@ const xBtnAppear = () =>{
                 <button className={styles.mailbtn} onClick={checkNumber} disabled={verifyedId}>인증</button>
                 <p className={styles.spacebetween}>
                   <span className={verifyedId ? styles.checkedcode : styles.checkingcode}>{emailInputMsg}</span>
-                  <Timer />
+                  {verifyedId ? null : <Timer />}
                 </p>
               </div>
             </div>
