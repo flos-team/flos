@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -187,12 +188,18 @@ public class FlowerServiceImpl implements FlowerService {
         Long cloud = recentWeatherCount.get(0);
         if ((sunny == 0 && rainy == 0) || (sunny == 0 && cloud == 0) || (rainy == 0 && cloud == 0))
             return FlowerType.TulipBlue;
-        if (sunny >= cloud && sunny >= rainy)
+        if (sunny > cloud && sunny > rainy)
             return RandomFlowerTypeSelector.getRandomSunnyType();
-        if (rainy >= sunny && rainy >= cloud)
+        if (rainy > sunny && rainy > cloud)
             return RandomFlowerTypeSelector.getRandomRainyType();
-        if (cloud >= sunny && cloud >= rainy)
+        if (cloud > sunny && cloud > rainy)
             return RandomFlowerTypeSelector.getRandomCloudyType();
+        if (sunny.equals(cloud) && cloud > rainy)
+            return RandomFlowerTypeSelector.getRandomSCType();
+        if (rainy.equals(cloud) && cloud > sunny)
+            return RandomFlowerTypeSelector.getRandomCRType();
+        if (rainy > cloud)
+            return RandomFlowerTypeSelector.getRandomSRType();
         return FlowerType.Tulip;
     }
 }
