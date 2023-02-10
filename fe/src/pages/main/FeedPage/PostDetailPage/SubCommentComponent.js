@@ -25,6 +25,7 @@ const SubCommentComponent = ({ parentId }) => {
     });
   }, []);
 
+
   useEffect(() => {}, [comments]);
 
   // 자신의 댓글 삭제를 누르면 삭제하는 함수
@@ -42,6 +43,7 @@ const SubCommentComponent = ({ parentId }) => {
   const toProfile = (userId) => {
     navigate(`/other-profile-page/${userId}`);
   };
+
   const commentsList = comments.map((comment) => {
     let commentDay = dayjs(comment.createdAt, "YYYY-MM-DD HH:mm:ss");
     let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
@@ -72,6 +74,8 @@ const SubCommentComponent = ({ parentId }) => {
     );
     return result;
   });
+
+  
   return commentsList;
 };
 
