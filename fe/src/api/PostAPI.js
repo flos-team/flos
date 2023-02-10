@@ -180,24 +180,30 @@ const getPostListByTagName = async (tagName) => {
  */
 const createPost = async (content, weather, tagList = [], attachFiles = []) => {
   let url = "/api/post";
-  let newPost = {
-    content,
-    weather,
-    tagList,
-    attachFiles,
-  };
+  const formData = new FormData();
+  formData.append("content", content);
+  formData.append("weather", weather);
+  formData.append("tagList", tagList);
+  Object.values(attachFiles).forEach((file) => formData.append("attachFiles", file));
+  /*
+attachFiles array[string]
+content string (query)	
+tagList array[string]
+weather  
+  */
+
   let isCreated = false;
   await axios
-    .post(url, newPost)
+    .post(url, formData, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+        },})
     .then((response) => {
-      console.dir(response);
-      if (response.status === 201) {
-        isCreated = true;
-      }
+      isCreated = true;
     })
-    .catch((res) => {
-      console.dir(res);
-      console.log("글쓰기 중 오류가 발생했습니다.");
+    .catch((err) => {
+      console.dir(err);
+      console.log("글 작성 중 오류 발생");
     });
   return isCreated;
 };
