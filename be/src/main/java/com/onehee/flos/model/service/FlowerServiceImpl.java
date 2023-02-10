@@ -180,9 +180,9 @@ public class FlowerServiceImpl implements FlowerService {
 
     private FlowerType getFlowerColor() {
         Member member = SecurityManager.getCurrentMember();
-        Long sunny = flowerRepository.countSunnyByRecent10Post(member);
-        Long rainy = flowerRepository.countRainyByRecent10Post(member);
-        Long cloud = flowerRepository.countCloudyByRecent10Post(member);
+        int sunny = flowerRepository.countSunnyByRecent10Post(member);
+        int rainy = flowerRepository.countRainyByRecent10Post(member);
+        int cloud = flowerRepository.countCloudyByRecent10Post(member);
         if ((sunny == 0 && rainy == 0) || (sunny == 0 && cloud == 0) || (rainy == 0 && cloud == 0))
             return FlowerType.TulipBlue;
         if (sunny > cloud && sunny > rainy)
@@ -191,9 +191,9 @@ public class FlowerServiceImpl implements FlowerService {
             return RandomFlowerTypeSelector.getRandomRainyType();
         if (cloud > sunny && cloud > rainy)
             return RandomFlowerTypeSelector.getRandomCloudyType();
-        if (sunny.equals(cloud) && cloud > rainy)
+        if (sunny == cloud && cloud > rainy)
             return RandomFlowerTypeSelector.getRandomSCType();
-        if (rainy.equals(cloud) && cloud > sunny)
+        if (rainy == cloud && cloud > sunny)
             return RandomFlowerTypeSelector.getRandomCRType();
         if (rainy > cloud)
             return RandomFlowerTypeSelector.getRandomSRType();
