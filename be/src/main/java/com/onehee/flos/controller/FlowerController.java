@@ -47,7 +47,7 @@ public class FlowerController {
 
     @Tag(name = "꽃API")
     @Operation(summary = "가든 페이지 꽃 수량", description = "가든 페이지의 꽃 수량을 반환합니다.")
-    @GetMapping("/garden")
+    @GetMapping("/garden/count")
     public ResponseEntity<?> getFlowerListCount(){
         return new ResponseEntity<Long>(flowerService.getCountInGarden(), HttpStatus.OK);
     }
