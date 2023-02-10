@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getPostList } from "../../../api/PostAPI";
+import { getFollowerPostList } from "../../../api/PostAPI";
 import { getFollowerList } from "../../../api/FollowAPI";
 
 import PostItem from "../../../components/PostItem/PostItem";
@@ -14,8 +14,9 @@ function Feed() {
   const [isPostsLoading, setIsPostsLoading] = useState(false);
   const [isFriendsLoading, SetFriendsLoading] = useState(false);
   useEffect(() => {
-    getPostList().then((response) => {
-      setPosts(response.postList);
+    getFollowerPostList().then((response) => {
+      console.log(response)
+      setPosts(response.content);
       setIsPostsLoading(true);
     }, []);
     getFollowerList().then((response) => {
@@ -27,7 +28,10 @@ function Feed() {
   // console.log(posts);
 
   if (isPostsLoading && isFriendsLoading) {
-    const postList = posts.map((key) => <PostItem post={key}></PostItem>);
+    let postList = "";
+    if (posts) {
+      postList = posts.map((key) => <PostItem post={key}></PostItem>);
+    }
     let friendList = "";
     if (friends) {
       friendList = friends.map((key) => {
@@ -55,7 +59,7 @@ function Feed() {
           </div>
           <div className={`${styles.main} ${styles.scroll}`} id="postMain">
             {/** 친구들의 포스트를 나열한다.  */}
-            {posts.length === 0 ? noPost : postList}
+            {posts ? postList : noPost}
           </div>
           <MoveToTopToggle></MoveToTopToggle>
         </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 /**
- * @author 1-hee
+ * @author 1-hee, tykimdream
  *
  * @copyright 2023
  */
@@ -12,18 +12,38 @@ axios.defaults.withCredentials = true;
 /////////* GET *///////////////////
 /**
  */
-const sendBookmarkRequest = async () => {
-  let url = `/api/post/{id}/bookmark`;
-  let value = null;
+const setBookMark = async (id) => {
+  console.log(id)
+
+  let url = `/api/book/${id}`;
+  let value = false;
   await axios
-    .get(url)
+    .post(url)
     .then((response) => {
+      value = true;
       console.dir(response);
     })
-    .catch((err) => {
+    .catch((error) => {
       console.log("북마크 중 오류 발생");
+      console.log(error)
     });
   return value;
 };
 
-export { sendBookmarkRequest };
+const deleteBookMark = async (id) => {
+  console.log(id)
+  let url = `/api/book/${id}`;
+  let value = true;
+  await axios
+    .delete(url)
+    .then((response) => {
+      value = false;
+      console.dir(response);
+    })
+    .catch((error) => {
+      console.log("북마크 삭제 중 오류 발생");
+    });
+  return value;
+};
+
+export { setBookMark, deleteBookMark };

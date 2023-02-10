@@ -1,6 +1,6 @@
 import axios from "axios";
 /**
- * @author 1-hee
+ * @author 1-hee, tykimdream
  *
  * @copyright 2023
  */
@@ -79,6 +79,23 @@ const getBookMarkList = async (page = 0) => {
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
   return bookmarkListObject;
+};
+
+const getFollowerPostList = async () => {
+  const url = `/api/post/list/follow`;
+  let userPostListObject = {};
+  await axios
+    .get(url)
+    .then((response) => {
+      if (response.status === 200) {
+        userPostListObject = response.data;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      console.log("게시글 리스트가 존재하지 않습니다.");
+    });
+  return userPostListObject;
 };
 
 /**
@@ -220,7 +237,14 @@ weather
  * @param {Date} modifiedAt 글을 수정한 시간 (자바스크립트 Date 객체)
  * @returns {Promise} A Promise object containing Boolean
  */
-const modifyPost = async (postId, content, writerId, tagList, attachFiles, modifiedAt = new Date()) => {
+const modifyPost = async (
+  postId,
+  content,
+  writerId,
+  tagList,
+  attachFiles,
+  modifiedAt = new Date()
+) => {
   let url = "/api/post/modify";
   let modifiedPost = {
     attachFiles,
@@ -282,4 +306,5 @@ export {
   createPost,
   modifyPost,
   deletePost,
+  getFollowerPostList,
 };
