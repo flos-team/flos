@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList } from "../../api/FollowAPI";
 
 /* import img */
 import userImg from "../../assets/DummyData/dummy-sample.jpg";
@@ -16,6 +15,7 @@ import UserInfoItem from "./UserInfoItem/UserInfoItem";
 
 /* import module */
 import { getMemberInfo, getOtherMemberInfo } from "../../api/MemberAPI";
+import { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList } from "../../api/FollowAPI";
 
 /* import css */
 import "./FollowerViewPage.css";

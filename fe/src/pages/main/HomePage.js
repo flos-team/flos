@@ -423,7 +423,9 @@ const Home = () => {
       }
     })
   }
-
+  useEffect(() => {
+    getNotification();
+  }, []);
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>

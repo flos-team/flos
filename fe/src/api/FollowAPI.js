@@ -1,6 +1,6 @@
 import axios from "axios";
 /**
- * @author tykimdream
+ * @author 1-hee, tykimdream
  *
  * @copyright 2023
  */
@@ -15,11 +15,11 @@ axios.defaults.withCredentials = true;
  * @param
  * @returns {Promise} A Promise object containing a FollowerObject
  */
-const getFollowerList = async () => {
+const getFollowerList = async (orderByName) => {
   let url = `api/follow/follower`;
   let followList = null;
   await axios
-    .get(url)
+    .get(url, { params: { orderByName: orderByName } })
     .then((response) => {
       // console.dir(response);
         followList = response.data;
@@ -36,11 +36,11 @@ const getFollowerList = async () => {
  * @param
  * @returns {Promise} A Promise object containing a FollowerObject
  */
-const getFollowingList = async () => {
+const getFollowingList = async (orderByName) => {
   let url = `/api/follow/following`;
   let followList = [];
   await axios
-    .get(url)
+    .get(url, { params: { orderByName: orderByName } })
     .then((response) => {
       // console.dir(response);
       followList = response.data;
@@ -51,7 +51,6 @@ const getFollowingList = async () => {
   // console.log(post);
   return followList;
 };
-
 
 // 다른 사람의 팔로워/팔로잉 리스트 확인하는 메서드
 /**
@@ -69,7 +68,9 @@ const getOtherFollowerList = async (id) => {
       followList = response.data;
     })
     .catch((error) => {
-      console.log("다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다.");
+      console.log(
+        "다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다."
+      );
     });
   return followList;
 };
@@ -89,7 +90,9 @@ const getOtherFollowingList = async (id) => {
       followList = response.data;
     })
     .catch((error) => {
-      console.log("다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다.");
+      console.log(
+        "다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다."
+      );
     });
   return followList;
 };
@@ -98,28 +101,39 @@ const getOtherFollowingList = async (id) => {
 const doFollowing = async (id) => {
   let url = `/api/follow`;
   let isFollow = false;
-  await axios.post(url, {id})
+  await axios
+    .post(url, { id })
     .then((response) => {
       // console.dir(response);
       isFollow = true;
-    }).catch((err) => {
-      console.log("팔로잉을 하는 도중 오류가 발생하였습니다.");
     })
+    .catch((err) => {
+      console.log("팔로잉을 하는 도중 오류가 발생하였습니다.");
+    });
   return isFollow;
-}
+};
 
 ////* DELETE *//////////////////
 const cancelFollowing = async (id) => {
   let url = `/api/follow/${id}`;
   let isFollow = false;
-  await axios.delete(url)
+  await axios
+    .delete(url)
     .then((response) => {
       // console.dir(response);
       isFollow = true;
-    }).catch((err) => {
+    })
+    .catch((err) => {
       console.log("팔로우를 취소 하는 도중 오류가 발생하였습니다.");
     });
   return isFollow;
-}
+};
 
-export {getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList, doFollowing, cancelFollowing}
+export {
+  getFollowerList,
+  getFollowingList,
+  getOtherFollowerList,
+  getOtherFollowingList,
+  doFollowing,
+  cancelFollowing,
+};
