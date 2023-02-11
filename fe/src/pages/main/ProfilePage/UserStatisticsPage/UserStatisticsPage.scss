@@ -4,18 +4,17 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  gap: 8 * $rpx1;
   justify-content: center;
   width: 100vw;
   height: max-content;
-  background: $white;
+  background: $black;
   // align-content: center;
+  color: $mono200;
 
   /* 사용자 포스트 활동지수 아이템 */
   .user-active-static-item {
     margin-top: 16px;
     /* user-active-static-item */
-    color: $mono600;
     box-sizing: border-box;
     /* Auto layout */
     display: flex;
@@ -25,9 +24,7 @@
     gap: 8 * $rpx1;
     width: 100%;
     height: 160px;
-    background: $white;
     /* mono100 */
-    border: 1 * $rpx1 solid $mono100;
     /* Inside auto layout */
     order: 1;
     .user-active-div {
@@ -51,7 +48,6 @@
         left: 0;
         top: 25%;
         gap: 12 * $rpx1;
-        border: 1px solid black;
         .user-name-div {
           width: max-content;
           height: max-content;
@@ -100,20 +96,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10 * $rpx1;
+    padding: 5 * $rpx1;
     gap: 4 * $rpx1;
-    width: 328 * $rpx1;
+    width: 100%;
     height: 160 * $rpx1;
-    background: #e8b477;
-    /* mono100 */
-    border: 1 * $rpx1 solid $mono100;
-    border-radius: 16 * $rpx1;
     order: 2;
     .cast-title-div {
-      width: 274 * $rpx1;
+      width: 100%;
       height: max-content;
+      padding-left: 10 * $rpx1;
       p {
-        color: $white;
         font-size: 20 * $rpx1;
       }
     }
@@ -121,12 +113,11 @@
       /* Auto layout */
       display: flex;
       flex-direction: row;
-      justify-content: center;
+      justify-content: left;
       align-items: center;
       padding: 0px 8 * $rpx1;
       gap: 8 * $rpx1;
-
-      width: 300 * $rpx1;
+      width: 100%;
       height: 36 * $rpx1;
       .img-div {
         width: 28 * $rpx1;
@@ -140,7 +131,7 @@
       }
       .graph-div {
         /* graph */
-        width: 240 * $rpx1;
+        width: 100%;
         height: 16 * $rpx1;
         background: $white;
         border-radius: 8 * $rpx1;
@@ -188,16 +179,12 @@
     align-items: flex-start;
     padding: 12 * $rpx1 16 * $rpx1;
     gap: 8 * $rpx1;
-    width: 328 * $rpx1;
+    width: 100%;
     height: 240 * $rpx1;
-    background: #e8b477;
-    border: 1 * $rpx1 solid $mono100;
-    border-radius: 16 * $rpx1;
     order: 3;
     .plant-title {
       width: 120 * $rpx1;
       height: 24 * $rpx1;
-      color: $white;
     }
     .plant-container {
       /* Auto layout */
@@ -213,12 +200,12 @@
       .plant-item {
         /* plant-item */
         box-sizing: border-box;
-        width: 94 * $rpx1;
+        width: 160 * $rpx1;
         height: 160 * $rpx1;
         background: $mono50;
         border: 1 * $rpx1 solid $mono200;
         border-radius: 4 * $rpx1;
-        background-color: $mono50;
+        background-color: rgb(256, 256, 256, 0.1);
         position: relative;
         display: flex;
         align-items: center;
@@ -230,14 +217,16 @@
           /* plant-name */
           box-sizing: border-box;
           position: absolute;
-          width: 60 * $rpx1;
-          height: 16 * $rpx1;
-          left: 16 * $rpx1;
-          bottom: 5 * $rpx1;
-          background: $mono50;
+          width: max-content;
+          height: max-content;
+          bottom: 5px;
+          left: 50%;
+          transform: translate(-50%, 0%);
+          padding-top: 5 * $rpx1;
+          padding-bottom: 5 * $rpx1;
+          padding-left: 10 * $rpx1;
+          padding-right: 10 * $rpx1;
           border: 1 * $rpx1 solid $mono300;
-          border-radius: 8 * $rpx1;
-          text-align: center;
           color: $mono600;
         }
       }
@@ -253,11 +242,9 @@
     align-items: flex-start;
     padding: 12 * $rpx1 16 * $rpx1;
     gap: 8 * $rpx1;
-    width: 328 * $rpx1;
+    width: 100%;
     height: 200 * $rpx1;
-    background: #e8b477;
-    border: 1 * $rpx1 solid $mono100;
-    border-radius: 16px;
+    background: $black;
     /* Inside auto layout */
     order: 3;
     .user-active-title {
@@ -265,8 +252,6 @@
       height: 24 * $rpx1;
       order: 0;
     }
-    color: $white;
-
     .user-post-count-div,
     .user-heart-share-div,
     .user-heart-get-div {
