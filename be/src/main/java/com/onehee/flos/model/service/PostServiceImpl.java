@@ -109,18 +109,18 @@ public class PostServiceImpl implements PostService {
 
         Post tempPost = postRepository.saveAndFlush(postCreateRequestDTO.toEntity(writer));
 
-        for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
-            if (e == null)
-                continue;
-            FileEntity tempFile = filesHandler.saveFile(e);
-            log.info("{}", tempFile);
-            tempFile.setMember(writer);
-            postFileRepository.saveAndFlush(
-                    PostFile.builder()
-                            .post(tempPost)
-                            .file(tempFile)
-                            .build()
-            );
+        if (postCreateRequestDTO.getAttachFiles() != null) {
+            for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
+                FileEntity tempFile = filesHandler.saveFile(e);
+                log.info("{}", tempFile);
+                tempFile.setMember(writer);
+                postFileRepository.saveAndFlush(
+                        PostFile.builder()
+                                .post(tempPost)
+                                .file(tempFile)
+                                .build()
+                );
+            }
         }
 
         for (String e : postCreateRequestDTO.getTagList()) {
