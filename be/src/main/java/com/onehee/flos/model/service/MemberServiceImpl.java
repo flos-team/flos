@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -237,6 +238,6 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberResponseDTO> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO) {
         Member me = SecurityManager.getCurrentMember();
         List<Member> memberList = memberRepository.findAllByNicknameLikeIgnoreCase(memberSearchRequestDTO.getNickname() + "%");
-        return null;
+        return memberList.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 }

@@ -20,7 +20,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     List<Member> findAllByNicknameLikeIgnoreCase(String nickname);
 
-    @Query("SELECT m from Member m ")
-    List<Member> findAllByNicknameLikeIgnoreCaseAndIsFollower(Member member, String nickname);
-
 }
