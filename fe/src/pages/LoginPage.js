@@ -43,7 +43,7 @@ function Login() {
           navigate("/main", { replace: true});
         }})
       .catch(() => {
-        console.log('서버 오류')
+        alert('서버의 일시적인 오류가 발생했습니다.')
       });
     }
 
