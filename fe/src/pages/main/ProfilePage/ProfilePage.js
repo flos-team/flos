@@ -108,7 +108,7 @@ const ProfilePage = ({ setIsToast }) => {
   const setBookmarkList = async () => {
     await getBookMarkList(postIdx).then((res) => {
       // console.dir(res);
-      if (res && res.content && res.content.length) {
+      if (res && res.content && res.content.length && postIdx != 1) {
         let newPostList = bookPostList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
         setBookPostList(newPostList);
         //console.dir(newPostList);
@@ -119,7 +119,7 @@ const ProfilePage = ({ setIsToast }) => {
   const setMyPostList = async () => {
     await getPostListByNickname(user.nickname, postIdx).then((res) => {
       // console.dir(res);
-      if (res && res.content && res.content.length) {
+      if (res && res.content && res.content.length && postIdx != 1) {
         let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
         setPostList(newPostList);
       }

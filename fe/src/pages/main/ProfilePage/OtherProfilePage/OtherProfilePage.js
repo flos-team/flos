@@ -1,7 +1,8 @@
 /* import react */
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setFollowingIdList } from "../../../../redux/user";
 
 /* import img */
 
@@ -12,6 +13,9 @@ import PostItem from "../../../../components/PostItem/PostItem";
 /* import modules */
 import { getOtherMemberInfo } from "../../../../api/MemberAPI";
 import { getPostListByNickname } from "../../../../api/PostAPI";
+import { doFollowing, cancelFollowing } from "../../../../api/FollowAPI";
+import Swal from "sweetalert2";
+
 // import {}
 
 /* import css */
@@ -21,6 +25,7 @@ const OtherProfilePage = ({ userNickName }) => {
   // 사용자 정보 리덕스
   const user = useSelector((state) => state.user.userData);
   const userIdList = useSelector((state) => state.user.followingIdList);
+  const dispatch = useDispatch();
 
   // 사용자 정보를 init
   // temp, 다른사람 페이지로 이동하는 메서드
@@ -40,20 +45,22 @@ const OtherProfilePage = ({ userNickName }) => {
   // 사용지 프로필 이미지 정보 state
   const [userImgURL, setUserImgURL] = useState("");
 
-  // 팔로잉 버튼의 렌더링용 함수! 수정하면 안됌
-  const [toggleFactor, setToggleFactor] = useState(false);
-  const [followBtnStyle, setFollowBtnStyle] = useState("following-btn");
-  const [followText, setFollowText] = useState("팔로우");
-  const toggleFunction = () => {
-    if (toggleFactor) {
-      setFollowBtnStyle("followed-btn");
-      setFollowText("팔로우");
-    } else {
-      setFollowBtnStyle("following-btn");
-      setFollowText("팔로잉");
+  // 토글
+  const [toggleFactor, setToggleFactor] = useState(true);
+  const [followText, setFollowText] = useState("팔로잉");
+
+  useEffect(() => {
+    let isFollowed = false;
+
+    for (let i = 0; i < userIdList.length; i++) {
+      if (userIdList[i] == userInfo.id) {
+        isFollowed = true;
+        break;
+      }
     }
-    setToggleFactor(!toggleFactor);
-  };
+    setToggleFactor(isFollowed);
+    setFollowText(isFollowed ? "팔로잉" : "팔로우");
+  }, []);
 
   let followingBtn = (
     <div
@@ -65,6 +72,43 @@ const OtherProfilePage = ({ userNickName }) => {
       <p>{followText}</p>
     </div>
   );
+
+  const toggleFunction = () => {
+    // 팔로잉 관련 로직
+    // true -> 팔로잉, 팔로우 한 상태
+    // false -> 팔로우, 팔로우 안한 상태
+    if (toggleFactor) {
+      setFollowText("팔로우");
+      let data = cancelFollowing(userInfo.id);
+      data.then((res) => {
+        if (res) {
+          alert("팔로잉 취소 성공");
+          let newList = userIdList.filter((id) => userInfo.id !== id);
+          console.log(newList);
+          dispatch(setFollowingIdList(newList));
+        } else {
+          console.log("서버로 부터 응답 받음 그러나 문제 발생");
+          console.dir(res);
+        }
+      });
+    } else {
+      setFollowText("팔로잉");
+      let data = doFollowing(userInfo.id);
+      data.then((res) => {
+        if (res) {
+          //alert("팔로잉 성공");
+          // 여기에 팔로잉 성공 시 리덕스 업데이트 로직 필요
+          let newList = userIdList.concat(userInfo.id);
+          console.log(newList);
+          dispatch(setFollowingIdList(newList));
+        } else {
+          console.log("서버로 부터 응답 받음 그러나 문제 발생");
+          console.dir(res);
+        }
+      });
+    }
+    setToggleFactor(!toggleFactor);
+  };
 
   useEffect(() => {
     // console.dir(params);
@@ -109,14 +153,11 @@ const OtherProfilePage = ({ userNickName }) => {
       // 내 팔로잉 정보에 따라서 팔로워 팔로잉 표시 다르게
       let isFollowed = false;
       for (let i = 0; i < userIdList.length; i++) {
-        console.log(userIdList[i]);
-
-        if (userIdList[i] == params.id) {
+        if (userIdList[i] == userInfo.id) {
           isFollowed = true;
           break;
         }
       }
-      console.dir(isFollowed);
       setToggleFactor(isFollowed);
       setFollowText(isFollowed ? "팔로잉" : "팔로우");
     });
