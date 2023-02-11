@@ -122,15 +122,16 @@ public class PostServiceImpl implements PostService {
                 );
             }
         }
-
-        for (String e : postCreateRequestDTO.getTagList()) {
-            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
-            postTagRepository.saveAndFlush(
-                    PostTag.builder()
-                            .post(tempPost)
-                            .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
-                            .build()
-            );
+        if (postCreateRequestDTO.getAttachFiles() != null) {
+            for (String e : postCreateRequestDTO.getTagList()) {
+                Tag tempTag = tagRepository.findByTagName(e).orElse(null);
+                postTagRepository.saveAndFlush(
+                        PostTag.builder()
+                                .post(tempPost)
+                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
+                                .build()
+                );
+            }
         }
         followRepository.findAllByOwnerByNickname(writer)
                 .forEach(follower ->
