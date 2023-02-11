@@ -52,6 +52,7 @@ const getGardenList = async (page) => {
   await axios
     .get(url)
     .then(({data}) => {
+      console.log(data);
       value = data;
     })
     .catch((err) => {

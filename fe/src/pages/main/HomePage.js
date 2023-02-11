@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 import { css, keyframes } from "@emotion/react";
 import GrowProgressBar from "../../components/homepage/GrowProgressBar";
 import { gsap } from "gsap";
-import rainObjectData from "../../assets/HomeAsset/53484-digital-clouds-rain.json";
+import rainObjectData from "../../assets/HomeAsset/8368-cloud.json";
 import rainAnimationData from "../../assets/HomeAsset/81756-rain.json";
 import sunObjectData from "../../assets/HomeAsset/22190-sunny-day.json";
 import congratulationData from "../../assets/HomeAsset/76411-confetti-effects-lottie-animation.json";
@@ -128,6 +128,7 @@ const Home = () => {
   const rainBox = useRef();
   const sunshine = useRef();
   const rain = useRef();
+  const flowerRef = useRef();
   const [elementStatus, setElementStatus] = useState("");
   const [sunAnimation, setSunAnimation] = useState(null);
   const [rainAnimation, setRainAnimation] = useState(null);
@@ -237,23 +238,22 @@ const Home = () => {
       let sunTimeLine = gsap.timeline();
       sunTimeLine.fromTo(
         sunBox.current,
-        { y: "-2000" },
+        { x: "400", y: "0" },
         {
-          y: "-600",
+          x: "-0", y: "-300",
+          duration: 1.5,
+        }
+      ).to(
+        sunBox.current,
+        {
+          x: "-400", y: "0",
+          duration: 1.5
         }
       );
-      sunTimeLine.fromTo(
-        sunshine.current,
-        { y: "-1000" },
-        {
-          y: "0",
-          duration: 2,
-        }
-      );
-      sunTimeLine.to(sunshine.current, {
-        y: "-2000",
-      });
-      sunTimeLine.to(sunBox.current, { y: "-2000" });
+      // sunTimeLine.to(sunshine.current, {
+      //   y: "-2000",
+      // });
+      // sunTimeLine.to(sunBox.current, { y: "-2000" });
       setElementStatus("");
       // setTimeout(function() {
       //     if(Animation !== null){
@@ -265,14 +265,20 @@ const Home = () => {
       let rainTimeLine = gsap.timeline();
       rainTimeLine.fromTo(
         rainBox.current,
-        { y: "-1000" },
+        { x: "400", y: "0" },
         {
-          y: "0",
+          x: "0", y: "-200",
           duration: 2,
         }
+      ).to(
+        rainBox.current,
+        {
+          x: "-400", y: "0",
+          duration: 2
+        }
       );
-      rainTimeLine.to(rainBox.current, { y: "-2000" });
-      // timeLine.fromTo(rain.current, {y: "0"}, {y: "-2000"});
+      // rainTimeLine.to(rainBox.current, { y: "-2000" });
+      rainTimeLine.fromTo(rain.current, { y: "0" }, { y: "-3000" });
       setElementStatus("");
     }
   }, [elementStatus]);
@@ -326,12 +332,13 @@ const Home = () => {
       flowerInfo.isFullGrown = res.isFullGrown;
     });
     flowerInfo.sunElementCount--;
+    flowerRef.current.FlowerSmile();
     setSunAnimation(
       <>
         <div ref={sunBox}>
-          <Lottie options={sunObjectOptions} height={1000} width={1000} />
+          <Lottie options={sunObjectOptions} height={500} width={500} />
         </div>
-        <div className={styles.SunShine} ref={sunshine}></div>
+        {/* <div className={styles.SunShine} ref={sunshine}></div> */}
       </>
     );
   };
@@ -360,16 +367,19 @@ const Home = () => {
       flowerInfo.isFullGrown = res.isFullGrown;
     });
     flowerInfo.rainElementCount--;
+    flowerRef.current.FlowerSmile();
     const rainObjectOptions = {
       autoplay: true,
       animationData: rainObjectData,
     };
     setRainAnimation(
       <WeatherAnimation>
-        {/* <div ref={rainBox} className={styles.raindrop}>
-                <Lottie options={rainObjectOptions} height={600} width={600} />
-            </div> */}
-        <Lottie ref={rain} options={rainAnimationOptions} height={400} width={400} />
+        <div ref={rainBox} className={styles.raindrop}>
+          <Lottie options={rainObjectOptions} height={300} width={300} />
+        </div>
+        <div ref={rain}>
+          <Lottie options={rainAnimationOptions} height={400} width={400} />
+        </div>
       </WeatherAnimation>
     );
   };
@@ -400,8 +410,9 @@ const Home = () => {
   /*
   * 꽃 생성 함수
   */
-  const MakeFlowerOnclick = () => {
+  const MakeFlowerOnclick = (name) => {
     setMakeFlowerModal(false);
+    flowerInfo.name = name;
     updateInfo();
   }
 
@@ -431,7 +442,7 @@ const Home = () => {
       <div className={styles.HomeRoot}>
         {isFlowering == true ? (
           <Flowering>
-              <FloweringButton onClick={() => { doFlowering() }}>개화</FloweringButton>
+            <FloweringButton onClick={() => { doFlowering() }}>개화</FloweringButton>
             <Congratulation>
               <Lottie
                 options={{
@@ -506,7 +517,7 @@ const Home = () => {
           </div>
         </div>
         <div className={styles.Flowerpot}>
-          <Flower flowerInfo={flowerInfo} doFullGrown={doFullGrown}></Flower>
+          <Flower ref={flowerRef} flowerInfo={flowerInfo} doFullGrown={doFullGrown}></Flower>
         </div>
       </div>
     </HomePageDiv>
