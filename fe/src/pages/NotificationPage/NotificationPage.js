@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 /* import img css */
 import userImg from "../../assets/DummyData/writerProfileSample.png";
+import defaultImg from '../../assets/GoormAsset/goorm-sunglass.png';
 
 /* import component */
 import AlarmItem from "../../components/AlarmItem/AlarmItem";
@@ -10,33 +10,65 @@ import AlarmItem from "../../components/AlarmItem/AlarmItem";
 /* import css */
 import "./NotificationPage.css";
 
-const NotificationPage = () => {
-  let testText = (
-    <>
-      <b>김채원</b>님이 <b>사쿠라</b> 님의 댓글에 좋아요를 누르셨습니다.
-    </>
-  );
-  let testTimeLog = "23시간 전";
-  const [AlarmItemList, setAlarmItemList] = useState([<></>]);
+import { getNotification } from "../../api/NotificationAPI"
+import { getTimeDiffText } from '../../api/DateModule'
 
-  let n = 5;
-  let commonAlarmItemList = [...Array(n)].map((e, i) => (
-    <AlarmItem AlarmImg={userImg} AlarmTextJSX={testText} AlarmTimeLog={testTimeLog}></AlarmItem>
-  ));
-  let dummy = ["SUNNY", "CLOUDY", "RAINY", "SUNNY", "CLOUDY", "RAINY", "SUNNY", "CLOUDY", "RAINY"];
-  let newAlarmItemList = commonAlarmItemList.concat(
-    dummy.map((e) => (
-      <AlarmItem AlarmImg={userImg} AlarmTextJSX={testText} AlarmTimeLog={testTimeLog} weather={e}></AlarmItem>
-    ))
-  );
+import dayjs from "dayjs";
+
+const NotificationPage = () => {
+
+  const [notiList, setNotiList] = useState([]);
+
+  const url = "https://i8b210.p.ssafy.io/api/file/"
+
   useEffect(() => {
-    setAlarmItemList(newAlarmItemList);
-  }, []);
+    getNotification().then((res) => {
+      setNotiList(res.notifications)
+    })
+  }, [notiList])
+  
+  let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
+
+  let notiItemList = null;
+
+  if (notiList !== undefined) {
+    notiItemList =
+    
+      notiList.map(({id, message, createdAt, data, messageType}) => {
+        let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
+        let RegBefore = getTimeDiffText(postDay, curDay);
+        let profileImg = ''
+        switch (messageType) {
+          case "NEWFEED":
+          case "NEWCOMMENT":
+          case "NEWREPLY":
+          case "COMMENTCHOSEN":
+            profileImg = `${url}${data.writer.profileImage.saveName}`
+            break;
+          case "FOLLOW":
+            profileImg = `${url}${data.profileImage.saveName}`
+            break;
+          default:
+            profileImg = {userImg}
+            break;
+        }
+        
+        return <AlarmItem AlarmImg={profileImg} AlarmTextJSX={message} AlarmTimeLog={RegBefore} id={id}></AlarmItem>;
+      });
+    }
+
+  const noItem =
+    <div>
+      <img src={defaultImg} alt='' className="defaultimg"></img>
+      <p className="no-noti-text">알림이 없습니다.</p>
+    </div>
 
   return (
     <div style={{ backgroundColor: "#e8e8e8" }}>
-      <HeaderComponent backVisible={true} pageName={"알림"} optType={0}></HeaderComponent>
-      <div className="alarm-container">{AlarmItemList}</div>
+      <HeaderComponent backVisible={true} pageName={"알림"}></HeaderComponent>
+      {notiList===undefined ? 
+      <div className="noalarm-container">{noItem}</div> :
+      <div className="alarm-container">{notiItemList}</div>}
     </div>
   );
 };

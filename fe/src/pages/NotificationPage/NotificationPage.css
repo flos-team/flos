@@ -30,3 +30,29 @@
 }
 
 /*# sourceMappingURL=NotificationPage.css.map */
+
+.noalarm-container{
+  width: 100vw;
+  min-height: 91.3vh;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background-color: #fcfcfc;
+  align-items: center;
+}
+
+.no-noti-text{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-size: 20px;
+}
+
+.defaultimg {
+  height: 120px;
+  width: 200px;
+}

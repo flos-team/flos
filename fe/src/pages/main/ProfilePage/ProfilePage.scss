@@ -5,25 +5,29 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 0px 16 * $rpx1;
+  padding: 16 * $rpx1;
   gap: 8 * $rpx1;
   width: 100vw;
-  height: 656 * $rpx1;
+  // height: 656 * $rpx1;
+  // height: max-content;
+  height: 88vh;
   overflow: hidden;
   overflow-y: scroll;
   .user-info-header {
+    flex-shrink: 0;
     /* Auto layout */
     display: flex;
     flex-flow: column wrap;
     align-items: center;
     padding: 12 * $rpx1 16 * $rpx1;
-    width: 328 * $rpx1;
-    height: 194 * $rpx1;
+    width: 100%;
+    // height: 12%;
+    height: max-content;
     .user-img {
-      width: 80px;
-      height: 80px;
+      width: 80 * $rpx1;
+      height: 80 * $rpx1;
       border: 1 * $rpx1 solid $mono200;
-      border-radius: 40px;
+      border-radius: 40 * $rpx1;
       background-position: center;
       background-size: cover;
     }
@@ -47,7 +51,7 @@
           justify-content: center;
           align-items: center;
           padding: 4 * $rpx1 8 * $rpx1;
-          width: 100 * $rpx1;
+          width: max-content;
           height: 30 * $rpx1;
           p {
             font-size: 16 * $rpx1;
@@ -63,7 +67,8 @@
       justify-content: center;
       align-items: center;
       padding: 8 * $rpx1 16 * $rpx1;
-      width: 296 * $rpx1;
+      // width: 296 * $rpx1;
+      width: 100%;
       height: 36 * $rpx1;
       background: #ffffff;
       p {
@@ -74,8 +79,11 @@
   }
 
   .user-social-info-box {
-    width: 328 * $rpx1;
+    flex-shrink: 0;
+    // width: 328 * $rpx1;
+    width: 90%;
     height: 80 * $rpx1;
+    margin: 0 auto;
     background: $white;
     border-radius: 10 * $rpx1;
     display: flex;
@@ -88,15 +96,24 @@
       flex-flow: row nowrap;
       justify-content: space-evenly;
       align-items: center;
+      li {
+        flex-grow: 1;
+        text-align: center;
+      }
     }
     .social-info-count {
       width: 100%;
       height: 50%;
       list-style: none;
       display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-evenly;
-      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      li {
+        flex-grow: 1;
+        height: max-content;
+        align-items: center;
+        text-align: center;
+      }
     }
   }
 
@@ -108,7 +125,7 @@
     align-items: center;
     padding: 8 * $rpx1;
     gap: 16 * $rpx1;
-    width: 328 * $rpx1;
+    width: 100%;
     height: 40 * $rpx1;
     background: $white-pure;
     .post-tab {
@@ -140,11 +157,11 @@
     display: flex;
     flex-flow: row wrap;
     overflow-y: scroll;
-    align-items: center;
-    padding: 8 * $rpx1 0px;
-    gap: 8 * $rpx1;
-    width: 328 * $rpx1;
-    height: 600 * $rpx1;
+    // padding: 8 * $rpx1 0px;
+    gap: 16 * $rpx1;
+    width: 100%;
+    height: 60vh;
+    margin-bottom: 80*$rpx1;
     .post-item {
       margin: 0 auto;
     }

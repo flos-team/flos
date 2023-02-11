@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 
-import loginlogo from "../assets/LoginAsset/groom-icon.png";
+import { doLogin, getMemberInfo } from "../api/MemberAPI";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/user";
+
+import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
 
-import axios from "axios";
-
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-// axios.defaults.baseURL = "http://localhost:8080/";
-axios.defaults.withCredentials = true;
-
 function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
 
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
+
+  const [loginMsg, setLoginMsg] = useState('');
+
   const handleInputId = (e) => {
     setInputId(e.target.value);
   };
@@ -27,67 +29,43 @@ function Login() {
 
   // 로그인 버튼 클릭 이벤트
   const onClickLogin = () => {
-    const loginInfo = {
-      email: inputId,
-      password: inputPw,
-    };
-    // console.log(loginInfo)
-    axios
-      .post("/member/login", loginInfo)
+    if (inputId.length === 0) {
+      setLoginMsg('아이디를 입력해주세요.')
+    } else if (inputPw.length === 0) {
+      setLoginMsg('비밀번호를 입력해주세요.')
+    }
+    else {
+    doLogin(inputId, inputPw)
       .then((response) => {
-        // console.log(response)
-        const accessToken = response.data.atk;
-        // console.log(accessToken)
-        // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-        console.dir(axios.defaults);
-      })
-      .then(() => {
-        axios
-          .get("/member/info")
-          .then((response) => {
-            console.log(response);
-            navigate("/main");
-          })
-          .catch((error) => {
-            console.log("error : " + error);
-            console.dir(axios.defaults);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        console.dir(axios.defaults);
+        if (response === false) {
+          setLoginMsg('아이디 또는 비밀번호를 확인해주세요.')
+        } else if (response === true) {
+          navigate("/main", { replace: true});
+        }})
+      .catch(() => {
+        console.log('서버 오류')
       });
+    }
+
+
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    // const REST_API_KEY = "9a9f7ea0fc0478260c22ccf4d7c2a796";
-    // const REDIRECT_URI = "http://localhost:3000/kakaoLogin"
-    // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
-    // window.location.href = KAKAO_AUTH_URL;
-    // navigate("http://i8b210.p.ssafy.io:8080/oauth2/authorization/kakao")
-    // const KAKAO_CODE = location.search.split('=')[1];
-    // console.log(KAKAO_CODE);
+    console.log("카카오 로그인");
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
     console.log("네이버 로그인");
   };
-
-  // // 페이지 렌더링 후 가장 처음 호출되는 함수
-  // useEffect(() => {
-  //     axios.get('')
-  //     .then(res => console.log(res))
-  //     .catch()
-  // },
-  // // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
-  // [])
-
+  const imgStyle = {
+    width:"143px"
+    
+  }
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
-        <img src={loginlogo} alt="hi" className={styles.groomimg}></img>
+        <img src={loginlogo} alt="no-image" className={styles.groomimg} style={imgStyle}></img>
         <br></br>
         <h1>Flos</h1>
         <br></br>
@@ -97,7 +75,7 @@ function Login() {
           <div className={styles.fullsize}>
             <input
               type="text"
-              name="input_id"
+              name="inputId"
               placeholder="flos@example.com"
               value={inputId}
               className={styles.inputdiv}
@@ -112,6 +90,9 @@ function Login() {
               className={styles.inputdiv}
               onChange={handleInputPw}
             />
+          </div>
+          <div className={styles.loginmsg}>
+            {loginMsg}
           </div>
           <div className={styles.loginbtndiv}>
             <button
@@ -129,9 +110,6 @@ function Login() {
             <Link to="/pwfind" className={styles.linktext}>
               비밀번호 찾기
             </Link>
-            <Link to="/main" className={styles.linktext}>
-              홈으로
-            </Link>
           </div>
         </div>
 
@@ -139,7 +117,7 @@ function Login() {
           <span className={styles.socialline}>소셜 로그인</span>
           <br></br>
           <div className={styles.socialbtn}>
-            <a href="http://i8b210.p.ssafy.io:8080/oauth2/authorization/kakao">
+            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/kakao">
               {/* <button onClick={onClickKakaoLogin} className={styles.kakaobtn}> */}
               <button onClick={onClickKakaoLogin} className={styles.kakaobtn}>
                 <img src={kakaologo} alt=""></img>
@@ -148,7 +126,7 @@ function Login() {
             </a>
           </div>
           <div className={styles.socialbtn}>
-            <a href="http://i8b210.p.ssafy.io:8080/oauth2/authorization/naver.com">
+            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/naver">
               {/* <button onClick={onClickNaverLogin} className={styles.naverbtn}> */}
               <button onClick={onClickNaverLogin} className={styles.naverbtn}>
                 <img src={naverlogo} alt=""></img>

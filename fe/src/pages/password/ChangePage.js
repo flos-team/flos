@@ -1,10 +1,20 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import HeaderComponent from '../../components/HeaderComponent/HeaderComponent'
 import TextLogoComponent from "../../components/TextLogoComponent";
 import InputPreventComponent from '../../components/InputPreventComponent'
 import styles from './ChangePage.module.css'
+import {getMemberInfo} from '../../api/MemberAPI'
+
 
 function ChangePage() {
+
+  useEffect(() => {
+    getMemberInfo().then((res) => {
+      console.log(res)
+      console.log('hi')
+    })
+  }, [])
+
   return (
     <>
         <HeaderComponent backVisible={1} pageName={'비밀번호 변경'}></HeaderComponent>
