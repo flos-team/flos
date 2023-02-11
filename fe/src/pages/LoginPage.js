@@ -3,13 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/user";
 import Swal from "sweetalert2";
-import { setUser, setFollowingIdList } from "../redux/user";
-
-/* import module */
-import { getFollowingList } from "../api/FollowAPI";
-
-
 import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
@@ -43,11 +38,6 @@ function Login() {
         if (response === false) {
           setLoginMsg('아이디 또는 비밀번호를 확인해주세요.')
         } else if (response === true) {
-          getFollowingList().then((res) => {            
-            let idList = []
-            res.map((e) => { idList = [...idList, e.id] }); // 로그인시 사용자의 팔로워 리스트를 받아와서 문자열 배열로 저장
-            dispatch(setFollowingIdList(idList));      
-          })
           navigate("/main", { replace: true});
         }})
       .catch(() => {

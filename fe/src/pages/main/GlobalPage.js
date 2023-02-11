@@ -107,7 +107,7 @@ function Global() {
       });
     }
     // 사용자 검색
-    else if (e.target.value.substr(0, 1) !== "#" && e.target.value.length >= 2) {
+    else if (e.target.value.substr(0, 1) !== "#" && e.target.value.length >= 1) {
       getPostListByNickname(e.target.value.toLowerCase()).then((response) => {
         if (response.content) {
           setIsSearching(true);
@@ -213,13 +213,13 @@ function Global() {
           </div>
         ) : null}
         <div className={`${styles.main} ${styles.scroll}`} id="postMain">
-          {/* {isSearching
+          {isSearching
             ? posts.length === 0
               ? noSearchResult
               : searchResult
             : posts.length === 0
             ? noPost
-            : postList} */}
+            : postList}
           {postList}
         </div>
       </div>
