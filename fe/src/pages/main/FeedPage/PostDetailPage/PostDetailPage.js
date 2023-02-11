@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
-import { getPost } from "../../../../api/PostAPI";
+import { getPost, deletePost } from "../../../../api/PostAPI";
 import { getCommentList, createComment } from "../../../../api/CommentAPI";
 import { setBookMark, deleteBookMark } from "../../../../api/BookmarkAPI";
 
 import CommentComponent from "./CommentComponent";
-
+import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
 // https://www.npmjs.com/package/react-responsive-carousel
@@ -126,17 +126,43 @@ const PostDetailPage = () => {
         </Carousel>
       );
     }
+    const clickOutSideCloseModal = () => {
+      if (openModal === true) {
+        setOpenModal(false)
+      }
+    }
 
+    const clickDelete = () => {
+      Swal.fire({
+        title: '해당 게시물을 <br> 삭제하시겠습니까?',
+        text: '삭제된 게시물은 되돌릴 수 없습니다.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deletePost(params.id)
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        } else {
+          console.log('삭제 안 함')
+        }
+      })
+    }
     return (
       <>
-        <div className="post-detail-page">
+        <div className="post-detail-page" onClick={clickOutSideCloseModal}>
           <HeaderComponent
             backVisible={true}
             pageName={"피드"}
             optType={0}
           ></HeaderComponent>
           <div className="post-detail-container">
-          {openModal ? <PostEditModal postId={post.id}/> : null}
             <div className="post-container">
               <div className="user-info-container">
                 <div className="user-info-div">
@@ -179,13 +205,11 @@ const PostDetailPage = () => {
                     }
                   />
                 </div>
+                { post.writer.id === user.id ?
                 <div className="dot-btn">
-                  <img src={dotMarkIcon} onClick={() =>{
-                    setOpenModal(true)
-                    // console.log(openModal)
-                    // console.log(post)
-                  }} />
-                </div>
+                  <p onClick={clickDelete}>삭제</p>
+                </div> : null }
+
               </div>
               {imgs}
               <div className="post-content-container">
@@ -237,3 +261,4 @@ const PostDetailPage = () => {
 };
 
 export default PostDetailPage;
+

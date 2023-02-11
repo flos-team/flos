@@ -285,8 +285,8 @@ const deletePost = async (postId) => {
       } else if (response.status === 204) {
         // console.log("해당 글이 존재하지 않습니다");
         // isDeleted = false;
-        console.log("글 삭제 완료");
-        isDeleted = true;
+        // console.log("글 삭제 완료");
+        // isDeleted = true;
       }
     })
     .catch((err) => {

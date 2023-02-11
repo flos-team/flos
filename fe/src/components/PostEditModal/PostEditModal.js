@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom"
 
 import styles from './PostEditModal.module.css'
 import { deletePost } from '../../api/PostAPI'
+import Swal from "sweetalert2";
 
 const PostEditModal = () => {
   const params = useParams();
@@ -19,8 +20,16 @@ const PostEditModal = () => {
   }
 
   const result = () => {
-    if (window.confirm('해당 게시물을 삭제하시겠습니까?')){
-      deletePost(params.id)
+    Swal.fire({
+      title: '해당 게시물을 <br> 삭제하시겠습니까?',
+      text: '삭제된 게시물은 되돌릴 수 없습니다.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deletePost(params.id)
         .then((res) => {
           console.log(res)
           setClickDotImg(false)
@@ -28,10 +37,25 @@ const PostEditModal = () => {
         .catch((err) => {
           console.log(err)
         })
-    } else {
-      console.log('삭제 안 함')
-      setClickDotImg(false)
-    }
+      } else {
+        console.log('삭제 안 함')
+        setClickDotImg(false)
+      }
+    })
+
+    // if (window.confirm('해당 게시물을 삭제하시겠습니까?')){
+      // deletePost(params.id)
+      //   .then((res) => {
+      //     console.log(res)
+      //     setClickDotImg(false)
+      //   })
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
+    // } else {
+    //   console.log('삭제 안 함')
+    //   setClickDotImg(false)
+    // }
   }
 
   return (

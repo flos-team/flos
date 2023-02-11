@@ -30,7 +30,7 @@ const FlowerName = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 1.4rem;
     line-height: 28px;
     display: flex;
     align-items: center;
@@ -61,17 +61,35 @@ const DateDetailText = styled.div`
     color: gray;
 `;
 
+const FlowerType = styled.div`
+    display: flex;
+    justify-content: center;
+    align-itmes: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    color: #3E3E3E;
+`;
+
+const StateAndType = styled.div`
+    display: flex;
+`;
+
 
 const DetailData = (props) => {
     return (
         <Detail>
             <SubDetailBox>
-                <StateText>{props.flowerData.state}</StateText>
+                <StateAndType>
+                    <StateText>{props.flowerData.flowerState}</StateText>
+                    <FlowerType>
+                        {props.flowerData.flowerType}
+                    </FlowerType>
+                </StateAndType>
                 <FlowerName>{props.flowerData.name}</FlowerName>
             </SubDetailBox>
             <SubDetailBox>
                 <DescriptionText> 길이 </DescriptionText>
-                <div>{props.flowerData.length}cm</div>
+                <div>{props.flowerData.height}cm</div>
             </SubDetailBox>
             <SubDetailBox>
                 <DescriptionText> 성장 기간 </DescriptionText>
