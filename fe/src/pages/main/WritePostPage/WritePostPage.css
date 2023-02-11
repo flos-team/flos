@@ -115,20 +115,23 @@
 .post-write-container .post-write-form .post-option-container label .photo-add-btn input {
   display: none;
 }
-.post-write-container .post-write-form .post-option-container .toggle-btn-container {
+.post-write-container .post-write-form .post-option-container .img-preview-container {
   width: 60%;
   height: 100%;
   display: flex;
+  flex-direction: row;
+  overflow: scroll;
   align-items: center;
-  justify-content: right;
-  gap: 0.5rem;
+  justify-content: left;
+  gap: 8px;
 }
-.post-write-container .post-write-form .post-option-container .toggle-btn-container .toggle-text {
-  width: 40%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.post-write-container .post-write-form .post-option-container .img-preview-container .img-preview {
+  flex-shrink: 0;
+  width: 3.75rem;
+  height: 3.75rem;
+  background-size: contain;
+  background-position: center;
+  border: 1px solid #bfbfbf;
 }
 
 /*# sourceMappingURL=WritePostPage.css.map */

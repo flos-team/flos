@@ -81,7 +81,9 @@ const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2, menuOpt1Fu
         <div
           className="opt-btn"
           onClick={(e) => {
-            menuOpt1Func();
+            if (menuOpt1Func) {
+              menuOpt1Func();
+            }
           }}
         >
           {optBtn1}
@@ -89,7 +91,9 @@ const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2, menuOpt1Fu
         <div
           className="opt-btn"
           onClick={(e) => {
-            menuOpt2Func();
+            if (menuOpt2Func) {
+              menuOpt2Func();
+            }
           }}
         >
           {optBtn2}

@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 /* import img */
 import groomSmile from "../../assets/GoormAsset/goorm-smile.png";
 import groomSoso from "../../assets/GoormAsset/goorm-soso.png";
-import goormSad from "../../assets/GoormAsset/goorm-sad.png"
+import goormSad from "../../assets/GoormAsset/goorm-sad.png";
 import sunny128 from "../../assets/GlobalAsset/sunny-128.png";
 import cloudy128 from "../../assets/GlobalAsset/cloudy-128.png";
 import rainy128 from "../../assets/GlobalAsset/rainy-128.png";
@@ -19,6 +19,7 @@ import angleLeft128 from "../../assets/GlobalAsset/angle-left-128.png";
 import angleRight128 from "../../assets/GlobalAsset/angle-right-128.png";
 
 /* import component */
+import Swal from "sweetalert2";
 
 /* import module */
 import COLORS from "../../styles/colors";

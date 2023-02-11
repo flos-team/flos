@@ -161,9 +161,18 @@
     gap: 16 * $rpx1;
     width: 100%;
     height: 60vh;
-    margin-bottom: 80*$rpx1;
+    margin-bottom: 80 * $rpx1;
     .post-item {
       margin: 0 auto;
+    }
+    .no-post-item {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      p {
+        text-align: center;
+      }
     }
   }
 }

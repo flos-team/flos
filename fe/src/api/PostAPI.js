@@ -70,9 +70,10 @@ const getBookMarkList = async (page = 0) => {
   await axios
     .get(url)
     .then((response) => {
+      // console.dir(response);
       if (response.status === 200) {
-        // bookmarkList = [...response.data.content];
-        console.dir(response);
+        bookmarkListObject = { ...response.data };
+        //console.dir(response);
       }
     })
     .catch((error) => {
@@ -110,6 +111,7 @@ const getPostListByNickname = async (nickName, page = 0) => {
   await axios
     .get(url)
     .then((response) => {
+      // console.dir(response);
       if (response.status === 200) {
         userPostListObject = response.data;
       }
@@ -213,8 +215,9 @@ weather
   await axios
     .post(url, formData, {
       headers: {
-          "Content-Type": "multipart/form-data",
-        },})
+        "Content-Type": "multipart/form-data",
+      },
+    })
     .then((response) => {
       isCreated = true;
     })
@@ -237,14 +240,7 @@ weather
  * @param {Date} modifiedAt 글을 수정한 시간 (자바스크립트 Date 객체)
  * @returns {Promise} A Promise object containing Boolean
  */
-const modifyPost = async (
-  postId,
-  content,
-  writerId,
-  tagList,
-  attachFiles,
-  modifiedAt = new Date()
-) => {
+const modifyPost = async (postId, content, writerId, tagList, attachFiles, modifiedAt = new Date()) => {
   let url = "/api/post/modify";
   let modifiedPost = {
     attachFiles,

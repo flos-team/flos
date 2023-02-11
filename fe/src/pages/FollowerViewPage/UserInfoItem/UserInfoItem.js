@@ -1,7 +1,8 @@
 /* import react */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setFollowingIdList } from "../../../redux/user";
 
 /* import img */
 import userImg from "../../../assets/DummyData/dummy-sample.jpg";
@@ -15,8 +16,9 @@ import { getFollowingList, getOtherFollowingList, cancelFollowing, doFollowing }
 import "./UserInfoItem.css";
 
 const UserInfoItem = ({ userInfo }) => {
-  const user = useSelector((state) => state.user.userData);  
+  const user = useSelector((state) => state.user.userData);
   const userIdList = useSelector((state) => state.user.followingIdList);
+  const dispatch = useDispatch();
 
   const [toggleFactor, setToggleFactor] = useState(true);
   const [followText, setFollowText] = useState("팔로잉");
@@ -25,15 +27,15 @@ const UserInfoItem = ({ userInfo }) => {
   useEffect(() => {
     let isFollowed = false;
 
-    for (let i = 0; i < userIdList.length; i++){
+    for (let i = 0; i < userIdList.length; i++) {
       if (userIdList[i] == userInfo.id) {
         isFollowed = true;
         break;
-      }      
+      }
     }
     setToggleFactor(isFollowed);
-    setFollowText(isFollowed?"팔로잉":"팔로우");
-  },[])
+    setFollowText(isFollowed ? "팔로잉" : "팔로우");
+  }, []);
 
   let followingBtn = (
     <div
@@ -54,17 +56,31 @@ const UserInfoItem = ({ userInfo }) => {
       setFollowText("팔로우");
       let data = cancelFollowing(userInfo.id);
       data.then((res) => {
-        if (res) alert("팔로잉 취소 성공");
+        if (res) {
+          alert("팔로잉 취소 성공");
+          let newList = userIdList.filter((id) => userInfo.id !== id);
+          console.log(newList);
+          dispatch(setFollowingIdList(newList));
+        } else {
+          console.log("서버로 부터 응답 받음 그러나 문제 발생");
+          console.dir(res);
+        }
       });
     } else {
       setFollowText("팔로잉");
-      setToggleFactor(false);
-      // let data = doFollowing(userInfo.id);
-      // data.then((res) => {
-      //   if (res) alert("팔로잉 성공");
-      //   // 여기에 팔로잉 성공 시 리덕스 업데이트 로직 필요
-      // });
-      console.log("팔로우 기능 잠시 막아두었습니다");
+      let data = doFollowing(userInfo.id);
+      data.then((res) => {
+        if (res) {
+          //alert("팔로잉 성공");
+          // 여기에 팔로잉 성공 시 리덕스 업데이트 로직 필요
+          let newList = userIdList.concat(userInfo.id);
+          console.log(newList);
+          dispatch(setFollowingIdList(newList));
+        } else {
+          console.log("서버로 부터 응답 받음 그러나 문제 발생");
+          console.dir(res);
+        }
+      });
     }
     setToggleFactor(!toggleFactor);
   };
@@ -83,7 +99,7 @@ const UserInfoItem = ({ userInfo }) => {
           <p>{userInfo.introduction}</p>
         </div>
       </div>
-      {followingBtn}
+      {user.id == userInfo.id ? <></> : followingBtn}
     </div>
   );
 };

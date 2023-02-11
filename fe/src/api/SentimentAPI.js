@@ -18,11 +18,14 @@ const getSentimentResult = async (content) => {
   let data = {
     content,
   };
+  console.dir(content);
+  console.dir(data);
   let SentimentResultObject = {};
   await axios
     .post(url, data)
     .then((response) => {
       SentimentResultObject = response;
+      console.dir(response);
     })
     .catch((err) => {
       console.log("감정 분석 결과를 가져오던 도중 오류가 발생했습니다.");

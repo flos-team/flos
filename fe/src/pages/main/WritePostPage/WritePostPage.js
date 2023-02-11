@@ -15,6 +15,7 @@ import pictureIcon from "../../../assets/GlobalAsset/picture-btn.png";
 import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
+import Swal from "sweetalert2";
 
 /* import module */
 import { createPost } from "../../../api/PostAPI";
@@ -80,7 +81,7 @@ const WritePostPage = () => {
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState(null); //파일
   const handleOnChange = (event) => {
-    console.log(event.target.files);
+    //console.log(event.target.files);
     setImgFile(event.target.files);
     //fd.append("file", event.target.files)
     setImgBase64([]);
@@ -117,7 +118,7 @@ const WritePostPage = () => {
         pageName={"나의 마음 포스트 작성하기"}
         menuOpt2={"CHECK"}
         menuOpt2Func={async () => {
-          judgeWeatherIdx("negative");
+          //judgeWeatherIdx("negative");
           let result = getSentimentResult(content);
           let resultText = "CLOUDY";
           // 빙글거리는 모달을 잠시 보여주고,
@@ -127,11 +128,16 @@ const WritePostPage = () => {
               resultText = res.data.document.sentiment;
               judgeWeatherIdx(resultText); // 결과 세팅해주고
               // data.document.sentiment / "positive", "neutral", "negative"
+              setIsVisible(true);
             })
-            .finally(() => {
-              // 여기서 모달을 닫는다.
+            .catch((err) => {
+              Swal.fire({
+                icon: "error",
+                title: "오류 발생",
+                text: "감정 결과를 불러오던 중 오류가 발생했습니다.",
+                footer: "잠시후 다시 시도해 주세요.",
+              });
             });
-          setIsVisible(true);
         }}
       ></HeaderComponent>
       <div className="post-write-container">
@@ -139,6 +145,7 @@ const WritePostPage = () => {
           <div className="post-write-input-div">
             <textarea
               className="post-content-input"
+              Swal
               placeholder="내용을 입력하세요"
               ref={contentRef}
               onChange={(e) => {
@@ -167,15 +174,13 @@ const WritePostPage = () => {
                   ref={imgInputRef}
                   onChange={handleOnChange}
                 ></input>
-                <img src={pictureIcon} />
+                <img src={pictureIcon} alt="이미지 버튼" />
               </div>
             </label>
-            <div className="toggle-btn-container">
-              <p className="toggle-text">공개설정</p>
-              {/* <div className="toggle-btn"></div> */}
-              <div onClick={(e) => {}}>
-                <ToggleBtn></ToggleBtn>
-              </div>
+            <div className="img-preview-container hide-scroll">
+              {imgBase64.map((item) => {
+                return <img className="img-preview" src={item} />;
+              })}
             </div>
           </div>
         </form>
@@ -196,11 +201,19 @@ const WritePostPage = () => {
               let ans = createPost(postObj.content, postObj.weather, postObj.tagList, postObj.attachFiles)
                 .then((res) => {
                   //console.dir(res);
-                  dispatch(setToastMessage("글 작성이 완료되었습니다."));
-                  dispatch(setIsToastValue(true));
+                  // dispatch(setToastMessage("글 작성이 완료되었습니다."));
+                  // dispatch(setIsToastValue(true));
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "글 작성이 완료되었습니다",
+                    showConfirmButton: false,
+                    timer: 1000,
+                  });
                 })
                 .catch((err) => {
                   console.dir(err);
+                  Swal.fire("포스트 작성 중 오류 발생");
                 });
             }}
           ></PostResultModal>
@@ -208,11 +221,6 @@ const WritePostPage = () => {
           <></>
         )}
       </div>
-      {imgBase64.map((item) => {
-        return (
-          <img className="d-block w-100" src={item} alt="First slide" style={{ width: "100%", height: "550px" }} />
-        );
-      })}
     </>
   );
 };
