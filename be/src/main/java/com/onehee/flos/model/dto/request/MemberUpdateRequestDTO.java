@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class MemberUpdateRequestDTO {
-    private final String nickname;
-    private final String introduction;
-    private final MultipartFile profileImage;
+    private String nickname;
+    private String introduction;
+    private MultipartFile profileImage;
 }

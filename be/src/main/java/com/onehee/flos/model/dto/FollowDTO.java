@@ -7,6 +7,6 @@ import lombok.Setter;
 @Data
 @Setter(AccessLevel.NONE)
 public class FollowDTO {
-    private final Long id;
-    private final boolean orderByName;
+    private Long id;
+    private boolean orderByName;
 }

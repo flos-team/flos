@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MemberResetPasswordDTO {
-    private final String email;
-    private final String code;
-    private final String password;
+    private String email;
+    private String code;
+    private String password;
 }

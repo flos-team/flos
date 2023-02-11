@@ -9,6 +9,6 @@ import javax.validation.constraints.Pattern;
 @Data
 public class LoginRequestDTO {
     @Pattern(regexp = "^\\w+@\\w+\\.\\w+$")
-    private final String email;
-    private final String password;
+    private String email;
+    private String password;
 }

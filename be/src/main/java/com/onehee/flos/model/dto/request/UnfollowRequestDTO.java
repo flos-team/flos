@@ -4,6 +4,6 @@ import lombok.*;
 
 @Data
 public class UnfollowRequestDTO {
-    private final Long id;
-    private final boolean orderByName;
+    private Long id;
+    private boolean orderByName;
 }

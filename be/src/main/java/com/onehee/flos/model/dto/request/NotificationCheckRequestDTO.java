@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class NotificationCheckRequestDTO {
-    private final Long id;
+    private Long id;
 }

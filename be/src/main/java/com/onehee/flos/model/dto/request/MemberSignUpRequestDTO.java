@@ -8,10 +8,10 @@ import lombok.Data;
 @Data
 @Builder(access = AccessLevel.PRIVATE)
 public class MemberSignUpRequestDTO {
-    private final String email;
-    private final String nickname;
-    private final String password;
-    private final String code;
+    private String email;
+    private String nickname;
+    private String password;
+    private String code;
 
     public Member toEntity() {
         return Member.builder()

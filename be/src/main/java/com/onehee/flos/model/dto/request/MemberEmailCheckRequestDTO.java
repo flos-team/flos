@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class MemberEmailCheckRequestDTO {
-    private final String email;
+    private String email;
 }
