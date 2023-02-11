@@ -15,12 +15,18 @@ const GardenPage = styled.div`
 `;
 
 const Header = styled.div`
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;;
+    font-weight: bold;
+    letter-spacing: -4px;
     width: 100%;
     height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    color: #9C9DB1;
+    font-size: 3rem;
+
+    text-shadow: 0 8px 9px #868798, 0px -2px 1px #D3D5EA;
 `;
 
 const Background = styled.div`

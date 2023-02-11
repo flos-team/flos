@@ -293,6 +293,7 @@ const Home = () => {
       flowerInfo.name = res.name;
       flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
       flowerInfo.MaxGrowthValue = res.maxGrowthValue;
+      flowerInfo.color = res.color;
       console.log("꽃 정보 가져옴");
     });
     getMemberInfo().then((res) => {
@@ -406,8 +407,7 @@ const Home = () => {
 
   const doFlowering = () => {
     flowering(flowerInfo.id);
-    // updateInfo();
-    window.location.replace("/flower-end-page")
+    window.location.replace("/flower-end-page");
   };
 
   const onClickPlayMusicButton = () => {
@@ -446,7 +446,9 @@ const Home = () => {
         ) : null}
         {makeFlowermodal == true ? (
           <MakeFlowerModal
-            makeOnclick={MakeFlowerOnclick}
+            makeOnclick={
+              MakeFlowerOnclick
+            }
           />
         ) : null}
         {changeFlowerNamemodal == true ? (
