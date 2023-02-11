@@ -126,17 +126,23 @@ const PostDetailPage = () => {
         </Carousel>
       );
     }
+    const clickOutSideCloseModal = () => {
+      if (openModal === true) {
+        setOpenModal(false)
+      }
+    }
 
     return (
       <>
-        <div className="post-detail-page">
+
+        {openModal ? <PostEditModal postId={post.id}/> : null}
+        <div className="post-detail-page" onClick={clickOutSideCloseModal}>
           <HeaderComponent
             backVisible={true}
             pageName={"피드"}
             optType={0}
           ></HeaderComponent>
           <div className="post-detail-container">
-          {openModal ? <PostEditModal postId={post.id}/> : null}
             <div className="post-container">
               <div className="user-info-container">
                 <div className="user-info-div">
