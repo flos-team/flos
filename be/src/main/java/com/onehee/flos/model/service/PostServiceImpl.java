@@ -44,8 +44,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
-        if (!memberRepository.existsByNicknameIgnoreCase(nickName))
-            throw new BadRequestException("존재하지 않는 회원입니다.");
+//        if (!memberRepository.existsByNicknameIgnoreCase(nickName))
+//            throw new BadRequestException("존재하지 않는 회원입니다.");
         if (Pattern.matches("^[a-zA-Z0-9]*$", nickName))
             nickName = nickName.toLowerCase();
         return SliceResponseDTO.toDto(postRepository.findSliceByNickname(nickName, pageable)
