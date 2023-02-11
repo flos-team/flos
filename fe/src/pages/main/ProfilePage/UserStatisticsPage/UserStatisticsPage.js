@@ -6,6 +6,12 @@ import userActiveGraph from "../../../../assets/ProfileAsset/user-active-graph.p
 import sunnyImg from "../../../../assets/GlobalAsset/sunny.png";
 import cloudyImg from "../../../../assets/GlobalAsset/cloudy.png";
 import rainyImg from "../../../../assets/GlobalAsset/rainy.png";
+import step1Img from "../../../../assets/StatisticsAsset/statistics_step1.png";
+import step2Img from "../../../../assets/StatisticsAsset/statistics_step2.png";
+import step3Img from "../../../../assets/StatisticsAsset/statistics_step3.png";
+import step4Img from "../../../../assets/StatisticsAsset/statistics_step4.png";
+import step5Img from "../../../../assets/StatisticsAsset/statistics_step5.png";
+import step6Img from "../../../../assets/StatisticsAsset/statistics_step6.png";
 
 /* module */
 import { getMyStatisticData } from "../../../../api/MemberAPI";
@@ -69,6 +75,39 @@ const UserStatisticsPage = () => {
     postInfo: { postCount: 0, sunny: 0, cloudy: 0, rainy: 0, ratio: { sunny: 0, cloudy: 0, rainy: 0 } },
   });
 
+  /*
+<15% - step1
+<30% - step2
+<45% - step3
+<60% - step4
+<75% - step5
+<100% - step6
+*/
+  const [gradeImg, setGradeImg] = useState(step1Img);
+  const [gradeText, setGradeText] = useState("베이직 화분");
+
+  const judgeGrade = (ratio) => {
+    if (ratio < 20) {
+      setGradeImg(step1Img);
+      setGradeText("반가운 분");
+    } else if (ratio < 40) {
+      setGradeImg(step2Img);
+      setGradeText("소중한 분");
+    } else if (ratio < 60) {
+      setGradeImg(step3Img);
+      setGradeText("친근한 분");
+    } else if (ratio < 80) {
+      setGradeImg(step4Img);
+      setGradeText("엄청난 분");
+    } else if (ratio < 90) {
+      setGradeImg(step5Img);
+      setGradeText("흘륭한 분");
+    } else {
+      // < 100
+      setGradeImg(step6Img);
+      setGradeText("완벽한 분");
+    }
+  };
   useEffect(() => {
     /*
 flowers (arr)
@@ -77,8 +116,11 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
 
     getMyStatisticData().then((res) => {
       setUserData(res);
-      let idx = 240;
       console.dir(res);
+      let loginRatio = (res.loginInfo.loginCount / res.loginInfo.lengthOfMonth) * 100;
+      //let loginRatio = (28 / 28) * 100;
+      judgeGrade(loginRatio);
+
       setCastItemList(
         castItem.map(({ castId, castImg, className }) => {
           let modifiedClassName = `cast-statistics-item-div ${className}`;
@@ -98,7 +140,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
           }
 
           let itemStyle = {
-            width: `${idx * ratio}px`,
+            width: `${ratio * 100}%`,
           };
           let castItem = (
             <div key={castId} className={modifiedClassName}>
@@ -127,11 +169,11 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
                 <p>{user.nickname}</p>
               </div>
               <div className="user-grade-div">
-                <p>베이직 화분</p>
+                <p>{gradeText}</p>
               </div>
             </div>
             <div className="user-active-graph">
-              <img src={userActiveGraph} />
+              <img src={gradeImg} />
             </div>
           </div>
           <div className="user-month-div">
@@ -150,7 +192,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
           <div className="plant-title">
             <p>최근 키운 식물</p>
           </div>
-          <div className="plant-container">{plantList}</div>
+          <div className="plant-container hide-scroll">{plantList}</div>
         </div>
         <div className="user-active-log-item">
           <div className="user-active-title">
