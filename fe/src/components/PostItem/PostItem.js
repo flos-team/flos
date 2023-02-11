@@ -33,6 +33,8 @@ const PostItem = ({ post }) => {
     writer.id/email/introduction/nickname/profileImage.saveName
     writer.profileImage.saveName
   */
+
+  // console.log(post)
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userData);
   const [imgBaseURL, setImgBaseURL] = useState("https://i8b210.p.ssafy.io/api/file/");
