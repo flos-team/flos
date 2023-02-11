@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
 import styled from "@emotion/styled";
 import { gsap } from "gsap";
 
@@ -10,6 +10,7 @@ import { ReactComponent as Leaf2 } from "../../../assets/HomeAsset/flower/leaf2.
 
 import { ReactComponent as Eyes1 } from "../../../assets/HomeAsset/flower/eye1.svg";
 import { ReactComponent as Eyes2 } from "../../../assets/HomeAsset/flower/eye2.svg";
+import { ReactComponent as Eyes3 } from "../../../assets/HomeAsset/flower/eye3.svg";
 import { ReactComponent as Mouth1 } from "../../../assets/HomeAsset/flower/mouth1.svg";
 import { ReactComponent as Mouth2 } from "../../../assets/HomeAsset/flower/mouth1.svg";
 import { ReactComponent as Mouth3 } from "../../../assets/HomeAsset/flower/mouth1.svg";
@@ -193,7 +194,7 @@ path {
 `;
 
 
-const Flower = (props) => {
+const Flower = forwardRef((props, ref) => {
   const colorPickers = ["red", "yellow", "grapefruit", "pink", "purple", "white", "orange", "mango", "green", "blue"];
 
   const LeafRef = useRef();
@@ -203,7 +204,7 @@ const Flower = (props) => {
   const flowers = [Flower1, Flower2];
   const stems = [Stem1];
   const leafs = [Leaf1, Leaf2]
-  const eyes = [Eyes1, Eyes2];
+  const eyes = [Eyes1, Eyes2, Eyes3];
   const mouths = [Mouth1, Mouth2, Mouth3];
   const heads = [Head1];
   const pots = [Pot1];
@@ -227,6 +228,11 @@ const Flower = (props) => {
   let blinkSecInterval;
   let blinkingSec = 5000;
   let blinkingSecTimeout;
+  let smileInterval;
+
+  useImperativeHandle(ref, () => ({
+    FlowerSmile
+  }));
 
   useEffect(() => {
     gsap.timeline({
@@ -368,6 +374,18 @@ const Flower = (props) => {
 
   };
 
+
+  const FlowerSmile = () => {
+    console.log("웃자!");
+    setEyesElement(eyes[2]);
+    smileInterval = setInterval(() => {
+      setEyesElement(eyes[0]);
+    }, 2000);
+    return () => {
+      clearInterval(smileInterval);
+    };
+  }
+
   return (
     <div ref={wholeFlowerRef} onClick={FlowerClick}>
       {(isFlowerAvailable ? <FlowerDiv colorType={(props.flowerInfo.color === "" ? "yellow" : props.flowerInfo.color)} height={flowerHeight}><FlowerElement /></FlowerDiv> : null)}
@@ -402,7 +420,7 @@ const Flower = (props) => {
       </FlowerPot>
     </div>
   );
-}
+});
 
 
 export default Flower;

@@ -83,9 +83,9 @@ const MakeFlowerModal = (props) => {
         setName(e.target.value);
     }, []);
 
-    const submit = () => {
-        createFlower(type, name);
-        props.makeOnclick();
+    const submit = async () => {
+        await createFlower(type, name);
+        props.makeOnclick(name);
     }
 
     return (

@@ -14,11 +14,26 @@ import { getFollowingList, getOtherFollowingList, cancelFollowing, doFollowing }
 /* import css */
 import "./UserInfoItem.css";
 
-const UserInfoItem = ({ userInfo, isMine }) => {
-  const user = useSelector((state) => state.user.userData);
+const UserInfoItem = ({ userInfo }) => {
+  const user = useSelector((state) => state.user.userData);  
+  const userIdList = useSelector((state) => state.user.followingIdList);
 
-  const [toggleFactor, setToggleFactor] = useState(false);
-  const [followText, setFollowText] = useState("팔로우");
+  const [toggleFactor, setToggleFactor] = useState(true);
+  const [followText, setFollowText] = useState("팔로잉");
+  const [myFollowingList, setMyFollowingList] = useState([]);
+
+  useEffect(() => {
+    let isFollowed = false;
+
+    for (let i = 0; i < userIdList.length; i++){
+      if (userIdList[i] == userInfo.id) {
+        isFollowed = true;
+        break;
+      }      
+    }
+    setToggleFactor(isFollowed);
+    setFollowText(isFollowed?"팔로잉":"팔로우");
+  },[])
 
   let followingBtn = (
     <div
@@ -36,17 +51,20 @@ const UserInfoItem = ({ userInfo, isMine }) => {
     // true -> 팔로잉, 팔로우 한 상태
     // false -> 팔로우, 팔로우 안한 상태
     if (toggleFactor) {
-      setFollowText("팔로잉");
-      // let data = cancelFollowing(userInfo.id);
-      // data.then((res) => {
-      //   if (res) alert("팔로잉 취소 성공");
-      // });
-    } else {
       setFollowText("팔로우");
+      let data = cancelFollowing(userInfo.id);
+      data.then((res) => {
+        if (res) alert("팔로잉 취소 성공");
+      });
+    } else {
+      setFollowText("팔로잉");
+      setToggleFactor(false);
       // let data = doFollowing(userInfo.id);
       // data.then((res) => {
       //   if (res) alert("팔로잉 성공");
+      //   // 여기에 팔로잉 성공 시 리덕스 업데이트 로직 필요
       // });
+      console.log("팔로우 기능 잠시 막아두었습니다");
     }
     setToggleFactor(!toggleFactor);
   };
