@@ -27,6 +27,7 @@ import { setUser } from "../../redux/user";
  * @param {Object} post 포스트의 정보를 담은 객체
  */
 const PostItem = ({ post }) => {
+  // console.log(post);
   /*
     id, content, regDate, relation.tagList, weather, tagList, attachFiles
     writer.id/email/introduction/nickname/profileImage.saveName
@@ -36,7 +37,23 @@ const PostItem = ({ post }) => {
   const user = useSelector((state) => state.user.userData);
   const [imgBaseURL, setImgBaseURL] = useState("https://i8b210.p.ssafy.io/api/file/");
   const [bottomComponent, setBottomComponent] = useState(
-    <PostTextComponent content={post ? post.content : "게시글 내용이 없습니다."}></PostTextComponent>
+    <PostTextComponent
+      content={post ? post.content : "게시글 내용이 없습니다."}
+    ></PostTextComponent>
+  );
+  const [topComponent, setTopComponent] = useState(
+    <PostTopComponent
+      userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
+      userNickname={post.writer.nickname}
+      date={post.regDate}
+      weather={post.weather}
+      tagList={post.relation.tagList}
+      moveProfile={(e) => {
+        if (post.writer.id !== user.id) {
+          navigate(`/other-profile-page/${post.writer.id}`);
+        }
+      }}
+    ></PostTopComponent>
   );
   const [postUserId, setPostUserId] = useState(-1);
   useEffect(() => {
@@ -46,50 +63,61 @@ const PostItem = ({ post }) => {
         let list = post.relation.attachFiles;
         //console.dir(list)
         setBottomComponent(<PostPhotoComponent imgURLList={list}></PostPhotoComponent>);
-
+        setTopComponent(
+          <PostTopComponent
+            userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
+            userNickname={post.writer.nickname}
+            date={post.regDate}
+            weather={post.weather}
+            tagList={post.relation.tagList}
+            moveProfile={(e) => {
+              if (post.writer.id !== user.id) {
+                navigate(`/other-profile-page/${post.writer.id}`);
+              }
+            }}
+          ></PostTopComponent>
+        );
         // setBottomComponent(<PostPhotoComponent testURL={`${post.writer.profileImage.saveName}`} ></PostPhotoComponent>);
         //console.dir(`${imgBaseURL}${post.writer.profileImage.saveName}`);
       } else {
         // setBottomComponent(<PostPhotoComponent testURL={`${post.writer.profileImage.saveName}`} ></PostPhotoComponent>);
+        // console.log(post);
         setBottomComponent(
-          <PostTextComponent content={post.content ? post.content : "게시글 내용이 없습니다."}></PostTextComponent>
+          <PostTextComponent
+            content={post.content ? post.content : "게시글 내용이 없습니다."}
+          ></PostTextComponent>
+        );
+        setTopComponent(
+          <PostTopComponent
+            userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
+            userNickname={post.writer.nickname}
+            date={post.regDate}
+            weather={post.weather}
+            tagList={post.relation.tagList}
+            moveProfile={(e) => {
+              if (post.writer.id !== user.id) {
+                navigate(`/other-profile-page/${post.writer.id}`);
+              }
+            }}
+          ></PostTopComponent>
         );
       }
     }
-  }, []);
+  }, [post]);
 
   // wetaher에 따라서
-  if (post) {
-    return (
-      <div className="post-item">
-        <PostTopComponent
-          userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
-          userNickname={post.writer.nickname}
-          date={post.regDate}
-          weather={post.weather}
-          tagList={post.relation.tagList}
-          moveProfile={(e) => {
-            if (post.writer.id !== user.id) {
-              navigate(`/other-profile-page/${post.writer.id}`);
-            }
-          }}
-        ></PostTopComponent>
-
-        {/* <PostPhotoComponent imgURLList={[`${imgBaseURL}${post.writer.profileImage.saveName}`]} ></PostPhotoComponent> */}
-        {/* <PostTextComponent content={post.content}></PostTextComponent> */}
-        {/* <Link to={`/main/post/${post.id}`}>
-        
-      </Link> */}
-        <div
-          onClick={(e) => {
-            navigate(`/main/post/${post.id}`);
-          }}
-        >
-          {bottomComponent}
-        </div>
+  return (
+    <div className="post-item">
+      {topComponent}
+      <div
+        onClick={(e) => {
+          navigate(`/main/post/${post.id}`);
+        }}
+      >
+        {bottomComponent}
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default PostItem;

@@ -19,17 +19,20 @@ import COLORS from "../../../styles/colors";
 import "./PostTextComponent.css";
 
 /**
- * 
+ *
  * @param {string} content 게시글 본문
- * @returns 
+ * @returns
  */
 // userImg, userNickname, timeLog, weather, tagList
 const PostTextComponent = ({ content }) => {
-    return (<div className="post-text-container">
-        <div className="text-div">
-            <p>{content}</p>
-        </div>
-    </div>)
-}
+  //   console.log(content);
+  return (
+    <div className="post-text-container">
+      <div className="text-div">
+        <p>{content}</p>
+      </div>
+    </div>
+  );
+};
 
 export default PostTextComponent;
