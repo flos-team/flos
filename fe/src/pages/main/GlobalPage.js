@@ -90,7 +90,7 @@ function Global() {
   const searchValue = (e) => {
     // 태그 검색
     if (e.target.value.substr(0, 1) === "#" && e.target.value.length >= 2) {
-      getPostListByTagName(e.target.value.substr(1)).then((response) => {
+      getPostListByTagName(e.target.value.substr(1).toLowerCase()).then((response) => {
         setIsSearching(true);
         setSearchInput(e.target.value);
         setPosts(response.content);
@@ -101,7 +101,7 @@ function Global() {
       e.target.value.substr(0, 1) !== "#" &&
       e.target.value.length >= 2
     ) {
-      getPostListByNickname(e.target.value).then((response) => {
+      getPostListByNickname(e.target.value.toLowerCase()).then((response) => {
         if (response.content) {
           setIsSearching(true);
           setSearchInput(e.target.value);
