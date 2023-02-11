@@ -5,6 +5,7 @@ import naverlogo from "../../assets/LoginAsset/naver-logo.png";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 import { useNavigate, Link } from "react-router-dom";
+import Swal from "sweetalert2"
 import axios from 'axios';
 import showPwImg from '../../assets/RegisterAsset/fi-br-eye-crossed.png'
 import noshowPwImg from '../../assets/RegisterAsset/fi-br-eye.png'
@@ -118,27 +119,44 @@ function FillPage() {
       "password": inputPw
     }
     if (!verifyedId) {
-      alert('사용할 아이디 입력 후 인증을 완료해주세요.')
       onFocus.current[0].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '사용할 아이디 입력 후 인증을 완료해주세요.',
+      })
     } else if (!pwMsgColor) {
-      alert('사용 가능하지 않은 비밀번호입니다.')
       onFocus.current[1].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '사용 가능하지 않은 비밀번호입니다.',
+      })
     } else if (!pwCheckMsgColor) {
-      alert('동일한 비밀번호를 입력해주세요.')
       onFocus.current[2].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '동일한 비밀번호를 입력해주세요.',
+      })
     } else if (!nicknameMsgColor) {
-      alert('사용할 수 없는 닉네임입니다.')
       onFocus.current[3].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '사용할 수 없는 닉네임입니다.',
+      })
     } else if (!useCheck) {
-      alert('필수 약관을 동의해주세요.')
+      Swal.fire({
+        icon: 'warning',
+        title: '필수 약관을 동의해주세요.',
+      })
     } else if (!canUseNickname) {
-      alert('이미 사용중인 닉네임입니다.')
       onFocus.current[3].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '이미 사용중인 닉네임입니다.',
+      })
     } else if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
       axios.post('api/member/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
-        alert('회원가입 성공')
-        navigate('/main', { state: res.data })
+        navigate('/register/result', { state: res.data })
       })
       .catch((err) => {
         console.log(err)
@@ -263,7 +281,11 @@ const xBtnAppear = () =>{
           }
           console.log("Error occurred : " + err);
         })
-      } else {alert('아이디 유효성 확인ㄱㄱ')}
+      } else {
+      Swal.fire({
+        icon: 'warning',
+        title: '사용할 수 없는 이메일입니다.',
+      })}
   }
 
   // 메일 전송 API
@@ -271,13 +293,19 @@ const xBtnAppear = () =>{
       axios.get('api/email/sign-up?email=' + inputId, {withCredentials : false})
       .then((res) => {
         console.log(res)
-        alert('메일 발송되었습니다.')
+        Swal.fire({
+          icon: 'success',
+          title: '메일 발송되었습니다.',
+        })
         setIsMailSend(true);
         setEmailMsg('');
       })
       .catch((err) => {
-        console.log(err)
-        alert('이미 가입된 이메일입니다.')
+        console.log(err)        
+        Swal.fire({
+          icon: 'warning',
+          title: '이미 가입된 이메일입니다.',
+        })
       })
 };
 

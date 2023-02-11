@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
-
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/user";
-
+import Swal from "sweetalert2";
 import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
@@ -43,7 +41,10 @@ function Login() {
           navigate("/main", { replace: true});
         }})
       .catch(() => {
-        alert('서버의 일시적인 오류가 발생했습니다.')
+        Swal.fire({
+          icon: 'error',
+          title: '일시적인 서버의 오류가 발생했습니다.',
+        })
       });
     }
 

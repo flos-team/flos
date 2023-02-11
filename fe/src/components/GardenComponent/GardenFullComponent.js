@@ -11,6 +11,7 @@ import { getGardenList } from "../../api/FlowerAPI"
 import Lottie from 'react-lottie';
 import LoadingIcon from "./../../assets/GardenAsset/8640-loading.json"
 import FloweringData from "../../assets/GardenAsset/77809-falling-leaf.json"
+import Swal from 'sweetalert2'
 
 const FullConponent = styled.div`
     display: flex;
@@ -119,8 +120,11 @@ const GardenFullComponent = () => {
                 page++;
                 getGardenListFunc();
             }
-            else {
-                alert("더 이상의 자료가 없어요!")
+            else {  
+                Swal.fire({
+                    icon: 'warning',
+                    title: '더 이상의 자료가 없어요!',
+                  })
             }
         }
     }, [presentCount]);

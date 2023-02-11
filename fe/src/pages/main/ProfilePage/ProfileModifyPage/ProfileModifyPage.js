@@ -17,6 +17,8 @@ import { getMemberInfo, modifyUserInfo } from "../../../../api/MemberAPI";
 /* import css */
 import "./ProfileModifyPage.css";
 
+import Swal from "sweetalert2"
+
 const ProfileModifyPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -91,7 +93,12 @@ const ProfileModifyPage = () => {
 
     await data
       .then((res) => {
-        if (res) alert("프로필 수정 성공");
+        if (res){
+          Swal.fire({
+            icon: 'success',
+            title: '프로필 수정 성공',
+          })
+        };
       })
       .catch((err) => {
 
