@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class MemberNicknameCheckRequestDTO {
-    private final String nickname;
+    private String nickname;
 }

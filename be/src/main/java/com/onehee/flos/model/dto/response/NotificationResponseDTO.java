@@ -7,5 +7,5 @@ import java.util.List;
 
 @Data
 public class NotificationResponseDTO {
-    private final List<NotificationDTO> notifications;
+    private List<NotificationDTO> notifications;
 }

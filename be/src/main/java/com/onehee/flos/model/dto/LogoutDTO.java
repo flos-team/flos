@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class LogoutDTO {
-    private final String atk;
-    private final String email;
+    private String atk;
+    private String email;
 }
