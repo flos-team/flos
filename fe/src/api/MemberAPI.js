@@ -191,6 +191,10 @@ const doLogin = async (email, password) => {
     })
     .catch((err) => {
       loginResult = false
+      Swal.fire({
+        icon: 'error',
+        title: '로그인에 실패하였습니다.',
+      })
       }
     )
     return loginResult

@@ -361,6 +361,9 @@ const Home = () => {
         title: '더 이상 비를 내릴 수 없습니다.',
         text: '개화를 진행해주세요.'
       })
+      return;
+    }
+    if (flowerInfo.rainElementCount < 1) {
       Swal.fire({
         icon: 'warning',
         title: '빗물의 양이 부족합니다.',

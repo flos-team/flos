@@ -82,8 +82,8 @@ const getBookMarkList = async (page = 0) => {
   return bookmarkListObject;
 };
 
-const getFollowerPostList = async () => {
-  const url = `/api/post/list/follow`;
+const getFollowerPostList = async (page = 0) => {
+  const url = `/api/post/list/follow?page=${page}`;
   let userPostListObject = {};
   await axios
     .get(url)
@@ -111,7 +111,7 @@ const getPostListByNickname = async (nickName, page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response);
+      console.dir(response);
       if (response.status === 200) {
         userPostListObject = response.data;
       }
@@ -121,6 +121,26 @@ const getPostListByNickname = async (nickName, page = 0) => {
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
   return userPostListObject;
+};
+
+// 닉네임 검색
+const getSearchNickname = async (nickName) => {
+  let url = `/api/member/search?nickname=${nickName}`
+  let searchNicknamePostListObject = {};
+  await axios
+    .get(url)
+    .then((response) => {
+      console.dir(response);
+      if (response.status === 200) {
+        searchNicknamePostListObject = response.data;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      console.log(url)
+      console.log("게시글 리스트가 존재하지 않습니다.");
+    });
+  return searchNicknamePostListObject;
 };
 
 /**
@@ -178,6 +198,7 @@ const getPostListByTagName = async (tagName) => {
   await axios
     .get(url)
     .then((response) => {
+      console.log(response)
       if (response.status === 200) {
         tagNamePostListObject = response.data;
       }
@@ -295,6 +316,7 @@ export {
   getPost,
   getPostList,
   getBookMarkList,
+  getSearchNickname,
   getPostListByNickname,
   getPostListByWeather,
   getPostListByComment,

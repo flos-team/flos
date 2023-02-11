@@ -39,6 +39,8 @@
   /* Inside auto layout */
   flex: none;
   flex-wrap: nowrap;
+
+  border-bottom: 1px solid grey;
 }
 
 .friendThumbnail {
