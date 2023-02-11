@@ -8,7 +8,6 @@ import userImg from "../../assets/DummyData/dummy-sample.jpg";
 
 /* import lib */
 
-
 /* import component */
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import UserInfoItem from "./UserInfoItem/UserInfoItem";
@@ -21,14 +20,11 @@ import { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollow
 import "./FollowerViewPage.css";
 import { setUser } from "../../redux/user";
 
-
 ///// MUI ////////////////
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
-
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,12 +49,9 @@ function TabPanel(props) {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-
-
 
 const FollowerViewPage = () => {
   const param = useParams();
@@ -76,7 +69,7 @@ const FollowerViewPage = () => {
   const requestFollowerList = async () => {
     await getFollowerList()
       .then((res) => {
-        setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isFollow={false}></UserInfoItem>));        
+        setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isMe={true}></UserInfoItem>));
       })
       .catch((err) => {});
   };
@@ -85,7 +78,7 @@ const FollowerViewPage = () => {
   const requestFollowingList = async () => {
     await getFollowingList()
       .then((res) => {
-        setFollowingList(res.map((u) => <UserInfoItem userInfo={u} isFollow={true}></UserInfoItem>));
+        setFollowingList(res.map((u) => <UserInfoItem userInfo={u} isMe={true}></UserInfoItem>));
       })
       .catch((err) => {});
   };
@@ -93,23 +86,25 @@ const FollowerViewPage = () => {
   // 다른사람 팔로워 정보 가져오는 메서드
   const requestOtherFollowerList = async () => {
     await getOtherFollowerList(param.id).then((res) => {
-      // includes
-      setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isFollow={false}></UserInfoItem>));        
-    })
-  }
+      if (res) {
+        setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isMe={false}></UserInfoItem>));
+      }
+    });
+  };
 
   // 다른사람 팔로잉 정보 가져오는 메서드
   const requestOtherFollowingList = async () => {
-    let data = getOtherFollowingList(param.id);
-    data.then((res) => {
-      console.dlr(res);
-    })
-  }
+    getOtherFollowingList(param.id).then((res) => {
+      if (res) {
+        setFollowingList(res.map((u) => <UserInfoItem userInfo={u} isMe={false}></UserInfoItem>));
+      }
+    });
+  };
 
   // MUI
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
-    //setValue(newValue);
+    setValue(newValue);
     //console.dir(event.target);
     if (isMine) {
       switch (Number(event.target.id.split("-")[2])) {
@@ -119,59 +114,58 @@ const FollowerViewPage = () => {
         case 1:
           requestFollowingList();
           break;
-      }      
+        default:
+          break;
+      }
     } else {
       switch (Number(event.target.id.split("-")[2])) {
         case 0:
           requestOtherFollowerList();
           break;
         case 1:
-          // requestOtherFollowingList();
+          requestOtherFollowingList();
           break;
-      }      
+        default:
+          break;
+      }
     }
   };
-
-  
 
   useEffect(() => {
     if (param.id == user.id) {
       console.log("나의 팔로워/팔로잉 페이지 입니다.");
       setIsMine(true);
       setUserInfo(user);
-      requestFollowerList();    
+      requestFollowerList();
     } else {
       console.log("타인의 팔로워/팔로잉 페이지 입니다.");
       setIsMine(false);
       getOtherMemberInfo(param.id).then((res) => {
         setUserInfo(res);
-      })
+      });
       requestOtherFollowerList();
     }
-    
   }, []);
 
   return (
     <>
       <HeaderComponent backVisible={true} pageName={userInfo.nickname}></HeaderComponent>
       <div className="follower-view-container">
-
         <div className="follower-info-container">{userInfoList}</div>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', width:"100%" }} >
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered >
-              <Tab label="팔로워" {...a11yProps(0)} style={{ display: "block", width:"30vw"}} />
-            <Tab label="팔로잉" {...a11yProps(1)} style={{display:"block", width:"30vw"}} />
-          </Tabs>
+        <Box sx={{ width: "100%" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+              <Tab label="팔로워" {...a11yProps(0)} />
+              <Tab label="팔로잉" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            {followerList}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {followingList}
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-              {followerList}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {followingList}
-        </TabPanel>
-    </Box>
-
       </div>
     </>
   );
