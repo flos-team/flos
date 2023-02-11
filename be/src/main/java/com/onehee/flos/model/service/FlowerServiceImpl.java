@@ -27,9 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +40,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public void createFlower(FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
         Member owner = SecurityManager.getCurrentMember();
-        if (flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(owner).orElse(null) != null)
+        if (flowerRepository.findByOwnerAndGardeningIsFalse(owner).orElse(null) != null)
             throw new BadRequestException("이미 키우는 꽃이 있습니다.");
         flowerRepository.saveAndFlush(flowerCreateRequestDTO.toEntity(owner));
     }
@@ -70,7 +68,7 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerInfo() {
-        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(SecurityManager.getCurrentMember()).orElseThrow(FlowerNotExistsException::new));
+        return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndGardeningIsFalse(SecurityManager.getCurrentMember()).orElseThrow(FlowerNotExistsException::new));
     }
 
     @Override
@@ -107,7 +105,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Transactional
     public FlowerResponseDTO giveWater() {
         Member member = SecurityManager.getCurrentMember();
-        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
+        Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
         if (flower.getCapacity() <= (flower.getLight() + flower.getWater()))
             throw new BadRequestException("성장한 꽃에 물을 줄 수 없습니다.");
@@ -137,7 +135,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Transactional
     public FlowerResponseDTO giveLight() {
         Member member = SecurityManager.getCurrentMember();
-        Flower flower = flowerRepository.findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
+        Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(member).orElseThrow(() -> new BadRequestException("현재 키우고 있는 꽃이 없습니다."));
 
         if (flower.getCapacity() <= (flower.getLight() + flower.getWater()))
             throw new BadRequestException("성장한 꽃에 햇빛을 줄 수 없습니다.");

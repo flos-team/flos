@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     // 회원이 키우는 꽃
-    Optional<Flower> findByOwnerAndBlossomAtIsNullOrGardeningIsFalse(Member owner);
+    Optional<Flower> findByOwnerAndGardeningIsFalse(Member owner);
 
     // 회원의 가든에 있는 꽃
     Slice<Flower> findSliceByOwnerAndBlossomAtIsNotNullAndGardeningIsTrueOrderByBlossomAtDesc(Member owner, Pageable pageable);
