@@ -56,7 +56,6 @@ function a11yProps(index) {
 const FollowerViewPage = () => {
   const param = useParams();
   const [userInfoList, setUserInfoList] = useState([<></>]);
-  const [myFollowingString, setMyFollowingString] = useState("");
   const [isMine, setIsMine] = useState(true);
   const [userInfo, setUserInfo] = useState({ nickname: "" });
   const [followerList, setFollowerList] = useState([<></>]);
@@ -69,7 +68,7 @@ const FollowerViewPage = () => {
   const requestFollowerList = async () => {
     await getFollowerList()
       .then((res) => {
-        setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isMe={true}></UserInfoItem>));
+        setFollowerList(res.map((u) => <UserInfoItem userInfo={u}></UserInfoItem>));
       })
       .catch((err) => {});
   };
@@ -78,7 +77,7 @@ const FollowerViewPage = () => {
   const requestFollowingList = async () => {
     await getFollowingList()
       .then((res) => {
-        setFollowingList(res.map((u) => <UserInfoItem userInfo={u} isMe={true}></UserInfoItem>));
+        setFollowingList(res.map((u) => <UserInfoItem userInfo={u}></UserInfoItem>));
       })
       .catch((err) => {});
   };

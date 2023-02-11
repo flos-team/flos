@@ -98,11 +98,13 @@ const getOtherFollowingList = async (id) => {
 };
 
 ////* POST */////////////////////
-const doFollowing = async (id) => {
+const doFollowing = async (id, orderByName=false) => {
   let url = `/api/follow`;
   let isFollow = false;
+  let data = { id, orderByName }
+  console.dir(data);
   await axios
-    .post(url, { id })
+    .post(url,data)
     .then((response) => {
       // console.dir(response);
       isFollow = true;

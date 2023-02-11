@@ -39,7 +39,7 @@ const ProfilePage = ({ setIsToast }) => {
     margin: "0 auto",
   }}
   onClick={async (e) => {
-    navigate("/flower-end-page");
+    // navigate("/flower-end-page");
   }}
 >
   기능테스트

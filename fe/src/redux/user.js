@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userData: [],
+  followingIdList:[]
 };
 
 export const memberSlice = createSlice({
@@ -13,11 +14,14 @@ export const memberSlice = createSlice({
       state.userData = action.payload;
       //console.log(action.payload);
     },
+    setFollowingIdList: (state, action) => {
+      state.followingIdList = action.payload;
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUser } = memberSlice.actions;
+export const { setUser, setFollowingIdList } = memberSlice.actions;
 
 export default memberSlice.reducer;
 

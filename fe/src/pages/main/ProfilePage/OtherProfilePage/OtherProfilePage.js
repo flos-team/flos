@@ -1,6 +1,7 @@
 /* import react */
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 /* import img */
 
@@ -17,12 +18,16 @@ import { getPostListByNickname } from "../../../../api/PostAPI";
 import "./OtherProfilePage.css";
 
 const OtherProfilePage = ({ userNickName }) => {
+  // 사용자 정보 리덕스
+  const user = useSelector((state) => state.user.userData);  
+  const userIdList = useSelector((state) => state.user.followingIdList);
+
   // 사용자 정보를 init
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
   const [titleList, setTitleList] = useState(["팔로잉", "팔로우", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>));
-;  const [userInfoList, setUserInfoList] = useState([0, 0, 0, 0].map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
-    //userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
+  const [userInfoList, setUserInfoList] = useState([0, 0, 0, 0].map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
+  const [isFollowed, setIsFollowed] = useState(false);
   
   // 사용자 정보 state
   const [userInfo, setUserInfo] = useState({nickname:"", introduction:""});
@@ -46,25 +51,29 @@ const OtherProfilePage = ({ userNickName }) => {
       setFollowBtnStyle("following-btn");
       setFollowText("팔로우");
     }
-  };
+  };  
 
-  /*
-profileImage
-: 
-originalName
-: 
-"person3.jpg"
-saveName
-*/  
-  
+  let followingBtn = (
+    <div
+      className={toggleFactor ? "followed-btn" : "follow-btn"}
+      onClick={(e) => {
+        toggleFunction();
+      }}
+    >
+      <p>{followText}</p>
+    </div>
+  );
+
+
   useEffect(() => {
     // console.dir(params);
+    // 사용자 닉네임을 기준으로 정보 불러오기
     let data = getOtherMemberInfo(params.id);
     data.then((res) => {
       // console.dir(res);
       // userInfo, setUserInfo
       // profileImage.saveName
-      console.dir(res);
+      // console.dir(res);
       setUserInfo({ nickname: res.nickname, introduction: res.introduction });
       // .map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);      
       let list = [res.followingCount, res.followerCount, res.postCount, res.blossomCount];
@@ -85,13 +94,26 @@ saveName
           return liEle;
         }
       ));
+      // 사용자 닉네임을 기준으로 포스트 불러오기
       let data = getPostListByNickname(res.nickname);
       data.then((res) => {
         //console.dir(res);
         // res.content
         setPostList(res.content.map((e) => (<PostItem post={e}></PostItem>)));
       })
-      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`)
+      // 사용자 이미지 렌더링
+      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`);
+
+      // 내 팔로잉 정보에 따라서 팔로워 팔로잉 표시 다르게
+      let isFollowed = false;
+      for (let i = 0; i < userIdList.length; i++){
+        if (userIdList[i] == userInfo.id) {
+          isFollowed = true;
+          break;
+        }      
+      }
+      setToggleFactor(isFollowed);
+      setFollowText(isFollowed ? "팔로잉" : "팔로우");
     });
 
   },[])
@@ -107,9 +129,7 @@ saveName
           <div className="user-introduce-text">
             <p>{userInfo.introduction}</p>
           </div>
-          <div className={followBtnStyle} onClick={toggleFunction}>
-            <p>{followText}</p>
-          </div>
+          {followingBtn}
         </div>
         <div className="user-social-info-box">
           <ul className="social-info-title">{titleList}</ul>
