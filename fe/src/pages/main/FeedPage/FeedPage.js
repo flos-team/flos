@@ -39,8 +39,9 @@ function Feed() {
   }, []);
 
   useEffect(() => {
+    // newPost가 새로 갱신되면
+    // posts에 newPosts를 붙힌다.
     setPosts([...posts, ...newPosts]);
-
   }, [newPosts]);
 
   // console.log(posts);
@@ -93,7 +94,7 @@ function Feed() {
         둘러보기에서 다른 사람들을 검색해보세요!
       </div>
     );
-    
+
     return (
       <div className={`${styles.feedRoot} ${styles.scroll}`}>
         <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>

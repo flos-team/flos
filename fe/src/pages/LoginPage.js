@@ -16,7 +16,7 @@ function Login() {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const [loginMsg, setLoginMsg] = useState('');
+  const [loginMsg, setLoginMsg] = useState("");
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -28,27 +28,25 @@ function Login() {
   // 로그인 버튼 클릭 이벤트
   const onClickLogin = () => {
     if (inputId.length === 0) {
-      setLoginMsg('아이디를 입력해주세요.')
+      setLoginMsg("아이디를 입력해주세요.");
     } else if (inputPw.length === 0) {
-      setLoginMsg('비밀번호를 입력해주세요.')
-    }
-    else {
-    doLogin(inputId, inputPw)
-      .then((response) => {
-        if (response === false) {
-          setLoginMsg('아이디 또는 비밀번호를 확인해주세요.')
-        } else if (response === true) {
-          navigate("/main", { replace: true});
-        }})
-      .catch(() => {
-        Swal.fire({
-          icon: 'error',
-          title: '일시적인 서버의 오류가 발생했습니다.',
+      setLoginMsg("비밀번호를 입력해주세요.");
+    } else {
+      doLogin(inputId, inputPw)
+        .then((response) => {
+          if (response === false) {
+            setLoginMsg("아이디 또는 비밀번호를 확인해주세요.");
+          } else if (response === true) {
+            navigate("/main", { replace: true });
+          }
         })
-      });
+        .catch(() => {
+          Swal.fire({
+            icon: "error",
+            title: "일시적인 서버의 오류가 발생했습니다.",
+          });
+        });
     }
-
-
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
@@ -60,9 +58,8 @@ function Login() {
     console.log("네이버 로그인");
   };
   const imgStyle = {
-    width:"143px"
-    
-  }
+    width: "143px",
+  };
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
@@ -90,17 +87,16 @@ function Login() {
               value={inputPw}
               className={styles.inputdiv}
               onChange={handleInputPw}
+              onKeyDown={(e) => {
+                if (e.key == "Enter" && inputId && inputPw) {
+                  onClickLogin();
+                }
+              }}
             />
           </div>
-          <div className={styles.loginmsg}>
-            {loginMsg}
-          </div>
+          <div className={styles.loginmsg}>{loginMsg}</div>
           <div className={styles.loginbtndiv}>
-            <button
-              type="button"
-              className={styles.loginbtn}
-              onClick={onClickLogin}
-            >
+            <button type="button" className={styles.loginbtn} onClick={onClickLogin}>
               로그인
             </button>
           </div>

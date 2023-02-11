@@ -7,8 +7,13 @@ import { Link } from "react-router-dom";
 import { getTimeDiffText } from "../../../../api/DateModule";
 
 import dayjs from "dayjs";
-import sunnyActivate from "../../../../assets/GlobalAsset/sunny-activate.png";
-import sunnyDeActivate from "../../../../assets/GlobalAsset/sunny-deactivate.png";
+import sunnyActivate from "../../../../assets/FeedAsset/sunny-img-181.png";
+import sunnyDeActivate from "../../../../assets/FeedAsset/sunny-line-181.png";
+import rainyActivate from "../../../../assets/FeedAsset/rainy-img-181.png";
+import rainyDeActivate from "../../../../assets/FeedAsset/rainy-line-181.png";
+import cloudyActivate from "../../../../assets/FeedAsset/cloudy-img-181.png";
+import cloudyDeActivate from "../../../../assets/FeedAsset/cloudy-line-181.png";
+
 import {
   getCommentList,
   getPriComment,
@@ -21,7 +26,7 @@ import "./PostDetailPage.css";
 
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
-const CommentComponent = ({ comment, postWriterId }) => {
+const CommentComponent = ({ comment, postWriterId, weather }) => {
   // console.log(comment);
   const user = useSelector((state) => state.user.userData);
 
@@ -32,6 +37,24 @@ const CommentComponent = ({ comment, postWriterId }) => {
   const [replyOnChange, setReplyOnChange] = useState(false);
 
   const navigate = useNavigate();
+  let activeEmotion = "";
+  let deactiveEmotion = "";
+  switch (weather) {
+    case "SUNNY":
+      activeEmotion = sunnyActivate;
+      deactiveEmotion = sunnyDeActivate;
+      break;
+    case "CLOUDY":
+      activeEmotion = cloudyActivate;
+      deactiveEmotion = cloudyDeActivate;
+      break;
+    case "RAINY":
+      activeEmotion = rainyActivate;
+      deactiveEmotion = rainyDeActivate;
+      break;
+    default:
+      break;
+  }
 
   useEffect(() => {
     getPriComment(comment.id).then((response) => {
@@ -100,9 +123,7 @@ const CommentComponent = ({ comment, postWriterId }) => {
           <div className="comment-container">
             <div className="comment-header">
               <div>
-                <span className="comment-header-left">
-                  {comment.writer.nickname}
-                </span>
+                <span className="comment-header-left">{comment.writer.nickname}</span>
                 <span className="comment-header-left">{RegBefore}</span>
               </div>
               {!comment.isApprove && comment.isMine && !comment.isCommented
@@ -128,12 +149,7 @@ const CommentComponent = ({ comment, postWriterId }) => {
           setInputFocus(false);
           if (inputValue) {
             // 입력된 값이 있으면
-            createReply(
-              inputValue,
-              comment.postId,
-              comment.id,
-              comment.id
-            ).then((response) => {
+            createReply(inputValue, comment.postId, comment.id, comment.id).then((response) => {
               console.log(response);
               setReply(response);
               setReplyOnChange(!replyOnChange);
@@ -143,12 +159,7 @@ const CommentComponent = ({ comment, postWriterId }) => {
         }}
         onKeyDown={(e) => {
           if (e.key == "Enter" && inputValue) {
-            createReply(
-              inputValue,
-              comment.postId,
-              comment.id,
-              comment.id
-            ).then(() => {
+            createReply(inputValue, comment.postId, comment.id, comment.id).then(() => {
               setReplyOnChange(!replyOnChange);
               setInputValue("");
             });
@@ -176,9 +187,7 @@ const CommentComponent = ({ comment, postWriterId }) => {
         <div className="comment-container">
           <div className="comment-header">
             <div>
-              <span className="comment-header-left">
-                {comment.writer.nickname}
-              </span>
+              <span className="comment-header-left">{comment.writer.nickname}</span>
               <span className="comment-header-left">{RegBefore}</span>
             </div>
             {!comment.isApprove && comment.isMine && !comment.isCommented
@@ -195,14 +204,13 @@ const CommentComponent = ({ comment, postWriterId }) => {
             id="ApproveIcon"
             onClick={() => {
               commentApprove(comment.id);
+              setReplyOnChange(!replyOnChange);
             }}
-            src={comment.isApprove ? sunnyActivate : sunnyDeActivate}
+            src={comment.isApprove ? activeEmotion : deactiveEmotion}
           />
         ) : (
           ""
         )}
-
-        {/* <SubCommentComponent parentId={comment.id}></SubCommentComponent> */}
       </div>
       {replyList ? replyList : ""}
     </>

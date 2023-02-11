@@ -1,6 +1,8 @@
 /* import react */
 import { useDispatch } from "react-redux";
 import { setUser, setFollowingIdList } from "../../../../redux/user";
+import { home } from "../../../../redux/page";
+
 import { useNavigate } from "react-router-dom";
 
 /* import component */
@@ -8,7 +10,6 @@ import ToggleBtn from "../../../../components/ToggleBtn/ToggleBtn";
 import Swal from "sweetalert2";
 
 /* import module */
-
 import { withdrawalUser, logout } from "../../../../api/MemberAPI";
 
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
@@ -95,26 +96,30 @@ const AlarmPage = () => {
           showConfirmButton: false,
           timer: 1000,
         });
-        setTimeout(() => {
-          logout()
-            .then((res) => {
-              dispatch(setUser({}));
-              dispatch(setFollowingIdList([]));
-              navigate("/login");
-            })
-            .catch((err) => {
-              Swal.fire({
-                icon: "error",
-                title: "오류 발생",
-                text: "로그아웃 중 오류가 발생하였습니다.",
-                footer: "잠시 후 다시 시도해주세요",
-              });
+        // setTimeout(() => {
+        logout()
+          .then((res) => {
+            dispatch(setUser({}));
+            dispatch(setFollowingIdList([]));
+            dispatch(home());
+          })
+          .then(() => {
+            navigate("/login");
+          })
+          .catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "오류 발생",
+              text: "로그아웃 중 오류가 발생하였습니다.",
+              footer: "잠시 후 다시 시도해주세요",
             });
-        }, 1000);
+          });
+        // }, 1000);
       }
     });
   };
-
+  // dispatch(setUser({}));
+  // dispatch(setFollowingIdList([]));
   return (
     <div className="alarm-page">
       <HeaderComponent backVisible={true} pageName={"설정"}></HeaderComponent>

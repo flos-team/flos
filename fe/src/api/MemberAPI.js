@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsToastValue, setToastMessage } from "../redux/toast";
 
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 /**
  * @author 1-hee
@@ -109,6 +109,7 @@ const logout = async () => {
     })
     .catch((err) => {
       console.log("로그아웃 중 오류 발생");
+      console.log(err);
     });
   return isLogout;
 };
@@ -129,18 +130,18 @@ const sendCodeToEmail = async (email) => {
       if (response.status === 204) {
         console.log("정상 전송");
         Swal.fire({
-          icon: 'success',
-          title: '인증 이메일이 전송되었습니다.',
-        })
+          icon: "success",
+          title: "인증 이메일이 전송되었습니다.",
+        });
         isComplete = true;
       }
     })
     .catch((error) => {
       //console.dir(error);
       Swal.fire({
-        icon: 'warning',
-        title: '회원 정보가 존재하지 않습니다.',
-      })
+        icon: "warning",
+        title: "회원 정보가 존재하지 않습니다.",
+      });
     });
   return isComplete;
 };
@@ -151,15 +152,18 @@ const sendCodeToEmail = async (email) => {
  */
 const getMyStatisticData = async () => {
   let url = `/api/member/report`;
-  let statisticsObject = {}
-  await axios.get(url).then((res) => {
-    // console.dir(res);
-    statisticsObject = res.data;
-  }).catch((err) => {
-    console.log("통계 데이터를 가져오던 도중 오류가 발생하였습니다.");
-  })
+  let statisticsObject = {};
+  await axios
+    .get(url)
+    .then((res) => {
+      // console.dir(res);
+      statisticsObject = res.data;
+    })
+    .catch((err) => {
+      console.log("통계 데이터를 가져오던 도중 오류가 발생하였습니다.");
+    });
   return statisticsObject;
-}
+};
 
 /////////* POST *//////////////////
 /**
@@ -170,8 +174,6 @@ const getMyStatisticData = async () => {
  * @param {string} email 
  * @param {string} password 
  */
-
-    
 
 const doLogin = async (email, password) => {
   let loginInfo = {
@@ -187,18 +189,17 @@ const doLogin = async (email, password) => {
       console.log(accessToken);
       // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
       axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-      loginResult = true
+      loginResult = true;
     })
     .catch((err) => {
-      loginResult = false
+      loginResult = false;
       Swal.fire({
-        icon: 'error',
-        title: '로그인에 실패하였습니다.',
-      })
-      }
-    )
-    return loginResult
-  };
+        icon: "error",
+        title: "로그인에 실패하였습니다.",
+      });
+    });
+  return loginResult;
+};
 
 /**
  * signUpUser : 자체 회원가입 메서드
@@ -239,13 +240,14 @@ const modifyUserInfo = async (nickname, introduction, imgFile) => {
   formData.append("introduction", introduction);
   formData.append("profileImage", imgFile);
   let url = `/api/member/info`;
-  
+
   let isUpdated = false;
   await axios
     .put(url, formData, {
       headers: {
-          "Content-Type": "multipart/form-data",
-        },})
+        "Content-Type": "multipart/form-data",
+      },
+    })
     .then((response) => {
       isUpdated = true;
     })
