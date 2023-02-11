@@ -82,8 +82,8 @@ const getBookMarkList = async (page = 0) => {
   return bookmarkListObject;
 };
 
-const getFollowerPostList = async () => {
-  const url = `/api/post/list/follow`;
+const getFollowerPostList = async (page = 0) => {
+  const url = `/api/post/list/follow?page=${page}`;
   let userPostListObject = {};
   await axios
     .get(url)
