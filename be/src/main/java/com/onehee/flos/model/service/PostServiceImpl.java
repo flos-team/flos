@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
     public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
         if (!memberRepository.existsByNickname(nickName))
             throw new BadRequestException("존재하지 않는 회원입니다.");
-        if (Pattern.matches("^[a-zA-Z]*$", nickName))
+        if (Pattern.matches("^[a-zA-Z0-9]*$", nickName))
             nickName = nickName.toLowerCase();
         return SliceResponseDTO.toDto(postRepository.findSliceByNickname(nickName, pageable)
                 .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
