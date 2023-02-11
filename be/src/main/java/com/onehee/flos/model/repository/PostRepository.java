@@ -25,7 +25,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Slice<Post> findSliceBy(Pageable pageable);
 
     // 작성자에 해당하는 포스트
-    @Query(value = "select p.* from post p where p.members_id in (select m.members_id from members m where m.nickname like ?1%)" , nativeQuery = true)
+    @Query(value = "select p.* from post p where p.members_id in (select m.members_id from members m where m.nickname like '?1%')" , nativeQuery = true)
     Slice<Post> findSliceByNickname(String nickName, Pageable pageable);
 
     // 게시글 댓글 많은순 검색
@@ -53,7 +53,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 기간안에 특정 사용자가 작성한 포스트 모두 반환
     List<Post> findAllByWriterAndCreatedAtBetween(Member writer, LocalDateTime start, LocalDateTime end);
 
-    @Query(value = "delete from pt, pf using post_tag as pt left join post_file as pf on pt.post_id = pf.post_id where pt.post_id = ?1", nativeQuery = true)
+    @Query(value = "delete from pt, pf, bm using post_tag as pt left join post_file as pf on pt.post_id = pf.post_id left join bookmark as bm on pt.post_id = bm.post_id where pt.post_id = ?1", nativeQuery = true)
     void deleteAllByPost(Post post);
 
 //    @Query(value = "select t.tag_name from tag t where t.tag_id in (select tag_id from post_tag where post_id = ?1.post_id)", nativeQuery = true)
