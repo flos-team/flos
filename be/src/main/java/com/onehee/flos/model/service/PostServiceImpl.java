@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -45,7 +44,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
-        if (!memberRepository.existsByNickname(nickName))
+        if (!memberRepository.existsByNicknameIgnoreCase(nickName))
             throw new BadRequestException("존재하지 않는 회원입니다.");
         if (Pattern.matches("^[a-zA-Z]*$", nickName))
             nickName = nickName.toLowerCase();
