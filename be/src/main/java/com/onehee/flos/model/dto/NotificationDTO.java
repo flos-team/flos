@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Setter(AccessLevel.NONE)
+@AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotificationDTO {
