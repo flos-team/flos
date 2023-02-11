@@ -8,6 +8,7 @@ import { setFollowingIdList } from "../../../redux/user";
 import userImg from "../../../assets/DummyData/dummy-sample.jpg";
 
 /* import component */
+import Swal from "sweetalert2";
 
 /* import module */
 import { getFollowingList, getOtherFollowingList, cancelFollowing, doFollowing } from "../../../api/FollowAPI";
@@ -22,7 +23,6 @@ const UserInfoItem = ({ userInfo }) => {
 
   const [toggleFactor, setToggleFactor] = useState(true);
   const [followText, setFollowText] = useState("팔로잉");
-  const [myFollowingList, setMyFollowingList] = useState([]);
 
   useEffect(() => {
     let isFollowed = false;
