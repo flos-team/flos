@@ -1,5 +1,9 @@
 @import "../../../styles/commons.scss";
 
+.swal2-popup {
+  font-size: 12px !important;
+}
+
 .user-info-item {
   /* Auto layout */
   display: flex;

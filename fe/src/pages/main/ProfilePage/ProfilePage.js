@@ -20,30 +20,63 @@ import { setIsToastValue } from "../../../redux/toast";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
-
+import Swal from "sweetalert2";
+///// MUI ////////////////
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
 import MemberAPI, { getMemberInfo, getOtherMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, { getPostListByNickname } from "../../../api/PostAPI";
+import PostAPI, { getPostListByNickname, getBookMarkList } from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
 
-const ProfilePage = ({ setIsToast }) => {
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-  let testBtn = <button
-  style={{
-    width: "160px",
-    height: "30px",
-    display: "block",
-    margin: "0 auto",
-  }}
-  onClick={async (e) => {
-    // navigate("/flower-end-page");
-  }}
->
-  기능테스트
-</button>
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+const ProfilePage = ({ setIsToast }) => {
+  let testBtn = (
+    <button
+      style={{
+        width: "160px",
+        height: "30px",
+        display: "block",
+        margin: "0 auto",
+      }}
+      onClick={async (e) => {
+        // navigate("/flower-end-page");
+      }}
+    >
+      기능테스트
+    </button>
+  );
 
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
@@ -52,11 +85,10 @@ const ProfilePage = ({ setIsToast }) => {
   // 사용자가 작성한 포스트의 세팅을 위한 state
   const [postIdx, setPostIdx] = useState(1);
   // 사용자 정보에 따른 포스트 리스트 state
-  const [postList, setPostList] = useState([<></>]);
+  const [postList, setPostList] = useState([]);
   const [isScrollable, setIsScrollable] = useState(true);
 
   // 사용자가 작성한 북마크의 세팅을 위한 state
-  const [bookPostIdx, setBookPostIdx] = useState(1);
   const [bookPostList, setBookPostList] = useState([]);
   const [isBookScrollable, setIsBookScrollable] = useState(true);
 
@@ -72,8 +104,27 @@ const ProfilePage = ({ setIsToast }) => {
   const [userImgURL, setUserImgURL] = useState("");
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.isToast);
-  // 현재 로그인한 사람의 정보
-  const dispatch = useDispatch();
+
+  const setBookmarkList = async () => {
+    await getBookMarkList(postIdx).then((res) => {
+      // console.dir(res);
+      if (res && res.content && res.content.length) {
+        let newPostList = bookPostList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+        setBookPostList(newPostList);
+        //console.dir(newPostList);
+      }
+    });
+  };
+
+  const setMyPostList = async () => {
+    await getPostListByNickname(user.nickname, postIdx).then((res) => {
+      // console.dir(res);
+      if (res && res.content && res.content.length) {
+        let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+        setPostList(newPostList);
+      }
+    });
+  };
 
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
   useEffect(() => {
@@ -102,30 +153,43 @@ const ProfilePage = ({ setIsToast }) => {
         return liEle;
       })
     );
-    let myPostList = getPostListByNickname(user.nickname);
-    myPostList.then((res) => {
-      setPostList(res.content.map((e) => <PostItem post={e}></PostItem>));
-    });
+    setMyPostList();
   }, []);
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
-    const bottom = (e.target.scrollHeight - e.target.scrollTop)+3 <= e.target.clientHeight;
+    const bottom = e.target.scrollHeight - e.target.scrollTop + 3 <= e.target.clientHeight;
     // console.log(e.target.scrollHeight - e.target.scrollTop);
     // console.log(e.target.clientHeight)
     //console.log("스크롤 감지");
     if (bottom) {
       console.log("스크롤 끝 감지");
-      let nextData = getPostListByNickname(user.nickname, postIdx + 1);
-      nextData.then((res) => {
-        if (res.hasNext) {
-          setPostIdx(postIdx + 1);
-          let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
-          setPostList(newPostList);
-        } else {
-          console.log("불러올 데이터가 없습니다.");
-        }
-      });
+      // let nextData = getPostListByNickname(user.nickname, postIdx + 1);
+      // nextData.then((res) => {
+      //   if (res.hasNext) {
+      //     setPostIdx(postIdx + 1);
+      //     let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+      //     setPostList(newPostList);
+      //   } else {
+      //     console.log("불러올 데이터가 없습니다.");
+      //   }
+      // });
+    }
+  };
+
+  // MUI
+  const [value, setValue] = useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    switch (Number(event.target.id.split("-")[2])) {
+      case 1:
+        setBookmarkList();
+        setPostIdx(1);
+        break;
+      default:
+        setMyPostList();
+        setPostIdx(1);
+        break;
     }
   };
 
@@ -154,23 +218,41 @@ const ProfilePage = ({ setIsToast }) => {
         <div className="user-social-info-box">
           <ul className="social-info-title">{titleList}</ul>
           <ul className="social-info-count">{userInfoList}</ul>
-        </div>        
-        <div className="profile-tab-menu">
-          <div className="post-tab focus-tab" onClick={(e) => {}}>
-            <p>내 포스트</p>
-          </div>
-          <div
-            className="book-tab"
-            onClick={(e) => {
-              setIsToast(true);
-            }}
-          >
-            <p>북마크</p>
-          </div>
         </div>
-        <div className="post-container hide-scroll" onScroll={handleScroll}>
-          {postList}
-        </div>
+        <Box sx={{ width: "100%", margin: "0 auto" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+              <Tab
+                label="내 포스트"
+                {...a11yProps(0)}
+                style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
+              />
+              <Tab label="북마크" {...a11yProps(1)} style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <div className="post-container hide-scroll" onScroll={handleScroll}>
+              {postList.length ? (
+                postList
+              ) : (
+                <div className="no-post-item">
+                  <p>불러올 게시글이 없습니다.</p>
+                </div>
+              )}
+            </div>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <div className="post-container hide-scroll" onScroll={handleScroll}>
+              {bookPostList.length ? (
+                bookPostList
+              ) : (
+                <div className="no-post-item">
+                  <p>불러올 게시글이 없습니다.</p>
+                </div>
+              )}
+            </div>
+          </TabPanel>
+        </Box>
       </div>
     </>
   );

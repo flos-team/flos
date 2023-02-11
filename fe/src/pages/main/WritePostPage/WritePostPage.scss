@@ -103,19 +103,22 @@
         }
       }
 
-      .toggle-btn-container {
+      .img-preview-container {
         width: 60%;
         height: 100%;
         display: flex;
+        flex-direction: row;
+        overflow: scroll;
         align-items: center;
-        justify-content: right;
-        gap: 8 * $rpx1;
-        .toggle-text {
-          width: 40%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+        justify-content: left;
+        gap: 8px;
+        .img-preview {
+          flex-shrink: 0;
+          width: 60 * $rpx1;
+          height: 60 * $rpx1;
+          background-size: contain;
+          background-position: center;
+          border: 1px solid $mono300;
         }
       }
     }

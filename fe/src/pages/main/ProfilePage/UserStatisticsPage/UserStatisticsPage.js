@@ -8,11 +8,10 @@ import cloudyImg from "../../../../assets/GlobalAsset/cloudy.png";
 import rainyImg from "../../../../assets/GlobalAsset/rainy.png";
 
 /* module */
-import {getMyStatisticData} from "../../../../api/MemberAPI"
+import { getMyStatisticData } from "../../../../api/MemberAPI";
 
 /* component */
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
-
 
 /* import CSS */
 import "./UserStatisticsPage.css";
@@ -26,21 +25,23 @@ const UserStatisticsPage = () => {
   ]);
 
   const user = useSelector((state) => state.user.userData);
-  
-  const [castItemList, setCastItemList ] = useState(castItem.map(({ castId, castImg, className }) => {
-    let modifiedClassName = `cast-statistics-item-div ${className}`;
-    let castItem = (
-      <div key={castId} className={modifiedClassName}>
-        <div className="img-div">
-          <img src={castImg} />
+
+  const [castItemList, setCastItemList] = useState(
+    castItem.map(({ castId, castImg, className }) => {
+      let modifiedClassName = `cast-statistics-item-div ${className}`;
+      let castItem = (
+        <div key={castId} className={modifiedClassName}>
+          <div className="img-div">
+            <img src={castImg} />
+          </div>
+          <div className="graph-div">
+            <div className="graph-gage"></div>
+          </div>
         </div>
-        <div className="graph-div">
-          <div className="graph-gage"></div>
-        </div>
-      </div>
-    );
-    return castItem;
-  }));
+      );
+      return castItem;
+    })
+  );
 
   // Will Remove...
   const [plantItem, setPlantItem] = useState([
@@ -60,43 +61,44 @@ const UserStatisticsPage = () => {
     );
     return plantItem;
   });
-  
+
   // 사용자 통계 데이터
   const [userData, setUserData] = useState({
-    flowers:[],
+    flowers: [],
     loginInfo: { month: 0, lengthOfMonth: 0, loginCount: 0 },
-    postInfo: {postCount: 0, sunny: 0, cloudy: 0, rainy: 0, ratio:{sunny: 0, cloudy: 0, rainy: 0}}
-  })
+    postInfo: { postCount: 0, sunny: 0, cloudy: 0, rainy: 0, ratio: { sunny: 0, cloudy: 0, rainy: 0 } },
+  });
 
   useEffect(() => {
     /*
 flowers (arr)
 loginInfo {month: 2, lengthOfMonth: 28, loginCount: 0}
 postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloudy: 0.6, rainy: 0.1}}*/
-    
+
     getMyStatisticData().then((res) => {
-      setUserData(res);      
+      setUserData(res);
       let idx = 240;
+      console.dir(res);
       setCastItemList(
         castItem.map(({ castId, castImg, className }) => {
           let modifiedClassName = `cast-statistics-item-div ${className}`;
           let ratio = 0;
           switch (castId) {
             case 1:
-              ratio = res.postInfo.ratio.sunny
+              ratio = res.postInfo.ratio.sunny;
               break;
             case 2:
-              ratio = res.postInfo.ratio.cloudy
+              ratio = res.postInfo.ratio.cloudy;
               break;
             case 3:
-              ratio = res.postInfo.ratio.rainy
+              ratio = res.postInfo.ratio.rainy;
               break;
             default:
               break;
           }
 
           let itemStyle = {
-            width: `${idx*ratio}px`,
+            width: `${idx * ratio}px`,
           };
           let castItem = (
             <div key={castId} className={modifiedClassName}>
@@ -112,7 +114,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
         })
       );
     });
-  },[])
+  }, []);
 
   return (
     <>
@@ -133,7 +135,9 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
             </div>
           </div>
           <div className="user-month-div">
-            <p>{userData.loginInfo.lengthOfMonth}일 중 {userData.loginInfo.loginCount}일 방문해주셨어요.</p>
+            <p>
+              {userData.loginInfo.lengthOfMonth}일 중 {userData.loginInfo.loginCount}일 방문해주셨어요.
+            </p>
           </div>
         </div>
         <div className="user-cast-static-item">
@@ -157,7 +161,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
               <p>작성 횟수</p>
             </div>
             <div className="post-count">
-              <p>{userData.postInfo.postCount>999?"999+":userData.postInfo.postCount}</p>
+              <p>{userData.postInfo.postCount > 999 ? "999+" : userData.postInfo.postCount}</p>
             </div>
           </div>
           <div className="user-heart-share-div">
