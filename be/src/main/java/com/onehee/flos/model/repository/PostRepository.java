@@ -25,7 +25,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Slice<Post> findSliceBy(Pageable pageable);
 
     // 작성자에 해당하는 포스트
-    @Query(value = "select p.* from post p where p.members_id in (select m.members_id from members m where m.nickname like '?1%')" , nativeQuery = true)
+    @Query(value = "select p.* from post p where p.members_id in (select members_id from members where nickname like ?1%)" , nativeQuery = true)
     Slice<Post> findSliceByNickname(String nickName, Pageable pageable);
 
     // 게시글 댓글 많은순 검색
