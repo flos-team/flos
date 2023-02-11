@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45.76 11.11">
+  <defs>
+    <style>
+      .eye3 {
+        fill: none;
+        stroke: #000000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="_레이어_9" data-name="레이어 9">
+    <path class="eye3" d="m.23,10.66l9.93-5.21L.23.45"/>
+    <path class="eye3" d="m45.52.45l-9.93,5.21,9.93,5"/>
+  </g>
+</svg>
