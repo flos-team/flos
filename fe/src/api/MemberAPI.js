@@ -3,6 +3,8 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsToastValue, setToastMessage } from "../redux/toast";
 
+import Swal from 'sweetalert2'
+
 /**
  * @author 1-hee
  *
@@ -126,13 +128,19 @@ const sendCodeToEmail = async (email) => {
       //console.dir(response);
       if (response.status === 204) {
         console.log("정상 전송");
-        alert("이메일이 전송되었습니다.");
+        Swal.fire({
+          icon: 'success',
+          title: '인증 이메일이 전송되었습니다.',
+        })
         isComplete = true;
       }
     })
     .catch((error) => {
       //console.dir(error);
-      alert("회원 정보가 존재하지 않습니다.");
+      Swal.fire({
+        icon: 'warning',
+        title: '회원 정보가 존재하지 않습니다.',
+      })
     });
   return isComplete;
 };

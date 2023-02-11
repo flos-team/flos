@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
-
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import { setUser, setFollowingIdList } from "../redux/user";
 
 /* import module */
@@ -52,7 +51,10 @@ function Login() {
           navigate("/main", { replace: true});
         }})
       .catch(() => {
-        alert('서버의 일시적인 오류가 발생했습니다.')
+        Swal.fire({
+          icon: 'error',
+          title: '일시적인 서버의 오류가 발생했습니다.',
+        })
       });
     }
 

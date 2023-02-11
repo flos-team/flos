@@ -23,6 +23,7 @@ import { getFlowerInfo, giveSun, giveRain, flowering, modifyFlower } from "../..
 import { getMemberInfo } from "../../api/MemberAPI";
 import { getNotification } from '../../api/NotificationAPI'
 import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
+import Swal from "sweetalert2"
 
 const Title = styled.h1`
   color: #007bff;
@@ -313,11 +314,19 @@ const Home = () => {
     // 해 버튼을 클릭 했을 경우,
     console.log("clicked - sun");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
-      alert("더 이상 해가 뜰 수 없습니다. 개화를 진행해주세요.");
+      Swal.fire({
+        icon: 'warning',
+        title: '더 이상 해가 뜰 수 없습니다.',
+        text: '개화를 진행해주세요.'
+      })
       return;
     }
     if (flowerInfo.sunElementCount < 1) {
-      alert("햇빛의 양이 부족합니다.");
+      Swal.fire({
+        icon: 'warning',
+        title: '햇빛의 양이 부족합니다.',
+      })
+      
       return;
     }
     setElementImg(require("../../assets/HomeAsset/sun-img.png"));
@@ -347,11 +356,15 @@ const Home = () => {
     // 비 버튼을 클릭 했을 경우,
     console.log("clicked - rain");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
-      alert("더 이상 비를 내릴 수 없습니다. 개화를 진행해주세요.");
-      return;
-    }
-    if (flowerInfo.rainElementCount < 1) {
-      alert("빗물의 양이 부족합니다.");
+      Swal.fire({
+        icon: 'warning',
+        title: '더 이상 비를 내릴 수 없습니다.',
+        text: '개화를 진행해주세요.'
+      })
+      Swal.fire({
+        icon: 'warning',
+        title: '빗물의 양이 부족합니다.',
+      })
       return;
     }
     setElementImg(require("../../assets/HomeAsset/rain-img.png"));
