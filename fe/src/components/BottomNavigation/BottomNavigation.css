@@ -17,12 +17,13 @@
 }
 
 .bottom-nav-container {
-  position: sticky;
+  position: fixed;
+  /* position: sticky; */
   left: 0;
   bottom: 0;
   width: 100vw;
   height: 80px;
-  position: relative;
+  /* position: relative; */
 }
 .bottom-nav-container .toast-message-div {
   z-index: 0;
