@@ -133,7 +133,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(SecurityManager.getCurrentMember().getId())
                 .orElseThrow(() -> new BadRequestException("회원 정보를 조회 할 수 없습니다."));
         if (memberUpdateRequestDTO.getNickname() != null) {
-            if (!memberUpdateRequestDTO.getNickname().equals(member.getNickname()) && memberRepository.existsByNickname(memberUpdateRequestDTO.getNickname())) {
+            if (!memberUpdateRequestDTO.getNickname().equals(member.getNickname()) && memberRepository.existsByNicknameIgnoreCase(memberUpdateRequestDTO.getNickname())) {
                 throw new BadRequestException("이미 해당 닉네임이 존재합니다.");
             }
             member.setNickname(memberUpdateRequestDTO.getNickname());
@@ -191,7 +191,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean isExistNickname(MemberNicknameCheckRequestDTO memberNicknameCheckRequestDTO) {
-        return memberRepository.existsByNickname(memberNicknameCheckRequestDTO.getNickname());
+        return memberRepository.existsByNicknameIgnoreCase(memberNicknameCheckRequestDTO.getNickname());
     }
 
     @Override
@@ -236,7 +236,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<MemberResponseDTO> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO) {
         Member me = SecurityManager.getCurrentMember();
-        List<Member> memberList = memberRepository.findAllByNicknameStartsWith(memberSearchRequestDTO.getNickname());
+        List<Member> memberList = memberRepository.findAllByNicknameLikeIgnoreCase(memberSearchRequestDTO.getNickname() + "%");
         return null;
     }
 }
