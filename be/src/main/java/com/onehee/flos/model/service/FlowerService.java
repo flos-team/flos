@@ -4,6 +4,7 @@ import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
+import com.onehee.flos.model.dto.request.FlowerInfoRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
@@ -20,6 +21,8 @@ public interface FlowerService {
     void modifyFlower(FlowerModifyRequestDTO flowerModifyRequestDTOo) throws BadRequestException;
     // 꽃 요양원행
     void gardeningFlower(FlowerGardeningRequestDTO flowerGardeningRequestDTO) throws BadRequestException;
+
+    FlowerResponseDTO getFlowerById(FlowerInfoRequestDTO flowerInfoRequestDTO);
     // 회원 꽃 정보
     FlowerResponseDTO getFlowerInfo();
     // 특정 꽃 정보
