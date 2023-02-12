@@ -30,6 +30,8 @@ public class Flower {
 
     private Long height;
 
+    private String letter;
+
     @ColumnDefault("false")
     private Boolean gardening;
 
