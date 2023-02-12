@@ -21,10 +21,10 @@ import OtherProfilePage from "./pages/main/ProfilePage/OtherProfilePage/OtherPro
 import SettingPage from "./pages/main/ProfilePage/SettingPage/SettingPage";
 import NotificationPage from "./pages/NotificationPage/NotificationPage";
 import GuidePage from "./pages/GuidePage";
-import EndingPage from "./pages/main/EndingPage/EndingPage"
+import EndingPage from "./pages/main/EndingPage/EndingPage";
 import FollowerViewPage from "./pages/FollowerViewPage/FollowerViewPage";
 
-import NotFoundPage from "./pages/NotFoundPage"
+import NotFoundPage from "./pages/NotFoundPage";
 
 import "./Transition.css";
 
@@ -40,7 +40,7 @@ function Transition() {
 
           <Route path="/main" element={<MainPage />}></Route>
           <Route path="/login" element={<LoginPage />}></Route>
-          
+
           {/* <Link to ={`/post/${1}`} > 로 전달 */}
           <Route path="/main/post/:id" element={<PostDetailPage />}></Route>
           <Route path="/main/write" element={<WritePostPage />}></Route>
@@ -59,10 +59,10 @@ function Transition() {
           <Route path="/profile-modify" element={<ProfileModifyPage />}></Route>
           <Route path="/other-profile-page/:id" element={<OtherProfilePage />}></Route>
           <Route path="/follower-view-page" element={<FollowerViewPage />}></Route>
-          <Route path="/flower-end-page" element={<EndingPage />}></Route>
-          <Route path="/follower-view-page/:id" element={<FollowerViewPage/>}></Route>
+          <Route path="/flower-end-page/:id" element={<EndingPage />}></Route>
+          <Route path="/follower-view-page/:id" element={<FollowerViewPage />}></Route>
 
-          <Route path="*" element={<NotFoundPage/>}></Route>
+          <Route path="*" element={<NotFoundPage />}></Route>
 
           {/* <Route path="/product/*" element={<Product />}></Route> */}
           {/* 상단에 위치하는 라우트들의 규칙을 모두 확인, 일치하는 라우트가 없는경우 처리 */}
