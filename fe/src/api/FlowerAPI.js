@@ -5,7 +5,6 @@ import axios from "axios";
  * @copyright 2023
  */
 
-
 // 엑시오스 기본 세팅
 axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
 axios.defaults.withCredentials = true;
@@ -20,7 +19,7 @@ const getFlowerInfo = async () => {
   let value = null;
   await axios
     .get(url)
-    .then(({data}) => {
+    .then(({ data }) => {
       console.log("데이터");
       console.log(data);
       value = {
@@ -30,11 +29,11 @@ const getFlowerInfo = async () => {
         flowerType: data.flowerType,
         currentGrowthValue: data.currentGrowValue,
         maxGrowthValue: data.capacity,
-        color: data.flowerColor
+        color: data.flowerColor,
       };
     })
-    .catch(({response}) => {
-      if(response.data.errorCode === "NO_FLOWER_EXISTS"){
+    .catch(({ response }) => {
+      if (response.data.errorCode === "NO_FLOWER_EXISTS") {
         value = "NO_FLOWER_EXISTS";
       }
       console.log(response.status, "꽃 정보 가져오는 중 오류 발생");
@@ -46,12 +45,12 @@ const getFlowerInfo = async () => {
  * getGardenList : 홈페이지의 꽃 정보를 가져옴
  * @returns
  */
-const getGardenList = async (page) => {
+const getGardenList = async (page = 0) => {
   let url = `/api/flower/garden?page=${page}`;
   let value = null;
   await axios
     .get(url)
-    .then(({data}) => {
+    .then(({ data }) => {
       console.log(data);
       value = data;
     })
@@ -64,16 +63,16 @@ const getGardenList = async (page) => {
 /////////* POST *///////////////////
 /**
  * createFlower : 꽃 정보를 줌
- * @param {string} flowerType 
- * @param {string} name 
+ * @param {string} flowerType
+ * @param {string} name
  */
 const createFlower = async (flowerType, name) => {
   let url = `/api/flower`;
   let value = null;
   console.log(name);
   await axios
-    .post(url, {flowerType,name})
-    .then(({data}) => {
+    .post(url, { flowerType, name })
+    .then(({ data }) => {
       console.log("꽃 생성함!!");
       console.log(data);
     })
@@ -92,7 +91,7 @@ const giveSun = async () => {
   let value = null;
   await axios
     .post(url, {})
-    .then(({data}) => {
+    .then(({ data }) => {
       console.log("햇빛 줌!!");
       console.log(data);
       value = data;
@@ -112,7 +111,7 @@ const giveRain = async () => {
   let value = null;
   await axios
     .post(url, {})
-    .then(({data}) => {
+    .then(({ data }) => {
       console.log("비 줌!!");
       console.log(data);
       value = data;
@@ -132,8 +131,8 @@ const flowering = async (id) => {
   let value = null;
   console.log(id);
   await axios
-    .post(url, {id})
-    .then(({data}) => {
+    .post(url, { id })
+    .then(({ data }) => {
       console.log("개화 함!!");
       console.log(data);
       value = data;
@@ -147,15 +146,15 @@ const flowering = async (id) => {
 /////////* PUT *///////////////////
 /**
  * modifyFlower : 꽃 이름 변경 줌
- * @param {long} id 
- * @param {string} name 
+ * @param {long} id
+ * @param {string} name
  */
 const modifyFlower = async (id, name) => {
   let url = `/api/flower`;
   let value = null;
   await axios
-    .put(url, {id,name})
-    .then(({data}) => {
+    .put(url, { id, name })
+    .then(({ data }) => {
       console.log("꽃 이름 변경함!!");
       console.log(data);
     })

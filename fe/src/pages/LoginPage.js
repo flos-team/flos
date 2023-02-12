@@ -66,9 +66,11 @@ function Login() {
               getFollowingList(false).then((res) => {
                 // console.log("로그인후 응답받은 팔로잉 리스트 결과");
                 let useIdList = [];
-                res.map((e, i) => {
-                  useIdList = [...useIdList, e.id];
-                });
+                if (res) {
+                  res.map((e, i) => {
+                    useIdList = [...useIdList, e.id];
+                  });
+                }
                 // console.log(useIdList);
                 // console.dir(res);
                 dispatch(setFollowingIdList(useIdList));

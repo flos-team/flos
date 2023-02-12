@@ -84,7 +84,7 @@ const EndingPage = () => {
       means: ["수줍은 사랑의 표시", "매혹적인 사랑"],
     },
     {
-      color: "jamong", // 에셋 없음
+      color: "grapefruit", // 에셋 없음
       name: "자몽 튤립",
       means: ["사랑의 고백"],
     },
@@ -128,8 +128,8 @@ const EndingPage = () => {
           }
         }
       }
-      console.dir(res);
-      console.dir(flowerRenderObj);
+      //console.dir(res);
+      // console.dir(flowerRenderObj);
       setFlowerObj(flowerRenderObj);
       let list = [
         <LetterStep1Component
