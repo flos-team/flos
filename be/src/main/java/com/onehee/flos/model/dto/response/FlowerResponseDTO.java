@@ -53,6 +53,9 @@ public class FlowerResponseDTO {
     private int water;
     @Schema(description = "꽃에 사용된 햇빛 수")
     private int light;
+    @Schema(description = "꽃에게 보내는 마지막 편지")
+    private String letter;
+
 
     public static FlowerResponseDTO toDto(Flower flower) {
 
@@ -74,6 +77,7 @@ public class FlowerResponseDTO {
                 .createdAt(flower.getCreatedAt())
                 .blossomAt(flower.getBlossomAt())
                 .duration(flower.getBlossomAt() == null ? null : ChronoUnit.DAYS.between(flower.getCreatedAt(), flower.getBlossomAt()))
+                .letter(flower.getLetter())
                 .build();
 
     }
