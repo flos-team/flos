@@ -3,20 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../redux/user";
+import { setUser, setFollowingIdList } from "../redux/user";
 import Swal from "sweetalert2";
 import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
+import { getFollowingList } from "../api/FollowAPI";
+import { useEffect } from "react";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userData);
 
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const [loginMsg, setLoginMsg] = useState('');
+  const [loginMsg, setLoginMsg] = useState("");
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -26,29 +29,43 @@ function Login() {
   };
 
   // 로그인 버튼 클릭 이벤트
-  const onClickLogin = () => {
+  const onClickLogin = async () => {
     if (inputId.length === 0) {
-      setLoginMsg('아이디를 입력해주세요.')
+      setLoginMsg("아이디를 입력해주세요.");
     } else if (inputPw.length === 0) {
-      setLoginMsg('비밀번호를 입력해주세요.')
-    }
-    else {
-    doLogin(inputId, inputPw)
-      .then((response) => {
-        if (response === false) {
-          setLoginMsg('아이디 또는 비밀번호를 확인해주세요.')
-        } else if (response === true) {
-          navigate("/main", { replace: true});
-        }})
-      .catch(() => {
-        Swal.fire({
-          icon: 'error',
-          title: '일시적인 서버의 오류가 발생했습니다.',
+      setLoginMsg("비밀번호를 입력해주세요.");
+    } else {
+      doLogin(inputId, inputPw)
+        .then((response) => {
+          if (response === false) {
+            setLoginMsg("아이디 또는 비밀번호를 확인해주세요.");
+          } else if (response === true) {
+            getMemberInfo().then((res) => {
+              // console.dir(res);
+              dispatch(setUser(res));
+              getFollowingList(false).then((res) => {
+                // console.log("로그인후 응답받은 팔로잉 리스트 결과");
+                let useIdList = [];
+                res.map((e, i) => {
+                  useIdList = [...useIdList, e.id];
+                });
+                // console.log(useIdList);
+                // console.dir(res);
+                dispatch(setFollowingIdList(useIdList));
+              });
+              setTimeout(() => {
+                navigate("/main", { replace: true });
+              }, 300);
+            });
+          }
         })
-      });
+        .catch(() => {
+          Swal.fire({
+            icon: "error",
+            title: "일시적인 서버의 오류가 발생했습니다.",
+          });
+        });
     }
-
-
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
@@ -60,9 +77,14 @@ function Login() {
     console.log("네이버 로그인");
   };
   const imgStyle = {
-    width:"143px"
-    
-  }
+    width: "143px",
+  };
+
+  useEffect(() => {
+    console.log("====LOGIN PAGE useEffect 결과 ====");
+    console.dir(user);
+  }, []);
+
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
@@ -92,15 +114,9 @@ function Login() {
               onChange={handleInputPw}
             />
           </div>
-          <div className={styles.loginmsg}>
-            {loginMsg}
-          </div>
+          <div className={styles.loginmsg}>{loginMsg}</div>
           <div className={styles.loginbtndiv}>
-            <button
-              type="button"
-              className={styles.loginbtn}
-              onClick={onClickLogin}
-            >
+            <button type="button" className={styles.loginbtn} onClick={onClickLogin}>
               로그인
             </button>
           </div>

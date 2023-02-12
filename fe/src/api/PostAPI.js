@@ -35,7 +35,7 @@ const getPost = async (postId) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains PostListObject
  */
-const getPostList = async (page = 0) => {
+const getPostList = async (page = 1) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
@@ -43,9 +43,11 @@ const getPostList = async (page = 0) => {
     .then((response) => {
       if (response.status === 200) {
         let data = response.data;
+        console.dir(response.data);
         postListObject = {
           postList: [...data.content],
           hasContent: data.hasContent,
+          hasNext: data.hasNext,
           isFirst: data.isFirst,
           isLast: data.isLast,
           nextPage: data.nextPage,
@@ -61,16 +63,16 @@ const getPostList = async (page = 0) => {
 
 /**
  * getBookMarkList : 로그인된 회원별 북마크한 게시글 리스트
- * @param {number} page 페이지번호 (0 ~ N)
+ * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains BookmarkListObject
  */
-const getBookMarkList = async (page = 0) => {
+const getBookMarkList = async (page = 1) => {
   let url = `/api/post/list/bookmark?page=${page}`;
   let bookmarkListObject = {};
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response);
+      console.dir(response);
       if (response.status === 200) {
         bookmarkListObject = { ...response.data };
         //console.dir(response);
@@ -111,7 +113,7 @@ const getPostListByNickname = async (nickName, page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      console.dir(response);
+      // console.dir(response);
       if (response.status === 200) {
         userPostListObject = response.data;
       }
@@ -125,7 +127,7 @@ const getPostListByNickname = async (nickName, page = 0) => {
 
 // 닉네임 검색
 const getSearchNickname = async (nickName) => {
-  let url = `/api/member/search?nickname=${nickName}`
+  let url = `/api/member/search?nickname=${nickName}`;
   let searchNicknamePostListObject = {};
   await axios
     .get(url)
@@ -137,7 +139,7 @@ const getSearchNickname = async (nickName) => {
     })
     .catch((error) => {
       console.log(error);
-      console.log(url)
+      console.log(url);
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
   return searchNicknamePostListObject;
@@ -198,7 +200,7 @@ const getPostListByTagName = async (tagName) => {
   await axios
     .get(url)
     .then((response) => {
-      console.log(response)
+      console.log(response);
       if (response.status === 200) {
         tagNamePostListObject = response.data;
       }

@@ -22,7 +22,7 @@ const getFollowerList = async (orderByName) => {
     .get(url, { params: { orderByName: orderByName } })
     .then((response) => {
       // console.dir(response);
-        followList = response.data;
+      followList = response.data;
     })
     .catch((error) => {
       // console.log(error);
@@ -68,9 +68,7 @@ const getOtherFollowerList = async (id) => {
       followList = response.data;
     })
     .catch((error) => {
-      console.log(
-        "다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다."
-      );
+      console.log("다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다.");
     });
   return followList;
 };
@@ -90,21 +88,19 @@ const getOtherFollowingList = async (id) => {
       followList = response.data;
     })
     .catch((error) => {
-      console.log(
-        "다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다."
-      );
+      console.log("다른사람의 팔로워 리스트를 불러오던 중 오류가 발생했습니다.");
     });
   return followList;
 };
 
 ////* POST */////////////////////
-const doFollowing = async (id, orderByName=false) => {
+const doFollowing = async (id, orderByName = false) => {
   let url = `/api/follow`;
   let isFollow = false;
-  let data = { id, orderByName }
-  console.dir(data);
+  let data = { id, orderByName };
+  //console.dir(data);
   await axios
-    .post(url,data)
+    .post(url, data)
     .then((response) => {
       // console.dir(response);
       isFollow = true;
@@ -131,11 +127,4 @@ const cancelFollowing = async (id) => {
   return isFollow;
 };
 
-export {
-  getFollowerList,
-  getFollowingList,
-  getOtherFollowerList,
-  getOtherFollowingList,
-  doFollowing,
-  cancelFollowing,
-};
+export { getFollowerList, getFollowingList, getOtherFollowerList, getOtherFollowingList, doFollowing, cancelFollowing };

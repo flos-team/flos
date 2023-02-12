@@ -109,19 +109,23 @@ const ProfilePage = ({ setIsToast }) => {
     await getBookMarkList(postIdx).then((res) => {
       // console.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = bookPostList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+        let newPostList = bookPostList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setBookPostList(newPostList);
         //console.dir(newPostList);
+      } else {
+        setBookPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
       }
     });
   };
 
   const setMyPostList = async () => {
     await getPostListByNickname(user.nickname, postIdx).then((res) => {
-      // console.dir(res);
+      //aconsole.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+        let newPostList = postList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setPostList(newPostList);
+      } else {
+        setPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
       }
     });
   };
