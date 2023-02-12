@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
@@ -10,6 +10,9 @@ import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
 import { getFollowingList } from "../api/FollowAPI";
 import { useEffect } from "react";
+import cancelImg from '../assets/RegisterAsset/Cancel.png'
+import showPwImg from '../assets/RegisterAsset/fi-br-eye-crossed.png'
+import noshowPwImg from '../assets/RegisterAsset/fi-br-eye.png'
 
 function Login() {
   const navigate = useNavigate();
@@ -20,6 +23,7 @@ function Login() {
   const [inputPw, setInputPw] = useState("");
 
   const [loginMsg, setLoginMsg] = useState("");
+  const [showPw, setShowPw] = useState(false)
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -28,12 +32,28 @@ function Login() {
     setInputPw(e.target.value);
   };
 
+  // 아이디 지우기
+  const clearInputId = () => {
+    setInputId('')
+  }
+  // pw type 변경
+  const pwEyeIcon = () => {
+    if (showPw) {
+      setShowPw(false)
+    } else {
+      setShowPw(true)
+    }
+  }
+
   // 로그인 버튼 클릭 이벤트
+  const onFocus = useRef([])
   const onClickLogin = async () => {
     if (inputId.length === 0) {
       setLoginMsg("아이디를 입력해주세요.");
+      onFocus.current[0].focus();
     } else if (inputPw.length === 0) {
       setLoginMsg("비밀번호를 입력해주세요.");
+      onFocus.current[1].focus();
     } else {
       doLogin(inputId, inputPw)
         .then((response) => {
@@ -101,15 +121,20 @@ function Login() {
             <input
               type="text"
               name="inputId"
+              id='xbtn'
               placeholder="flos@example.com"
               value={inputId}
               className={styles.inputdiv}
               onChange={handleInputId}
+              ref={(el) => (onFocus.current[0] = el)}
             />
+            { inputId.length>=1 ?
+            <img alt='' onClick={clearInputId} className={styles.icon} src={cancelImg}></img> :
+            null }
           </div>
           <div className={styles.fullsize}>
             <input
-              type="password"
+              type = {showPw ? "text" : "password"}
               name="input_pw"
               value={inputPw}
               className={styles.inputdiv}
@@ -119,7 +144,12 @@ function Login() {
                   onClickLogin();
                 }
               }}
+
+              ref={(el) => (onFocus.current[1] = el)}
             />
+          { inputPw.length >=1 ? 
+          <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img> : null }
+              
           </div>
           <div className={styles.loginmsg}>{loginMsg}</div>
           <div className={styles.loginbtndiv}>
