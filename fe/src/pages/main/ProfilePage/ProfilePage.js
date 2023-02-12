@@ -96,9 +96,7 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로워", "팔로잉", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const [userInfoList, setUserInfoList] = useState(
-    userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>)
-  );
+  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
 
   // 사용자 정보를 다루는 state
   const [userInfo, setUserinfo] = useState({});
@@ -111,11 +109,11 @@ const ProfilePage = ({ setIsToast }) => {
     await getBookMarkList(postIdx).then((res) => {
       // console.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = bookPostList.concat(
-          res.content.map((e) => <PostItem post={e}></PostItem>)
-        );
+        let newPostList = bookPostList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setBookPostList(newPostList);
         //console.dir(newPostList);
+      } else {
+        setBookPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
       }
     });
   };
@@ -124,8 +122,10 @@ const ProfilePage = ({ setIsToast }) => {
     await getPostListByNickname(userInfo.nickname, postIdx).then((res) => {
       // console.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = postList.concat(res.content.map((e) => <PostItem post={e}></PostItem>));
+        let newPostList = postList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setPostList(newPostList);
+      } else {
+        setPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
       }
     });
   };
@@ -140,12 +140,7 @@ const ProfilePage = ({ setIsToast }) => {
         introduction: response.introduction,
       });
       setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`);
-      let list = [
-        response.followerCount,
-        response.followingCount,
-        response.postCount,
-        response.blossomCount,
-      ];
+      let list = [response.followerCount, response.followingCount, response.postCount, response.blossomCount];
       setUserInfoList(
         list.map((e, i) => {
           let liEle = <></>;
@@ -239,11 +234,7 @@ const ProfilePage = ({ setIsToast }) => {
                 {...a11yProps(0)}
                 style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
               />
-              <Tab
-                label="북마크"
-                {...a11yProps(1)}
-                style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
-              />
+              <Tab label="북마크" {...a11yProps(1)} style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>

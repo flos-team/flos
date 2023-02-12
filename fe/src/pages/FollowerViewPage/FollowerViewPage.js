@@ -68,7 +68,7 @@ const FollowerViewPage = () => {
   const requestFollowerList = async () => {
     await getFollowerList()
       .then((res) => {
-        setFollowerList(res.map((u) => <UserInfoItem userInfo={u}></UserInfoItem>));
+        setFollowerList(res.map((u, i) => <UserInfoItem key={i} userInfo={u} paramId={param.id}></UserInfoItem>));
       })
       .catch((err) => {});
   };
@@ -77,7 +77,7 @@ const FollowerViewPage = () => {
   const requestFollowingList = async () => {
     await getFollowingList()
       .then((res) => {
-        setFollowingList(res.map((u) => <UserInfoItem userInfo={u}></UserInfoItem>));
+        setFollowingList(res.map((u, i) => <UserInfoItem key={i} userInfo={u} paramId={param.id}></UserInfoItem>));
       })
       .catch((err) => {});
   };
@@ -86,7 +86,7 @@ const FollowerViewPage = () => {
   const requestOtherFollowerList = async () => {
     await getOtherFollowerList(param.id).then((res) => {
       if (res) {
-        setFollowerList(res.map((u) => <UserInfoItem userInfo={u} isMe={false}></UserInfoItem>));
+        setFollowerList(res.map((u, i) => <UserInfoItem key={i} userInfo={u} paramId={param.id}></UserInfoItem>));
       }
     });
   };
@@ -95,7 +95,7 @@ const FollowerViewPage = () => {
   const requestOtherFollowingList = async () => {
     getOtherFollowingList(param.id).then((res) => {
       if (res) {
-        setFollowingList(res.map((u) => <UserInfoItem userInfo={u} isMe={false}></UserInfoItem>));
+        setFollowingList(res.map((u, i) => <UserInfoItem key={i} userInfo={u} paramId={param.id}></UserInfoItem>));
       }
     });
   };
