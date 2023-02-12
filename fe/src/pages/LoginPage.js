@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
@@ -46,11 +46,14 @@ function Login() {
   }
 
   // 로그인 버튼 클릭 이벤트
+  const onFocus = useRef([])
   const onClickLogin = async () => {
     if (inputId.length === 0) {
       setLoginMsg("아이디를 입력해주세요.");
+      onFocus.current[0].focus();
     } else if (inputPw.length === 0) {
       setLoginMsg("비밀번호를 입력해주세요.");
+      onFocus.current[1].focus();
     } else {
       doLogin(inputId, inputPw)
         .then((response) => {
@@ -121,6 +124,7 @@ function Login() {
               value={inputId}
               className={styles.inputdiv}
               onChange={handleInputId}
+              ref={(el) => (onFocus.current[0] = el)}
             />
             { inputId.length>=1 ?
             <img alt='' onClick={clearInputId} className={styles.icon} src={cancelImg}></img> :
@@ -138,6 +142,8 @@ function Login() {
                   onClickLogin();
                 }
               }}
+
+              ref={(el) => (onFocus.current[1] = el)}
             />
           { inputPw.length >=1 ? 
           <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img> : null }
