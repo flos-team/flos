@@ -49,9 +49,9 @@ public class FlowerResponseDTO {
     private Long capacity;
     @Schema(description = "꽃에 사용한 자원의 수")
     private int currentGrowValue;
-    @JsonIgnore
+    @Schema(description = "꽃에 사용된 물 수")
     private int water;
-    @JsonIgnore
+    @Schema(description = "꽃에 사용된 햇빛 수")
     private int light;
 
     public static FlowerResponseDTO toDto(Flower flower) {
@@ -68,6 +68,8 @@ public class FlowerResponseDTO {
                 .height(flower.getHeight())
                 .name(flower.getName())
                 .currentGrowValue(flower.getWater() + flower.getLight())
+                .water(flower.getWater())
+                .light(flower.getLight())
                 .capacity(flower.getCapacity())
                 .createdAt(flower.getCreatedAt())
                 .blossomAt(flower.getBlossomAt())
