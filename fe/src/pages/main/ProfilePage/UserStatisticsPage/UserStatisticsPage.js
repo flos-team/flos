@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { getGardenList } from "../../../../api/FlowerAPI";
+import dayjs from "dayjs";
 
 /* import img */
 import userActiveGraph from "../../../../assets/ProfileAsset/user-active-graph.png";
@@ -12,6 +14,15 @@ import step3Img from "../../../../assets/StatisticsAsset/statistics_step3.png";
 import step4Img from "../../../../assets/StatisticsAsset/statistics_step4.png";
 import step5Img from "../../../../assets/StatisticsAsset/statistics_step5.png";
 import step6Img from "../../../../assets/StatisticsAsset/statistics_step6.png";
+/* import img */
+import flowerRed from "../../../../assets/EndingAsset/flower-red.png";
+import flowerOrange from "../../../../assets/EndingAsset/flower-orange.png";
+import flowerYellow from "../../../../assets/EndingAsset/flower-yellow.png";
+import flowerPurple from "../../../../assets/EndingAsset/flower-purple.png";
+import flowerPink from "../../../../assets/EndingAsset/flower-pink.png";
+import flowerWhite from "../../../../assets/EndingAsset/flower-white.png";
+import flowerGreen from "../../../../assets/EndingAsset/flower-green.png";
+import flowerBlue from "../../../../assets/EndingAsset/flower-blue.png";
 
 /* module */
 import { getMyStatisticData } from "../../../../api/MemberAPI";
@@ -58,7 +69,7 @@ const UserStatisticsPage = () => {
     { plantId: 5, plantImg: "" },
   ]);
 
-  const plantList = plantItem.map(({ plantId, plantImg }) => {
+  const tempItem = plantItem.map(({ plantId, plantImg }) => {
     let plantItem = (
       <div key={plantId} className="plant-item">
         <img src={plantImg} />
@@ -67,6 +78,8 @@ const UserStatisticsPage = () => {
     );
     return plantItem;
   });
+
+  const [plantList, setPlantList] = useState([<div>불러올 식물 데이터가 없습니다.</div>]);
 
   // 사용자 통계 데이터
   const [userData, setUserData] = useState({
@@ -108,19 +121,114 @@ const UserStatisticsPage = () => {
       setGradeText("완벽한 분");
     }
   };
+
+  // 꽃 렌더링을 위한 정보 init
+  const [flowerInfoList, setFlowerInfoList] = useState([
+    {
+      color: "red",
+      name: "빨간 튤립",
+      means: ["사랑의 고백", "열정적인 사랑"],
+      img: flowerRed,
+    },
+    {
+      color: "orange",
+      name: "주황 튤립",
+      means: ["매혹", "온정", "수줍음", "부끄러움"],
+      img: flowerOrange,
+    },
+    ,
+    {
+      color: "yellow",
+      name: "노랑 튤립",
+      means: ["헛된 사랑", "이루어질 수 없는"],
+      img: flowerYellow,
+    },
+    {
+      color: "purple",
+      name: "보라 튤립",
+      means: ["영원한 사랑", "영원하지 않은 사랑"],
+      img: flowerPurple,
+    },
+    {
+      color: "pink",
+      name: "핑크 튤립",
+      means: ["사랑의 시작", "애정", "배려"],
+      img: flowerPink,
+    },
+    {
+      color: "white",
+      name: "하얀 튤립",
+      means: ["과거의 우정", "실연", "추억", "새로운 시작", "순결"],
+      img: flowerWhite,
+    },
+    {
+      color: "mango", // 에셋 없음
+      name: "망고 튤립",
+      means: ["수줍은 사랑의 표시", "매혹적인 사랑"],
+    },
+    {
+      color: "grapefruit", // 에셋 없음
+      name: "자몽 튤립",
+      means: ["사랑의 고백"],
+    },
+    {
+      color: "green",
+      name: "초록 튤립",
+      means: ["아름다운 눈"],
+      img: flowerGreen,
+    },
+    {
+      color: "blue",
+      name: "파란 튤립",
+      means: ["사랑합니다 여러분"],
+      img: flowerBlue,
+    },
+  ]);
+
   useEffect(() => {
     /*
 flowers (arr)
 loginInfo {month: 2, lengthOfMonth: 28, loginCount: 0}
 postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloudy: 0.6, rainy: 0.1}}*/
 
+    getGardenList().then((res) => {
+      //console.dir(res);
+      if (res && res.content && res.content.length) {
+        let flowerListJSX = res.content.map((e, i) => {
+          let flowerRenderObj = {};
+          L: for (let i = 0; i < flowerInfoList.length; i++) {
+            let obj = flowerInfoList[i];
+            if (obj) {
+              if (obj.color == e.flowerColor) {
+                flowerRenderObj = obj;
+                break L;
+              }
+            }
+          }
+          let dateString = dayjs(e.blossomAt, "YYYY-MM-DD HH:mm:ss").format("YYYY년 MM월 DD일");
+          let item = (
+            <div key={i} className="plant-item">
+              <img src={flowerRenderObj.img} />
+              <p className="flowering-date ">{dateString}</p>
+              <p className="plant-name">
+                {e.flowerState} {e.flowerType} {e.name}
+              </p>
+            </div>
+          );
+          return item;
+        });
+        setPlantList(flowerListJSX);
+      } else {
+        setPlantList(<div>불러올 식물 데이터가 없습니다.</div>);
+      }
+    });
+
     getMyStatisticData().then((res) => {
       setUserData(res);
-      console.dir(res);
+      //console.dir(res);
       let loginRatio = (res.loginInfo.loginCount / res.loginInfo.lengthOfMonth) * 100;
       //let loginRatio = (28 / 28) * 100;
       judgeGrade(loginRatio);
-
       setCastItemList(
         castItem.map(({ castId, castImg, className }) => {
           let modifiedClassName = `cast-statistics-item-div ${className}`;
@@ -169,7 +277,9 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
                 <p>{user.nickname}</p>
               </div>
               <div className="user-grade-div">
-                <p>{gradeText}</p>
+                <p>
+                  <b>{gradeText}</b>
+                </p>
               </div>
             </div>
             <div className="user-active-graph">
@@ -184,7 +294,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
         </div>
         <div className="user-cast-static-item">
           <div className="cast-title-div">
-            <p>제목입니다.</p>
+            <p>주간 포스트 날씨 비율</p>
           </div>
           {castItemList}
         </div>
@@ -206,7 +316,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
               <p>{userData.postInfo.postCount > 999 ? "999+" : userData.postInfo.postCount}</p>
             </div>
           </div>
-          <div className="user-heart-share-div">
+          {/* <div className="user-heart-share-div">
             <div className="post-count-title">
               <p>마음을 나눈 횟수</p>
             </div>
@@ -221,7 +331,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
             <div className="post-count">
               <p>999+</p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
