@@ -71,7 +71,7 @@ const ProfilePage = ({ setIsToast }) => {
         margin: "0 auto",
       }}
       onClick={async (e) => {
-        // navigate("/flower-end-page");
+        navigate("/flower-end-page");
       }}
     >
       기능테스트
@@ -226,6 +226,7 @@ const ProfilePage = ({ setIsToast }) => {
           <ul className="social-info-title">{titleList}</ul>
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
+        {testBtn}
         <Box sx={{ width: "100%", margin: "0 auto" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
