@@ -21,9 +21,9 @@ import "./HomePage.css";
 import { motion } from "framer-motion";
 import { getFlowerInfo, giveSun, giveRain, flowering, modifyFlower } from "../../api/FlowerAPI";
 import { getMemberInfo } from "../../api/MemberAPI";
-import { getNotification } from '../../api/NotificationAPI'
+import { getNotification } from "../../api/NotificationAPI";
 import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 
 const Title = styled.h1`
   color: #007bff;
@@ -164,14 +164,12 @@ const Home = () => {
 
   // ----------------------- 시간에 따른 배경화면 지정 -------------------------
 
-
   let timer;
 
   useEffect(() => {
-
     /*
-*   현재 시간을 가져와서 배경을 변환함
-*/
+     *   현재 시간을 가져와서 배경을 변환함
+     */
     let currentHour = new Date().getHours();
     if (isDay(currentHour)) {
       setBackgroundImgUrl(DayBackground);
@@ -179,10 +177,9 @@ const Home = () => {
       setBackgroundImgUrl(NightBackground);
     }
 
-
     /*
- *   꽃 대화창 관련 interval
- */
+     *   꽃 대화창 관련 interval
+     */
     let interval = setInterval(function () {
       const value = Math.floor(Math.random() * 2);
       setFlowerMessageIsVisible(true);
@@ -208,8 +205,8 @@ const Home = () => {
       );
 
       /*
-      *   꽃이 대화창을 닫음
-      */
+       *   꽃이 대화창을 닫음
+       */
       timer = setTimeout(() => {
         setFlowerMessageIsVisible(!flowerMessageIsVisible);
         setFlowerMessage(null);
@@ -217,8 +214,8 @@ const Home = () => {
     }, 10000);
 
     /*
-    * 알림 확인
-    */
+     * 알림 확인
+     */
     isHaveNoti();
 
     return () => {
@@ -226,7 +223,6 @@ const Home = () => {
       clearTimeout(timer);
     };
   }, []);
-
 
   useEffect(() => {
     updateInfo();
@@ -237,20 +233,21 @@ const Home = () => {
       console.log("useEffect");
       setRainAnimation(null);
       let sunTimeLine = gsap.timeline();
-      sunTimeLine.fromTo(
-        sunBox.current,
-        { x: "400", y: "0" },
-        {
-          x: "-0", y: "-300",
+      sunTimeLine
+        .fromTo(
+          sunBox.current,
+          { x: "400", y: "0" },
+          {
+            x: "-0",
+            y: "-300",
+            duration: 1.5,
+          }
+        )
+        .to(sunBox.current, {
+          x: "-400",
+          y: "0",
           duration: 1.5,
-        }
-      ).to(
-        sunBox.current,
-        {
-          x: "-400", y: "0",
-          duration: 1.5
-        }
-      );
+        });
       // sunTimeLine.to(sunshine.current, {
       //   y: "-2000",
       // });
@@ -264,20 +261,21 @@ const Home = () => {
     } else if (elementStatus === "rain") {
       setSunAnimation(null);
       let rainTimeLine = gsap.timeline();
-      rainTimeLine.fromTo(
-        rainBox.current,
-        { x: "400", y: "0" },
-        {
-          x: "0", y: "-200",
+      rainTimeLine
+        .fromTo(
+          rainBox.current,
+          { x: "400", y: "0" },
+          {
+            x: "0",
+            y: "-200",
+            duration: 2,
+          }
+        )
+        .to(rainBox.current, {
+          x: "-400",
+          y: "0",
           duration: 2,
-        }
-      ).to(
-        rainBox.current,
-        {
-          x: "-400", y: "0",
-          duration: 2
-        }
-      );
+        });
       // rainTimeLine.to(rainBox.current, { y: "-2000" });
       rainTimeLine.fromTo(rain.current, { y: "0" }, { y: "-3000" });
       setElementStatus("");
@@ -286,8 +284,8 @@ const Home = () => {
 
   const updateInfo = () => {
     /*
-    *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
-    */
+     *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
+     */
     getFlowerInfo().then((res) => {
       console.log(res);
       if (res === "NO_FLOWER_EXISTS") {
@@ -306,27 +304,26 @@ const Home = () => {
     getMemberInfo().then((res) => {
       flowerInfo.sunElementCount = res.light;
       flowerInfo.rainElementCount = res.water;
-
     });
-  }
+  };
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
     console.log("clicked - sun");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
-        icon: 'warning',
-        title: '더 이상 해가 뜰 수 없습니다.',
-        text: '개화를 진행해주세요.'
-      })
+        icon: "warning",
+        title: "더 이상 해가 뜰 수 없습니다.",
+        text: "개화를 진행해주세요.",
+      });
       return;
     }
     if (flowerInfo.sunElementCount < 1) {
       Swal.fire({
-        icon: 'warning',
-        title: '햇빛의 양이 부족합니다.',
-      })
-      
+        icon: "warning",
+        title: "햇빛의 양이 부족합니다.",
+      });
+
       return;
     }
     setElementImg(require("../../assets/HomeAsset/sun-img.png"));
@@ -357,17 +354,17 @@ const Home = () => {
     console.log("clicked - rain");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
-        icon: 'warning',
-        title: '더 이상 비를 내릴 수 없습니다.',
-        text: '개화를 진행해주세요.'
-      })
+        icon: "warning",
+        title: "더 이상 비를 내릴 수 없습니다.",
+        text: "개화를 진행해주세요.",
+      });
       return;
     }
     if (flowerInfo.rainElementCount < 1) {
       Swal.fire({
-        icon: 'warning',
-        title: '빗물의 양이 부족합니다.',
-      })
+        icon: "warning",
+        title: "빗물의 양이 부족합니다.",
+      });
       return;
     }
     setElementImg(require("../../assets/HomeAsset/rain-img.png"));
@@ -408,8 +405,8 @@ const Home = () => {
   };
 
   /*
-  * 이름 변경 함수
-  */
+   * 이름 변경 함수
+   */
   const ChangeFlowerNameOnclick = (newName) => {
     console.log("바꾸기 시작");
     console.log("새로운 이름", newName);
@@ -424,13 +421,13 @@ const Home = () => {
   };
 
   /*
-  * 꽃 생성 함수
-  */
+   * 꽃 생성 함수
+   */
   const MakeFlowerOnclick = (name) => {
     setMakeFlowerModal(false);
     flowerInfo.name = name;
     updateInfo();
-  }
+  };
 
   const doFlowering = () => {
     flowering(flowerInfo.id);
@@ -438,18 +435,18 @@ const Home = () => {
   };
 
   const onClickPlayMusicButton = () => {
-    setIsPlay((pre) => !pre)
-  }
+    setIsPlay((pre) => !pre);
+  };
 
   const isHaveNoti = () => {
     getNotification().then((res) => {
       if (res.length === 0) {
-        setHaveNoti(false)
+        setHaveNoti(false);
       } else {
-        setHaveNoti(true)
+        setHaveNoti(true);
       }
-    })
-  }
+    });
+  };
   useEffect(() => {
     getNotification();
   }, []);
@@ -458,7 +455,13 @@ const Home = () => {
       <div className={styles.HomeRoot}>
         {isFlowering == true ? (
           <Flowering>
-            <FloweringButton onClick={() => { doFlowering() }}>개화</FloweringButton>
+            <FloweringButton
+              onClick={() => {
+                doFlowering();
+              }}
+            >
+              개화
+            </FloweringButton>
             <Congratulation>
               <Lottie
                 options={{
@@ -471,13 +474,7 @@ const Home = () => {
             </Congratulation>
           </Flowering>
         ) : null}
-        {makeFlowermodal == true ? (
-          <MakeFlowerModal
-            makeOnclick={
-              MakeFlowerOnclick
-            }
-          />
-        ) : null}
+        {makeFlowermodal == true ? <MakeFlowerModal makeOnclick={MakeFlowerOnclick} /> : null}
         {changeFlowerNamemodal == true ? (
           <ChangeFlowerNamemodal
             oldName={flowerInfo.name}

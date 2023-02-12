@@ -68,10 +68,6 @@ const PostDetailPage = () => {
     });
   }, [commentOnChange]);
 
-  // useEffect(() => {
-
-  // }, [isBookmark]);
-
   if (postLoading && commentLoading) {
     // console.log(comments);
     console.log(post);
@@ -81,6 +77,7 @@ const PostDetailPage = () => {
           <CommentComponent
             comment={key}
             postWriterId={post.writer.id}
+            weather={post.weather}
           ></CommentComponent>
         </>
       );
@@ -128,40 +125,36 @@ const PostDetailPage = () => {
     }
     const clickOutSideCloseModal = () => {
       if (openModal === true) {
-        setOpenModal(false)
+        setOpenModal(false);
       }
-    }
+    };
 
     const clickDelete = () => {
       Swal.fire({
-        title: '해당 게시물을 <br> 삭제하시겠습니까?',
-        text: '삭제된 게시물은 되돌릴 수 없습니다.',
-        icon: 'warning',
+        title: "해당 게시물을 <br> 삭제하시겠습니까?",
+        text: "삭제된 게시물은 되돌릴 수 없습니다.",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: '삭제',
-        cancelButtonText: '취소'
+        confirmButtonText: "삭제",
+        cancelButtonText: "취소",
       }).then((result) => {
         if (result.isConfirmed) {
           deletePost(params.id)
-          .then((res) => {
-            console.log(res)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
-          console.log('삭제 안 함')
+          console.log("삭제 안 함");
         }
-      })
-    }
+      });
+    };
     return (
       <>
         <div className="post-detail-page" onClick={clickOutSideCloseModal}>
-          <HeaderComponent
-            backVisible={true}
-            pageName={"피드"}
-            optType={0}
-          ></HeaderComponent>
+          <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
               <div className="user-info-container">
@@ -177,8 +170,7 @@ const PostDetailPage = () => {
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
-                      {RegBefore}{" "}
-                      <img className="post-emotion" src={emotionWeather}></img>
+                      {RegBefore} <img className="post-emotion" src={emotionWeather}></img>
                     </p>
                   </div>
                 </div>
@@ -187,9 +179,9 @@ const PostDetailPage = () => {
                   onClick={(e) => {
                     // setIsBookmark(!isBookmark);
                     if (!post.relation.bookmarked) {
-                      console.log("post id : " , post.id)
+                      console.log("post id : ", post.id);
                       setBookMark(post.id).then((response) => {
-                        console.log(response)
+                        console.log(response);
                         setIsBookmark(response);
                       });
                     } else {
@@ -199,17 +191,13 @@ const PostDetailPage = () => {
                     }
                   }}
                 >
-                  <img
-                    src={
-                      post.relation.bookmarked ? bookMarkActive : bookMarkIcon
-                    }
-                  />
+                  <img src={post.relation.bookmarked ? bookMarkActive : bookMarkIcon} />
                 </div>
-                { post.writer.id === user.id ?
-                <div className="dot-btn">
-                  <p onClick={clickDelete}>삭제</p>
-                </div> : null }
-
+                {post.writer.id === user.id ? (
+                  <div className="dot-btn">
+                    <p onClick={clickDelete}>삭제</p>
+                  </div>
+                ) : null}
               </div>
               {imgs}
               <div className="post-content-container">
@@ -223,10 +211,7 @@ const PostDetailPage = () => {
             </div>
           </div>
           <div className="user-content-input-div">
-            <img
-              className="user-icon"
-              src={`${url}${user.profileImage.saveName}`}
-            />
+            <img className="user-icon" src={`${url}${user.profileImage.saveName}`} />
             <div className="comment-input-div">
               <input
                 className="comment-input"
@@ -261,4 +246,3 @@ const PostDetailPage = () => {
 };
 
 export default PostDetailPage;
-
