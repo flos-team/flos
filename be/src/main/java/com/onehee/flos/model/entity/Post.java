@@ -30,7 +30,7 @@ public class Post {
     @JoinColumn(name = "members_id")
     private Member writer;
 
-    @Column(length = 1000)
+    @Column(length = 2000)
     private String content;
 
     @ColumnDefault("now()")

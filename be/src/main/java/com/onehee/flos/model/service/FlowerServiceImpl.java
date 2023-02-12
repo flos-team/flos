@@ -97,7 +97,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
-        if (!flower.getOwner().equals(SecurityManager.getCurrentMember()))
+        if (flower.getOwner().getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("꽃 주인이 아닙니다.");
         return SliceResponseDTO.toDto(flowerRepository.findContributorByFlower(flower, pageable));
     }
