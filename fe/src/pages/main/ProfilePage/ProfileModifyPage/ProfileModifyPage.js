@@ -89,8 +89,8 @@ const ProfileModifyPage = () => {
 
   // functions;
   const modifyMemberInfoFunc = async () => {
-    let data = modifyUserInfo(nickname, introduction, imgFile[0]);
-
+    let data = modifyUserInfo(nickname, introduction);
+    // imgFile[0]
     await data
       .then((res) => {
         if (res) {
