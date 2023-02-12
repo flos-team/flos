@@ -119,8 +119,8 @@ const ProfilePage = ({ setIsToast }) => {
   };
 
   const setMyPostList = async () => {
-    await getPostListByNickname(user.nickname, postIdx).then((res) => {
-      //aconsole.dir(res);
+    await getPostListByNickname(userInfo.nickname, postIdx).then((res) => {
+      // console.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
         let newPostList = postList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setPostList(newPostList);
@@ -133,31 +133,34 @@ const ProfilePage = ({ setIsToast }) => {
   // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
   useEffect(() => {
     setIsToast(toastValue);
-    setUserinfo({
-      nickname: user.nickname,
-      introduction: user.introduction,
+    getMemberInfo().then((response) => {
+      // console.log(response);
+      setUserinfo({
+        nickname: response.nickname,
+        introduction: response.introduction,
+      });
+      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`);
+      let list = [response.followerCount, response.followingCount, response.postCount, response.blossomCount];
+      setUserInfoList(
+        list.map((e, i) => {
+          let liEle = <></>;
+          if (i <= 1) {
+            liEle = (
+              <li
+                key={i}
+                onClick={(e) => {
+                  navigate(`/follower-view-page/${response.id}`);
+                }}
+              >
+                {e > 999 ? "999+" : e}
+              </li>
+            );
+          } else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>;
+          return liEle;
+        })
+      );
+      setMyPostList();
     });
-    setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${user.profileImage.saveName}`);
-    let list = [user.followerCount, user.followingCount, user.postCount, user.blossomCount];
-    setUserInfoList(
-      list.map((e, i) => {
-        let liEle = <></>;
-        if (i <= 1) {
-          liEle = (
-            <li
-              key={i}
-              onClick={(e) => {
-                navigate(`/follower-view-page/${user.id}`);
-              }}
-            >
-              {e > 999 ? "999+" : e}
-            </li>
-          );
-        } else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>;
-        return liEle;
-      })
-    );
-    setMyPostList();
   }, []);
 
   // 스크롤 끝을 감지하는 메서드

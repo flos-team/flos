@@ -112,6 +112,11 @@ function Login() {
               value={inputPw}
               className={styles.inputdiv}
               onChange={handleInputPw}
+              onKeyDown={(e) => {
+                if (e.key == "Enter" && inputId && inputPw) {
+                  onClickLogin();
+                }
+              }}
             />
           </div>
           <div className={styles.loginmsg}>{loginMsg}</div>

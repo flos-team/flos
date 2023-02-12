@@ -109,6 +109,7 @@ const logout = async () => {
     })
     .catch((err) => {
       console.log("로그아웃 중 오류 발생");
+      console.log(err);
     });
   return isLogout;
 };
