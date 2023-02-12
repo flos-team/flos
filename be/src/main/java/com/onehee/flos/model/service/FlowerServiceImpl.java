@@ -5,6 +5,7 @@ import com.onehee.flos.exception.FlowerNotExistsException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
+import com.onehee.flos.model.dto.request.FlowerInfoRequestDTO;
 import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
@@ -58,6 +59,14 @@ public class FlowerServiceImpl implements FlowerService {
         flower.setGardening(true);
         flower.setBlossomAt(LocalDateTime.now());
         flowerRepository.saveAndFlush(flower);
+    }
+
+    @Override
+    public FlowerResponseDTO getFlowerById(FlowerInfoRequestDTO flowerInfoRequestDTO) {
+        Flower flower = flowerRepository.findById(flowerInfoRequestDTO.getId()==null?0:flowerInfoRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당되는 꽃이 없습니다."));
+        if (!Objects.equals(flower.getOwner().getId(), SecurityManager.getCurrentMember().getId()))
+            throw new BadRequestException("내 꽃이 아닙니다.");
+        return FlowerResponseDTO.toDto(flower);
     }
 
     @Override
