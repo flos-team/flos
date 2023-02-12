@@ -72,7 +72,7 @@ const getBookMarkList = async (page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      console.dir(response);
+      //console.dir(response);
       if (response.status === 200) {
         bookmarkListObject = { ...response.data };
         //console.dir(response);

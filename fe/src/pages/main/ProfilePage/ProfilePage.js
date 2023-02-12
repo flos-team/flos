@@ -62,6 +62,22 @@ function a11yProps(index) {
 }
 
 const ProfilePage = ({ setIsToast }) => {
+  // temp, 다른사람 페이지로 이동하는 메서드
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.userData);
+
+  ///////// temp //////////////
+  // 경고창용 swal
+  // 팔로잉/팔로우 오류 시 swal 창
+  const showError = () => {
+    Swal.fire({
+      icon: "error",
+      title: "오류 발생",
+      text: "주하 계정이 아닙니다... 테스트 불가",
+      footer: "주하에게 문의하세여.",
+    });
+  };
+
   let testBtn = (
     <button
       style={{
@@ -71,16 +87,18 @@ const ProfilePage = ({ setIsToast }) => {
         margin: "0 auto",
       }}
       onClick={async (e) => {
-        navigate("/flower-end-page");
+        if (user.id === 4) {
+          navigate(`/flower-end-page/${1}`);
+        } else {
+          showError();
+        }
       }}
     >
       기능테스트
     </button>
   );
 
-  // temp, 다른사람 페이지로 이동하는 메서드
-  const navigate = useNavigate();
-  const user = useSelector((state) => state.user.userData);
+  ////////////////////////////
 
   // 사용자가 작성한 포스트의 세팅을 위한 state
   const [postIdx, setPostIdx] = useState(1);
@@ -107,6 +125,7 @@ const ProfilePage = ({ setIsToast }) => {
   // redux-toolkit
   const toastValue = useSelector((state) => state.toast.isToast);
 
+  // 북마크리스트 렌더용 함수
   const setBookmarkList = async () => {
     await getBookMarkList(0).then((res) => {
       // console.dir(res);

@@ -61,10 +61,11 @@ const WritePostPage = () => {
   const [tagTextList, setTagTextList] = useState([]);
   const handleKeyPress = (e) => {
     let value = tagRef.current.value;
+    if (value.includes("#") && value.indexOf("#") !== 0) tagRef.current.value = "";
     if (value.includes("#")) {
       let text = value.slice(1, value.length - 1);
-      if (e.code === "Space") {
-        if (value.length - 3 > 0) {
+      if (e.key === " ") {
+        if (value.length - 2 > 0) {
           const nextList = tagList.concat(<span className="tag-span">{text}</span>);
           setTagList(nextList);
           const nextTag = tagTextList.concat(text);
@@ -73,9 +74,6 @@ const WritePostPage = () => {
         tagRef.current.value = "";
       }
     }
-  };
-  const checkTagList = () => {
-    console.dir(tagTextList);
   };
 
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
@@ -150,6 +148,12 @@ const WritePostPage = () => {
               ref={contentRef}
               onChange={(e) => {
                 setContent(contentRef.current.value);
+                if (contentRef.current.value.length >= 1000) {
+                  alert("1000자 이상 입력할 수 없습니다.");
+                  contentRef.current.value = contentRef.current.value.slice(0, 1000);
+                  setContent(contentRef.current.value);
+                }
+                //console.log(contentRef.current.value.length);
                 // console.log(content);
               }}
             />
