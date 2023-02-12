@@ -10,6 +10,9 @@ import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
 import { getFollowingList } from "../api/FollowAPI";
 import { useEffect } from "react";
+import cancelImg from '../assets/RegisterAsset/Cancel.png'
+import showPwImg from '../assets/RegisterAsset/fi-br-eye-crossed.png'
+import noshowPwImg from '../assets/RegisterAsset/fi-br-eye.png'
 
 function Login() {
   const navigate = useNavigate();
@@ -20,6 +23,7 @@ function Login() {
   const [inputPw, setInputPw] = useState("");
 
   const [loginMsg, setLoginMsg] = useState("");
+  const [showPw, setShowPw] = useState(false)
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -27,6 +31,19 @@ function Login() {
   const handleInputPw = (e) => {
     setInputPw(e.target.value);
   };
+
+  // 아이디 지우기
+  const clearInputId = () => {
+    setInputId('')
+  }
+  // pw type 변경
+  const pwEyeIcon = () => {
+    if (showPw) {
+      setShowPw(false)
+    } else {
+      setShowPw(true)
+    }
+  }
 
   // 로그인 버튼 클릭 이벤트
   const onClickLogin = async () => {
@@ -99,15 +116,19 @@ function Login() {
             <input
               type="text"
               name="inputId"
+              id='xbtn'
               placeholder="flos@example.com"
               value={inputId}
               className={styles.inputdiv}
               onChange={handleInputId}
             />
+            { inputId.length>=1 ?
+            <img alt='' onClick={clearInputId} className={styles.icon} src={cancelImg}></img> :
+            null }
           </div>
           <div className={styles.fullsize}>
             <input
-              type="password"
+              type = {showPw ? "text" : "password"}
               name="input_pw"
               value={inputPw}
               className={styles.inputdiv}
@@ -118,6 +139,9 @@ function Login() {
                 }
               }}
             />
+          { inputPw.length >=1 ? 
+          <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img> : null }
+              
           </div>
           <div className={styles.loginmsg}>{loginMsg}</div>
           <div className={styles.loginbtndiv}>
