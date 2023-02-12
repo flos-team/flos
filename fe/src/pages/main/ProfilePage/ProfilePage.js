@@ -96,7 +96,9 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로워", "팔로잉", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
+  const [userInfoList, setUserInfoList] = useState(
+    userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>)
+  );
 
   // 사용자 정보를 다루는 state
   const [userInfo, setUserinfo] = useState({});
@@ -106,26 +108,34 @@ const ProfilePage = ({ setIsToast }) => {
   const toastValue = useSelector((state) => state.toast.isToast);
 
   const setBookmarkList = async () => {
-    await getBookMarkList(postIdx).then((res) => {
+    await getBookMarkList(0).then((res) => {
       // console.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = bookPostList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
+        let newPostList = bookPostList.concat(
+          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
+        );
         setBookPostList(newPostList);
+        setPostList([]);
         //console.dir(newPostList);
       } else {
         setBookPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
+        setPostList([]);
       }
     });
   };
 
-  const setMyPostList = async () => {
-    await getPostListByNickname(userInfo.nickname, postIdx).then((res) => {
-      // console.dir(res);
-      if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = postList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
+  const setMyPostList = async (nickname) => {
+    await getPostListByNickname(nickname).then((res) => {
+      console.dir(res);
+      if (res && res.content && res.content.length) {
+        let newPostList = postList.concat(
+          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
+        );
         setPostList(newPostList);
+        setBookPostList([]);
       } else {
         setPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
+        setBookPostList([]);
       }
     });
   };
@@ -140,7 +150,12 @@ const ProfilePage = ({ setIsToast }) => {
         introduction: response.introduction,
       });
       setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`);
-      let list = [response.followerCount, response.followingCount, response.postCount, response.blossomCount];
+      let list = [
+        response.followerCount,
+        response.followingCount,
+        response.postCount,
+        response.blossomCount,
+      ];
       setUserInfoList(
         list.map((e, i) => {
           let liEle = <></>;
@@ -159,7 +174,9 @@ const ProfilePage = ({ setIsToast }) => {
           return liEle;
         })
       );
-      setMyPostList();
+      setMyPostList(response.nickname).then(() => {
+        // console.log(postList);
+      });
     });
   }, []);
 
@@ -167,7 +184,6 @@ const ProfilePage = ({ setIsToast }) => {
   const handleScroll = (e) => {
     const bottom = e.target.scrollHeight - e.target.scrollTop + 3 <= e.target.clientHeight;
     // console.log(e.target.scrollHeight - e.target.scrollTop);
-    // console.log(e.target.clientHeight)
     //console.log("스크롤 감지");
     if (bottom) {
       console.log("스크롤 끝 감지");
@@ -191,11 +207,11 @@ const ProfilePage = ({ setIsToast }) => {
     switch (Number(event.target.id.split("-")[2])) {
       case 1:
         setBookmarkList();
-        setPostIdx(1);
+        // setPostIdx(0);
         break;
       default:
-        setMyPostList();
-        setPostIdx(1);
+        setMyPostList(userInfo.nickname);
+        // setPostIdx(0);
         break;
     }
   };
@@ -235,12 +251,16 @@ const ProfilePage = ({ setIsToast }) => {
                 {...a11yProps(0)}
                 style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
               />
-              <Tab label="북마크" {...a11yProps(1)} style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }} />
+              <Tab
+                label="북마크"
+                {...a11yProps(1)}
+                style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
+              />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <div className="post-container hide-scroll" onScroll={handleScroll}>
-              {postList.length ? (
+            <div className="post-container hide-scroll">
+              {postList.length > 0 ? (
                 postList
               ) : (
                 <div className="no-post-item">
@@ -251,7 +271,7 @@ const ProfilePage = ({ setIsToast }) => {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div className="post-container hide-scroll" onScroll={handleScroll}>
-              {bookPostList.length ? (
+              {bookPostList.length > 0 ? (
                 bookPostList
               ) : (
                 <div className="no-post-item">

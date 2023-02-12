@@ -28,16 +28,24 @@ import styles from "./GlobalPage.module.css";
 
 function Global() {
   const [posts, setPosts] = useState([]);
+  const [newPosts, setNewPosts] = useState([]);
+
   const [filtering, setFiltering] = useState(false); // 필터링 아이콘 누른 상태 확인
   const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
   const [searchInput, setSearchInput] = useState(""); // 검색 : # 포함 -> 태그검색, # 미포함 -> 사용자검색
   const [isSearching, setIsSearching] = useState(false);
 
+  const [nextPage, setNextPage] = useState(0);
+  const [hasNext, SetHasNext] = useState(false);
+
   // 기본 렌더링 = 최신순
   useEffect(() => {
     getPostList().then((response) => {
+      console.log(response);
+      // SetHasNext(response.isLast)
       setPosts([...response.postList]);
-      console.log(posts);
+      setNextPage(response.nextPage);
+      SetHasNext(!response.isLast);
     });
   }, []);
   // 입력값이 변경할 때마다 발동
@@ -45,50 +53,59 @@ function Global() {
     onFilter();
   }, [filterStandard]);
 
-  // 필터를 위한 상태관리
-  // const changeFilterStandard = (num) => {
-  //   setFilterStandard(num)
-  //   console.log(filterStandard)
-  //   setIsSearching(false)
-  // }
+  useEffect(() => {
+    // newPost가 새로 갱신되면
+    // posts에 newPosts를 붙힌다.
+    // setPosts([...posts, ...newPosts]);
+  }, [newPosts]);
+
   // 상태관리에 따른 필터
   const onFilter = () => {
     if (filterStandard === 1) {
       getPostList().then((response) => {
+        // console.log(response);
         setPosts([...response.postList]);
+        // setNewPosts([...response.content]);
+        setNextPage(response.nextPage);
+        SetHasNext(!response.isLast);
         setIsSearching(false);
       });
     } else if (filterStandard === 2) {
       getPostListByComment().then((response) => {
-        const temp = [...posts];
+        // console.log(response);
         setPosts([...response.content]);
-        // console.log(Object.is(temp, posts));
-
+        setNextPage(response.nextPage);
+        SetHasNext(!response.isLast);
         setIsSearching(false);
       });
     } else if (filterStandard === 3) {
       getPostListByWeather("SUNNY").then((response) => {
-        const temp = [...posts];
-
+        // console.log(response);
         setPosts([...response.content]);
+        setNextPage(response.nextPage);
+        SetHasNext(!response.isLast);
         setIsSearching(false);
       });
     } else if (filterStandard === 4) {
       getPostListByWeather("CLOUDY").then((response) => {
+        // console.log(response);
         setPosts(response.content);
-        console.log(posts);
+        setNextPage(response.nextPage);
+        SetHasNext(!response.isLast);
         setIsSearching(false);
       });
     } else if (filterStandard === 5) {
       getPostListByWeather("RAINY").then((response) => {
-        console.log(response);
+        // console.log(response);
         setPosts(response.content);
+        setNextPage(response.nextPage);
+        SetHasNext(!response.isLast);
         setIsSearching(false);
       });
     }
   };
 
-  console.log(posts);
+  // console.log(posts);
   const postList = posts.map((key) => <PostItem post={key}></PostItem>);
 
   const clickFilterIcon = () => {
@@ -126,6 +143,65 @@ function Global() {
         setPosts([...response.postList]);
         setIsSearching(false);
       });
+    }
+  };
+
+  const handleScroll = (e) => {
+    const pos = e.target.scrollHeight - e.target.scrollTop;
+    // console.log(pos);
+    console.log(hasNext);
+    if (pos < 1100 && hasNext) {
+      switch (filterStandard) {
+        case 1:
+          getPostList(nextPage).then((response) => {
+            console.log(response);
+            setNewPosts(response.content);
+            setNextPage(response.nextPage);
+            SetHasNext(response.isLast);
+            setIsSearching(false);
+          });
+          break;
+        case 2:
+          getPostListByComment(nextPage).then((response) => {
+            setNewPosts(response.content);
+            setNextPage(response.nextPage);
+            SetHasNext(response.isLast);
+            setIsSearching(false);
+          });
+          break;
+        case 3:
+          getPostListByWeather("SUNNY", nextPage).then((response) => {
+            setNewPosts(response.content);
+            setNextPage(response.nextPage);
+            SetHasNext(response.isLast);
+            setIsSearching(false);
+          });
+          break;
+        case 4:
+          getPostListByWeather("CLOUDY", nextPage).then((response) => {
+            setNewPosts(response.content);
+            setNextPage(response.nextPage);
+            SetHasNext(response.isLast);
+            setIsSearching(false);
+          });
+          break;
+        case 5:
+          getPostListByWeather("RAINY", nextPage).then((response) => {
+            setNewPosts(response.content);
+            setNextPage(response.nextPage);
+            SetHasNext(response.isLast);
+            setIsSearching(false);
+          });
+          break;
+      }
+      //   // console.log("스크롤 끝 감지");
+      //   getFollowerPostList(nextPage).then((response) => {
+      //     setNextPage(response.nextPage);
+      //     SetHasNext(response.hasNext);
+      //     setNewPosts(response.content);
+      //     setHasContent(response.hasContent);
+      //     setIsPostsLoading(true);
+      //   });
     }
   };
 
@@ -212,7 +288,7 @@ function Global() {
             </div>
           </div>
         ) : null}
-        <div className={`${styles.main} ${styles.scroll}`} id="postMain">
+        <div className={`${styles.main} ${styles.scroll}`} id="postMain" onScroll={handleScroll}>
           {isSearching
             ? posts.length === 0
               ? noSearchResult
