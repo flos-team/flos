@@ -2,10 +2,7 @@ package com.onehee.flos.controller;
 
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.SliceResponseDTO;
-import com.onehee.flos.model.dto.request.FlowerCreateRequestDTO;
-import com.onehee.flos.model.dto.request.FlowerGardeningRequestDTO;
-import com.onehee.flos.model.dto.request.FlowerInfoRequestDTO;
-import com.onehee.flos.model.dto.request.FlowerModifyRequestDTO;
+import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.dto.response.GardenCountResponseDTO;
@@ -42,6 +39,14 @@ public class FlowerController {
     @PostMapping("/info")
     public ResponseEntity<?> getFlowerById(@RequestBody FlowerInfoRequestDTO flowerInfoRequestDTO){
         return new ResponseEntity<FlowerResponseDTO>(flowerService.getFlowerById(flowerInfoRequestDTO), HttpStatus.OK);
+    }
+
+    @Tag(name = "꽃API")
+    @Operation(summary = "꽃에게 보내는 마지막 편지", description = "꽃에 letter 정보를 입력합니다.")
+    @PostMapping("/letter")
+    public ResponseEntity<?> modifyLetter(@RequestBody FlowerLastLetterRequestDTO flowerLastLetterRequestDTO){
+        flowerService.modifyLastLetter(flowerLastLetterRequestDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Tag(name = "꽃API")
