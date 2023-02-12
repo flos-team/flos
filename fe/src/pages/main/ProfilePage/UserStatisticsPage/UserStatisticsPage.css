@@ -18,33 +18,28 @@
 
 .user-static-page {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(191.23deg, #E8B477 10.06%, #E7C39A 100.48%);
   justify-content: center;
   width: 100vw;
   height: max-content;
-  flex-wrap: wrap;
+  background: #141414;
+  color: #d3d3d3;
   /* 사용자 포스트 활동지수 아이템 */
 }
 .user-static-page .user-active-static-item {
   margin-top: 16px;
   /* user-active-static-item */
-  color: white;
   box-sizing: border-box;
   /* Auto layout */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.625rem;
+  padding: 1rem;
   gap: 0.5rem;
-  width: 20.5rem;
+  width: 100%;
   height: 160px;
-  background: #E8B477;
   /* mono100 */
-  border: 0.0625rem solid #e8e8e8;
-  border-radius: 1rem;
   /* Inside auto layout */
   order: 1;
 }
@@ -58,16 +53,17 @@
   flex-grow: 0;
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  align-items: left;
+  justify-content: space-between;
 }
 .user-static-page .user-active-static-item .user-active-div .user-info-div {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: max-content;
   height: max-content;
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 25%;
   gap: 0.75rem;
 }
 .user-static-page .user-active-static-item .user-active-div .user-info-div .user-name-div {
@@ -76,19 +72,21 @@
 }
 .user-static-page .user-active-static-item .user-active-div .user-info-div .user-name-div p {
   font-size: 1rem;
-  text-align: center;
+  text-align: left;
 }
 .user-static-page .user-active-static-item .user-active-div .user-info-div .user-grade-div {
   width: max-content;
   height: max-content;
 }
 .user-static-page .user-active-static-item .user-active-div .user-info-div .user-grade-div p {
-  text-align: center;
+  text-align: left;
   font-size: 1.25rem;
 }
 .user-static-page .user-active-static-item .user-active-div .user-active-graph {
   width: 5.875rem;
   height: 5.875rem;
+  position: absolute;
+  right: 0;
 }
 .user-static-page .user-active-static-item .user-active-div .user-active-graph img {
   width: 100%;
@@ -112,33 +110,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.625rem;
+  padding: 0.3125rem;
   gap: 0.25rem;
-  width: 20.5rem;
+  width: 100%;
   height: 10rem;
-  background: #E8B477;
-  /* mono100 */
-  border: 0.0625rem solid #e8e8e8;
-  border-radius: 1rem;
   order: 2;
 }
 .user-static-page .user-cast-static-item .cast-title-div {
-  width: 17.125rem;
+  width: 100%;
   height: max-content;
+  padding-left: 0.625rem;
 }
 .user-static-page .user-cast-static-item .cast-title-div p {
-  color: #f9f9f9;
   font-size: 1.25rem;
 }
 .user-static-page .user-cast-static-item .cast-statistics-item-div {
   /* Auto layout */
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   padding: 0px 0.5rem;
   gap: 0.5rem;
-  width: 18.75rem;
+  width: 100%;
   height: 2.25rem;
 }
 .user-static-page .user-cast-static-item .cast-statistics-item-div .img-div {
@@ -153,7 +147,7 @@
 }
 .user-static-page .user-cast-static-item .cast-statistics-item-div .graph-div {
   /* graph */
-  width: 15rem;
+  width: 100%;
   height: 1rem;
   background: #f9f9f9;
   border-radius: 0.5rem;
@@ -161,7 +155,6 @@
 }
 .user-static-page .user-cast-static-item .cast-statistics-item-div .graph-div .graph-gage {
   position: absolute;
-  width: 9.75rem;
   height: 1rem;
   left: 0px;
   top: 0px;
@@ -186,17 +179,13 @@
   align-items: flex-start;
   padding: 0.75rem 1rem;
   gap: 0.5rem;
-  width: 20.5rem;
+  width: 100%;
   height: 15rem;
-  background: #E8B477;
-  border: 0.0625rem solid #e8e8e8;
-  border-radius: 1rem;
   order: 3;
 }
 .user-static-page .plant-static-item .plant-title {
   width: 7.5rem;
   height: 1.5rem;
-  color: #f9f9f9;
 }
 .user-static-page .plant-static-item .plant-container {
   /* Auto layout */
@@ -213,12 +202,12 @@
 .user-static-page .plant-static-item .plant-container .plant-item {
   /* plant-item */
   box-sizing: border-box;
-  width: 5.875rem;
+  width: 10rem;
   height: 10rem;
   background: #fcfcfc;
   border: 0.0625rem solid #d3d3d3;
   border-radius: 0.25rem;
-  background-color: #fcfcfc;
+  background-color: rgba(255, 255, 255, 0.1);
   position: relative;
   display: flex;
   align-items: center;
@@ -230,14 +219,16 @@
   /* plant-name */
   box-sizing: border-box;
   position: absolute;
-  width: 3.75rem;
-  height: 1rem;
-  left: 1rem;
-  bottom: 0.3125rem;
-  background: #fcfcfc;
+  width: max-content;
+  height: max-content;
+  bottom: 5px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
   border: 0.0625rem solid #bfbfbf;
-  border-radius: 0.5rem;
-  text-align: center;
   color: #827c7c;
 }
 .user-static-page .user-active-log-item {
@@ -249,21 +240,20 @@
   align-items: flex-start;
   padding: 0.75rem 1rem;
   gap: 0.5rem;
-  width: 20.5rem;
+  width: 100%;
   height: 12.5rem;
-  background: #E8B477;
-  border: 0.0625rem solid #e8e8e8;
-  border-radius: 16px;
+  background: #141414;
   /* Inside auto layout */
   order: 3;
-  color: #f9f9f9;
 }
 .user-static-page .user-active-log-item .user-active-title {
   width: 5rem;
   height: 1.5rem;
   order: 0;
 }
-.user-static-page .user-active-log-item .user-post-count-div, .user-static-page .user-active-log-item .user-heart-share-div, .user-static-page .user-active-log-item .user-heart-get-div {
+.user-static-page .user-active-log-item .user-post-count-div,
+.user-static-page .user-active-log-item .user-heart-share-div,
+.user-static-page .user-active-log-item .user-heart-get-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -272,7 +262,12 @@
   width: 100%;
   height: 2.25rem;
 }
-.user-static-page .user-active-log-item .user-post-count-div .post-count-title, .user-static-page .user-active-log-item .user-post-count-div .post-count, .user-static-page .user-active-log-item .user-heart-share-div .post-count-title, .user-static-page .user-active-log-item .user-heart-share-div .post-count, .user-static-page .user-active-log-item .user-heart-get-div .post-count-title, .user-static-page .user-active-log-item .user-heart-get-div .post-count {
+.user-static-page .user-active-log-item .user-post-count-div .post-count-title,
+.user-static-page .user-active-log-item .user-post-count-div .post-count,
+.user-static-page .user-active-log-item .user-heart-share-div .post-count-title,
+.user-static-page .user-active-log-item .user-heart-share-div .post-count,
+.user-static-page .user-active-log-item .user-heart-get-div .post-count-title,
+.user-static-page .user-active-log-item .user-heart-get-div .post-count {
   width: max-content;
   height: max-content;
 }

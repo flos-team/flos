@@ -1,0 +1,18 @@
+.modalcontainer{
+    position: absolute;
+    border: 1px solid black;
+    width: 72px;
+    height: 32px;
+    background-color: white;
+    border-radius: 4px;
+    top: 104px;
+    right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalitem{
+    font-size: 14px;
+    z-index: 2;
+}

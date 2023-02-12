@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /* import image assets */
 import arrowLeft from "../../assets/GlobalAsset/arrow-left.png";
@@ -18,20 +18,6 @@ import "./HeaderComponent.css";
  */
 const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2, menuOpt1Func, menuOpt2Func }) => {
   const navigate = useNavigate();
-
-  // /* 뒤로갈 페이지가 있을 경우 arrow 표시 */
-  // const backImg = backVisible ? (
-  //   <img src={angleLeft} onClick={() => navigate(-1)}></img>
-  // ) : (
-  //   <></>
-  // );
-  // const notificationCase = (
-  //   <Link to="/notification">
-  //     <div className="btn-div">
-  //       <img className="option-btn" src={notification}></img>
-  //     </div>
-  //   </Link>
-  // );
   let optBtn1 = null;
   switch (menuOpt1) {
     case "CAMERA": // 카메라
@@ -48,7 +34,6 @@ const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2, menuOpt1Fu
       optBtn1 = <></>;
       break;
   }
-
   let optBtn2 = null;
   switch (menuOpt2) {
     case "ALERT": // 알림
@@ -80,25 +65,35 @@ const HeaderComponent = ({ backVisible, pageName, menuOpt1, menuOpt2, menuOpt1Fu
   ) : (
     <></>
   );
-  // const settingCase = (
-  //   <Link to="/settings">
-  //     <div className="btn-div">
-  //       <img className="option-btn" src={settingBtn}></img>
-  //     </div>
-  //   </Link>
-  // );
+  const pageNameStyle = {
+    fontSize: "16px",
+  };
+
   return (
     <>
       <div className="top-bar">
         {arrowBtn}
         <div className="title-div">
-          <p className="title-name">{pageName}</p>
+          <p className="title-name" style={pageName !== undefined && pageName.length >= 9 ? pageNameStyle : {}}>
+            {pageName}
+          </p>
         </div>
-        <div className="opt-btn">{optBtn1}</div>
         <div
           className="opt-btn"
           onClick={(e) => {
-            menuOpt2Func();
+            if (menuOpt1Func) {
+              menuOpt1Func();
+            }
+          }}
+        >
+          {optBtn1}
+        </div>
+        <div
+          className="opt-btn"
+          onClick={(e) => {
+            if (menuOpt2Func) {
+              menuOpt2Func();
+            }
           }}
         >
           {optBtn2}

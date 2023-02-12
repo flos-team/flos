@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+import { getFollowerPostList } from "../../../api/PostAPI";
+import { getFollowerList } from "../../../api/FollowAPI";
 
 import PostItem from "../../../components/PostItem/PostItem";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -8,169 +11,112 @@ import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle.js";
 import styles from "./FeedPage.module.css";
 
 function Feed() {
-  axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-  // axios.defaults.baseURL = "http://localhost:8080/";
-  axios.defaults.withCredentials = false;
-
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [newPosts, setNewPosts] = useState([]);
+
+  const [friends, setFriends] = useState([]);
+  const [isPostsLoading, setIsPostsLoading] = useState(false);
+  const [isFriendsLoading, SetFriendsLoading] = useState(false);
+
+  const [nextPage, setNextPage] = useState(0);
+  const [hasNext, SetHasNext] = useState(false);
+  const [hasContent, setHasContent] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("/post/list?page=1")
-      .then((response) => {
-        setPosts(response.data.content);
-      })
-      .catch((error) => {
-        console.log("error : " + error);
-        console.dir(axios.defaults);
-      });
+    getFollowerPostList().then((response) => {
+      console.log(response);
+      setNextPage(response.nextPage);
+      SetHasNext(response.hasNext);
+      setPosts(response.content);
+      setHasContent(response.hasContent);
+      setIsPostsLoading(true);
+    }, []);
+    getFollowerList().then((response) => {
+      setFriends(response);
+      SetFriendsLoading(true);
+    });
   }, []);
 
-  const postList = posts.map(({ id, writer, weather, regDate, content }) => (
-    <PostItem
-      key={id}
-      postId={id}
-      writer={writer}
-      weather={weather}
-      regDate={regDate}
-      content={content}
-    ></PostItem>
-  ));
+  useEffect(() => {
+    // newPost가 새로 갱신되면
+    // posts에 newPosts를 붙힌다.
+    setPosts([...posts, ...newPosts]);
+  }, [newPosts]);
 
-  const noPost = <div>게시물이 없습니다.</div>;
+  // console.log(posts);
 
-  return (
-    <div className={styles.feedRoot}>
-      <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
-      <div className={styles.friendListBar}>
-        {/** 친구 프로필을 나열한다.  */}
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            alt="test"
-            src="images/commentProfileSample.png"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
-        </div>
-        <div className={`${styles.friendThumbnail} ${styles.a}`}>
-          <img
-            src="images/commentProfileSample.png"
-            alt="test"
-            className={styles.friendProfileImg}
-          ></img>
+  const handleScroll = (e) => {
+    const pos = e.target.scrollHeight - e.target.scrollTop;
+    if (pos < 1100 && hasNext) {
+      // console.log("스크롤 끝 감지");
+      getFollowerPostList(nextPage).then((response) => {
+        setNextPage(response.nextPage);
+        SetHasNext(response.hasNext);
+        setNewPosts(response.content);
+        setHasContent(response.hasContent);
+        setIsPostsLoading(true);
+      });
+    }
+  };
+
+  if (isPostsLoading && isFriendsLoading) {
+    let postList = "";
+    if (posts) {
+      postList = posts.map((key) => <PostItem post={key}></PostItem>);
+    }
+    let friendList = "";
+    if (friends) {
+      friendList = friends.map((key) => {
+        let url =
+          "https://i8b210.p.ssafy.io/api/file/" + key.profileImage.saveName;
+        // console.log(EachFriend);
+        const result = (
+          <div className={`${styles.friendThumbnail}`}>
+            <img
+              src={url}
+              alt="test"
+              className={styles.friendProfileImg}
+              onClick={() => {
+                navigate(`/other-profile-page/${key.id}`);
+              }}
+            ></img>
+          </div>
+        );
+        return result;
+      });
+    }
+
+    const noPost = <div>팔로워 게시물이 없습니다.</div>;
+    const noFriend = (
+      <div>
+        팔로우한 사람이 없습니다. <br />
+        둘러보기에서 다른 사람들을 검색해보세요!
+      </div>
+    );
+
+    return (
+      <div className={`${styles.feedRoot} ${styles.scroll}`}>
+        <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
+        <div className={styles.globalroot}>
+          <div className={styles.friendListBar}>
+            {/** 친구 프로필을 나열한다.  */}
+            {friends.length > 0 ? friendList : noFriend}
+          </div>
+          <div
+            className={`${styles.main} ${styles.scroll}`}
+            id="postMain"
+            onScroll={handleScroll}
+          >
+            {/** 친구들의 포스트를 나열한다.  */}
+            {/* {posts.length > 0 ? postList : noPost} */}
+            {hasContent ? postList : noPost}
+          </div>
+          <MoveToTopToggle></MoveToTopToggle>
         </div>
       </div>
-      <div className={styles.main}>
-        {/** 친구들의 포스트를 나열한다.  */}
-        {posts.length === 0 ? noPost : postList}
-      </div>
-      <MoveToTopToggle></MoveToTopToggle>
-    </div>
-  );
+    );
+  }
 }
 
 export default Feed;

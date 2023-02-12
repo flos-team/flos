@@ -4,7 +4,8 @@ import styles from './MoveToTopToggle.module.css'
 function MoveToTopToggle() {
 
     const MoveToTop = () => {
-      document.getElementById("postlist").scrollIntoView(false, {behavior: 'smooth'});
+      const top = document.getElementById("postMain").children.item(0);
+      top.scrollIntoView(false, {behavior: 'smooth'});
     };
 
     

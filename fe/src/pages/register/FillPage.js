@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./FillPage.module.css";
 import kakaologo from "../../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../../assets/LoginAsset/naver-logo.png";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 import { useNavigate, Link } from "react-router-dom";
+import Swal from "sweetalert2"
 import axios from 'axios';
 import showPwImg from '../../assets/RegisterAsset/fi-br-eye-crossed.png'
 import noshowPwImg from '../../assets/RegisterAsset/fi-br-eye.png'
@@ -44,7 +45,6 @@ function FillPage() {
   const [openModal, setOpenModal] = useState(false); // 모달 띄울까?
   const [emailInputMsg, setEmailInputMsg] = useState('해당 이메일로 인증 메일을 보냈습니다.');
   const [isMailSend, setIsMailSend] = useState(false);
-  // const [canUseId, setCanUseId] = useState(false);
   const [canUseNickname, setCanUseNickname] = useState(false);
   const [verifyedId, setVerifyedId] = useState(false); // 이메일인증까지 마친 이메일인가?
   const [showPw, setShowPw] = useState(false); // 비밀번호 보이기 
@@ -79,10 +79,6 @@ function FillPage() {
       setEmailMsg("이메일 주소가 올바르지 않습니다.");
       setEmailMsgColor(false);
     }
-    // else if (DB에 있으면) {
-    // setEmailMsg('이미 사용 중인 이메일입니다.')
-    // setEmailMsgColor(false)
-    // }
     else {
       setEmailMsg("해당 이메일로 인증을 받습니다.");
       setEmailMsgColor(true);
@@ -111,22 +107,9 @@ function FillPage() {
     }
   };
 
-  // 2. 닉네임 유효성 검사 로직
-  // const checkNickname = () => {
-  //   if (isValidNicknameLength === false || isValidNicknameForm === false) {
-  //     setNicknameMsg("사용할 수 없는 닉네임입니다");
-  //     setNicknameMsgColor(false);
-  //   }
-  //   else if (DB에 같은 닉네임이 존재하면){
-  //   setNicknameMsg('이미 사용중인 닉네임입니다.')
-  //   setNicknameMsgColor(false)
-  //   else {
-  //     setNicknameMsg("사용 가능한 닉네임입니다");
-  //     setNicknameMsgColor(true);
-  //   }
-  // };
 
   // 3. 다음 페이지로 이동할지 확인
+  const onFocus = useRef([]);
   const navigate = useNavigate();
   const checkFill = () => {
     const axiosInfo = {
@@ -136,23 +119,44 @@ function FillPage() {
       "password": inputPw
     }
     if (!verifyedId) {
-      alert('아이디 확인')
+      onFocus.current[0].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '사용할 아이디 입력 후 인증을 완료해주세요.',
+      })
     } else if (!pwMsgColor) {
-      alert('비밀번호 확인')
+      onFocus.current[1].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '사용 가능하지 않은 비밀번호입니다.',
+      })
     } else if (!pwCheckMsgColor) {
-      alert('비밀번호 확인 확인')
+      onFocus.current[2].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '동일한 비밀번호를 입력해주세요.',
+      })
     } else if (!nicknameMsgColor) {
-      alert('닉네임 유효 확인?')
+      onFocus.current[3].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '사용할 수 없는 닉네임입니다.',
+      })
     } else if (!useCheck) {
-      alert('약관동의 확인')
+      Swal.fire({
+        icon: 'warning',
+        title: '필수 약관을 동의해주세요.',
+      })
     } else if (!canUseNickname) {
-      alert('닉네임 중복 확인?')
+      onFocus.current[3].focus();
+      Swal.fire({
+        icon: 'warning',
+        title: '이미 사용중인 닉네임입니다.',
+      })
     } else if (verifyedId && pwMsgColor && pwCheckMsgColor && nicknameMsgColor && useCheck && canUseNickname) {
-      axios.post('/member/sign-up', axiosInfo, {withCredentials: false})
+      axios.post('api/member/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
-        console.log(res)
-        alert('회원가입 성공')
-        navigate('/main', { state: res.data })
+        navigate('/register/result', { state: res.data })
       })
       .catch((err) => {
         console.log(err)
@@ -240,7 +244,7 @@ const xBtnAppear = () =>{
         }
         if (parseInt(seconds) === 0) {
           if(parseInt(minutes) === 0) {
-            console.log('end')
+            setIsMailSend(false)
             clearInterval(countdown);
           } else {
             setMinutes(parseInt(minutes) - 1)
@@ -257,12 +261,12 @@ const xBtnAppear = () =>{
 
 
   // API
-  axios.defaults.baseURL = 'http://i8b210.p.ssafy.io:8080'                                                                                                                                                                                                                                                           
+  axios.defaults.baseURL = 'https://i8b210.p.ssafy.io'                                                                                                                                                                                                                                                           
 
   // 아이디 중복 확인 API
   const isSameId = () => {
     if (isValidId) {
-      axios.get('/member/check/email?email=' + inputId, {withCredentials : false})
+      axios.get('api/member/check/email?email=' + inputId, {withCredentials : false})
         .then((res) => {
           const { accessToken } = res.data;
           // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
@@ -270,9 +274,6 @@ const xBtnAppear = () =>{
             "Authorization"
           ] = `Bearer ${accessToken}`;
           // accessToken을 localStorage, cookie 등에 저장하지 않는다!
-          console.log("input id: ", inputId)
-          console.log(res)
-          // setCanUseId(true)
         })
         .catch((err) => {
           if(err.response.status === false){
@@ -280,21 +281,31 @@ const xBtnAppear = () =>{
           }
           console.log("Error occurred : " + err);
         })
-      } else {alert('아이디 유효성 확인ㄱㄱ')}
+      } else {
+      Swal.fire({
+        icon: 'warning',
+        title: '사용할 수 없는 이메일입니다.',
+      })}
   }
 
   // 메일 전송 API
   const mailSend = () => {
-      axios.get('/email/sign-up?email=' + inputId, {withCredentials : false})
+      axios.get('api/email/sign-up?email=' + inputId, {withCredentials : false})
       .then((res) => {
         console.log(res)
-        alert('메일 발송되었습니다.')
+        Swal.fire({
+          icon: 'success',
+          title: '메일 발송되었습니다.',
+        })
         setIsMailSend(true);
         setEmailMsg('');
       })
       .catch((err) => {
-        console.log(err)
-        alert('중복이메일 / 서버쪽 문제로 메일 발송 실패')
+        console.log(err)        
+        Swal.fire({
+          icon: 'warning',
+          title: '이미 가입된 이메일입니다.',
+        })
       })
 };
 
@@ -305,16 +316,15 @@ const xBtnAppear = () =>{
       "email" : inputId
     }
     if (isMailSend) {
-      axios.post('/email/sign-up', axiosInfo, {withCredentials: false})
+      axios.post('api/email/sign-up', axiosInfo, {withCredentials: false})
       .then ((res) => {
-        console.log(res)
-        console.log('성공')
         setVerifyedId(true)
         setEmailMsg('')
         setEmailInputMsg('인증이 완료되었습니다.')
       })
       .catch((err) => {
         console.log(err)
+        console.log('여기에러')
       })
     }
   }
@@ -325,7 +335,7 @@ const xBtnAppear = () =>{
       setNicknameMsg("사용할 수 없는 닉네임입니다");
       setNicknameMsgColor(false);
     } else {
-      axios.get('/member/check/nickname?nickname=' + inputNickname, {withCredentials : false})
+      axios.get('api/member/check/nickname?nickname=' + inputNickname, {withCredentials : false})
         .then((res) => {
           const { accessToken } = res.data;
           // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
@@ -334,7 +344,6 @@ const xBtnAppear = () =>{
           ] = `Bearer ${accessToken}`;
           // accessToken을 localStorage, cookie 등에 저장하지 않는다!
           console.log("input Nickname: ", inputNickname)
-          console.log(res.data)
           if (res.data === true) {
             setCanUseNickname(false)
             setNicknameMsgColor(false);
@@ -353,8 +362,6 @@ const xBtnAppear = () =>{
         })
       }
   }
-
-
   return (
     <>
     {/* 모달 켜졌을 때 바깥 부분 어둡게 하는 설정 */}
@@ -378,8 +385,9 @@ const xBtnAppear = () =>{
               onKeyUp={checkId}
               className={styles.inputdiv}
               disabled={verifyedId}
+              ref={(el) => (onFocus.current[0] = el)}
             />
-            <img id = "emailXBtn" alt='' onClick={cancelIdValue} className={styles.icon}></img>
+            {verifyedId ? null : <img id = "emailXBtn" alt='' onClick={cancelIdValue} className={styles.icon}></img>}
           </div>
           <p className={styles.spacebetween}>
           <span className={emailMsgColor ? styles.canuse : styles.cannotuse}>{emailMsg}</span>
@@ -402,7 +410,7 @@ const xBtnAppear = () =>{
                 <button className={styles.mailbtn} onClick={checkNumber} disabled={verifyedId}>인증</button>
                 <p className={styles.spacebetween}>
                   <span className={verifyedId ? styles.checkedcode : styles.checkingcode}>{emailInputMsg}</span>
-                  <Timer />
+                  {verifyedId ? null : <Timer />}
                 </p>
               </div>
             </div>
@@ -418,6 +426,7 @@ const xBtnAppear = () =>{
               onChange={handleInput}
               onKeyUp={checkPw}
               className={styles.inputdiv}
+              ref={(el) => (onFocus.current[1] = el)}
             />
             <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img>
           </div>
@@ -433,6 +442,7 @@ const xBtnAppear = () =>{
             onChange={handleInput}
             onKeyUp={reCheckPw}
             className={styles.inputdiv}
+            ref={(el) => (onFocus.current[2] = el)}
           />  
           <img src={showPwCheck ? showPwImg : noshowPwImg} alt='' onClick={pwCheckEyeIcon} className={styles.icon}></img>
         </div>
@@ -447,6 +457,7 @@ const xBtnAppear = () =>{
             onChange={handleInput}
             onKeyUp={isSameNickname}
             className={styles.inputdiv}
+            ref={(el) => (onFocus.current[3] = el)}
           />
           <span className={nicknameMsgColor ? styles.canuse : styles.cannotuse}>{nicknameMsg}</span>
         </div>

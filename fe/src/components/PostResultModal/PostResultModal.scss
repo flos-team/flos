@@ -1,0 +1,120 @@
+@import "../../styles/commons.scss";
+
+.post-result-modal-container {
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .post-result-modal {
+    z-index: 5;
+    /* groom-modal */
+    box-sizing: border-box;
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12 * $rpx1 16 * $rpx1;
+    gap: 16 * $rpx1;
+    position: relative;
+    width: 328 * $rpx1;
+    height: 436 * $rpx1;
+    background: rgba($color: $white-pure, $alpha: 0.9);
+    border: 1 * $rpx1 solid $mono300;
+    border-radius: 16 * $rpx1;
+    .groom-img-cotainer {
+      /* groom-img-cotainer */
+      width: 100%;
+      height: 24.8%;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      // border: 1px solid black;
+    }
+    .result-text-div {
+      /* result-text-div */
+      width: 70%;
+      height: max-content;
+      p {
+        text-align: center;
+        font-size: 16 * $rpx1;
+      }
+    }
+    .result-guide-text {
+      /* result-guide-text */
+      width: 100%;
+      height: max-content;
+      p {
+        text-align: center;
+        font-size: 12 * $rpx1;
+      }
+    }
+    .emotion-modify-div {
+      /* emotion-modify-div */
+      /* Auto layout */
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 12 * $rpx1 16 * $rpx1;
+      gap: 28 * $rpx1;
+      width: 100%;
+      height: 35.8%;
+      .angle-left-btn {
+        /* angle-left */
+        width: 48 * $rpx1;
+        height: 48 * $rpx1;
+        order: 0;
+      }
+      .swiper-slide {
+        width: 128 * $rpx1;
+        height: 128 * $rpx1;
+        .weather-img {
+          /* sunny-img */
+          width: 128 * $rpx1;
+          height: 128 * $rpx1;
+          background-position: center;
+          background-size: contain;
+          background-repeat: no-repeat;
+          order: 1;
+        }
+      }
+      .angle-right-btn {
+        /* angle-right */
+        width: 48 * $rpx1;
+        height: 48 * $rpx1;
+        order: 2;
+      }
+    }
+    .confirm-btn {
+      /* Auto layout */
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 12 * $rpx1 16 * $rpx1;
+      width: 70%;
+      height: 10%;
+      /* skyblue300 */
+      background: $sky-blue300;
+      border-radius: 30 * $rpx1;
+      p {
+        font-size: 16px;
+        color: $white;
+      }
+    }
+  }
+  .background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    opacity: 30%;
+  }
+}

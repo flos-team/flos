@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.post-img-container {
+  width: 17rem;
+  height: 18.25rem;
+  order: 1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0 0 0.75rem 0.75rem;
+  border-left: 1px solid #bfbfbf;
+  border-right: 1px solid #bfbfbf;
+}
+
+/*# sourceMappingURL=PostPhotoComponent.css.map */

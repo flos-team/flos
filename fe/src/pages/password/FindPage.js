@@ -5,7 +5,7 @@ import styles from './FindPage.module.css'
 import axios from 'axios'
 import showPwImg from '../../assets/RegisterAsset/fi-br-eye-crossed.png'
 import noshowPwImg from '../../assets/RegisterAsset/fi-br-eye.png'
-
+import Swal from "sweetalert2"
 
 
 function FindPage() {
@@ -38,13 +38,19 @@ function FindPage() {
     const sendEmail = () => {
         axios.get('/email/reset-password?email=' + inputId, {withCredentials : false})
             .then((res) => {
-                console.log(res)
-                alert('메일 발송되었습니다.')
+                console.log(res)        
+                Swal.fire({
+                  icon: 'success',
+                  title: '메일 발송되었습니다.',
+                })
                 setIsMailSend(true);
             })
             .catch((err) => {
                 console.log(err)
-                alert('없는 이메일 / 서버쪽 문제로 메일 발송 실패')
+                Swal.fire({
+                  icon: 'warning',
+                  title: '가입되지 않은 이메일입니다.',
+                })
             })
         };
     const checkCode = () => {
@@ -55,12 +61,19 @@ function FindPage() {
         axios.post('/email/reset-password', axiosInfo, {withCredentials : false})
             .then((res) => {
                 console.log(res)
-                alert('인증 완료 비밀번호 재설정 ㄱㄱ')
+                Swal.fire({
+                  icon: 'success',
+                  title: '인증이 완료되었습니다.',
+                  content: '사용할 비밀번호를 입력해주세요.'
+                })
                 setIsResetPw(true);
             })
             .catch((err) => {
                 console.log(err)
-                alert('인증 실패')
+                Swal.fire({
+                  icon: 'warning',
+                  title: '인증에 실패했습니다.'
+                })
             })
         };
 
@@ -118,11 +131,17 @@ function FindPage() {
     axios.put('/member/reset-password', axiosInfo)
     .then((res) => {
         console.log(res)
-        alert('비밀번호 재설정 완료')
+        Swal.fire({
+          icon: 'success',
+          title: '비밀번호 재설정 완료',
+        })
     })
     .catch((err) => {
         console.log(err)
-        alert('인증 실패')
+        Swal.fire({
+          icon: 'warning',
+          title: '인증에 실패하였습니다.',
+        })
     })
 };
   // 타이머
