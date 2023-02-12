@@ -89,18 +89,26 @@ const ProfileModifyPage = () => {
 
   // functions;
   const modifyMemberInfoFunc = async () => {
-    let data = modifyUserInfo(nickname, introduction);
-    // imgFile[0]
-    await data
-      .then((res) => {
+    if (imgFile) {
+      console.log("이미지 있음");
+      modifyUserInfo(nickname, introduction, imgFile[0]).then((res) => {
         if (res) {
           Swal.fire({
             icon: "success",
             title: "프로필 수정 성공",
           });
         }
-      })
-      .catch((err) => {});
+      });
+    } else {
+      modifyUserInfo(nickname, introduction).then((res) => {
+        if (res) {
+          Swal.fire({
+            icon: "success",
+            title: "프로필 수정 성공",
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -149,7 +157,7 @@ const ProfileModifyPage = () => {
               className="nickname-input"
               type="text"
               id="nickname-input"
-              placeholder={nickname}
+              value={nickname}
               ref={nicknameRef}
               onChange={(e) => {
                 setNickname(e.target.value);
@@ -165,7 +173,7 @@ const ProfileModifyPage = () => {
               className="introduce-input"
               type="text"
               id="introduce-input"
-              placeholder={introduction}
+              value={introduction}
               ref={introRef}
               onChange={(e) => {
                 setIntroduction(e.target.value);
