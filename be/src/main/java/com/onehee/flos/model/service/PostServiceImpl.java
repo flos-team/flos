@@ -196,6 +196,8 @@ public class PostServiceImpl implements PostService {
 
         postRepository.deleteAllByPost(tempPost);
 
+        postRepository.deletePriCommentByPost(tempPost);
+
         postRepository.deleteCommentByPost(tempPost);
 
         postRepository.delete(tempPost);
