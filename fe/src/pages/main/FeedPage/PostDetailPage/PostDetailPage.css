@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .post-detail-page {
   z-index: 1;
 }
@@ -303,11 +313,3 @@
 }
 
 /*# sourceMappingURL=PostDetailPage.css.map */
-
-.modal-position{
-  width: 100px;
-}
-
-.dot-btn {
-  color: red;
-}

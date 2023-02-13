@@ -4,13 +4,14 @@
   align-items: center;
   padding: 0px 20px;
   gap: 8px;
-  /* isolation: isolate; */
-  /* position: relative; */
-  /* background-image: url("../assets/HomeAsset/day.png"); */
-  /* width: 100%; */
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
-  /* overflow: hidden; */
+  isolation: isolate;
+  position: relative;
+  background-image: url("../assets/HomeAsset/day.png");
+  width: 100%;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
 }
 
 .FlowerInfo {
@@ -136,4 +137,146 @@
   top: 7.14%;
   bottom: 35.71%;
 
+}
+
+.guidecontainer{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  top: 160px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.goorm{
+  width: 104px;
+  height: 72px;
+  margin-left: 4px;
+}
+
+.guidetext{
+  background-color: white;
+  border-radius: 16px;
+  padding: 8px 2px 8px 8px;
+  word-break:keep-all;
+}
+
+.blinking {
+  position: absolute;
+  top: -44px;
+  padding: 16px;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes blink {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.gohomeblink {
+  /* position: absolute; */
+  top: -44px;
+  padding: 16px;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+.background{
+  z-index: 1;
+}
+
+.redborder{
+  position: absolute;
+  border: red 3px solid;
+  z-index: 2;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+.xIcon{
+  position: absolute;
+  top: 104px;
+  right: 40px;
+}
+
+.homeborder{
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 21;
+  border: 3px solid red;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+.gardenborder{
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 46%;
+  left: calc(50% + 70px);
+  transform: translate(-50%, -50%);
+  z-index: 21;
+  border: 3px solid red;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+.globalborder{
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 46%;
+  left: calc(50% - 70px);
+  transform: translate(-50%, -50%);
+  z-index: 21;
+  border: 3px solid red;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+.feedborder{
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 46%;
+  left: calc(50% - 140px);
+  transform: translate(-50%, -50%);
+  z-index: 21;
+  border: 3px solid red;
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
 }
