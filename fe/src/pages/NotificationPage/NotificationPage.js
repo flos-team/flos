@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from 'react-router-dom'
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 
 /* import img css */
-import userImg from "../../assets/DummyData/writerProfileSample.png";
+import goormSad from "../../assets/GoormAsset/goorm-sad.png";
 import defaultImg from "../../assets/GoormAsset/goorm-sunglass.png";
 
 /* import component */
@@ -19,7 +20,8 @@ import dayjs from "dayjs";
 const NotificationPage = () => {
   const [notiList, setNotiList] = useState([]);
   const [notiItemList, setNotiItemList] = useState();
-
+  const navigate = useNavigate();
+  const params = useParams();
   const url = "https://i8b210.p.ssafy.io/api/file/";
 
   useEffect(() => {
@@ -30,40 +32,66 @@ const NotificationPage = () => {
   }, []); // 너무 많은 요청 발생합니다...
   const bringNoticeList = () => {
     getNotification().then((res) => {
+      console.log(res)
       setNotiList(res.notifications);
 
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
+
       if (notiList !== undefined) {
         setNotiItemList(
           res.notifications.map(({ id, message, createdAt, data, messageType }) => {
+
             let postDay = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss");
             let RegBefore = getTimeDiffText(postDay, curDay);
             let profileImg = "";
+            let notiSource = "";
+
+            const goNotiSource = () => {
+              console.log(messageType)
+              if (messageType === 'FOLLOW'){
+                navigate(`/other-profile-page/${notiSource}`) // 사용자 페이지로 이동
+              } else if (messageType === 'NEWFEED' || messageType === 'COMMENTCHOSEN' || messageType === 'NEWCOMMENT' || messageType === 'NEWREPLY') {
+                navigate(`/main/post/${notiSource}`) // 해당 피드로 이동
+              } else if (messageType === 'NOCAREPLANT24H' || messageType === 'NOFEED24H'){
+                navigate('/main')
+              }
+            }
+
             switch (messageType) {
               case "NEWFEED":
+              case "COMMENTCHOSEN":
+                profileImg = `${url}${data.writer.profileImage.saveName}`
+                notiSource = data.id
+                break;
               case "NEWCOMMENT":
               case "NEWREPLY":
-              case "COMMENTCHOSEN":
-                profileImg = `${url}${data.writer.profileImage.saveName}`;
+                profileImg = `${url}${data.commenter.profileImage.saveName}`
+                notiSource = data.commenter.id
                 break;
               case "FOLLOW":
-                profileImg = `${url}${data.profileImage.saveName}`;
+                profileImg = `${url}${data.profileImage.saveName}`
+                notiSource = data.id
+                break;
+              case "NOCAREPLANT24H":
+              case "NOFEED24H":
+                profileImg = `${goormSad}`
                 break;
               default:
-                profileImg = { userImg };
                 break;
             }
 
             return (
-              <AlarmItem
-                AlarmImg={profileImg}
-                AlarmTextJSX={message}
-                AlarmTimeLog={RegBefore}
-                id={id}
-                render={(e) => {
-                  bringNoticeList();
-                }}
-              ></AlarmItem>
+              <div onClick={goNotiSource}>
+                <AlarmItem
+                  AlarmImg={profileImg}
+                  AlarmTextJSX={message}
+                  AlarmTimeLog={RegBefore}
+                  id={id}
+                  render={(e) => {
+                    bringNoticeList();
+                  }}
+                ></AlarmItem>
+              </div>
             );
           })
         );
