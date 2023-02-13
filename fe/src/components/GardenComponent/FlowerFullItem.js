@@ -143,7 +143,7 @@ const FlowerFullItem = (props) => {
                     <GardenFullComponentDetailData flowerData={props.flowerInfo} />
                 </FlowerDetailData>
                 <ButtonArea>
-                    <Link to="/flower-end-page">
+                    <Link to={`/flower-end-page/${props.flowerInfo.id}`}>
                     <EndingPlayButton onClick={EndingPlayButtonOnClick}><EndingPlayImg /></EndingPlayButton>
                     </Link>
                     <ContributorButton onClick={ContributorButtonOnClick} background={contributorButtonColor}><ContributorImg /></ContributorButton>
