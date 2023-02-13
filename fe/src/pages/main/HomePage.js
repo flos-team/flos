@@ -337,6 +337,7 @@ const Home = () => {
       flowerInfo.CurrentGrowthValue = res.currentGrowValue;
       flowerInfo.isFullGrown = res.isFullGrown;
     });
+
     flowerInfo.sunElementCount--;
     flowerRef.current.FlowerSmile();
     setSunAnimation(
@@ -424,14 +425,23 @@ const Home = () => {
    * 꽃 생성 함수
    */
   const MakeFlowerOnclick = (name) => {
-    setMakeFlowerModal(false);
-    flowerInfo.name = name;
-    updateInfo();
+    if(name === ""){
+      Swal.fire({
+        icon: "warning",
+        title: "꽃 이름이 비어있어요!",
+        text: "꽃의 이름을 지어주세요.",
+      });
+    }
+    else{
+      setMakeFlowerModal(false);
+      flowerInfo.name = name;
+      updateInfo();
+    }
   };
 
   const doFlowering = () => {
     flowering(flowerInfo.id);
-    window.location.replace("/flower-end-page");
+    window.location.replace(`/flower-end-page/${flowerInfo.id}`);
   };
 
   const onClickPlayMusicButton = () => {
@@ -447,9 +457,11 @@ const Home = () => {
       }
     });
   };
+
   useEffect(() => {
     getNotification();
   }, []);
+
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
