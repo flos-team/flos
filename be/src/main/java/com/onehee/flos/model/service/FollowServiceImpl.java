@@ -1,13 +1,15 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.FollowDTO;
 import com.onehee.flos.model.dto.request.FollowRequestDTO;
 import com.onehee.flos.model.dto.request.UnfollowRequestDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Follow;
 import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.repository.FollowRepository;
-import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.model.entity.Notification;
+import com.onehee.flos.model.entity.type.MessageType;
+import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,20 +24,33 @@ public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberResponseDTO> getFollowerList() {
-        Member member = SecurityManager.getCurrentMember();
-        List<Member> followers = followRepository.findAllByOwner(member);
+    public List<MemberResponseDTO> getFollowerList(FollowDTO followDTO) {
+        Member member = memberRepository.findById(followDTO.getId())
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
+        List<Member> followers;
+        if (followDTO.isOrderByName()) {
+            followers = followRepository.findAllByOwnerByNickname(member);
+        } else {
+            followers = followRepository.findAllByOwnerOrderByLastLoginAtDesc(member);
+        }
         return followers.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<MemberResponseDTO> getFollowingList() {
-        Member member = SecurityManager.getCurrentMember();
-        List<Member> followings = followRepository.findAllByFollower(member);
+    public List<MemberResponseDTO> getFollowingList(FollowDTO followDTO) {
+        Member member = memberRepository.findById(followDTO.getId())
+                .orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
+        List<Member> followings;
+        if (followDTO.isOrderByName()) {
+            followings = followRepository.findAllByFollowerByName(member);
+        } else {
+            followings = followRepository.findAllByFollowerOrderByLastLoginAtDesc(member);
+        }
         return followings.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 
@@ -58,7 +73,16 @@ public class FollowServiceImpl implements FollowService {
 
         followRepository.saveAndFlush(follow);
 
-        return getFollowingList();
+        // 알림
+        notificationRepository.save(Notification.builder()
+                .member(target)
+                .messageType(MessageType.FOLLOW)
+                .message(String.format(MessageType.FOLLOW.getMessage(), me.getNickname()))
+                .referenceKey(me.getId())
+                .build()
+        );
+
+        return getFollowingList(new FollowDTO(me.getId(), followRequestDTO.getOrderByName()));
     }
 
     @Override
@@ -76,6 +100,7 @@ public class FollowServiceImpl implements FollowService {
         followRepository.delete(follow);
         followRepository.flush();
 
-        return getFollowingList();
+        return getFollowingList(new FollowDTO(me.getId(), unfollowRequestDTO.isOrderByName()));
     }
+
 }

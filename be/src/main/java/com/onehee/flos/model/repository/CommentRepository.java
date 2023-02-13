@@ -16,10 +16,10 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 게시글별 댓글 리스트
-    Slice<Comment> findAllByPost(Post post, Pageable pageable);
+    List<Comment> findAllByPostAndPrimitiveIsNull(Post post);
 
     // 회원의 댓글 리스트
-    Slice<Comment> findAllByWriter(Member writer, Pageable pageable);
+    List<Comment> findAllByWriterAndPrimitiveIsNull(Member writer);
 
     // 특정 댓글이 조상인 댓글 리스트
     List<Comment> findAllByPrimitive(Comment primitive);
@@ -32,5 +32,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // 게시글별 채택 댓글 수
     Long countByIsApprove(Boolean bool);
+
+    // 채택된 댓글이 존재하는지
+    boolean existsByWriterAndPostAndIsApproveIs(Member writer, Post post, boolean isApproved);
 
 }

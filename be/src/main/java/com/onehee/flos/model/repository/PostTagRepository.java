@@ -14,4 +14,6 @@ public interface PostTagRepository extends JpaRepository<PostTag, Long> {
 
     // 포스트 기준으로 탐색
     List<PostTag> findAllByPost(Post post);
+
+    boolean existsByTagAndPost(Post post, Tag tag);
 }

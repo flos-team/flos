@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 
@@ -35,6 +36,7 @@ public class JwtTokenProvider {
     private Long rtkExpire;
 
     private final RedisRepository redisRepository;
+    private final MemberRepository memberRepository;
     private final ObjectMapper objectMapper;
 
     @PostConstruct
@@ -49,6 +51,10 @@ public class JwtTokenProvider {
         String rtk = generateToken(rtkSubject, rtkExpire);
         redisRepository.deleteValue("rtk:" + member.getId());
         redisRepository.setValue("rtk:" + member.getId(), rtk, Duration.ofMillis(rtkExpire));
+
+        member.setLastLoginAt(LocalDateTime.now());
+        memberRepository.save(member);
+
         return new TokenDTO(atk, rtk);
     }
 

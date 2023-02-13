@@ -28,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        Message message = new Message(exceptionMessage, HttpStatus.UNAUTHORIZED);
+        Message message = new Message(exceptionMessage, null, HttpStatus.UNAUTHORIZED);
         String res = this.convertObjectToJson(message);
         response.getWriter().print(res);
     }
