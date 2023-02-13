@@ -39,4 +39,5 @@ public class GlobalExceptionHandler {
         Message message = new Message(ErrorCode.NO_FLOWER_EXISTS.getErrorMessage(), ErrorCode.NO_FLOWER_EXISTS, HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
+
 }
