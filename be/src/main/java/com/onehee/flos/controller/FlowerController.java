@@ -96,13 +96,8 @@ public class FlowerController {
     @Tag(name = "꽃API")
     @Operation(summary = "꽃 기여자 리스트", description = "꽃의 성장에 기여한 회원 리스트를 반환합니다.")
     @GetMapping("/{flowerId}")
-    public ResponseEntity<?> getContributorByFlower(@RequestParam(value="page", required = false) Integer page, @PathVariable("flowerId") Long flowerId){
-        PageRequest pageRequest = null;
-        if (page==null)
-            pageRequest = PageRequest.of(0, size);
-        else
-            pageRequest = PageRequest.of(page, size);
-        return new ResponseEntity<List<MemberResponseDTO>>(flowerService.getContributorByFlower(flowerId, pageRequest), HttpStatus.OK);
+    public ResponseEntity<?> getContributorByFlower(@PathVariable("flowerId") Long flowerId){
+        return new ResponseEntity<List<MemberResponseDTO>>(flowerService.getContributorByFlower(flowerId), HttpStatus.OK);
     }
 
     @Tag(name = "꽃API")

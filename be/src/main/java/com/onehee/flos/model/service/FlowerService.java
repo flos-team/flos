@@ -32,7 +32,7 @@ public interface FlowerService {
     // 회원의 가든 꽃 리스트
     SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException;
 
-    List<MemberResponseDTO> getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
+    List<MemberResponseDTO> getContributorByFlower(Long flowerId) throws BadRequestException;
 
     BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException;
 
