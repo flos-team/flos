@@ -16,24 +16,28 @@ import com.onehee.flos.model.entity.type.FlowerType;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.FlowerRepository;
 import com.onehee.flos.model.repository.FollowRepository;
+import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.model.repository.WeatherResourceRepository;
 import com.onehee.flos.util.RandomFlowerTypeSelector;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class FlowerServiceImpl implements FlowerService {
 
     private final FlowerRepository flowerRepository;
     private final WeatherResourceRepository weatherResourceRepository;
-    private final FollowRepository followRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public void createFlower(FlowerCreateRequestDTO flowerCreateRequestDTO) throws BadRequestException {
@@ -61,7 +65,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     @Transactional
     public void modifyLastLetter(FlowerLastLetterRequestDTO flowerLastLetterRequestDTO) {
-        Flower flower = flowerRepository.findById(flowerLastLetterRequestDTO.getId()==null?0:flowerLastLetterRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당되는 꽃이 없습니다."));
+        Flower flower = flowerRepository.findById(flowerLastLetterRequestDTO.getId() == null ? 0 : flowerLastLetterRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당되는 꽃이 없습니다."));
         if (!Objects.equals(flower.getOwner().getId(), SecurityManager.getCurrentMember().getId()))
             throw new BadRequestException("내 꽃이 아닙니다.");
         flower.setLetter(flowerLastLetterRequestDTO.getLetter());
@@ -70,7 +74,7 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public FlowerResponseDTO getFlowerById(FlowerInfoRequestDTO flowerInfoRequestDTO) {
-        Flower flower = flowerRepository.findById(flowerInfoRequestDTO.getId()==null?0:flowerInfoRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당되는 꽃이 없습니다."));
+        Flower flower = flowerRepository.findById(flowerInfoRequestDTO.getId() == null ? 0 : flowerInfoRequestDTO.getId()).orElseThrow(() -> new BadRequestException("해당되는 꽃이 없습니다."));
         if (!Objects.equals(flower.getOwner().getId(), SecurityManager.getCurrentMember().getId()))
             throw new BadRequestException("내 꽃이 아닙니다.");
         return FlowerResponseDTO.toDto(flower);
@@ -99,7 +103,8 @@ public class FlowerServiceImpl implements FlowerService {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
         if (flower.getOwner().getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("꽃 주인이 아닙니다.");
-        return SliceResponseDTO.toDto(flowerRepository.findContributorByFlower(flower, pageable));
+        return SliceResponseDTO.toDto(flowerRepository.findContributorByFlower(flower, pageable)
+                .map(MemberResponseDTO::toDto));
     }
 
     @Override
@@ -107,7 +112,12 @@ public class FlowerServiceImpl implements FlowerService {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
         return BestContributorResponseDTO.builder()
                 .flower(FlowerResponseDTO.toDto(flower))
-                .contributor(MemberResponseDTO.toDto(flowerRepository.findContributorByFlowerOrderByCount(flower)))
+                .contributor(MemberResponseDTO.toDto(
+                                memberRepository.findById(
+                                        flowerRepository.findContributorByFlowerOrderByCount(flower)
+                                ).orElseThrow(() -> new BadRequestException("해당 기여자가 존재하지 않습니다."))
+                        )
+                )
                 .contributeCounter(flowerRepository.countByFlowerAndContributor(flower, SecurityManager.getCurrentMember()))
                 .build();
     }
@@ -132,7 +142,7 @@ public class FlowerServiceImpl implements FlowerService {
 
         if (flower.getCapacity() >= (flower.getLight() + flower.getWater() + 1))
             calIsFullGrown(flower, flower.getWater() + 1, flower.getLight());
-        if ((float)flower.getCapacity()*0.7 <= (float)(flower.getLight() + flower.getWater() + 1) && Objects.equals(flower.getFlowerType().getColor(), ""))
+        if ((float) flower.getCapacity() * 0.7 <= (float) (flower.getLight() + flower.getWater() + 1) && Objects.equals(flower.getFlowerType().getColor(), ""))
             flower.setFlowerType(getFlowerColor());
 
         // 물쓰기
@@ -162,7 +172,7 @@ public class FlowerServiceImpl implements FlowerService {
 
         if (flower.getCapacity() >= (flower.getLight() + flower.getWater() + 1))
             calIsFullGrown(flower, flower.getWater(), flower.getLight() + 1);
-        if ((float)flower.getCapacity()*0.7 <= (float)(flower.getLight() + flower.getWater() + 1) && Objects.equals(flower.getFlowerType().getColor(), ""))
+        if ((float) flower.getCapacity() * 0.7 <= (float) (flower.getLight() + flower.getWater() + 1) && Objects.equals(flower.getFlowerType().getColor(), ""))
             flower.setFlowerType(getFlowerColor());
         // 물쓰기
         light.setFlower(flower);
