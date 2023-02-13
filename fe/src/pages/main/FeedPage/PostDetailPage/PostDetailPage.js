@@ -141,7 +141,13 @@ const PostDetailPage = () => {
         if (result.isConfirmed) {
           deletePost(params.id)
             .then((res) => {
-              console.log(res);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "글이 삭제되었습니다.",
+                showConfirmButton: false,
+                timer: 1000,
+              });
             })
             .catch((err) => {
               console.log(err);
