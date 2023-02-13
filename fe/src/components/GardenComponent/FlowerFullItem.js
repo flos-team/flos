@@ -11,6 +11,7 @@ const ItemContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 `;
 
 const FlowerView = styled.div`
@@ -68,30 +69,40 @@ const ContributorModalContainer = styled.div`
     position: fixed;
     border-radius: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     top: 0px;
+    padding-top: 40px;
 `;
 
 const ContributorListItem = styled.div`
     width: 100%;
     display: flex;
-    margin-left: 50px;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
+    padding: 10px 0;
+    margin-bottom: 5px;
+    background-color: #CDCDCD;
 `;
 
 const ContributorModalContainerTitle = styled.div`
     margin-bottom: 20px;
-
+    font-size: 1.2rem;
 
     &:after {
         border: 1px;
     }
 `;
 
-const ContributorListItemImg = styled.div`
+const ContributorModalContainerContent = styled.div`
+    width: 100%;
+    overflow: auto;
+`;
+
+const ContributorListItemImg = styled.img`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 `;
 
 const ContributorListItemId = styled.div`
@@ -111,20 +122,19 @@ const FlowerFullItem = (props) => {
         setContributorModal(!contributorModal);
         if(contributorModal){
             setContributorButtonColor("linear-gradient(360deg, #FFFFFF 0%, rgba(255, 255, 255, 0.0872917) 50.99%, rgba(255, 255, 255, 0) 100%)");
-            getFlowerContributorList(0, props.flowerInfo.id).then((res) => {
-                console.log("기여자 가져와서 페이지 전환해야 함");
-                console.log(res);
-                setContributorList(...res.map(() => {
-                    <ContributorListItem>
-                        <ContributorListItemImg>이미지</ContributorListItemImg>
-                        <ContributorListItemId>아이디</ContributorListItemId>
-                    </ContributorListItem>
-                }));
-            });
         }
         else {
             setContributorButtonColor("linear-gradient(360deg, #FFFFFF 0%, rgba(100, 100, 100, 0.5) 50.99%, rgba(0, 0, 0, 0) 100%)");
-            
+            getFlowerContributorList(props.flowerInfo.id).then((res) => {
+                console.log("기여자 가져와서 페이지 전환해야 함");
+                console.log(res);
+                setContributorList([...res].map((e, i) => {
+                    return (<ContributorListItem key={i}>
+                        <ContributorListItemImg src={`https://i8b210.p.ssafy.io/api/file/${e.profileImage.saveName}`} />
+                        <ContributorListItemId>{e.nickname}</ContributorListItemId>
+                    </ContributorListItem>);
+                }));
+            });
         }
     };
 
@@ -132,8 +142,10 @@ const FlowerFullItem = (props) => {
         <ItemContainer>
             {contributorModal ? 
                 <ContributorModalContainer>
-                    <ContributorModalContainerTitle>기여자 리스트</ContributorModalContainerTitle>
-                    {contributorList}
+                    <ContributorModalContainerTitle>도움 주신 분들</ContributorModalContainerTitle>
+                    <ContributorModalContainerContent>
+                        {(contributorList.length == 0 ? "도움 주신 분들이 없어요!" : contributorList)}
+                    </ContributorModalContainerContent>
                 </ContributorModalContainer> : null}
             <FullItem>
                 <FlowerView>
