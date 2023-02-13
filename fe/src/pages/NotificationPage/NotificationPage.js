@@ -46,17 +46,6 @@ const NotificationPage = () => {
             let profileImg = "";
             let notiSource = "";
 
-            const goNotiSource = () => {
-              console.log(messageType)
-              if (messageType === 'FOLLOW'){
-                navigate(`/other-profile-page/${notiSource}`) // 사용자 페이지로 이동
-              } else if (messageType === 'NEWFEED' || messageType === 'COMMENTCHOSEN' || messageType === 'NEWCOMMENT' || messageType === 'NEWREPLY') {
-                navigate(`/main/post/${notiSource}`) // 해당 피드로 이동
-              } else if (messageType === 'NOCAREPLANT24H' || messageType === 'NOFEED24H'){
-                navigate('/main')
-              }
-            }
-
             switch (messageType) {
               case "NEWFEED":
               case "COMMENTCHOSEN":
@@ -82,17 +71,17 @@ const NotificationPage = () => {
             }
 
             return (
-              <div onClick={goNotiSource}>
-                <AlarmItem
-                  AlarmImg={profileImg}
-                  AlarmTextJSX={message}
-                  AlarmTimeLog={RegBefore}
-                  id={id}
-                  render={(e) => {
-                    bringNoticeList();
-                  }}
-                ></AlarmItem>
-              </div>
+              <AlarmItem
+                AlarmImg={profileImg}
+                AlarmTextJSX={message}
+                AlarmTimeLog={RegBefore}
+                id={id}
+                messageType={messageType}
+                notiSrc={notiSource}
+                render={(e) => {
+                  bringNoticeList();
+                }}
+              ></AlarmItem>
             );
           })
         );
