@@ -16,18 +16,29 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .post-item {
   /* Auto layout */
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   align-items: center;
   padding: 0px;
-  width: 272px;
+  width: 100%;
   height: max-content;
   max-height: 352px;
   background: #fcfcfc;
-  border-radius: 12px;
-  border: 0.125rem solid #bfbfbf;
+  overflow: hidden;
+  border-top: 1px solid #bfbfbf;
+  border-bottom: 1px solid #bfbfbf;
   margin-top: 1rem;
 }
 

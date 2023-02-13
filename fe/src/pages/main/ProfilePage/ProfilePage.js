@@ -29,15 +29,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
-import MemberAPI, {
-  getMemberInfo,
-  getOtherMemberInfo,
-  doLogin,
-} from "../../../api/MemberAPI";
-import PostAPI, {
-  getPostListByNickname,
-  getBookMarkList,
-} from "../../../api/PostAPI";
+import MemberAPI, { getMemberInfo, getOtherMemberInfo, doLogin } from "../../../api/MemberAPI";
+import PostAPI, { getPostListByNickname, getBookMarkList } from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -122,9 +115,7 @@ const ProfilePage = ({ setIsToast }) => {
   const titles = ["팔로워", "팔로잉", "게시글", "꽃송이"];
   const titleList = titles.map((e, i) => <li key={i}>{e}</li>);
   const userInfos = [1000, 1000, 1000, 1000];
-  const [userInfoList, setUserInfoList] = useState(
-    userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>)
-  );
+  const [userInfoList, setUserInfoList] = useState(userInfos.map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
 
   // 사용자 정보를 다루는 state
   const [userInfo, setUserinfo] = useState({});
@@ -138,16 +129,12 @@ const ProfilePage = ({ setIsToast }) => {
     await getBookMarkList(0).then((res) => {
       // console.dir(res);
       if (res && res.content && res.content.length && postIdx != 1) {
-        let newPostList = bookPostList.concat(
-          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
-        );
+        let newPostList = bookPostList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setBookPostList(newPostList);
         setPostList([]);
         //console.dir(newPostList);
       } else {
-        setBookPostList(
-          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
-        );
+        setBookPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setPostList([]);
       }
     });
@@ -157,15 +144,11 @@ const ProfilePage = ({ setIsToast }) => {
     await getPostListByNickname(nickname).then((res) => {
       // console.dir(res);
       if (res && res.content && res.content.length) {
-        let newPostList = postList.concat(
-          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
-        );
+        let newPostList = postList.concat(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setPostList(newPostList);
         setBookPostList([]);
       } else {
-        setPostList(
-          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
-        );
+        setPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
         setBookPostList([]);
       }
     });
@@ -180,15 +163,8 @@ const ProfilePage = ({ setIsToast }) => {
         nickname: response.nickname,
         introduction: response.introduction,
       });
-      setUserImgURL(
-        `https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`
-      );
-      let list = [
-        response.followerCount,
-        response.followingCount,
-        response.postCount,
-        response.blossomCount,
-      ];
+      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`);
+      let list = [response.followerCount, response.followingCount, response.postCount, response.blossomCount];
       setUserInfoList(
         list.map((e, i) => {
           let liEle = <></>;
@@ -215,8 +191,7 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop + 3 <= e.target.clientHeight;
+    const bottom = e.target.scrollHeight - e.target.scrollTop + 3 <= e.target.clientHeight;
     // console.log(e.target.scrollHeight - e.target.scrollTop);
     //console.log("스크롤 감지");
     if (bottom) {
@@ -260,10 +235,7 @@ const ProfilePage = ({ setIsToast }) => {
       ></HeaderComponent>
       <div className="profile-page-container hide-scroll">
         <div className="user-info-header">
-          <div
-            className="user-img"
-            style={{ backgroundImage: `url(${userImgURL})` }}
-          ></div>
+          <div className="user-img" style={{ backgroundImage: `url(${userImgURL})` }}></div>
           <div className="profile-edit-nav-container">
             <Link to="/profile-modify">
               <div className="profile-edit-btn">
@@ -290,15 +262,10 @@ const ProfilePage = ({ setIsToast }) => {
           </ul>
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
-        {testBtn}
+        {/* {testBtn} */}
         <Box sx={{ width: "100%", margin: "0 auto" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              centered
-            >
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
               <Tab
                 label="내 포스트"
                 {...a11yProps(0)}

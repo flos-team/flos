@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .user-static-page {
   display: flex;
   flex-flow: row wrap;
@@ -156,6 +166,8 @@
   border-radius: 0.5rem;
   position: relative;
   background: #e8e8e8;
+  display: flex;
+  align-items: center;
 }
 .user-static-page .user-cast-static-item .cast-statistics-item-div .graph-div .graph-gage {
   position: absolute;
@@ -165,11 +177,18 @@
   background-blend-mode: darken;
   border-radius: 0.5rem 0px 0px 0.5rem;
 }
+.user-static-page .user-cast-static-item .cast-statistics-item-div .graph-div .graph-number {
+  position: absolute;
+  right: 10px;
+  font-size: 10px;
+  text-align: center;
+  color: #141414;
+}
 .user-static-page .user-cast-static-item .sunny-item-static-div .graph-div .graph-gage {
   background: #ffe042;
 }
 .user-static-page .user-cast-static-item .cloudy-item-static-div .graph-div .graph-gage {
-  background: #e8e8e8;
+  background: #bfbfbf;
 }
 .user-static-page .user-cast-static-item .rainy-item-static-div .graph-div .graph-gage {
   background: #3aaae2;
@@ -254,7 +273,6 @@
   font-size: 0.75rem;
 }
 .user-static-page .user-active-log-item {
-  border-bottom: 1px solid #827c7c;
   /* user-active-log-item */
   box-sizing: border-box;
   /* Auto layout */
@@ -264,7 +282,7 @@
   padding: 0.75rem 1rem;
   gap: 0.5rem;
   width: 100%;
-  height: 12.5rem;
+  min-height: 6.25rem;
   /* Inside auto layout */
   order: 3;
 }
