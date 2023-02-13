@@ -367,6 +367,12 @@ insert into `notification` (`notification_id`, `message`, `member_id`, `message_
 insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (10, "김성태님이 새로운 글을 작성했습니다.", 4, "NEWFEED", 2);
 insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (11, "김성태님이 새로운 글을 작성했습니다.", 5, "NEWFEED", 2);
 insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (12, "김성태님이 새로운 글을 작성했습니다.", 6, "NEWFEED", 2);
+insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (13, "김성태님이 회원님의 게시글에 댓글을 남겼습니다.", 1, "NEWCOMMENT", 1);
+insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (14, "김성태님이 회원님의 게시글에 댓글을 남겼습니다.", 2, "NEWCOMMENT", 2);
+insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (15, "김성태님이 회원님의 게시글에 댓글을 남겼습니다.", 3, "NEWCOMMENT", 3);
+insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (16, "김성태님이 회원님의 게시글에 댓글을 남겼습니다.", 4, "NEWCOMMENT", 5);
+insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (17, "김성태님이 회원님의 게시글에 댓글을 남겼습니다.", 5, "NEWCOMMENT", 46);
+insert into `notification` (`notification_id`, `message`, `member_id`, `message_type`, `reference_key`) VALUE (18, "김성태님이 회원님의 게시글에 댓글을 남겼습니다.", 6, "NEWCOMMENT", 50);
 insert into `flower` (`flower_id`, `name`, `state`, `members_id`, `height`, `created_at`, `blossom_at`, `flower_type`, `gardening`) VALUE (1, "춘식이", "S3R1", 4, 30, "23-02-05", "23-02-08", "TulipRed", true);
 insert into `flower` (`flower_id`, `name`, `state`, `members_id`, `height`, `created_at`, `blossom_at`, `flower_type`, `gardening`) VALUE (2, "석삼이", "S3R1", 4, 32, "23-02-05", "23-02-08", "TulipOrange", true);
 insert into `flower` (`flower_id`, `name`, `state`, `members_id`, `height`, `created_at`, `blossom_at`, `flower_type`, `gardening`) VALUE (3, "너구리", "S2R1", 4, 34, "23-02-05", "23-02-08", "TulipYellow", true);

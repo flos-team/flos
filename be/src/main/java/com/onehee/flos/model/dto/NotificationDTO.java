@@ -1,6 +1,7 @@
 package com.onehee.flos.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.entity.Notification;
 import com.onehee.flos.model.entity.type.MessageType;
 import lombok.*;
