@@ -155,7 +155,7 @@ const getMyStatisticData = async () => {
   await axios
     .get(url)
     .then((res) => {
-      // console.dir(res);
+      console.dir(res);
       statisticsObject = res.data;
     })
     .catch((err) => {

@@ -3,6 +3,8 @@
  *
  * @copyright 2023
  */
+import dayjs from "dayjs";
+
 /* import react */
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,6 +20,7 @@ import PostTextComponent from "./PostTextComponent/PostTextComponent";
 
 /* import module */
 import { getOtherMemberInfo } from "../../api/MemberAPI";
+import { getTimeDiffText } from "../../api/DateModule";
 
 /* css import */
 import "./PostItem.css";
@@ -27,17 +30,17 @@ import { setUser } from "../../redux/user";
  * @param {Object} post 포스트의 정보를 담은 객체
  */
 const PostItem = ({ post }) => {
-  // console.log(post);
   /*
     id, content, regDate, relation.tagList, weather, tagList, attachFiles
     writer.id/email/introduction/nickname/profileImage.saveName
     writer.profileImage.saveName
   */
-
-  // console.log(post)
+  const time = getTimeDiffText(new dayjs(post.regDate), new dayjs(new Date()));
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userData);
-  const [imgBaseURL, setImgBaseURL] = useState("https://i8b210.p.ssafy.io/api/file/");
+  const [imgBaseURL, setImgBaseURL] = useState(
+    "https://i8b210.p.ssafy.io/api/file/"
+  );
   const [bottomComponent, setBottomComponent] = useState(
     <PostTextComponent
       content={post ? post.content : "게시글 내용이 없습니다."}
@@ -47,7 +50,8 @@ const PostItem = ({ post }) => {
     <PostTopComponent
       userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
       userNickname={post.writer.nickname}
-      date={post.regDate}
+      date={time}
+      flag={post.regDate}
       weather={post.weather}
       tagList={post.relation.tagList}
       moveProfile={(e) => {
@@ -57,6 +61,7 @@ const PostItem = ({ post }) => {
       }}
     ></PostTopComponent>
   );
+
   const [postUserId, setPostUserId] = useState(-1);
   useEffect(() => {
     if (post !== null) {
@@ -64,12 +69,15 @@ const PostItem = ({ post }) => {
       if (post.relation.attachFiles.length) {
         let list = post.relation.attachFiles;
         //console.dir(list)
-        setBottomComponent(<PostPhotoComponent imgURLList={list}></PostPhotoComponent>);
+        setBottomComponent(
+          <PostPhotoComponent imgURLList={list}></PostPhotoComponent>
+        );
         setTopComponent(
           <PostTopComponent
             userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
             userNickname={post.writer.nickname}
-            date={post.regDate}
+            date={time}
+            flag={post.regDate}
             weather={post.weather}
             tagList={post.relation.tagList}
             moveProfile={(e) => {
@@ -79,11 +87,7 @@ const PostItem = ({ post }) => {
             }}
           ></PostTopComponent>
         );
-        // setBottomComponent(<PostPhotoComponent testURL={`${post.writer.profileImage.saveName}`} ></PostPhotoComponent>);
-        //console.dir(`${imgBaseURL}${post.writer.profileImage.saveName}`);
       } else {
-        // setBottomComponent(<PostPhotoComponent testURL={`${post.writer.profileImage.saveName}`} ></PostPhotoComponent>);
-        // console.log(post);
         setBottomComponent(
           <PostTextComponent
             content={post.content ? post.content : "게시글 내용이 없습니다."}
@@ -93,7 +97,8 @@ const PostItem = ({ post }) => {
           <PostTopComponent
             userImgURL={`${imgBaseURL}${post.writer.profileImage.saveName}`}
             userNickname={post.writer.nickname}
-            date={post.regDate}
+            date={time}
+            flag={post.regDate}
             weather={post.weather}
             tagList={post.relation.tagList}
             moveProfile={(e) => {

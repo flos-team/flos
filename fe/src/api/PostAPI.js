@@ -31,37 +31,6 @@ const getPost = async (postId) => {
 };
 
 /**
- * getPostList : 게시글 리스트
- * @param {number} page 페이지번호 (1 ~ N)
- * @returns {Promise} A Promise Object contains PostListObject
- */
-const getPostList = async (page = 1) => {
-  let url = `/api/post/list?page=${page}`;
-  let postListObject = {};
-  await axios
-    .get(url)
-    .then((response) => {
-      if (response.status === 200) {
-        let data = response.data;
-        console.dir(response.data);
-        postListObject = {
-          postList: [...data.content],
-          hasContent: data.hasContent,
-          hasNext: data.hasNext,
-          isFirst: data.isFirst,
-          isLast: data.isLast,
-          nextPage: data.nextPage,
-          nextSize: data.nextSize,
-        };
-      }
-    })
-    .catch((error) => {
-      console.log("게시글 리스트가 존재하지 않습니다.");
-    });
-  return postListObject;
-};
-
-/**
  * getBookMarkList : 로그인된 회원별 북마크한 게시글 리스트
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains BookmarkListObject
@@ -132,7 +101,7 @@ const getSearchNickname = async (nickName) => {
   await axios
     .get(url)
     .then((response) => {
-      console.dir(response);
+      // console.dir(response.data);
       if (response.status === 200) {
         searchNicknamePostListObject = response.data;
       }
@@ -143,6 +112,37 @@ const getSearchNickname = async (nickName) => {
       console.log("게시글 리스트가 존재하지 않습니다.");
     });
   return searchNicknamePostListObject;
+};
+
+/**
+ * getPostList : 게시글 리스트
+ * @param {number} page 페이지번호 (1 ~ N)
+ * @returns {Promise} A Promise Object contains PostListObject
+ */
+const getPostList = async (page = 1) => {
+  let url = `/api/post/list?page=${page}`;
+  let postListObject = {};
+  await axios
+    .get(url)
+    .then((response) => {
+      if (response.status === 200) {
+        let data = response.data;
+        // console.dir(response.data);
+        postListObject = {
+          postList: [...data.content],
+          hasContent: data.hasContent,
+          hasNext: data.hasNext,
+          isFirst: data.isFirst,
+          isLast: data.isLast,
+          nextPage: data.nextPage,
+          nextSize: data.nextSize,
+        };
+      }
+    })
+    .catch((error) => {
+      console.log("게시글 리스트가 존재하지 않습니다.");
+    });
+  return postListObject;
 };
 
 /**
@@ -157,6 +157,7 @@ const getPostListByWeather = async (weather, page = 0) => {
   await axios
     .get(url)
     .then((response) => {
+      // console.dir(response.data);
       if (response.status === 200) {
         weatherPostListObject = response.data;
       }
@@ -178,6 +179,8 @@ const getPostListByComment = async (page = 0) => {
   await axios
     .get(url)
     .then((response) => {
+      // console.dir(response.data);
+
       if (response.status === 200) {
         commentPostListObject = response.data;
       }
@@ -226,7 +229,9 @@ const createPost = async (content, weather, tagList = [], attachFiles = []) => {
   formData.append("content", content);
   formData.append("weather", weather);
   formData.append("tagList", tagList);
-  Object.values(attachFiles).forEach((file) => formData.append("attachFiles", file));
+  Object.values(attachFiles).forEach((file) =>
+    formData.append("attachFiles", file)
+  );
   /*
 attachFiles array[string]
 content string (query)	
