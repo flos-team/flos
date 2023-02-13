@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   getPostList,
   getPostListByWeather,
@@ -6,13 +6,6 @@ import {
   getPostListByNickname,
   getPostListByTagName,
 } from "../../api/PostAPI";
-
-// import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
-// import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
-// import PostItem from "../../../../components/PostItem/PostItem";
-// import PostItem from "./PostItem/PostItem";
-// import MoveToTopToggle from "../../../../components/MoveToTop/MoveToTopToggle.js";
-// import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle";
 
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import MoveToTopToggle from "../../components/MoveToTop/MoveToTopToggle";
@@ -42,10 +35,9 @@ function Global() {
   useEffect(() => {
     getPostList().then((response) => {
       console.log(response);
-      // SetHasNext(response.isLast)
-      setPosts([...response.postList]);
+      setPosts(response.postList);
       setNextPage(response.nextPage);
-      SetHasNext(!response.isLast);
+      SetHasNext(response.hasNext);
     });
   }, []);
 
@@ -57,7 +49,8 @@ function Global() {
   useEffect(() => {
     // newPost가 새로 갱신되면
     // posts에 newPosts를 붙힌다.
-    if(newPosts){
+    if(newPosts.length > 0){
+      console.log(posts)
       setPosts([...posts, ...newPosts]);
     }
   }, [newPosts]);
@@ -66,37 +59,37 @@ function Global() {
   const onFilter = () => {
     if (filterStandard === 1) {
       getPostList().then((response) => {
-        setPosts([...response.postList]);
+        setPosts(response.postList);
         setNextPage(response.nextPage);
-        SetHasNext(!response.isLast);
+        SetHasNext(response.hasNext);
         setIsSearching(false);
       });
     } else if (filterStandard === 2) {
       getPostListByComment().then((response) => {
         setPosts([...response.content]);
         setNextPage(response.nextPage);
-        SetHasNext(!response.isLast);
+        SetHasNext(response.hasNext);
         setIsSearching(false);
       });
     } else if (filterStandard === 3) {
       getPostListByWeather("SUNNY").then((response) => {
         setPosts([...response.content]);
         setNextPage(response.nextPage);
-        SetHasNext(!response.isLast);
+        SetHasNext(response.hasNext);
         setIsSearching(false);
       });
     } else if (filterStandard === 4) {
       getPostListByWeather("CLOUDY").then((response) => {
         setPosts(response.content);
-        setNextPage(response.nextPage);
-        SetHasNext(!response.isLast);
+        setNextPage(response.hasNext);
+        SetHasNext(response.isLast);
         setIsSearching(false);
       });
     } else if (filterStandard === 5) {
       getPostListByWeather("RAINY").then((response) => {
         setPosts(response.content);
         setNextPage(response.nextPage);
-        SetHasNext(!response.isLast);
+        SetHasNext(response.hasNext);
         setIsSearching(false);
       });
     }
@@ -144,16 +137,18 @@ function Global() {
   };
 
   const handleScroll = (e) => {
-    const pos = e.target.scrollHeight - e.target.scrollTop;
+    // const pos = e.target.scrollHeight - e.target.scrollTop;
     // console.log(pos);
-    // console.log(hasNext);
-    if (pos < 1100 && hasNext) {
+    // console.log(e.target);
+    // if (pos < 1100 && hasNext.client) {
+      if(e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight && hasNext){
       switch (filterStandard) {
         case 1:
           getPostList(nextPage).then((response) => {
-            setNewPosts(response.content);
+            console.log(response);
+            setNewPosts(response.postList);
             setNextPage(response.nextPage);
-            SetHasNext(response.isLast);
+            SetHasNext(response.hasNext);
             setIsSearching(false);
           });
           break;
@@ -161,7 +156,7 @@ function Global() {
           getPostListByComment(nextPage).then((response) => {
             setNewPosts(response.content);
             setNextPage(response.nextPage);
-            SetHasNext(response.isLast);
+            SetHasNext(response.hasNext);
             setIsSearching(false);
           });
           break;
@@ -169,7 +164,7 @@ function Global() {
           getPostListByWeather("SUNNY", nextPage).then((response) => {
             setNewPosts(response.content);
             setNextPage(response.nextPage);
-            SetHasNext(response.isLast);
+            SetHasNext(response.hasNext);
             setIsSearching(false);
           });
           break;
@@ -177,7 +172,7 @@ function Global() {
           getPostListByWeather("CLOUDY", nextPage).then((response) => {
             setNewPosts(response.content);
             setNextPage(response.nextPage);
-            SetHasNext(response.isLast);
+            SetHasNext(response.hasNext);
             setIsSearching(false);
           });
           break;
@@ -185,7 +180,7 @@ function Global() {
           getPostListByWeather("RAINY", nextPage).then((response) => {
             setNewPosts(response.content);
             setNextPage(response.nextPage);
-            SetHasNext(response.isLast);
+            SetHasNext(response.hasNext);
             setIsSearching(false);
           });
           break;

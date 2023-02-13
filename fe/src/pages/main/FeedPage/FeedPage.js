@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getFollowerPostList } from "../../../api/PostAPI";
-import { getFollowerList } from "../../../api/FollowAPI";
+import { getFollowingList } from "../../../api/FollowAPI";
 
 import PostItem from "../../../components/PostItem/PostItem";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -32,7 +32,7 @@ function Feed() {
       setHasContent(response.hasContent);
       setIsPostsLoading(true);
     }, []);
-    getFollowerList().then((response) => {
+    getFollowingList().then((response) => {
       setFriends(response);
       SetFriendsLoading(true);
     });
