@@ -182,11 +182,12 @@ const PostDetailPage = () => {
                       console.log("post id : ", post.id);
                       setBookMark(post.id).then((response) => {
                         console.log(response);
-                        setIsBookmark(response);
+                        setIsBookmark(!isBookmark);
                       });
                     } else {
                       deleteBookMark(post.id).then((response) => {
-                        setIsBookmark(response);
+                        console.log(response);
+                        setIsBookmark(!isBookmark);
                       });
                     }
                   }}

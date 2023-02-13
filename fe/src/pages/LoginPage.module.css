@@ -22,6 +22,8 @@
 
 .fullsize {
     width: 100%;
+    display: flex;
+    position: relative;
 }
 
 .inputdiv {
@@ -36,6 +38,18 @@
     outline: none;
     border-bottom: 1.5px solid black;
 }
+.icon{
+    top: 12px;
+    right: 4px;
+    bottom: 2px;
+    margin: 0;
+    padding: 0;
+    /* background-color: transparent; */
+    border: 0;
+    font-size: 1px;
+    /* color: transparent; */
+    position: absolute;
+  }
 
 .emaillabel {
     display: flex;

@@ -7,12 +7,14 @@
   justify-content: center;
   width: 100vw;
   height: max-content;
-  background: $black;
+  background: $white;
   // align-content: center;
-  color: $mono200;
+  color: $mono900;
 
   /* 사용자 포스트 활동지수 아이템 */
   .user-active-static-item {
+    border-top: 1px solid $mono600;
+    border-bottom: 1px solid $mono600;
     margin-top: 16px;
     /* user-active-static-item */
     box-sizing: border-box;
@@ -90,6 +92,7 @@
   }
 
   .user-cast-static-item {
+    border-bottom: 1px solid $mono600;
     /* user-cast-static-item */
     box-sizing: border-box;
     /* Auto layout */
@@ -106,7 +109,7 @@
       height: max-content;
       padding-left: 10 * $rpx1;
       p {
-        font-size: 20 * $rpx1;
+        font-size: 16 * $rpx1;
       }
     }
     .cast-statistics-item-div {
@@ -136,6 +139,7 @@
         background: $white;
         border-radius: 8 * $rpx1;
         position: relative;
+        background: $mono100;
         .graph-gage {
           position: absolute;
           height: 16 * $rpx1;
@@ -171,6 +175,7 @@
   }
 
   .plant-static-item {
+    border-bottom: 1px solid $mono600;
     /* plant-static-item */
     box-sizing: border-box;
     /* Auto layout */
@@ -189,14 +194,12 @@
     .plant-container {
       /* Auto layout */
       display: flex;
-      align-items: center;
       padding: 0px;
       gap: 8 * $rpx1;
       width: 100%;
       height: 160 * $rpx1;
-      overflow-y: scroll;
-      flex-wrap: wrap;
-      flex-direction: column;
+      overflow-x: scroll;
+      flex-flow: column wrap;
       .plant-item {
         /* plant-item */
         box-sizing: border-box;
@@ -210,8 +213,28 @@
         display: flex;
         align-items: center;
         img {
-          width: 100%;
+          // width: 100%;
+          display: block;
+          margin: 0 auto;
+          height: 100%;
           // border: 1px solid black;
+          padding: 5px;
+        }
+        .flowering-date {
+          box-sizing: border-box;
+          position: absolute;
+          width: max-content;
+          height: max-content;
+          padding-top: 5 * $rpx1;
+          padding-bottom: 5 * $rpx1;
+          padding-left: 10 * $rpx1;
+          padding-right: 10 * $rpx1;
+          // background-color: $white;
+          bottom: 2px;
+          right: 2px;
+          font-size: 10px;
+          opacity: 90%;
+          color: $mono800;
         }
         .plant-name {
           /* plant-name */
@@ -219,21 +242,24 @@
           position: absolute;
           width: max-content;
           height: max-content;
-          bottom: 5px;
-          left: 50%;
-          transform: translate(-50%, 0%);
+          bottom: 10%;
+          right: 2px;
+          color: $mono800;
+          transform: translate(0, 0);
           padding-top: 5 * $rpx1;
           padding-bottom: 5 * $rpx1;
           padding-left: 10 * $rpx1;
           padding-right: 10 * $rpx1;
-          border: 1 * $rpx1 solid $mono300;
-          color: $mono600;
+          opacity: 90%;
+          font-size: 12 * $rpx1;
+          // background-color: $white;
         }
       }
     }
   }
 
   .user-active-log-item {
+    border-bottom: 1px solid $mono600;
     /* user-active-log-item */
     box-sizing: border-box;
     /* Auto layout */
@@ -244,7 +270,6 @@
     gap: 8 * $rpx1;
     width: 100%;
     height: 200 * $rpx1;
-    background: $black;
     /* Inside auto layout */
     order: 3;
     .user-active-title {
@@ -279,4 +304,13 @@
       order: 3;
     }
   }
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }

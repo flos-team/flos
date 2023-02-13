@@ -17,7 +17,7 @@ import { getMemberInfo, modifyUserInfo } from "../../../../api/MemberAPI";
 /* import css */
 import "./ProfileModifyPage.css";
 
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 
 const ProfileModifyPage = () => {
   const navigate = useNavigate();
@@ -89,20 +89,26 @@ const ProfileModifyPage = () => {
 
   // functions;
   const modifyMemberInfoFunc = async () => {
-    let data = modifyUserInfo(nickname, introduction, imgFile[0]);
-
-    await data
-      .then((res) => {
-        if (res){
+    if (imgFile) {
+      console.log("이미지 있음");
+      modifyUserInfo(nickname, introduction, imgFile[0]).then((res) => {
+        if (res) {
           Swal.fire({
-            icon: 'success',
-            title: '프로필 수정 성공',
-          })
-        };
-      })
-      .catch((err) => {
-
+            icon: "success",
+            title: "프로필 수정 성공",
+          });
+        }
       });
+    } else {
+      modifyUserInfo(nickname, introduction).then((res) => {
+        if (res) {
+          Swal.fire({
+            icon: "success",
+            title: "프로필 수정 성공",
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -119,78 +125,78 @@ const ProfileModifyPage = () => {
         }}
       />
       <div className="profiile-edit-page-conatiner">
-          <div className="profile-photo-edit-container">
+        <div className="profile-photo-edit-container">
+          <div
+            className="user-img"
+            style={{ backgroundImage: `url(${imgBase64.length ? imgBase64 : userInfo.profileURL})` }}
+          ></div>
+          <div className="profile-photo-edit-btn">
+            <label htmlFor="photo-input">프로필 사진 수정</label>
+            <input
+              type="file"
+              id="photo-input"
+              accept="image/jpg, image/jpeg, image/png"
+              ref={imgInputRef}
+              style={{ display: "none" }}
+              onChange={handleOnChange}
+            />
+          </div>
+        </div>
+        <div className="profile-edit-container">
+          <div className="profile-edit-item">
+            <label className="email-input-lab" htmlFor="email-input">
+              이메일
+            </label>
+            <input className="email-input" type="text" id="email-input" placeholder={userInfo.email} disabled />
+          </div>
+          <div className="profile-edit-item">
+            <label className="nickname-input-lab" htmlFor="nickname-input">
+              닉네임
+            </label>
+            <input
+              className="nickname-input"
+              type="text"
+              id="nickname-input"
+              value={nickname}
+              ref={nicknameRef}
+              onChange={(e) => {
+                setNickname(e.target.value);
+                setIsChanged(true);
+              }}
+            />
+          </div>
+          <div className="profile-edit-item">
+            <label className="introduce-input-lab" htmlFor="introduce-input">
+              소개글
+            </label>
+            <input
+              className="introduce-input"
+              type="text"
+              id="introduce-input"
+              value={introduction}
+              ref={introRef}
+              onChange={(e) => {
+                setIntroduction(e.target.value);
+                setIsChanged(true);
+              }}
+            />
+          </div>
+          <div className="password-modify-item">
+            <Link to="/pwchange">
+              <div className="password-modify-btn">
+                <p>비밀번호 변경</p>
+              </div>
+            </Link>
             <div
-              className="user-img"
-              style={{ backgroundImage: `url(${imgBase64.length ? imgBase64 : userInfo.profileURL})` }}
-            ></div>
-            <div className="profile-photo-edit-btn">
-              <label htmlFor="photo-input">프로필 사진 수정</label>
-              <input
-                type="file"
-                id="photo-input"
-                accept="image/jpg, image/jpeg, image/png"
-                ref={imgInputRef}
-                style={{ display: "none" }}
-                onChange={handleOnChange}
-              />
+              className="user-exit-btn"
+              onClick={(e) => {
+                setIsOpen(true);
+              }}
+            >
+              <p>회원 탈퇴</p>
             </div>
           </div>
-          <div className="profile-edit-container">
-            <div className="profile-edit-item">
-              <label className="email-input-lab" htmlFor="email-input">
-                이메일
-              </label>
-              <input className="email-input" type="text" id="email-input" placeholder={userInfo.email} disabled />
-            </div>
-            <div className="profile-edit-item">
-              <label className="nickname-input-lab" htmlFor="nickname-input">
-                닉네임
-              </label>
-              <input
-                className="nickname-input"
-                type="text"
-                id="nickname-input"
-                placeholder={nickname}
-                ref={nicknameRef}
-                onChange={(e) => {
-                  setNickname(e.target.value);
-                  setIsChanged(true);
-                }}
-              />
-            </div>
-            <div className="profile-edit-item">
-              <label className="introduce-input-lab" htmlFor="introduce-input">
-                소개글
-              </label>
-              <input
-                className="introduce-input"
-                type="text"
-                id="introduce-input"
-                placeholder={introduction}
-                ref={introRef}
-                onChange={(e) => {
-                  setIntroduction(e.target.value);
-                  setIsChanged(true);
-                }}
-              />
-            </div>
-            <div className="password-modify-item">
-              <Link to="/pwchange">
-                <div className="password-modify-btn">
-                  <p>비밀번호 변경</p>
-                </div>
-              </Link>
-              <div
-                className="user-exit-btn"
-                onClick={(e) => {
-                  setIsOpen(true);
-                }}
-              >
-                <p>회원 탈퇴</p>
-              </div>
-            </div>
-            </div>
+        </div>
       </div>
       {isOpen ? (
         <DangerAlertModal

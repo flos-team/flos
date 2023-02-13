@@ -1,9 +1,8 @@
-import dayjs from "dayjs";
 // /* libraray */
 
 /* import react */
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 /* import img */
 import sunnyImg from "../../../assets/GlobalAsset/sunny.png";
@@ -16,7 +15,6 @@ import questionMark from "../../../assets/GlobalAsset/question-mark.png";
 
 /* import module */
 import COLORS from "../../../styles/colors";
-import { getTimeDiffText } from "../../../api/DateModule";
 
 /* import css */
 import "./PostTopComponent.css";
@@ -32,12 +30,19 @@ import "./PostTopComponent.css";
  * @returns
  */
 // userImg, userNickname, timeLog, weather, tagList
-const PostTopComponent = ({ userImgURL, userNickname, date, weather, tagList, moveProfile }) => {
-  //   console.log(userNickname, date, weather, tagList);
+const PostTopComponent = ({
+  userImgURL,
+  userNickname,
+  date,
+  flag,
+  weather,
+  tagList,
+  moveProfile,
+}) => {
+  // console.log(date);
   let testWeather = "SUNNY";
   const navigate = useNavigate();
   // RAINY, CLOUDY
-
   let testTagList = [
     "기쁨",
     "슬픔",
@@ -53,8 +58,8 @@ const PostTopComponent = ({ userImgURL, userNickname, date, weather, tagList, mo
     "슬픔",
   ];
   const [postTagList, setPostTagList] = useState([]); // 포스트의 태그
-  const [postDate, setPostDate] = useState(date); // 포스트의 작성 날짜
-  const [postTimeDiffText, setPostTimeDiffText] = useState(""); // 포스트 날짜 차이 텍스트
+  // const [postDate, setPostDate] = useState(); // 포스트의 작성 날짜
+  // const [postTimeDiffText, setPostTimeDiffText] = useState(""); // 포스트 날짜 차이 텍스트
   const [postColor, setPostColor] = useState("#000");
   const [postImg, setPostImg] = useState(questionMark);
 
@@ -82,15 +87,12 @@ const PostTopComponent = ({ userImgURL, userNickname, date, weather, tagList, mo
   useEffect(() => {
     // 태그 JSX List 생성
     setPostTagList(
-      tagList !== null ? [] : tagList.map(({ tagName }) => <div className="tag">{tagName}</div>)
+      tagList !== null
+        ? []
+        : tagList.map(({ tagName }) => <div className="tag">{tagName}</div>)
     );
-    // 날짜 텍스트 생성
-    setPostDate(date);
-    let text = getTimeDiffText(new dayjs(postDate), new dayjs(new Date()));
-    setPostTimeDiffText(text);
-    //
     setWeatherInfo(weather);
-  }, [date]);
+  }, [flag]);
 
   return (
     <>
@@ -106,7 +108,8 @@ const PostTopComponent = ({ userImgURL, userNickname, date, weather, tagList, mo
           <div className="post-info-div">
             <p>{userNickname}</p>
             <p className="time-log">
-              {postTimeDiffText} <img src={postImg} />
+              {date}
+              <img src={postImg} />
             </p>
           </div>
         </div>
