@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .post-write-container {
   /* Auto layout */
   display: flex;
@@ -125,13 +135,24 @@
   justify-content: left;
   gap: 8px;
 }
-.post-write-container .post-write-form .post-option-container .img-preview-container .img-preview {
+.post-write-container .post-write-form .post-option-container .img-preview-container .img-holder {
+  width: max-content;
+  height: max-content;
+  position: relative;
+}
+.post-write-container .post-write-form .post-option-container .img-preview-container .img-holder .img-preview {
   flex-shrink: 0;
   width: 3.75rem;
   height: 3.75rem;
   background-size: contain;
   background-position: center;
   border: 1px solid #bfbfbf;
+}
+.post-write-container .post-write-form .post-option-container .img-preview-container .img-holder .close-btn {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 15px;
 }
 
 /*# sourceMappingURL=WritePostPage.css.map */

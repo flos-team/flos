@@ -112,13 +112,25 @@
         align-items: center;
         justify-content: left;
         gap: 8px;
-        .img-preview {
-          flex-shrink: 0;
-          width: 60 * $rpx1;
-          height: 60 * $rpx1;
-          background-size: contain;
-          background-position: center;
-          border: 1px solid $mono300;
+        .img-holder {
+          width: max-content;
+          height: max-content;
+          position: relative;
+          .img-preview {
+            flex-shrink: 0;
+            width: 60 * $rpx1;
+            height: 60 * $rpx1;
+            background-size: contain;
+            background-position: center;
+            border: 1px solid $mono300;
+          }
+          .close-btn {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            // border: 1px solid black;
+            width: 15px;
+          }
         }
       }
     }
