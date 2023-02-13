@@ -22,8 +22,11 @@ import { motion } from "framer-motion";
 import { getFlowerInfo, giveSun, giveRain, flowering, modifyFlower } from "../../api/FlowerAPI";
 import { getMemberInfo } from "../../api/MemberAPI";
 import { getNotification } from "../../api/NotificationAPI";
+import {ReactComponent as Mountain} from "../../assets/HomeAsset/background-mountain.svg";
+import cloudData from "../../assets/HomeAsset/day-cloud.json"
 import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
 import Swal from "sweetalert2";
+import {commonMsg, commonMsgLength} from "../../constants/flowerMessage.js"
 
 const Title = styled.h1`
   color: #007bff;
@@ -48,6 +51,7 @@ const HomePageDiv = styled.div`
   gap: 8px;
   isolation: isolate;
   position: relative;
+  height: 100vh;
 
   background-image: url(${(p) => p.url});
   background-repeat: no-repeat;
@@ -124,6 +128,26 @@ const hide = {
   },
 };
 
+const BackgroundMountain = styled.div`
+  position: fixed;
+  width: 1000px;
+  height: 20vh;
+  bottom: 300px;
+  left: -200px;
+  z-index: -2;
+`;
+
+const Background = styled.div`
+  position: relative;
+`;
+
+const BackgroundCloud = styled.div`
+  position: fixed;
+  top: -100px;
+  left: -200px;
+  z-index: -5;
+`;
+
 const Home = () => {
   const sunBox = useRef();
   const rainBox = useRef();
@@ -157,7 +181,6 @@ const Home = () => {
     setIsFlowering(true);
   };
 
-  const flowerMessageArr = ["안녕~", "졸리다~", "기분짱!"];
 
   const [flowerMessage, setFlowerMessage] = useState(null);
   const [flowerMessageIsVisible, setFlowerMessageIsVisible] = useState(true);
@@ -181,7 +204,7 @@ const Home = () => {
      *   꽃 대화창 관련 interval
      */
     let interval = setInterval(function () {
-      const value = Math.floor(Math.random() * 2);
+      const value = Math.floor(Math.random() * commonMsgLength);
       setFlowerMessageIsVisible(true);
       setFlowerMessage(
         <motion.div
@@ -198,7 +221,7 @@ const Home = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.1 }}
             >
-              {flowerMessageArr[value]}
+              {commonMsg[value].msg}
             </motion.span>
           </FlowerMessageText>
         </motion.div>
@@ -545,6 +568,21 @@ const Home = () => {
           <Flower ref={flowerRef} flowerInfo={flowerInfo} doFullGrown={doFullGrown}></Flower>
         </div>
       </div>
+      <Background>
+        <BackgroundCloud>
+          <Lottie
+                options={{
+                  autoplay: true,
+                  animationData: cloudData,
+                }}
+                height={1000}
+                width={1000}
+              />
+        </BackgroundCloud>
+        <BackgroundMountain>
+        <Mountain />
+      </BackgroundMountain>
+      </Background>
     </HomePageDiv>
   );
 };

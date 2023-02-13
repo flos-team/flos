@@ -65,8 +65,8 @@ const getGardenList = async (page = 0) => {
  * getFlowerContributorList : 꽃의 성장에 기여한 회원 리스트를 반환함
  * @returns
  */
-const getFlowerContributorList = async (page, flowerId) => {
-  let url = `/api/flower/${flowerId}?page=${page}`;
+const getFlowerContributorList = async (flowerId) => {
+  let url = `/api/flower/${flowerId}`;
   let value = null;
   await axios
     .get(url)
