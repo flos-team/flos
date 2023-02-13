@@ -12,7 +12,7 @@ import FlowerGlassBottle from "../../GardenComponent/FlowerGlassBottleItem";
 /* import css */
 import "./LetterStep1Component.css";
 
-const LetterStep1Component = ({ flowerImg, flowerMeans, flowerName }) => {
+const LetterStep1Component = ({ step1Obj }) => {
   const user = useSelector((state) => state.user.userData);
 
   return (
@@ -22,10 +22,10 @@ const LetterStep1Component = ({ flowerImg, flowerMeans, flowerName }) => {
           <p>
             " {user.nickname} " 의 사랑으로 예쁜 꽃이 탄생했어요.
             <br />
-            꽃의 종류는 <b>{flowerName}</b> <br /> 꽃말은
+            꽃의 종류는 <b>{step1Obj.flowerName}</b> <br /> 꽃말은
           </p>
           <p>
-            {flowerMeans.map((e, i) => (
+            {step1Obj.flowerMeans.map((e, i) => (
               <b key={i}>
                 {e}
                 {",  "}
@@ -34,7 +34,7 @@ const LetterStep1Component = ({ flowerImg, flowerMeans, flowerName }) => {
           </p>
         </div>
         <div className="flower-container">
-          <img width="61px" height="206px" src={flowerImg} />
+          <img width="61px" height="206px" src={step1Obj.flowerImg} />
           {/* <FlowerGlassBottle width={"256px"} height={"256px"}></FlowerGlassBottle> */}
         </div>
       </div>

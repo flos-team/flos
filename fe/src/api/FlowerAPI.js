@@ -60,6 +60,7 @@ const getGardenList = async (page = 0) => {
   return value;
 };
 
+
 /**
  * getFlowerContributorList : 꽃의 성장에 기여한 회원 리스트를 반환함
  * @returns
@@ -77,6 +78,51 @@ const getFlowerContributorList = async (page, flowerId) => {
       console.log(err, "꽃 기여자 리스트 가져오는 중 오류 발생");
     });
   return value;
+};
+
+
+// 꽃 가져오는 메서드 정보
+/**
+ * @param {number} id 불러올 꽃의 id 정보
+ * @return 꽃의 정보를 담은 Promise Object 리턴
+ */
+const getFlowerInfoById = async (id) => {
+  let url = `/api/flower/info`;
+  let data = {
+    id,
+  };
+  let flowerInfoObject = {};
+  await axios
+    .post(url, data)
+    .then((response) => {
+      flowerInfoObject = { ...response.data };
+    })
+    .catch((err) => {
+      console.log("꽃 정보를 가져오던 중 오류가 발생했습니다.");
+      return err;
+    });
+  return flowerInfoObject;
+};
+
+// 최고 기여자
+/**
+ *
+ * @param {number} flowerId 꽃 ID
+ */
+const getFlowerMVPInfo = async (flowerId) => {
+  let url = `/api/flower/best/${flowerId}`;
+  let flowerMVPInfoObj = {};
+  await axios
+    .get(url)
+    .then((response) => {
+      console.dir(response);
+      flowerMVPInfoObj = { ...response.data };
+    })
+    .catch((err) => {
+      console.log("꽃 최고 기여자를 불러오던 도중 오류 발생");
+      return err;
+    });
+  return flowerMVPInfoObj;
 };
 
 
@@ -163,6 +209,26 @@ const flowering = async (id) => {
   return value;
 };
 
+const writeEndLetter = async (id, letter = "") => {
+  let url = "/api/flower/letter";
+  let data = {
+    id,
+    letter,
+  };
+  let isLettered = false;
+  await axios
+    .post(url, data)
+    .then((res) => {
+      console.dir(res);
+      isLettered = true;
+    })
+    .catch((err) => {
+      console.log("꽃에게 편지를 쓰는 도중 오류가 발생했습니다.");
+      return err;
+    });
+  return isLettered;
+};
+
 /////////* PUT *///////////////////
 /**
  * modifyFlower : 꽃 이름 변경 줌
@@ -184,4 +250,16 @@ const modifyFlower = async (id, name) => {
   return value;
 };
 
-export { getFlowerInfo, getGardenList, getFlowerContributorList, createFlower, giveSun, giveRain, flowering, modifyFlower };
+export {
+  getFlowerInfo,
+  getGardenList,
+  getFlowerContributorList,
+  getFlowerInfoById,
+  getFlowerMVPInfo,
+  createFlower,
+  giveSun,
+  giveRain,
+  flowering,
+  writeEndLetter,
+  modifyFlower,
+};
