@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 /* import react-redux */
 import { useSelector, useDispatch } from "react-redux";
 import { setIsToastValue } from "../../../redux/toast";
+import { garden } from "../../../redux/page";
 
 /* import img */
 
@@ -28,8 +29,15 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 /* import module */
 import { getTimeDiffText } from "../../../api/DateModule";
-import MemberAPI, { getMemberInfo, getOtherMemberInfo, doLogin } from "../../../api/MemberAPI";
-import PostAPI, { getPostListByNickname, getBookMarkList } from "../../../api/PostAPI";
+import MemberAPI, {
+  getMemberInfo,
+  getOtherMemberInfo,
+  doLogin,
+} from "../../../api/MemberAPI";
+import PostAPI, {
+  getPostListByNickname,
+  getBookMarkList,
+} from "../../../api/PostAPI";
 
 /* import css */
 import "./ProfilePage.css";
@@ -99,7 +107,7 @@ const ProfilePage = ({ setIsToast }) => {
   );
 
   ////////////////////////////
-
+  const dispatch = useDispatch();
   // 사용자가 작성한 포스트의 세팅을 위한 state
   const [postIdx, setPostIdx] = useState(1);
   // 사용자 정보에 따른 포스트 리스트 state
@@ -137,7 +145,9 @@ const ProfilePage = ({ setIsToast }) => {
         setPostList([]);
         //console.dir(newPostList);
       } else {
-        setBookPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
+        setBookPostList(
+          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
+        );
         setPostList([]);
       }
     });
@@ -145,7 +155,7 @@ const ProfilePage = ({ setIsToast }) => {
 
   const setMyPostList = async (nickname) => {
     await getPostListByNickname(nickname).then((res) => {
-      console.dir(res);
+      // console.dir(res);
       if (res && res.content && res.content.length) {
         let newPostList = postList.concat(
           res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
@@ -153,7 +163,9 @@ const ProfilePage = ({ setIsToast }) => {
         setPostList(newPostList);
         setBookPostList([]);
       } else {
-        setPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
+        setPostList(
+          res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>)
+        );
         setBookPostList([]);
       }
     });
@@ -168,7 +180,9 @@ const ProfilePage = ({ setIsToast }) => {
         nickname: response.nickname,
         introduction: response.introduction,
       });
-      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`);
+      setUserImgURL(
+        `https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`
+      );
       let list = [
         response.followerCount,
         response.followingCount,
@@ -183,7 +197,7 @@ const ProfilePage = ({ setIsToast }) => {
               <li
                 key={i}
                 onClick={(e) => {
-                  navigate(`/follower-view-page/${response.id}`);
+                  navigate(`/follower-view-page/${response.id}?${i}`);
                 }}
               >
                 {e > 999 ? "999+" : e}
@@ -201,7 +215,8 @@ const ProfilePage = ({ setIsToast }) => {
 
   // 스크롤 끝을 감지하는 메서드
   const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight - e.target.scrollTop + 3 <= e.target.clientHeight;
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop + 3 <= e.target.clientHeight;
     // console.log(e.target.scrollHeight - e.target.scrollTop);
     //console.log("스크롤 감지");
     if (bottom) {
@@ -245,7 +260,10 @@ const ProfilePage = ({ setIsToast }) => {
       ></HeaderComponent>
       <div className="profile-page-container hide-scroll">
         <div className="user-info-header">
-          <div className="user-img" style={{ backgroundImage: `url(${userImgURL})` }}></div>
+          <div
+            className="user-img"
+            style={{ backgroundImage: `url(${userImgURL})` }}
+          ></div>
           <div className="profile-edit-nav-container">
             <Link to="/profile-modify">
               <div className="profile-edit-btn">
@@ -258,22 +276,46 @@ const ProfilePage = ({ setIsToast }) => {
           </div>
         </div>
         <div className="user-social-info-box">
-          <ul className="social-info-title">{titleList}</ul>
+          <ul className="social-info-title">
+            <li>팔로워 </li>
+            <li>팔로잉</li>
+            <li>게시글</li>
+            <li
+              onClick={() => {
+                dispatch(garden());
+              }}
+            >
+              꽃송이{" "}
+            </li>
+          </ul>
           <ul className="social-info-count">{userInfoList}</ul>
         </div>
         {testBtn}
         <Box sx={{ width: "100%", margin: "0 auto" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              centered
+            >
               <Tab
                 label="내 포스트"
                 {...a11yProps(0)}
-                style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
+                style={{
+                  width: "35%",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
               />
               <Tab
                 label="북마크"
                 {...a11yProps(1)}
-                style={{ width: "35%", marginLeft: "10px", marginRight: "10px" }}
+                style={{
+                  width: "35%",
+                  marginLeft: "10px",
+                  marginRight: "10px",
+                }}
               />
             </Tabs>
           </Box>

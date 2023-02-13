@@ -118,10 +118,12 @@ const commentApprove = async (commentId) => {
     .then((response) => {
       if (response.status === 200) {
         console.dir(response);
+        return true;
       }
     })
     .catch((error) => {
       console.log(error);
+      return false;
     });
 };
 

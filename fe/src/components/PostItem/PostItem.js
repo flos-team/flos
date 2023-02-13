@@ -68,7 +68,7 @@ const PostItem = ({ post }) => {
       setPostUserId(post.writer.id);
       if (post.relation.attachFiles.length) {
         let list = post.relation.attachFiles;
-        //console.dir(list)
+        // console.dir(list)
         setBottomComponent(
           <PostPhotoComponent imgURLList={list}></PostPhotoComponent>
         );
