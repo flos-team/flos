@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .profile-page-container {
   /* Auto layout */
   display: flex;
@@ -164,7 +174,7 @@
 .profile-page-container .post-container {
   /* Auto layout */
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   overflow-y: scroll;
   gap: 1rem;
   width: 100%;
