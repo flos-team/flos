@@ -41,7 +41,9 @@ function Feed() {
   useEffect(() => {
     // newPost가 새로 갱신되면
     // posts에 newPosts를 붙힌다.
-    setPosts([...posts, ...newPosts]);
+    if(newPosts){
+      setPosts([...posts, ...newPosts]);
+    }
   }, [newPosts]);
 
   // console.log(posts);

@@ -48,6 +48,7 @@ function Global() {
       SetHasNext(!response.isLast);
     });
   }, []);
+
   // 입력값이 변경할 때마다 발동
   useEffect(() => {
     onFilter();
@@ -56,23 +57,22 @@ function Global() {
   useEffect(() => {
     // newPost가 새로 갱신되면
     // posts에 newPosts를 붙힌다.
-    // setPosts([...posts, ...newPosts]);
+    if(newPosts){
+      setPosts([...posts, ...newPosts]);
+    }
   }, [newPosts]);
 
   // 상태관리에 따른 필터
   const onFilter = () => {
     if (filterStandard === 1) {
       getPostList().then((response) => {
-        // console.log(response);
         setPosts([...response.postList]);
-        // setNewPosts([...response.content]);
         setNextPage(response.nextPage);
         SetHasNext(!response.isLast);
         setIsSearching(false);
       });
     } else if (filterStandard === 2) {
       getPostListByComment().then((response) => {
-        // console.log(response);
         setPosts([...response.content]);
         setNextPage(response.nextPage);
         SetHasNext(!response.isLast);
@@ -80,7 +80,6 @@ function Global() {
       });
     } else if (filterStandard === 3) {
       getPostListByWeather("SUNNY").then((response) => {
-        // console.log(response);
         setPosts([...response.content]);
         setNextPage(response.nextPage);
         SetHasNext(!response.isLast);
@@ -88,7 +87,6 @@ function Global() {
       });
     } else if (filterStandard === 4) {
       getPostListByWeather("CLOUDY").then((response) => {
-        // console.log(response);
         setPosts(response.content);
         setNextPage(response.nextPage);
         SetHasNext(!response.isLast);
@@ -96,7 +94,6 @@ function Global() {
       });
     } else if (filterStandard === 5) {
       getPostListByWeather("RAINY").then((response) => {
-        // console.log(response);
         setPosts(response.content);
         setNextPage(response.nextPage);
         SetHasNext(!response.isLast);
@@ -149,12 +146,11 @@ function Global() {
   const handleScroll = (e) => {
     const pos = e.target.scrollHeight - e.target.scrollTop;
     // console.log(pos);
-    console.log(hasNext);
+    // console.log(hasNext);
     if (pos < 1100 && hasNext) {
       switch (filterStandard) {
         case 1:
           getPostList(nextPage).then((response) => {
-            console.log(response);
             setNewPosts(response.content);
             setNextPage(response.nextPage);
             SetHasNext(response.isLast);

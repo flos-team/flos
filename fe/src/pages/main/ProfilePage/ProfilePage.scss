@@ -155,7 +155,7 @@
   .post-container {
     /* Auto layout */
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     overflow-y: scroll;
     // padding: 8 * $rpx1 0px;
     gap: 16 * $rpx1;
