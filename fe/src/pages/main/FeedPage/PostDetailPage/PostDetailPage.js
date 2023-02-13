@@ -148,6 +148,7 @@ const PostDetailPage = () => {
                 showConfirmButton: false,
                 timer: 1000,
               });
+              navigate(-1)
             })
             .catch((err) => {
               console.log(err);

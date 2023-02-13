@@ -77,6 +77,7 @@ const NotificationPage = () => {
                 profileImg = `${goormSad}`
                 break;
               default:
+                profileImg = `${goormSad}`
                 break;
             }
 
