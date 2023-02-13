@@ -23,7 +23,7 @@ public interface FlowerRepository extends JpaRepository<Flower, Long> {
 
     long countByOwnerAndBlossomAtIsNotNullAndGardeningIsTrue(Member owner);
 
-    @Query("SELECT distinct wr.contributor FROM WeatherResource wr WHERE wr.flower = :flower")
+    @Query("SELECT wr.contributor FROM WeatherResource wr WHERE wr.flower = :flower")
     Slice<Member> findContributorByFlower(Flower flower, Pageable pageable);
 
     @Query(value = "select contributor_id from weather_resource where flower_id = ?1 order by count(*) desc limit 1;", nativeQuery = true)
