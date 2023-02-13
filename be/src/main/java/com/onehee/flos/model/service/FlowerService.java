@@ -6,8 +6,11 @@ import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.dto.response.GardenCountResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface FlowerService {
@@ -29,7 +32,7 @@ public interface FlowerService {
     // 회원의 가든 꽃 리스트
     SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException;
 
-    SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
+    List<MemberResponseDTO> getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
 
     BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException;
 

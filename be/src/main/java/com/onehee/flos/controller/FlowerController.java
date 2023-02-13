@@ -6,6 +6,7 @@ import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.BestContributorResponseDTO;
 import com.onehee.flos.model.dto.response.FlowerResponseDTO;
 import com.onehee.flos.model.dto.response.GardenCountResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.service.FlowerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "꽃API", description = "꽃 기능을 담당합니다.")
 @RestController
@@ -99,7 +102,7 @@ public class FlowerController {
             pageRequest = PageRequest.of(0, size);
         else
             pageRequest = PageRequest.of(page, size);
-        return new ResponseEntity<SliceResponseDTO>(flowerService.getContributorByFlower(flowerId, pageRequest), HttpStatus.OK);
+        return new ResponseEntity<List<MemberResponseDTO>>(flowerService.getContributorByFlower(flowerId, pageRequest), HttpStatus.OK);
     }
 
     @Tag(name = "꽃API")
