@@ -155,7 +155,7 @@ const OtherProfilePage = ({ userNickName }) => {
               <li
                 key={i}
                 onClick={(e) => {
-                  navigate(`/follower-view-page/${res.id}`);
+                  navigate(`/follower-view-page/${res.id}?${i}`);
                 }}
               >
                 {e > 999 ? "999+" : e}

@@ -20,6 +20,7 @@ const getPost = async (postId) => {
   await axios
     .get(url)
     .then((response) => {
+      console.dir(response.data)
       if (response.status === 200) {
         post = response.data;
       }
@@ -119,7 +120,7 @@ const getSearchNickname = async (nickName) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains PostListObject
  */
-const getPostList = async (page = 1) => {
+const getPostList = async (page = 0) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
