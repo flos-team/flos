@@ -11,6 +11,7 @@ TRUNCATE TABLE `notification`;
 TRUNCATE TABLE `weather_resource`;
 TRUNCATE TABLE `notification`;
 TRUNCATE TABLE `flower`;
+TRUNCATE TABLE `attendance`;
 set FOREIGN_KEY_CHECKS = 1;
 insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (4, null, "person1.jpg", "person1.jpg", "2023-02-06");
 insert into `file_entity` (`files_id`, `members_id`, `original_name`, `saved_name`, `created_at`) VALUE (5, null, "person2.jpg", "person2.jpg", "2023-02-06");

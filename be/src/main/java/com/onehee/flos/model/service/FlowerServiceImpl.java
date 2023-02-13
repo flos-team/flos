@@ -28,7 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -99,12 +101,14 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    public SliceResponseDTO getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
+    public List<MemberResponseDTO> getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
         if (flower.getOwner().getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("꽃 주인이 아닙니다.");
-        return SliceResponseDTO.toDto(flowerRepository.findContributorByFlower(flower, pageable)
-                .map(MemberResponseDTO::toDto));
+        return flowerRepository.findContributorByFlower(flower, pageable)
+                .stream()
+                .map(MemberResponseDTO::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
