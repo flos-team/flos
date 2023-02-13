@@ -52,7 +52,18 @@
 ```
 **Front-end : REACT**
 ```
-- 몰루?
+- React : 18.2.0
+- redux : 4.2.1
+- reduxjs/toolkit : 1.9.2
+- axios : 1.3.0
+- react-lottie : 1.2.3
+- dayjs : 1.11.7
+- sweetalert2 : 11.7.1
+- mui/material : 5.11.8
+- material-ui/core : 4.12.4
+- framer-motion : 9.0.1
+- swiper : 9.0.0
+- sass : 1.3.0
 ```
 **CI/CD**
 ```
@@ -96,7 +107,7 @@
        ├── components
        ├── constants
        ├── hooks
-       ├── pages
+       ├── pages 
        ├── redux
        └── styles
 ```
