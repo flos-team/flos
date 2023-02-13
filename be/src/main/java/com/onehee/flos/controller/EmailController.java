@@ -3,6 +3,8 @@ package com.onehee.flos.controller;
 import com.onehee.flos.model.dto.request.EmailVerificationRequestDTO;
 import com.onehee.flos.model.service.MailService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,10 @@ public class EmailController {
 
     @Tag(name = "이메일API")
     @Operation(summary = "회원가입 인증 이메일 발송 메서드", description = "회원가입 인증 이메일을 발송합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "이메일이 정상적으로 발송되었습니다."),
+            @ApiResponse(responseCode = "500")
+    })
     @GetMapping("/sign-up")
     public ResponseEntity<?> sendSignUpMail(EmailVerificationRequestDTO emailVerificationRequestDTO) throws MessagingException, UnsupportedEncodingException {
         mailService.sendSignUpEmail(emailVerificationRequestDTO);

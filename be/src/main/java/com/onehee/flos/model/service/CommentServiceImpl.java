@@ -74,7 +74,7 @@ public class CommentServiceImpl implements CommentService {
         if (commentCreateRequestDTO.getPrimitiveId() != null)
             tempPrimitiveComment = commentRepository.findById(commentCreateRequestDTO.getPrimitiveId()).orElse(null);
 
-        commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
+        Comment thisComment = commentRepository.save(commentCreateRequestDTO.toEntity(writer, tempPost, tempParentComment, tempPrimitiveComment));
 
         // 알람 갈 사람
         Member receiver;
@@ -93,8 +93,8 @@ public class CommentServiceImpl implements CommentService {
                 Notification.builder()
                         .member(receiver)
                         .messageType(messageType)
-                        .message(String.format(messageType.getMessage(), writer))
-                        .referenceKey(tempPost.getId())
+                        .message(String.format(messageType.getMessage(), writer.getNickname()))
+                        .referenceKey(thisComment.getId())
                         .build()
         );
 
@@ -102,7 +102,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void modifyComment(CommentModifyRequestDTO commentModifyRequestDTO) throws BadRequestException {
-        Comment tempComment = commentRepository.findById(commentModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
+        Comment tempComment =  commentRepository.findById(commentModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
         if (tempComment.getWriter().getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
         Post tempPost = postRepository.findById(commentModifyRequestDTO.getPostId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
@@ -157,7 +157,7 @@ public class CommentServiceImpl implements CommentService {
                 Notification.builder()
                         .member(tempComment.getWriter())
                         .messageType(MessageType.COMMENTCHOSEN)
-                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter(), weatherType.getName()))
+                        .message(String.format(MessageType.COMMENTCHOSEN.getMessage(), post.getWriter().getNickname(), weatherType.getName()))
                         .referenceKey(post.getId())
                         .build()
         );

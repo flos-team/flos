@@ -30,8 +30,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FileNotFoundException.class)
     public ResponseEntity<Message> fileNotFoundHandler() {
-        Message message = new Message("해당 파일을 찾을 수 없습니다.", null, HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        Message message = new Message("해당 파일을 찾을 수 없습니다.", null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(FlowerNotExistsException.class)
