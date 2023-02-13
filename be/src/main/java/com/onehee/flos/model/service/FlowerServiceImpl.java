@@ -107,7 +107,7 @@ public class FlowerServiceImpl implements FlowerService {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
         return BestContributorResponseDTO.builder()
                 .flower(FlowerResponseDTO.toDto(flower))
-                .contributor(MemberResponseDTO.toDto(flowerRepository.findContributorByFlowerOrderByCount(flower).orElseThrow(() -> new BadRequestException("기여자가 없습니다."))))
+                .contributor(MemberResponseDTO.toDto(flowerRepository.findContributorByFlowerOrderByCount(flower)))
                 .contributeCounter(flowerRepository.countByFlowerAndContributor(flower, SecurityManager.getCurrentMember()))
                 .build();
     }
