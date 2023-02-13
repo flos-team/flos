@@ -15,7 +15,6 @@ import com.onehee.flos.model.entity.type.FlowerState;
 import com.onehee.flos.model.entity.type.FlowerType;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.FlowerRepository;
-import com.onehee.flos.model.repository.FollowRepository;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.model.repository.WeatherResourceRepository;
 import com.onehee.flos.util.RandomFlowerTypeSelector;
@@ -26,7 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -101,11 +99,11 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    public List<MemberResponseDTO> getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException {
+    public List<MemberResponseDTO> getContributorByFlower(Long flowerId) throws BadRequestException {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
         if (flower.getOwner().getId() != SecurityManager.getCurrentMember().getId())
             throw new BadRequestException("꽃 주인이 아닙니다.");
-        return flowerRepository.findContributorByFlower(flower, pageable)
+        return flowerRepository.findContributorByFlower(flower)
                 .stream()
                 .map(MemberResponseDTO::toDto)
                 .collect(Collectors.toList());
