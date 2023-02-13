@@ -60,6 +60,27 @@ const getGardenList = async (page = 0) => {
   return value;
 };
 
+
+/**
+ * getFlowerContributorList : 꽃의 성장에 기여한 회원 리스트를 반환함
+ * @returns
+ */
+const getFlowerContributorList = async (page, flowerId) => {
+  let url = `/api/flower/${flowerId}?page=${page}`;
+  let value = null;
+  await axios
+    .get(url)
+    .then(({ data }) => {
+      console.log(data);
+      value = data;
+    })
+    .catch((err) => {
+      console.log(err, "꽃 기여자 리스트 가져오는 중 오류 발생");
+    });
+  return value;
+};
+
+
 // 꽃 가져오는 메서드 정보
 /**
  * @param {number} id 불러올 꽃의 id 정보
@@ -103,6 +124,7 @@ const getFlowerMVPInfo = async (flowerId) => {
     });
   return flowerMVPInfoObj;
 };
+
 
 /////////* POST *///////////////////
 /**
@@ -231,6 +253,7 @@ const modifyFlower = async (id, name) => {
 export {
   getFlowerInfo,
   getGardenList,
+  getFlowerContributorList,
   getFlowerInfoById,
   getFlowerMVPInfo,
   createFlower,
