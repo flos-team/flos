@@ -16,34 +16,71 @@
   box-sizing: border-box;
 }
 
-.bottom-nav-bar {
-  position: sticky;
+.bottom-nav-container {
+  position: fixed;
+  /* position: sticky; */
   left: 0;
   bottom: 0;
+  width: 100vw;
+  height: 80px;
+  /* position: relative; */
+}
+.bottom-nav-container .toast-message-div {
+  z-index: 0;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.125rem 1rem;
+  width: 100%;
+  height: 1.5rem;
+  transition: 1s;
+  /* black */
+  background: #141414;
+  font-size: 0.75rem;
+  color: #f9f9f9;
+}
+.bottom-nav-container .toast-message-div .toast-message {
+  width: max-content;
+  height: 1.125rem;
+  line-height: 1.125rem;
+}
+.bottom-nav-container .toast-message-div .check-btn {
+  width: max-content;
+  height: 1.125rem;
+  line-height: 1.125rem;
+}
+.bottom-nav-container .bottom-nav-bar {
+  z-index: 1;
   /* Auto layout */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 16px;
-  gap: 24px;
+  padding: 0.75rem 1rem;
+  gap: 1.5rem;
   position: relative;
   width: 100vw;
-  height: 80px;
-  z-index: 0;
+  height: 5rem;
   background: #f9f9f9;
 }
-.bottom-nav-bar .bottom-nav-item {
-  width: 48px;
-  height: 48px;
+.bottom-nav-container .bottom-nav-bar .bottom-nav-item {
+  width: 3rem;
+  height: 3rem;
   /* Inside auto layout */
 }
-.bottom-nav-bar .bottom-nav-item img {
+.bottom-nav-container .bottom-nav-bar .bottom-nav-item img {
   display: block;
-  width: 24px;
-  margin: 12px auto;
+  width: 1.5rem;
+  margin: 0.75rem auto;
   height: fit-content;
   align-items: center;
+}
+
+.toast-up {
+  transition: 1s;
+  transform: translateY(-24px);
 }
 
 /*# sourceMappingURL=BottomNavigation.css.map */

@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
-
-import loginlogo from "../assets/LoginAsset/groom-icon.png";
+import { doLogin, getMemberInfo } from "../api/MemberAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, setFollowingIdList } from "../redux/user";
+import Swal from "sweetalert2";
+import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
-
-import axios from "axios";
-
-axios.defaults.baseURL = "http://i8b210.p.ssafy.io:8080";
-axios.defaults.withCredentials = true;
+import { getFollowingList } from "../api/FollowAPI";
+import { useEffect } from "react";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userData);
+
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
+
+  const [loginMsg, setLoginMsg] = useState("");
+
   const handleInputId = (e) => {
     setInputId(e.target.value);
   };
@@ -23,69 +29,66 @@ function Login() {
   };
 
   // 로그인 버튼 클릭 이벤트
-  const onClickLogin = () => {
-    const loginInfo = {
-      email: inputId,
-      password: inputPw,
-    };
-    // console.log(loginInfo)
-    axios
-      .post("/member/login", loginInfo)
-      .then((response) => {
-        // console.log(response)
-        const accessToken = response.data.atk;
-        // console.log(accessToken)
-        // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-        axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
-        // console.dir(axios.defaults)
-
-      })
-      .then(() => {
-        axios
-          .get("/member/info",)
-          .then((response) => {
-            console.log(response);
-            navigate("/main");
-          })
-          .catch((error) => {
-            console.log("error : " + error);
-            console.dir(axios.defaults);
+  const onClickLogin = async () => {
+    if (inputId.length === 0) {
+      setLoginMsg("아이디를 입력해주세요.");
+    } else if (inputPw.length === 0) {
+      setLoginMsg("비밀번호를 입력해주세요.");
+    } else {
+      doLogin(inputId, inputPw)
+        .then((response) => {
+          if (response === false) {
+            setLoginMsg("아이디 또는 비밀번호를 확인해주세요.");
+          } else if (response === true) {
+            getMemberInfo().then((res) => {
+              // console.dir(res);
+              dispatch(setUser(res));
+              getFollowingList(false).then((res) => {
+                // console.log("로그인후 응답받은 팔로잉 리스트 결과");
+                let useIdList = [];
+                res.map((e, i) => {
+                  useIdList = [...useIdList, e.id];
+                });
+                // console.log(useIdList);
+                // console.dir(res);
+                dispatch(setFollowingIdList(useIdList));
+              });
+              setTimeout(() => {
+                navigate("/main", { replace: true });
+              }, 300);
+            });
+          }
+        })
+        .catch(() => {
+          Swal.fire({
+            icon: "error",
+            title: "일시적인 서버의 오류가 발생했습니다.",
           });
-      })
-      .catch((error) => {
-        console.log(error)
-        console.dir(axios.defaults);
-      });
+        });
+    }
   };
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    // console.log(axios.defaults.headers)
     console.log("카카오 로그인");
-    axios.get("/member/reissue").then(response => {
-      console.log(response).then(error => {
-        console.log(error)
-      })
-    })
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
     console.log("네이버 로그인");
   };
+  const imgStyle = {
+    width: "143px",
+  };
 
-  // // 페이지 렌더링 후 가장 처음 호출되는 함수
-  // useEffect(() => {
-  //     axios.get('')
-  //     .then(res => console.log(res))
-  //     .catch()
-  // },
-  // // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
-  // [])
+  useEffect(() => {
+    console.log("====LOGIN PAGE useEffect 결과 ====");
+    console.dir(user);
+  }, []);
 
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
-        <img src={loginlogo} alt="hi" className={styles.groomimg}></img>
+        <img src={loginlogo} alt="no-image" className={styles.groomimg} style={imgStyle}></img>
         <br></br>
         <h1>Flos</h1>
         <br></br>
@@ -95,7 +98,7 @@ function Login() {
           <div className={styles.fullsize}>
             <input
               type="text"
-              name="input_id"
+              name="inputId"
               placeholder="flos@example.com"
               value={inputId}
               className={styles.inputdiv}
@@ -109,14 +112,16 @@ function Login() {
               value={inputPw}
               className={styles.inputdiv}
               onChange={handleInputPw}
+              onKeyDown={(e) => {
+                if (e.key == "Enter" && inputId && inputPw) {
+                  onClickLogin();
+                }
+              }}
             />
           </div>
+          <div className={styles.loginmsg}>{loginMsg}</div>
           <div className={styles.loginbtndiv}>
-            <button
-              type="button"
-              className={styles.loginbtn}
-              onClick={onClickLogin}
-            >
+            <button type="button" className={styles.loginbtn} onClick={onClickLogin}>
               로그인
             </button>
           </div>
@@ -127,9 +132,6 @@ function Login() {
             <Link to="/pwfind" className={styles.linktext}>
               비밀번호 찾기
             </Link>
-            <Link to="/main" className={styles.linktext}>
-              홈으로
-            </Link>
           </div>
         </div>
 
@@ -137,16 +139,22 @@ function Login() {
           <span className={styles.socialline}>소셜 로그인</span>
           <br></br>
           <div className={styles.socialbtn}>
-            <button onClick={onClickKakaoLogin} className={styles.kakaobtn}>
-              <img src={kakaologo} alt=""></img>
-              <span>카카오톡 계정으로 로그인</span>
-            </button>
+            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/kakao">
+              {/* <button onClick={onClickKakaoLogin} className={styles.kakaobtn}> */}
+              <button onClick={onClickKakaoLogin} className={styles.kakaobtn}>
+                <img src={kakaologo} alt=""></img>
+                <span>카카오톡 계정으로 로그인</span>
+              </button>
+            </a>
           </div>
           <div className={styles.socialbtn}>
-            <button onClick={onClickNaverLogin} className={styles.naverbtn}>
-              <img src={naverlogo} alt=""></img>
-              <span>네이버 계정으로 로그인</span>
-            </button>
+            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/naver">
+              {/* <button onClick={onClickNaverLogin} className={styles.naverbtn}> */}
+              <button onClick={onClickNaverLogin} className={styles.naverbtn}>
+                <img src={naverlogo} alt=""></img>
+                <span>네이버 계정으로 로그인</span>
+              </button>
+            </a>
           </div>
         </div>
       </div>

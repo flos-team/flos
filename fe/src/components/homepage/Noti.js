@@ -4,12 +4,14 @@ import styled from "@emotion/styled";
 const Selection = styled.div`
   `;
 
-const Noti = (props) => {
+const Noti = () => {
+
     return (
-        <Selection onClick={props.onClick}>
+        <Selection>
             <img src={NotiImg}/>
         </Selection>
     )
 }
+
 
 export default Noti;

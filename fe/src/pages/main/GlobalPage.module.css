@@ -20,69 +20,35 @@
   order: 1;
   flex-grow: 0;
 }
-.friendListBar {
-  /* friend-list-bar */
 
-  /* Auto layout */
-  position: relative;
-  display: flex;
-  overflow-x: auto;
-  padding: 0px 8px;
-  gap: 4px;
-
-  width: 100%;
-  height: 8vh;
-
-  background: #ffffff;
-
-  /* Inside auto layout */
-
-  flex: none;
-  flex-wrap: nowrap;
-}
-.friendThumbnail {
-  position: relative;
-  display: flex;
-  flex: 0 0 auto;
-  /* height: 100vh; */
-  width: 18%;
-  /* border: 1px solid rebeccapurple; */
-  /* padding-bottom: 100%; */
-  overflow: hidden;
-}
-.friendProfileImg {
-  position: relative;
-  margin: auto;
-  width: 100%;
-  border-radius: 50%;
-  border: 1px solid gray;
-}
 .main {
   margin-top: 0.25rem;
   /* margin-bottom: 0.25rem; */
-  width: 20rem;
-  height: 80rem;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  width: 100%;
+  height: 74vh;
+  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
+  overflow: scroll;
+  display: flex;
+  flex-flow: row wrap;
+  scroll-behavior: smooth;
+  background: #ffffff;
 }
 
-.posts {
-  margin-bottom: 12.625rem !important; 
-  /* margin-bottom: 212300px; */
+.scroll::-webkit-scrollbar {
+  display: none;
 }
-
-.globalroot{
+.globalroot {
   width: 80%;
 }
 
-
-.searchdiv{
+.searchdiv {
   width: 100%;
   display: flex;
   position: relative;
 }
 
-.searchbar{
+.searchbar {
   background-color: white;
   width: 88%;
   height: 32px;
@@ -92,34 +58,46 @@
   font-size: 14px;
 }
 
-.searchicon{
+.searchicon {
   position: absolute;
   top: 4px;
   left: 16px;
 }
 
-.filtericon{
+.filtericon {
   position: absolute;
   top: 4px;
   right: 1%;
-} 
+}
 
-.filterselectbox{
+.filterselectbox {
   display: flex;
   justify-content: space-between;
   margin-top: 4px;
 }
 
-.filtertext{
-  margin: 0 8px;
-}
-
-.filtertextdiv{
+.filtertextdiv {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.nonselecticon{
+.filtertext {
+  margin: 0 8px;
+}
+
+.filtertextstandard {
+  margin: 0 8px;
+  color: #3bace2;
+  /* padding-top: 4px; */
+}
+
+.filterweathericon {
   margin: 0 4px;
+}
+
+.filterweatherstandard {
+  margin: 0 4px;
+  border: 1px solid #3bace2;
+  padding: 2px;
 }

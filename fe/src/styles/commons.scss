@@ -1,5 +1,5 @@
 /* rem unit */
-$rpx1:0.0625rem;
+$rpx1: 0.0625rem;
 
 /* red-tokens */
 $red900: #540000;
@@ -115,3 +115,12 @@ $white: #f9f9f9;
   padding: 0;
   box-sizing: border-box;
 }
+
+// /* 스크롤바 숨기는 속성 */
+// .hide-scroll {
+//   -ms-overflow-style: none; /* IE and Edge */
+//   scrollbar-width: none; /* Firefox */
+// }
+// .hide-scroll::-webkit-scrollbar {
+//   display: none; /* Chrome, Safari, Opera*/
+// }

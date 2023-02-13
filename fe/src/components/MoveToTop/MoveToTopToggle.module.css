@@ -1,0 +1,12 @@
+.arrowicon {
+    background-color: #ECE7ED;
+    border: solid #D5CDD8 3px;
+    border-radius: 100%;
+    font-size: 20px;
+  }
+  
+.arrowiconposition{
+    position: fixed;
+    bottom: 15%;
+    right: 6vw;
+  }

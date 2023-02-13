@@ -1,65 +1,232 @@
-import React from "react";
-import { useState } from "react";
-import PostItem from "../../components/PostItem/PostItem";
-import styles from "./GlobalPage.module.css";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  getPostList,
+  getPostListByWeather,
+  getPostListByComment,
+  getPostListByNickname,
+  getPostListByTagName,
+} from "../../api/PostAPI";
+
+// import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
+// import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
+// import PostItem from "../../../../components/PostItem/PostItem";
+// import PostItem from "./PostItem/PostItem";
+// import MoveToTopToggle from "../../../../components/MoveToTop/MoveToTopToggle.js";
+// import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle";
+
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import SearchIcon from '../../assets/GlobalAsset/Search.png'
-import FilterIcon from '../../assets/GlobalAsset/Filter.png'
-import SunnyIcon from '../../assets/GlobalAsset/sunny.png'
-import CloudyIcon from '../../assets/GlobalAsset/cloudy.png'
-import RainyIcon from '../../assets/GlobalAsset/rainy.png'
+import MoveToTopToggle from "../../components/MoveToTop/MoveToTopToggle";
+import PostItem from "../../components/PostItem/PostItem";
 
-function Feed() {
-  const [userInfos, setUserInfos] = useState([
-    { userInfoId: 1, userInfo: 999 },
-    { userInfoId: 2, userInfo: 999 },
-    { userInfoId: 3, userInfo: 999 },
-    { userInfoId: 4, userInfo: 999 },
-    { userInfoId: 5, userInfo: 999 },
-  ]);
-  const postList = userInfos.map(({ userInfoId, userInfo }) => (
-    <PostItem mood={"RAINY"} userName={"wonnny"}></PostItem>
-  ));
+import SearchIcon from "../../assets/GlobalAsset/Search.png";
+import FilterIcon from "../../assets/GlobalAsset/Filter.png";
+import SunnyIcon from "../../assets/GlobalAsset/sunny.png";
+import CloudyIcon from "../../assets/GlobalAsset/cloudy.png";
+import RainyIcon from "../../assets/GlobalAsset/rainy.png";
 
-  const [filtering, setFiltering] = useState(false)
-  
-  const clickFilterIcon = () => {
-    if (filtering===false) {
-      setFiltering(true)
-    } else {
-      setFiltering(false)
+import styles from "./GlobalPage.module.css";
+
+function Global() {
+  const [posts, setPosts] = useState([]);
+  const [filtering, setFiltering] = useState(false); // 필터링 아이콘 누른 상태 확인
+  const [filterStandard, setFilterStandard] = useState(1); // 정렬 기준 (1: 최신순 2: 댓글 많은 순 3: 맑음 4: 흐림 5: 비)
+  const [searchInput, setSearchInput] = useState(""); // 검색 : # 포함 -> 태그검색, # 미포함 -> 사용자검색
+  const [isSearching, setIsSearching] = useState(false);
+
+  // 기본 렌더링 = 최신순
+  useEffect(() => {
+    getPostList().then((response) => {
+      setPosts([...response.postList]);
+      console.log(posts);
+    });
+  }, []);
+  // 입력값이 변경할 때마다 발동
+  useEffect(() => {
+    onFilter();
+  }, [filterStandard]);
+
+  // 필터를 위한 상태관리
+  // const changeFilterStandard = (num) => {
+  //   setFilterStandard(num)
+  //   console.log(filterStandard)
+  //   setIsSearching(false)
+  // }
+  // 상태관리에 따른 필터
+  const onFilter = () => {
+    if (filterStandard === 1) {
+      getPostList().then((response) => {
+        setPosts([...response.postList]);
+        setIsSearching(false);
+      });
+    } else if (filterStandard === 2) {
+      getPostListByComment().then((response) => {
+        const temp = [...posts];
+        setPosts([...response.content]);
+        // console.log(Object.is(temp, posts));
+
+        setIsSearching(false);
+      });
+    } else if (filterStandard === 3) {
+      getPostListByWeather("SUNNY").then((response) => {
+        const temp = [...posts];
+
+        setPosts([...response.content]);
+        setIsSearching(false);
+      });
+    } else if (filterStandard === 4) {
+      getPostListByWeather("CLOUDY").then((response) => {
+        setPosts(response.content);
+        console.log(posts);
+        setIsSearching(false);
+      });
+    } else if (filterStandard === 5) {
+      getPostListByWeather("RAINY").then((response) => {
+        console.log(response);
+        setPosts(response.content);
+        setIsSearching(false);
+      });
     }
-  }
+  };
+
+  console.log(posts);
+  const postList = posts.map((key) => <PostItem post={key}></PostItem>);
+
+  const clickFilterIcon = () => {
+    setFiltering((pre) => !pre);
+  };
+
+  // 검색기능
+  // 입력값이 변경할 때마다 발동하는 함수
+  const searchValue = (e) => {
+    // 태그 검색
+    if (e.target.value.substr(0, 1) === "#" && e.target.value.length >= 2) {
+      getPostListByTagName(e.target.value.substr(1).toLowerCase()).then((response) => {
+        setIsSearching(true);
+        setSearchInput(e.target.value);
+        setPosts([...response.content]);
+      });
+    }
+    // 사용자 검색
+    else if (e.target.value.substr(0, 1) !== "#" && e.target.value.length >= 1) {
+      getPostListByNickname(e.target.value.toLowerCase()).then((response) => {
+        if (response.content) {
+          setIsSearching(true);
+          setSearchInput(e.target.value);
+          setPosts([...response.content]);
+        } else {
+          setSearchInput(e.target.value);
+          setIsSearching(true);
+          setPosts([]);
+        }
+      });
+    }
+    // 검색하다가 비웠을 때
+    else if (e.target.value.length === 0) {
+      getPostList().then((response) => {
+        setPosts([...response.postList]);
+        setIsSearching(false);
+      });
+    }
+  };
+
+  const noPost = <div>게시물이 없습니다.</div>;
+  const searchResult = (
+    <div>
+      <div>"{searchInput}"에 대한 검색 결과입니다.</div>
+      <div>{postList}</div>
+    </div>
+  );
+  const noSearchResult = <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>;
 
   return (
     <div className={styles.feedRoot}>
       <HeaderComponent pageName={"둘러보기"} optType={0}></HeaderComponent>
       <div className={styles.globalroot}>
         <div className={styles.searchdiv}>
-          <img src={SearchIcon} className={styles.searchicon} alt=''></img>
-          <input className={styles.searchbar} alt=''></input>
-          <img src={FilterIcon} className={styles.filtericon} alt='' onClick={clickFilterIcon}></img>
+          <img src={SearchIcon} className={styles.searchicon} alt=""></img>
+          <input className={styles.searchbar} alt="" onChange={searchValue}></input>
+          <img
+            src={FilterIcon}
+            className={styles.filtericon}
+            alt=""
+            onClick={clickFilterIcon}
+          ></img>
         </div>
         {/* 필터 아이콘 누른 상태 */}
-        {filtering ?
-        (<div className={styles.filterselectbox}>
-          <div className={styles.filtertextdiv}>
-            <span className={styles.filtertext}>최신순</span>
-            <span className={styles.filtertext}>댓글 많은 순</span>
+        {filtering ? (
+          <div className={styles.filterselectbox}>
+            <div className={styles.filtertextdiv}>
+              <span
+                className={filterStandard === 1 ? styles.filtertextstandard : styles.filtertext}
+                onClick={() => {
+                  setFilterStandard(1);
+                  setIsSearching(false);
+                }}
+              >
+                최신순
+              </span>
+              <span
+                className={filterStandard === 2 ? styles.filtertextstandard : styles.filtertext}
+                onClick={() => {
+                  setFilterStandard(2);
+                  setIsSearching(false);
+                }}
+              >
+                댓글 많은 순
+              </span>
+            </div>
+            <div className={styles.filtertextdiv}>
+              <img
+                src={SunnyIcon}
+                alt=""
+                className={
+                  filterStandard === 3 ? styles.filterweatherstandard : styles.filterweathericon
+                }
+                onClick={() => {
+                  setFilterStandard(3);
+                  setIsSearching(false);
+                }}
+              ></img>
+              <img
+                src={CloudyIcon}
+                alt=""
+                className={
+                  filterStandard === 4 ? styles.filterweatherstandard : styles.filterweathericon
+                }
+                onClick={() => {
+                  setFilterStandard(4);
+                  setIsSearching(false);
+                }}
+              ></img>
+              <img
+                src={RainyIcon}
+                alt=""
+                className={
+                  filterStandard === 5 ? styles.filterweatherstandard : styles.filterweathericon
+                }
+                onClick={() => {
+                  setFilterStandard(5);
+                  setIsSearching(false);
+                }}
+              ></img>
+            </div>
           </div>
-          <div className={styles.filtertextdiv}>
-            <img src={SunnyIcon} alt='' className={styles.nonselecticon}></img>
-            <img src={CloudyIcon} alt='' className={styles.nonselecticon}></img>
-            <img src={RainyIcon} alt='' className={styles.nonselecticon}></img>
-          </div>
-        </div>) : null}
+        ) : null}
+        <div className={`${styles.main} ${styles.scroll}`} id="postMain">
+          {isSearching
+            ? posts.length === 0
+              ? noSearchResult
+              : searchResult
+            : posts.length === 0
+            ? noPost
+            : postList}
+          {postList}
+        </div>
       </div>
-      <div className={styles.main}>
-        {/** 친구들의 포스트를 나열한다.  */}
-        {postList}
-      </div>
+
+      <MoveToTopToggle></MoveToTopToggle>
     </div>
   );
 }
 
-export default Feed;
+export default Global;

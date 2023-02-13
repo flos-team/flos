@@ -34,7 +34,7 @@
 }
 .inputdiv:focus {
     outline: none;
-    border-bottom: 2px solid black;
+    border-bottom: 1.5px solid black;
 }
 
 .emaillabel {
@@ -54,7 +54,7 @@
     height: 5vh;
     padding: 0;
     font-size: 16px;
-    margin: 2vh 0 2vh 0;
+    margin: 2vh 0 3vh 0;
     background: #3BACE2;
     border-radius: 30px;
     border: none;
@@ -74,9 +74,6 @@
 
 .socialbtn {
     width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .kakaobtn {
@@ -131,4 +128,10 @@
 
   ::placeholder {
     opacity: 60%;
+  }
+
+  .loginmsg{
+    margin-top: 4px;
+    font-size: 12px;
+    color: red;
   }

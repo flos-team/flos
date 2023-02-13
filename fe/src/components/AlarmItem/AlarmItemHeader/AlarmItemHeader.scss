@@ -1,0 +1,52 @@
+@import "../../../styles//commons.scss";
+
+
+.alarm-header-div{
+    width: 334*$rpx1;
+    height: 60*$rpx1;
+    display: flex;    
+    flex-flow: row;
+    gap: 8*$rpx1;
+    img{
+        display: block;
+        width: 36*$rpx1;
+        height: 36*$rpx1;
+        border-radius: 18*$rpx1;
+    }
+    .alarm-text-div{
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 4*$rpx1 0px;
+        gap: 4*$rpx1;
+        width: 290*$rpx1;
+        height: 60*$rpx1;    
+        .alarm-text{        
+            width: 268*$rpx1;
+            height: 34*$rpx1;
+            font-size: 14*$rpx1;
+            text-overflow: wrap;
+        }
+        .alarm-time-log{
+            width: max-content;
+            height: 13*$rpx1;
+            font-size: 10*$rpx1;
+        }
+
+    }
+}
+
+// <div className="alarm-header-div">
+// <img />
+// <div className="alarm-text-div">
+//     <p className="alarm-text">
+//         <b>김채원</b>님이 <b>사쿠라</b> 님의 댓글에 좋아요를 누르셨습니다.
+//         {AlarmText}
+//     </p>
+//     <p className="alarm-time-log">
+//         23시간 전 {AlarmTimeLog}
+//     </p>
+// </div>
+// </div>

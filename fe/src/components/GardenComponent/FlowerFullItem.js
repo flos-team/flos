@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
-import GardenFullComponentDetailData from "./GardenFullComponentDetailData"
+import GardenFullComponentDetailData from "./GardenFullComponentDetail"
+import FlowerGlassBottle from "./FlowerGlassBottleItem";
 
 const FlowerView = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
 `;
 
 const FlowerDetailData = styled.div`
@@ -19,26 +21,13 @@ const FullItem = styled.div`
 `;
 
 const FlowerFullItem = (props) => {
-    let flowerInfo = props.flowerInfo;
-    let flowerImgData = {
-        flowerColor: "red"
-    }
-    let flowerData = {
-        state: "은은한",
-        name: "춘식",
-        length: 15,
-        startDate: "2022-10-11",
-        endDate: "2022-10-30"
-    }
     return (
         <FullItem>
             <FlowerView>
-                이미지
-                이미지
-                이미지
+                <FlowerGlassBottle width={"200px"} height={"200px"}></FlowerGlassBottle>
             </FlowerView>
             <FlowerDetailData>
-                <GardenFullComponentDetailData flowerData={flowerData} />
+                <GardenFullComponentDetailData flowerData={props.flowerInfo} />
             </FlowerDetailData>
         </FullItem>
     );

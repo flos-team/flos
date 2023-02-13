@@ -1,0 +1,137 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profiile-edit-page-conatiner {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 1rem;
+  width: 100vw;
+  height: 90vh;
+}
+.profiile-edit-page-conatiner .profile-photo-edit-container {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  gap: 0.625rem;
+  width: 100%;
+  height: 20%;
+}
+.profiile-edit-page-conatiner .profile-photo-edit-container .user-img {
+  width: 5rem;
+  height: 5rem;
+  border: 0.0625rem solid #d3d3d3;
+  border-radius: 2.5rem;
+  background-position: center;
+  background-size: cover;
+}
+.profiile-edit-page-conatiner .profile-photo-edit-container .profile-photo-edit-btn {
+  width: max-content;
+  height: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profiile-edit-page-conatiner .profile-photo-edit-container .profile-photo-edit-btn label {
+  font-size: 1rem;
+  text-align: center;
+  color: #96c6e0;
+  font-weight: 600;
+}
+.profiile-edit-page-conatiner .profile-edit-container {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+}
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 0.75rem 0px;
+  gap: 0.5rem;
+  width: 100%;
+  height: 5rem;
+  background: #ffffff;
+}
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item .nickname-input-lab,
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item .introduce-input-lab,
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item .email-input-lab {
+  /* name-input-lab */
+  width: 100%;
+  height: 1.125rem;
+  font-size: 0.875rem;
+}
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item .nickname-input,
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item .introduce-input,
+.profiile-edit-page-conatiner .profile-edit-container .profile-edit-item .email-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 1.875rem;
+  border: none;
+  border-bottom: 0.0625rem solid #827c7c;
+}
+.profiile-edit-page-conatiner .profile-edit-container .password-modify-item {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  padding: 12px 0px;
+  gap: 8px;
+  width: 328px;
+  height: 80px;
+  background: #ffffff;
+}
+.profiile-edit-page-conatiner .profile-edit-container .password-modify-item a {
+  display: block;
+  flex-grow: 1;
+  text-decoration: none;
+}
+.profiile-edit-page-conatiner .profile-edit-container .password-modify-item a .password-modify-btn {
+  /* Auto layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+}
+.profiile-edit-page-conatiner .profile-edit-container .password-modify-item a .password-modify-btn p {
+  color: #96c6e0;
+  font-weight: 600;
+}
+.profiile-edit-page-conatiner .profile-edit-container .password-modify-item .user-exit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  height: 2.5rem;
+  color: #ff9393;
+  font-weight: 600;
+}
+
+/*# sourceMappingURL=ProfileModifyPage.css.map */
