@@ -1,7 +1,6 @@
 def component = [
 	Nginxapp: true, // 프론트 서버 사용 여부
 	Springapp: false, // 백 서버 사용 여부
-	Pythonapp: false // 테스트 서버 사용 여부
 ]
 pipeline {
 	agent any
@@ -28,7 +27,8 @@ pipeline {
 		stage("Tag and Push") {
 			steps {
 				script {
-					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > .env"
+					sh "mkdir -p nginxapp"
+					sh "echo 'BUILD_NUMBER=${BUILD_NUMBER}' > nginxapp/.env"
 					component.each{ entry ->
 						stage ("${entry.key} Push"){
 							if(entry.value){
@@ -60,6 +60,7 @@ pipeline {
 										cleanRemote: false, 
 										excludes: '', 
 										execCommand: '''
+cd nginxapp
 sudo docker-compose pull
 sudo docker-compose up --force-recreate -d''', 
 										execTimeout: 120000, 
@@ -70,7 +71,7 @@ sudo docker-compose up --force-recreate -d''',
 										remoteDirectory: '', 
 										remoteDirectorySDF: false, 
 										removePrefix: '', 
-										sourceFiles: '.env'
+										sourceFiles: 'nginxapp/.env'
 									)
 								], 
 								usePromotionTimestamp: false, 
