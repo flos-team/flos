@@ -15,6 +15,9 @@ import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.model.service.StatisticsService;
 import com.onehee.flos.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -140,14 +143,16 @@ public class MemberController {
     }
 
 
-    @Operation(summary = "이용 통계 메서드", description = "이용 통계 보고서를 반환합니다.")
+    @Operation(summary = "이용 통계 메서드", description = "이용 통계 보고서를 반환합니다.", responses = {
+            @ApiResponse(responseCode = "200", description = "디디디스크크크립ㅂ션", content = @Content(mediaType = "application/json", schema = @Schema(implementation = StatisticsResponseDTO.class)))
+    })
     @GetMapping("/report")
     @Tag(name = "멤버API")
     public ResponseEntity<?> getReport() {
         return new ResponseEntity<StatisticsResponseDTO>(statisticsService.getReport(), HttpStatus.OK);
     }
 
-    @Operation(summary = "닉네임으로 회원목록 검색", description = "닉네임으로 회원목록을 검색합니다. keyup이벤트 사용 컨트롤러로 의도되었습니다.")
+    @Operation(summary = "회원 닉네임 검색 메서드", description = "닉네임으로 회원목록을 검색합니다. keyup이벤트 사용 컨트롤러로 의도되었습니다.")
     @GetMapping("/search")
     @Tag(name = "멤버API")
     public ResponseEntity<?> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO) {

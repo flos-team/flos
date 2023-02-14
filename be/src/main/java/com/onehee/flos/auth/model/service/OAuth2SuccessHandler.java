@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.OAuth2UserDTO;
 import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
@@ -59,8 +60,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             member = memberRepository.saveAndFlush(member);
             profileImage.setMember(member);
         }
+
         Member loginMember = memberRepository.findByEmailAndProviderType(oAuth2UserDTO.getEmail(), oAuth2UserDTO.getProviderType())
                 .orElseThrow(() -> new RuntimeException("소셜 회원 등록과정중에 에러가 발생했습니다."));
+
+        if (loginMember.getStatus().equals(MemberStatus.INACTIVE)) {
+            loginMember.setStatus(MemberStatus.ACTIVE);
+        }
 
         TokenDTO tokenDTO = jwtTokenProvider.generateTokenByMember(loginMember);
         log.info("{}", tokenDTO);

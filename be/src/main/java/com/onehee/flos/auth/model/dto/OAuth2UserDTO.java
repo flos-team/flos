@@ -12,8 +12,6 @@ public class OAuth2UserDTO {
 
     private String email;
 
-    private String nickname;
-
     private String profileImage;
 
     private ProviderType providerType;
@@ -21,7 +19,6 @@ public class OAuth2UserDTO {
     @Builder
     public OAuth2UserDTO(String email, String nickname, String profileImage, ProviderType providerType) {
         this.email = email;
-        this.nickname = nickname;
         this.profileImage = profileImage;
         this.providerType = providerType;
     }
@@ -30,7 +27,6 @@ public class OAuth2UserDTO {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         return OAuth2UserDTO.builder()
                 .email((String) attributes.get("email"))
-                .nickname((String) attributes.get("nickname"))
                 .profileImage((String) attributes.get("picture"))
                 .providerType((ProviderType) attributes.get("providerType"))
                 .build();
