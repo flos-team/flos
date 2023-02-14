@@ -9,12 +9,11 @@
   // width: 272px;
   width: 100%;
   height: max-content;
-  max-height: 352px;
+  // max-height: 352px;
   background: $mono50;
   overflow: hidden;
   // border-radius: 12px;
-  border-top: 1px solid $mono300;
-  border-bottom: 1px solid $mono300;
+  border: 1px solid $mono300;
   margin-top: 16 * $rpx1;
 }
 

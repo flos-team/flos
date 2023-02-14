@@ -1,16 +1,18 @@
 @import "../../../styles/commons.scss";
 
-.post-img-container {
-  //width: 272*$rpx1;
+.bottom-component{
   width: 100%;
-  height: 292 * $rpx1;
-  order: 1;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border-radius: 0 0 12 * $rpx1 12 * $rpx1;
-  // padding: 100px;
 
-  border-left: 1px solid $mono300;
-  border-right: 1px solid $mono300;
+  .post-img-container {
+    //width: 272*$rpx1;
+    width: 100%;
+    height: 292 * $rpx1;
+    order: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    // border-radius: 0 0 12 * $rpx1 12 * $rpx1;  
+    // border-left: 1px solid $mono300;
+    // border-right: 1px solid $mono300;
+  }
 }

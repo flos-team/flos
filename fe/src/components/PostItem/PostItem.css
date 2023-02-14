@@ -34,11 +34,9 @@
   padding: 0px;
   width: 100%;
   height: max-content;
-  max-height: 352px;
   background: #fcfcfc;
   overflow: hidden;
-  border-top: 1px solid #bfbfbf;
-  border-bottom: 1px solid #bfbfbf;
+  border: 1px solid #bfbfbf;
   margin-top: 1rem;
 }
 

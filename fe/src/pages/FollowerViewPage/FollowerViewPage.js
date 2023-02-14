@@ -59,11 +59,11 @@ const FollowerViewPage = () => {
   // console.log(location.search[1]);
   const tabPosition = Number(location.search[1]);
   // console.log(e);
-  const [userInfoList, setUserInfoList] = useState([<></>]);
+  const [userInfoList, setUserInfoList] = useState([]);
   const [isMine, setIsMine] = useState(true);
   const [userInfo, setUserInfo] = useState({ nickname: "" });
-  const [followerList, setFollowerList] = useState([<></>]);
-  const [followingList, setFollowingList] = useState([<></>]);
+  const [followerList, setFollowerList] = useState([]);
+  const [followingList, setFollowingList] = useState([]);
 
   // 현재 로그인한 사람의 정보
   const user = useSelector((state) => state.user.userData);
@@ -136,6 +136,11 @@ const FollowerViewPage = () => {
   };
 
   useEffect(() => {
+    console.log(`팔로워 리스트 길이 ${followerList.length}`);
+    console.dir(followerList.length);
+    console.log(`팔로잉 리스트 길이 ${followingList.length}`);
+    console.dir(followingList);
+
     if(tabPosition === 0){
       if (param.id == user.id) {
         console.log("나의 팔로워/팔로잉 페이지 입니다.");
@@ -180,10 +185,10 @@ const FollowerViewPage = () => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            {followerList}
+            {followerList&&followerList.length?followerList:<div>팔로워가 존재하지 않습니다.</div>}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {followingList}
+            {followingList&&followingList.length?followingList:<div>팔로우 한 사람이 존재하지 않습니다.</div>}
           </TabPanel>
         </Box>
       </div>

@@ -26,16 +26,16 @@
   display: none; /* Chrome, Safari, Opera*/
 }
 
-.post-img-container {
+.bottom-component {
+  width: 100%;
+}
+.bottom-component .post-img-container {
   width: 100%;
   height: 18.25rem;
   order: 1;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 0 0 0.75rem 0.75rem;
-  border-left: 1px solid #bfbfbf;
-  border-right: 1px solid #bfbfbf;
 }
 
 /*# sourceMappingURL=PostPhotoComponent.css.map */
