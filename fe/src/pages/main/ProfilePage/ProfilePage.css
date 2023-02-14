@@ -185,6 +185,8 @@
   width: 100%;
   height: 60vh;
   margin-bottom: 5rem;
+  padding: 8px;
+  gap: 16px;
 }
 .profile-page-container .MuiBox-root .MuiTypography-root .post-container .post-item {
   margin: 0 auto;

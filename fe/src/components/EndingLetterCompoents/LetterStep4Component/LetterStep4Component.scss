@@ -1,50 +1,60 @@
 @import "../../../styles/commons.scss";
 
-.letter-step4-component{
+.letter-step4-component {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32 * $rpx1 16 * $rpx1;
+  gap: 32 * $rpx1;
+
+  position: relative;
+  width: 100%;
+  height: 67.5vh;
+  // background: $white;
+  background: $red50;
+  border-radius: 16 * $rpx1;
+  .end-result-text-container {
+    /* end-result-text-container */
     /* Auto layout */
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 8 * $rpx1;
+    gap: 16 * $rpx1;
+    width: 100%;
+    // height: 108px;
+    flex-grow: 1;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    p {
+      font-size: 12px;
+      text-align: center;
+    }
+    p:first-child {
+      font-size: 14px;
+    }
+    p:last-child {
+      span {
+        color: $red300;
+        font-weight: 600;
+      }
+    }
+  }
+  /* flower-container */
+  .flower-container {
+    width: 296 * $rpx1;
+    height: 296 * $rpx1;
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 32*$rpx1 16*$rpx1;
-    gap: 32*$rpx1;
-
-    position: relative;
-    width: 100%;
-    height: 67.5vh;
-
-    background: $white;
-    border-radius: 16*$rpx1;
-    .end-result-text-container{
-        /* end-result-text-container */
-        /* Auto layout */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 8*$rpx1;
-        gap: 16*$rpx1;
-        width: 100%;
-        // height: 108px;
-        flex-grow: 1;
-        /* Inside auto layout */
-        flex: none;
-        order: 0;
-        align-self: stretch;
-        flex-grow: 0;
-        p{
-            text-align: center;
-        }
-    }
-    /* flower-container */
-    .flower-container{
-        width: 296*$rpx1;
-        height: 296*$rpx1;
-        /* Inside auto layout */
-        flex: none;
-        order: 1;
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  }
 }
