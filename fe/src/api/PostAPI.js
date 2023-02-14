@@ -224,7 +224,7 @@ const getPostListByTagName = async (tagName) => {
  * @param {Array:ImageBitmap} attachFiles 게시글에 첨부한 비트맵 리소스 배열
  * @returns {Promise} A Promise object containing Boolean
  */
-const createPost = async (content, weather, tagList = [], attachFiles = []) => {
+const createPost = async (content, weather, tagList, attachFiles = []) => {
   let url = "/api/post";
   const formData = new FormData();
   formData.append("content", content);
