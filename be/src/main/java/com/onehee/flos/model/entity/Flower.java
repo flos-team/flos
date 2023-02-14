@@ -35,7 +35,7 @@ public class Flower {
     @ColumnDefault("false")
     private Boolean gardening;
 
-    @ColumnDefault("50")
+    @ColumnDefault("10")
     private Long capacity;
 
     @OneToOne
