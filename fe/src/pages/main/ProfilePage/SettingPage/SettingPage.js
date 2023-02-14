@@ -1,5 +1,6 @@
 /* import react */
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { setUser, setFollowingIdList } from "../../../../redux/user";
 import { home } from "../../../../redux/page";
 
@@ -11,6 +12,7 @@ import Swal from "sweetalert2";
 
 /* import module */
 import { withdrawalUser, logout } from "../../../../api/MemberAPI";
+import { ComplaintReceived } from "../../../../api/EmailAPI";
 
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 /* css */
@@ -18,9 +20,12 @@ import "./SettingPage.css";
 
 const AlarmPage = () => {
   const user = useSelector((state) => state.user.userData);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [complaint, setComplaint] = useState("");
+
   const alarmOptItems = [
     { optId: 0, optName: "알림 설정" },
     // { optId: 1, optName: "새글 알림" },
@@ -123,20 +128,52 @@ const AlarmPage = () => {
   // dispatch(setUser({}));
   // dispatch(setFollowingIdList([]));
 
-console.log(user);
+  const handleComplaint = (e) => {
+    setComplaint(e.target.value);
+    console.log(complaint);
+  };
+
+  const onSubmit = async () => {
+    ComplaintReceived(complaint, user.email).then((response) => {
+      console.log(response);
+    });
+  };
 
   return (
     <div className="alarm-page">
       <HeaderComponent backVisible={true} pageName={"설정"}></HeaderComponent>
       <div className="alarm-main">{alarmOptList}</div>
       <div className="alarm-main">{themeOptList}</div>
-      <div className="alarm-main">불편사항 접수 <br>
-      </br>서비스 이용 중에 발생한 불편 사항을 알려주세요!
-        {/* 유저 정보와 입력된 정보를 폼에 담아 이메일로 전송한다. */}
-        <form>
-          <input type="text" placeholder="귀하의 소중한 의견이 서비스 개선에 큰 도움이 됩니다." ></input>
-          <button>제출</button>
-        </form>
+      <div className="alarm-main">
+        <div className="complaint-container">
+          <p className="complaint-title">불편사항 접수</p>
+          <p className="complaint-guide-text">
+            고객의 말씀에 귀 기울이며 품질과 서비스 향상을 위해 <br />
+            노력하는 <b>FLOS</b>가 되겠습니다. <br /> 남겨주신 의견은 본사에서
+            관리 및 서비스 개선용도로 활용합니다. <br />
+            고객님께서 입력하신 내용은 비밀이 보장됩니다.
+            <br />
+            이용에 대한 불편 및 불만사항을 접수하실 경우 최대한 신속하게
+            고객님의 입장에서 해결하도록 노력하겠습니다.
+          </p>
+          {/* 유저 정보와 입력된 정보를 폼에 담아 이메일로 전송한다. */}
+          <form className="input-complaint">
+            <textarea
+              className="input-complaint-input"
+              type="text"
+              placeholder="귀하의 소중한 의견이 서비스 개선에 큰 도움이 됩니다. &#13;&#10;서비스 개선에 도움을 주셔서 감사합니다."
+              value={complaint}
+              onChange={handleComplaint}
+            ></textarea>
+          </form>
+          <button
+            type="button"
+            // onClick={onSubmit}
+            className="input-complaint-btn"
+          >
+            제출
+          </button>
+        </div>
       </div>
       <div className="logout-container">
         <div onClick={confirmWithdrawalUser}>회원 탈퇴</div>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 
+
 import Sample from "../../assets/DummyData/dummy-sample.jpg"
 // import styles from "./ResultPage.module.css";
 
