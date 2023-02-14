@@ -88,6 +88,10 @@ public class CommentServiceImpl implements CommentService {
             messageType = MessageType.NEWREPLY;
         }
 
+        if (receiver.getId() == writer.getId()) {
+            return;
+        }
+
         // 알람 보내기
         notificationRepository.save(
                 Notification.builder()

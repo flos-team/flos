@@ -30,7 +30,7 @@ public class FileController {
     private String fileDir;
 
     @Tag(name = "파일 컨트롤러")
-    @Operation(summary = "파일 컨트롤러", description = "FileResponseDTO의 saveName을 요청하면 해당 자원을 반환합니다.")
+    @Operation(summary = "파일 컨트롤러", description = "FileResponseDTO의 saveName을 요청하면 해당 자원을 반환합니다. 이미지 태그에 넣어서 사용할 수 있습니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "파일 반환 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")
