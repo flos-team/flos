@@ -9,12 +9,12 @@ spring:
     password: test1234
   jpa:
     hibernate:
-      ddl-auto: update
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:import.sql
+      ddl-auto: none
+#    defer-datasource-initialization: true
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: classpath:import.sql
   security:
     oauth2:
       client:
