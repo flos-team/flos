@@ -75,34 +75,36 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         LocalDateTime yesterday = now.minusDays(1);
 
-        if (
-                !postRepository.existsByWriterAndCreatedAtIsAfter(loginMember, yesterday)
-                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(loginMember, MessageType.NOFEED24H, yesterday)
-        ) {
-            Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(loginMember);
-            if (lastPost != null) {
-                long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
-                Notification notification = Notification.builder()
-                        .member(loginMember)
-                        .messageType(MessageType.NOFEED24H)
-                        .message(String.format(MessageType.NOFEED24H.getMessage(), loginMember.getNickname(), time))
-                        .build();
-                notificationRepository.save(notification);
+        if (loginMember.getCreatedAt().plusDays(1).isBefore(now)) {
+            if (
+                    !postRepository.existsByWriterAndCreatedAtIsAfter(loginMember, yesterday)
+                            && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(loginMember, MessageType.NOFEED24H, yesterday)
+            ) {
+                Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(loginMember);
+                if (lastPost != null) {
+                    long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
+                    Notification notification = Notification.builder()
+                            .member(loginMember)
+                            .messageType(MessageType.NOFEED24H)
+                            .message(String.format(MessageType.NOFEED24H.getMessage(), loginMember.getNickname(), time))
+                            .build();
+                    notificationRepository.save(notification);
+                }
             }
-        }
 
-        if (
-                !weatherResourceRepository.existsByOwnerAndUsedAtAfter(loginMember, yesterday)
-                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(loginMember, MessageType.NOCAREPLANT24H, yesterday)
-        ) {
-            Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(loginMember).orElse(null);
-            if (flower != null) {
-                Notification notification = Notification.builder()
-                        .member(loginMember)
-                        .messageType(MessageType.NOCAREPLANT24H)
-                        .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), loginMember.getNickname(), flower.getName()))
-                        .build();
-                notificationRepository.save(notification);
+            if (
+                    !weatherResourceRepository.existsByOwnerAndUsedAtAfter(loginMember, yesterday)
+                            && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(loginMember, MessageType.NOCAREPLANT24H, yesterday)
+            ) {
+                Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(loginMember).orElse(null);
+                if (flower != null) {
+                    Notification notification = Notification.builder()
+                            .member(loginMember)
+                            .messageType(MessageType.NOCAREPLANT24H)
+                            .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), loginMember.getNickname(), flower.getName()))
+                            .build();
+                    notificationRepository.save(notification);
+                }
             }
         }
 
