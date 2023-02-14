@@ -7,7 +7,8 @@
   // padding: 0px 16 * $rpx1;
   gap: 8 * $rpx1;
   width: 100vw;
-  height: 90vh;
+  min-height: 90vh;
+  height: max-content;
   overflow: hidden;
   overflow-y: scroll;
   .post-write-form {
@@ -16,9 +17,13 @@
     /* Auto layout */
     display: flex;
     flex-flow: column wrap;
-    padding: 12 * $rpx1 16 * $rpx1;
+    //padding: 12 * $rpx1 16 * $rpx1;
+    padding: 8px;
     width: 100%;
-    height: 100%;
+    height: max-content;
+    gap: 5*$rpx1;
+    // min-height: 65%;
+    // max-height: 100%;
     /* mono50 */
     background: $mono50;
     // margin: 32*$rpx1 auto;
@@ -29,14 +34,15 @@
       // min-height: 77%;
       // height: max-content;
       // height: 77%;
+      height: max-content;
       order: 0;
-      flex-grow: 4;
+      //flex-grow: 4;
       .post-content-input {
         border: none;
         box-sizing: border-box;
         width: 100%;
-        height: 45%;
-        flex-grow: 5;
+        height: 200px;
+        //flex-grow: 5;
         /* mono200 */
         border-bottom: 1 * $rpx1 solid $mono300;
         border-color: none;
@@ -53,7 +59,8 @@
         align-items: center;
         gap: 4px;
         height: max-content;
-        transform: translate(0, -50%);
+        min-height: 50px;
+        //transform: translate(0, -50%);
         .post-tag-input {
           width: max-content;
           height: max-content;
@@ -87,7 +94,6 @@
       gap: 8 * $rpx1;
       width: 100%;
       height: 13%;
-      transform: translate(0, -80%);
       border-top: 1px solid $mono300;
       // 0flex-grow: 0.5;
       order: 1;
