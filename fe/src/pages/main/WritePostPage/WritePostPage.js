@@ -1,19 +1,17 @@
-import axios from "axios";
-
 /* import react */
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // redux/toolkit
-import { useSelector, useDispatch } from "react-redux";
-import { setIsToastValue, setToastMessage } from "../../../redux/toast";
+// import { useDispatch } from "react-redux";
+// import { setIsToastValue, setToastMessage } from "../../../redux/toast";
 
 /* import img */
 import pictureIcon from "../../../assets/GlobalAsset/picture-btn.png";
 import closeBtn from "../../../assets/GlobalAsset/close-btn.png";
 
 /* import compoents */
-import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
+// import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 import Swal from "sweetalert2";
@@ -108,21 +106,22 @@ const WritePostPage = () => {
     }
   };
   // redux-toolkit
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+
   const deleteImgPreview = (idx) => {
     //console.log(idx);
 
     const dataTranster = new DataTransfer();
     let i = 0;
     Array.prototype.forEach.call(imgFile, function (file) {
-      if (i != idx) {
+      if (i !== idx) {
         dataTranster.items.add(file);
       }
       i++;
     });
     setImgFile(dataTranster.files);
 
-    let decImgBase64 = imgBase64.filter((e, i) => i != idx);
+    let decImgBase64 = imgBase64.filter((e, i) => i !== idx);
     setImgBase64(decImgBase64);
   };
 
