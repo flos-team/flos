@@ -1,0 +1,61 @@
+@import "../../styles/commons.scss";
+
+
+    .result-container{
+        color: none;
+        padding: 8px;
+        box-sizing: border-box;
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        gap: 16px;
+        text-decoration: none;
+        color: $black;
+        .result-complete-text{
+            width: 100%;
+            // border: 1px solid black;
+            text-align: center;
+            font-size: 24px;
+        }
+        .result-img{
+            display: block;
+            margin: 0 auto;
+            width: fit-content;
+            height: max-content;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .result-greet-text{
+            width: 100%;
+            text-align: center;
+        }
+
+        .result-login-text{
+            width: 100%;
+            text-align: center;
+
+
+        }
+    }
+
+
+
+/** 점멸 기능  */
+.blinking {
+    -webkit-animation: blink 1s ease-in-out infinite alternate;
+    -moz-animation: blink 1s ease-in-out infinite alternate;
+    animation: blink 1s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

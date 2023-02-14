@@ -27,7 +27,8 @@ import "./PostDetailPage.css";
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
 const CommentComponent = ({ comment, postWriterId, weather }) => {
-  console.log(comment);
+  // console.log("here");
+  // console.log(comment);
   const user = useSelector((state) => state.user.userData);
 
   const [inputFocus, setInputFocus] = useState(false);
@@ -158,7 +159,7 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
               comment.id,
               comment.id
             ).then((response) => {
-              console.log(response);
+              // console.log(response);
               setReply(response);
               setReplyOnChange(!replyOnChange);
             });
@@ -192,16 +193,16 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
       className="check-btn"
       id="ApproveIcon"
       onClick={() => {
-        if(isApprove){
+        if (isApprove) {
           // alert("안돼")
           // 이미 처리되어있으면 아무일도 안일어나게 해야함
-        } else{
-          commentApprove(comment.id).then((response)=>{
-            if(response){
+        } else {
+          commentApprove(comment.id).then((response) => {
+            if (response) {
               setReplyOnChange(!replyOnChange);
-              setIsApprove(!isApprove)
+              setIsApprove(!isApprove);
             }
-          })
+          });
         }
       }}
       src={isApprove ? activeEmotion : deactiveEmotion}
@@ -234,7 +235,7 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
           {inputFocus ? replyInput : addComment}
         </div>
         {/* 포스트 작성자거나, 댓글이 채택되었을 때만 표시한다. */}
-        {user.id === postWriterId || comment.isApprove ? emotionBtn : ""}
+        {user.id === postWriterId && (comment.writer.id !== postWriterId) || comment.isApprove ? emotionBtn : ""}
       </div>
       {replyList ? replyList : ""}
     </>

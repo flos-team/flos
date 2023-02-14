@@ -9,15 +9,9 @@ export const toastSlice = createSlice({
   reducers: {
     setIsToastValue: (state, action) => {
       state.isToast = action.payload;
-      // console.dir("IsToast PayLoad : ", action.payload);
-      // console.dir(state);
-      // console.dir(action);
     },
     setToastMessage: (state, action) => {
       state.toastMessage = action.payload;
-      // console.dir("toastMessage PayLoad : ", action.payload);
-      // console.dir(state);
-      // console.dir(action);
     },
   },
 });

@@ -367,7 +367,7 @@ const Flower = forwardRef((props, ref) => {
 
 
   const FlowerClick = () => {
-    console.log("clicked - flower");
+    // console.log("clicked - flower");
 
     gsap.timeline({ yoyo: true, repeatDelay: 0, defaults: { duration: 1 } })
       .fromTo(wholeFlowerRef.current, { y: -10 }, { y: 5 });
@@ -376,7 +376,7 @@ const Flower = forwardRef((props, ref) => {
 
 
   const FlowerSmile = () => {
-    console.log("웃자!");
+    // console.log("웃자!");
     setEyesElement(eyes[2]);
     smileInterval = setInterval(() => {
       setEyesElement(eyes[0]);

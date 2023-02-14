@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .post-top-component {
   /* Auto layout */
   display: flex;
@@ -25,9 +35,9 @@
   gap: 0.25rem;
   width: 100%;
   flex-grow: 1;
-  max-height: 3.75rem;
+  max-height: 4.375rem;
   /* yellow100 */
-  border-radius: 0.75rem 0.75rem 0 0;
+  border-bottom: 1px solid #bfbfbf;
   order: 0;
 }
 .post-top-component .user-info-div {

@@ -86,3 +86,7 @@
 .scroll::-webkit-scrollbar {
   display: none;
 }
+
+.noPostText{
+  padding: 8px;
+}

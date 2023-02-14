@@ -65,7 +65,7 @@ const createComment = async (content, postId, parentId = 0, primitiveId = 0) => 
     postId: postId,
     primitiveId: primitiveId,
   };
-  console.log(newComment);
+  // console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -90,7 +90,7 @@ const createReply = async (content, postId, primitiveId, parentId) => {
     parentId: parentId,
     primitiveId: primitiveId,
   };
-  console.log(newComment);
+  // console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -118,10 +118,12 @@ const commentApprove = async (commentId) => {
     .then((response) => {
       if (response.status === 200) {
         console.dir(response);
+        return true;
       }
     })
     .catch((error) => {
       console.log(error);
+      return false;
     });
 };
 

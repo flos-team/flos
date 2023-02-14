@@ -1,9 +1,12 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
+
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setFollowingIdList } from "../redux/user";
+
 import Swal from "sweetalert2";
 import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
@@ -55,7 +58,7 @@ function Login() {
       setLoginMsg("비밀번호를 입력해주세요.");
       onFocus.current[1].focus();
     } else {
-      doLogin(inputId, inputPw)
+      doLogin(inputId.toLowerCase(), inputPw)
         .then((response) => {
           if (response === false) {
             setLoginMsg("아이디 또는 비밀번호를 확인해주세요.");
@@ -92,19 +95,19 @@ function Login() {
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    console.log("카카오 로그인");
+    // console.log("카카오 로그인");
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
-    console.log("네이버 로그인");
+    // console.log("네이버 로그인");
   };
   const imgStyle = {
     width: "143px",
   };
 
   useEffect(() => {
-    console.log("====LOGIN PAGE useEffect 결과 ====");
-    console.dir(user);
+    // console.log("====LOGIN PAGE useEffect 결과 ====");
+    // console.dir(user);
   }, []);
 
   return (

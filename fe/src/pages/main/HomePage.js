@@ -22,8 +22,11 @@ import { motion } from "framer-motion";
 import { getFlowerInfo, giveSun, giveRain, flowering, modifyFlower } from "../../api/FlowerAPI";
 import { getMemberInfo } from "../../api/MemberAPI";
 import { getNotification } from "../../api/NotificationAPI";
+import {ReactComponent as Mountain} from "../../assets/HomeAsset/background-mountain.svg";
+import cloudData from "../../assets/HomeAsset/day-cloud.json"
 import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
 import Swal from "sweetalert2";
+import {commonMsg, commonMsgLength} from "../../constants/flowerMessage.js"
 
 const Title = styled.h1`
   color: #007bff;
@@ -48,6 +51,7 @@ const HomePageDiv = styled.div`
   gap: 8px;
   isolation: isolate;
   position: relative;
+  height: 100vh;
 
   background-image: url(${(p) => p.url});
   background-repeat: no-repeat;
@@ -124,6 +128,26 @@ const hide = {
   },
 };
 
+const BackgroundMountain = styled.div`
+  position: fixed;
+  width: 1000px;
+  height: 20vh;
+  bottom: 300px;
+  left: -200px;
+  z-index: -2;
+`;
+
+const Background = styled.div`
+  position: relative;
+`;
+
+const BackgroundCloud = styled.div`
+  position: fixed;
+  top: -100px;
+  left: -200px;
+  z-index: -5;
+`;
+
 const Home = () => {
   const sunBox = useRef();
   const rainBox = useRef();
@@ -153,11 +177,10 @@ const Home = () => {
 
   const doFullGrown = () => {
     flowerInfo.isFullGrown = true;
-    console.log("개화 시작");
+    // console.log("개화 시작");
     setIsFlowering(true);
   };
 
-  const flowerMessageArr = ["안녕~", "졸리다~", "기분짱!"];
 
   const [flowerMessage, setFlowerMessage] = useState(null);
   const [flowerMessageIsVisible, setFlowerMessageIsVisible] = useState(true);
@@ -181,7 +204,7 @@ const Home = () => {
      *   꽃 대화창 관련 interval
      */
     let interval = setInterval(function () {
-      const value = Math.floor(Math.random() * 2);
+      const value = Math.floor(Math.random() * commonMsgLength);
       setFlowerMessageIsVisible(true);
       setFlowerMessage(
         <motion.div
@@ -198,7 +221,7 @@ const Home = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.1 }}
             >
-              {flowerMessageArr[value]}
+              {commonMsg[value].msg}
             </motion.span>
           </FlowerMessageText>
         </motion.div>
@@ -230,7 +253,7 @@ const Home = () => {
 
   useEffect(() => {
     if (elementStatus === "sun") {
-      console.log("useEffect");
+      // console.log("useEffect");
       setRainAnimation(null);
       let sunTimeLine = gsap.timeline();
       sunTimeLine
@@ -287,10 +310,10 @@ const Home = () => {
      *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
      */
     getFlowerInfo().then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res === "NO_FLOWER_EXISTS") {
         setMakeFlowerModal(true);
-        console.log("꽃이 존재하지 않습니다.");
+        // console.log("꽃이 존재하지 않습니다.");
         return;
       }
       flowerInfo.id = res.id;
@@ -299,7 +322,7 @@ const Home = () => {
       flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
       flowerInfo.MaxGrowthValue = res.maxGrowthValue;
       flowerInfo.color = res.color;
-      console.log("꽃 정보 가져옴");
+      // console.log("꽃 정보 가져옴");
     });
     getMemberInfo().then((res) => {
       flowerInfo.sunElementCount = res.light;
@@ -309,7 +332,7 @@ const Home = () => {
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
-    console.log("clicked - sun");
+    // console.log("clicked - sun");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
         icon: "warning",
@@ -352,7 +375,7 @@ const Home = () => {
 
   const rainClick = () => {
     // 비 버튼을 클릭 했을 경우,
-    console.log("clicked - rain");
+    // console.log("clicked - rain");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
         icon: "warning",
@@ -399,7 +422,7 @@ const Home = () => {
   };
 
   const flowerNameClick = () => {
-    console.log("clicked - name");
+    // console.log("clicked - name");
     setSunAnimation(null);
     setRainAnimation(null);
     setChangeFlowerNamemodal(true);
@@ -409,8 +432,8 @@ const Home = () => {
    * 이름 변경 함수
    */
   const ChangeFlowerNameOnclick = (newName) => {
-    console.log("바꾸기 시작");
-    console.log("새로운 이름", newName);
+    // console.log("바꾸기 시작");
+    // console.log("새로운 이름", newName);
     flowerInfo.name = newName;
     modifyFlower(flowerInfo.id, flowerInfo.name);
     setChangeFlowerNamemodal(false);
@@ -545,6 +568,21 @@ const Home = () => {
           <Flower ref={flowerRef} flowerInfo={flowerInfo} doFullGrown={doFullGrown}></Flower>
         </div>
       </div>
+      <Background>
+        <BackgroundCloud>
+          <Lottie
+                options={{
+                  autoplay: true,
+                  animationData: cloudData,
+                }}
+                height={1000}
+                width={1000}
+              />
+        </BackgroundCloud>
+        <BackgroundMountain>
+        <Mountain />
+      </BackgroundMountain>
+      </Background>
     </HomePageDiv>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getFollowerPostList } from "../../../api/PostAPI";
-import { getFollowerList } from "../../../api/FollowAPI";
+import { getFollowingList } from "../../../api/FollowAPI";
 
 import PostItem from "../../../components/PostItem/PostItem";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -25,14 +25,14 @@ function Feed() {
 
   useEffect(() => {
     getFollowerPostList().then((response) => {
-      console.log(response);
+      // console.log(response);
       setNextPage(response.nextPage);
       SetHasNext(response.hasNext);
       setPosts(response.content);
       setHasContent(response.hasContent);
       setIsPostsLoading(true);
     }, []);
-    getFollowerList().then((response) => {
+    getFollowingList().then((response) => {
       setFriends(response);
       SetFriendsLoading(true);
     });
@@ -89,9 +89,9 @@ function Feed() {
       });
     }
 
-    const noPost = <div>팔로워 게시물이 없습니다.</div>;
+    const noPost = <div className={styles.noPostText}>팔로워 게시물이 없습니다.</div>;
     const noFriend = (
-      <div>
+      <div className={styles.noPostText}>
         팔로우한 사람이 없습니다. <br />
         둘러보기에서 다른 사람들을 검색해보세요!
       </div>
