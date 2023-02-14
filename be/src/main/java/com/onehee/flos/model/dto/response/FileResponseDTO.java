@@ -26,8 +26,8 @@ public class FileResponseDTO {
 
     private static FileResponseDTO getDefaultDTO() {
         return FileResponseDTO.builder()
-                .originalName("profile_image.jpg")
-                .saveName("default/profile_image.jpg")
+                .originalName("profile_image.png")
+                .saveName("default/profile_image.png")
                 .build();
     }
 }
