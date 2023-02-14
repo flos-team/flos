@@ -1,9 +1,6 @@
 package com.onehee.flos.model.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onehee.flos.model.entity.Flower;
-import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.type.FlowerType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -67,7 +64,7 @@ public class FlowerResponseDTO {
                 .flowerType(flower.getFlowerType().getFlowerType())
                 .flowerMeaning(flower.getFlowerType().getFlowerMeaning())
                 .flowerColor(flower.getFlowerType().getColor())
-                .flowerState(flower.getState()==null?null:flower.getState().getState())
+                .flowerState(flower.getState() == null ? null : flower.getState().getState())
                 .height(flower.getHeight())
                 .name(flower.getName())
                 .currentGrowValue(flower.getWater() + flower.getLight())

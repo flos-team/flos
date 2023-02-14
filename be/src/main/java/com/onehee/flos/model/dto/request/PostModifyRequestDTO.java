@@ -1,11 +1,8 @@
 package com.onehee.flos.model.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.onehee.flos.model.dto.response.PostResponseDTO;
-import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
-import com.onehee.flos.model.entity.Tag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;

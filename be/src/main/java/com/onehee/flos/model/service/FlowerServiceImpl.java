@@ -101,7 +101,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public List<MemberResponseDTO> getContributorByFlower(Long flowerId) throws BadRequestException {
         Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당하는 꽃이 없습니다."));
-        if (flower.getOwner().getId() != SecurityManager.getCurrentMember().getId())
+        if (!SecurityManager.getCurrentMember().getId().equals(flower.getOwner().getId()))
             throw new BadRequestException("꽃 주인이 아닙니다.");
         return flowerRepository.findContributorByFlower(flower)
                 .stream()

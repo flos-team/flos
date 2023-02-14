@@ -1,6 +1,5 @@
 package com.onehee.flos.model.entity.type;
 
-import com.onehee.flos.model.entity.FileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

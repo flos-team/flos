@@ -103,7 +103,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void modifyComment(CommentModifyRequestDTO commentModifyRequestDTO) throws BadRequestException {
         Comment tempComment =  commentRepository.findById(commentModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
-        if (tempComment.getWriter().getId() != SecurityManager.getCurrentMember().getId())
+        if (!SecurityManager.getCurrentMember().getId().equals(tempComment.getWriter().getId()))
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
         Post tempPost = postRepository.findById(commentModifyRequestDTO.getPostId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         commentRepository.save(commentModifyRequestDTO.toAccept(tempComment, tempPost));
@@ -115,7 +115,7 @@ public class CommentServiceImpl implements CommentService {
         Comment tempComment = commentRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 댓글입니다."));
         if (tempComment.getIsApprove())
             throw new BadRequestException("추천한 댓글은 삭제할 수 없습니다.");
-        if (tempComment.getWriter().getId() != SecurityManager.getCurrentMember().getId())
+        if (!SecurityManager.getCurrentMember().getId().equals(tempComment.getWriter().getId()))
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
         tempComment.setContent(null);
         commentRepository.delete(tempComment);
@@ -131,10 +131,10 @@ public class CommentServiceImpl implements CommentService {
             throw new BadRequestException("이미 채택된 댓글이 존재합니다.");
         }
         Member me = SecurityManager.getCurrentMember();
-        if (me.getId() != post.getWriter().getId()) {
+        if (!me.getId().equals(post.getWriter().getId())) {
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
         }
-        if (me.getId() == tempComment.getWriter().getId()) {
+        if (me.getId().equals(tempComment.getWriter().getId())) {
             throw new BadRequestException("게시글 주인이 본인의 댓글을 채택할 수 없습니다.");
         }
 
