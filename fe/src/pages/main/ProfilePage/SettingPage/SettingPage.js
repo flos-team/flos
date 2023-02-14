@@ -130,12 +130,12 @@ const AlarmPage = () => {
 
   const handleComplaint = (e) => {
     setComplaint(e.target.value);
-    console.log(complaint);
+    // console.log(complaint);
   };
 
   const onSubmit = async () => {
     ComplaintReceived(complaint, user.email).then((response) => {
-      console.log(response);
+      // console.log(response);
     });
   };
 

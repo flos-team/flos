@@ -10,8 +10,8 @@ function ChangePage() {
 
   useEffect(() => {
     getMemberInfo().then((res) => {
-      console.log(res)
-      console.log('hi')
+      // console.log(res)
+      // console.log('hi')
     })
   }, [])
 

@@ -50,8 +50,8 @@ function Global() {
     // newPost가 새로 갱신되면
     // posts에 newPosts를 붙힌다.
     if (newPosts.length >= 1) {
-      console.log(posts);
-      console.log(newPosts);
+      // console.log(posts);
+      // console.log(newPosts);
       setPosts([...posts, ...newPosts]);
     }
   }, [newPosts]);
@@ -160,7 +160,7 @@ function Global() {
       switch (filterStandard) {
         case 1:
           getPostList(nextPage).then((response) => {
-            console.log(response);
+            // console.log(response);
             setNewPosts(response.postList);
             setNextPage(response.nextPage);
             SetHasNext(response.hasNext);

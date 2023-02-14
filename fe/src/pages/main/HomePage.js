@@ -177,7 +177,7 @@ const Home = () => {
 
   const doFullGrown = () => {
     flowerInfo.isFullGrown = true;
-    console.log("개화 시작");
+    // console.log("개화 시작");
     setIsFlowering(true);
   };
 
@@ -253,7 +253,7 @@ const Home = () => {
 
   useEffect(() => {
     if (elementStatus === "sun") {
-      console.log("useEffect");
+      // console.log("useEffect");
       setRainAnimation(null);
       let sunTimeLine = gsap.timeline();
       sunTimeLine
@@ -313,7 +313,7 @@ const Home = () => {
       // console.log(res);
       if (res === "NO_FLOWER_EXISTS") {
         setMakeFlowerModal(true);
-        console.log("꽃이 존재하지 않습니다.");
+        // console.log("꽃이 존재하지 않습니다.");
         return;
       }
       flowerInfo.id = res.id;
@@ -332,7 +332,7 @@ const Home = () => {
 
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
-    console.log("clicked - sun");
+    // console.log("clicked - sun");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
         icon: "warning",
@@ -375,7 +375,7 @@ const Home = () => {
 
   const rainClick = () => {
     // 비 버튼을 클릭 했을 경우,
-    console.log("clicked - rain");
+    // console.log("clicked - rain");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
         icon: "warning",
@@ -422,7 +422,7 @@ const Home = () => {
   };
 
   const flowerNameClick = () => {
-    console.log("clicked - name");
+    // console.log("clicked - name");
     setSunAnimation(null);
     setRainAnimation(null);
     setChangeFlowerNamemodal(true);
@@ -432,8 +432,8 @@ const Home = () => {
    * 이름 변경 함수
    */
   const ChangeFlowerNameOnclick = (newName) => {
-    console.log("바꾸기 시작");
-    console.log("새로운 이름", newName);
+    // console.log("바꾸기 시작");
+    // console.log("새로운 이름", newName);
     flowerInfo.name = newName;
     modifyFlower(flowerInfo.id, flowerInfo.name);
     setChangeFlowerNamemodal(false);

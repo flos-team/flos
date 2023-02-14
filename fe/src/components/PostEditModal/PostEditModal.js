@@ -31,7 +31,7 @@ const PostEditModal = () => {
       if (result.isConfirmed) {
         deletePost(params.id)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           setClickDotImg(false)
         })
         .catch((err) => {
@@ -42,20 +42,6 @@ const PostEditModal = () => {
         setClickDotImg(false)
       }
     })
-
-    // if (window.confirm('해당 게시물을 삭제하시겠습니까?')){
-      // deletePost(params.id)
-      //   .then((res) => {
-      //     console.log(res)
-      //     setClickDotImg(false)
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
-    // } else {
-    //   console.log('삭제 안 함')
-    //   setClickDotImg(false)
-    // }
   }
 
   return (

@@ -152,9 +152,9 @@ const ProfilePage = ({ setIsToast }) => {
       e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight &&
       hasNext
     ) {
-      console.log("스크롤 끝 감지1");
+      // console.log("스크롤 끝 감지1");
       getPostListByNickname(userInfo.nickname, nextPage).then((response) => {
-        console.log(response);
+        // console.log(response);
         setHasNext(response.hasNext);
         setNextPage(response.nextPage);
         setNewPosts(response.content);
@@ -167,13 +167,13 @@ const ProfilePage = ({ setIsToast }) => {
       e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight &&
       hasNext
     ) {
-      console.log("스크롤 끝 감지2");
+      // console.log("스크롤 끝 감지2");
       getBookMarkList(nextPage).then((response) => {
-        console.log(response);
+        // console.log(response);
         setHasNext(response.hasNext);
         setNextPage(response.nextPage);
         setNewBookPosts(response.content);
-        console.log(newBookPosts);
+        // console.log(newBookPosts);
       });
     }
   };
@@ -185,7 +185,7 @@ const ProfilePage = ({ setIsToast }) => {
     switch (Number(event.target.id.split("-")[2])) {
       case 1:
         getBookMarkList().then((response) => {
-          console.log(response);
+          // console.log(response);
           setHasNext(response.hasNext);
           setNextPage(response.nextPage);
           setBookPosts(response.content);

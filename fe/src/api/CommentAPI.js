@@ -65,7 +65,7 @@ const createComment = async (content, postId, parentId = 0, primitiveId = 0) => 
     postId: postId,
     primitiveId: primitiveId,
   };
-  console.log(newComment);
+  // console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)
