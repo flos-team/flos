@@ -126,6 +126,7 @@ const WritePostPage = () => {
   };
 
   useEffect(() => {
+    console.dir(tagTextList);
     setImgPreviewList(
       imgBase64.map((item, i) => (
         <div key={i} className={`img-holder ${i}`}>
@@ -141,7 +142,7 @@ const WritePostPage = () => {
         </div>
       ))
     );
-  }, [imgBase64]);
+  }, [imgBase64, tagTextList]);
 
   return (
     <>
@@ -233,7 +234,7 @@ const WritePostPage = () => {
                 weather: weatherText,
                 attachFiles: imgFile,
               };
-              // console.dir(postObj);
+              console.dir(postObj);
               createPost(postObj.content, postObj.weather, postObj.tagList, postObj.attachFiles)
                 .then((res) => {
                   //console.dir(res);
