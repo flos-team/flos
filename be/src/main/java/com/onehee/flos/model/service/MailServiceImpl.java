@@ -132,7 +132,7 @@ public class MailServiceImpl implements MailService {
         messageHelper.setSubject(subject);
         messageHelper.setText(msg);
         messageHelper.setFrom(from);
-        messageHelper.setTo(sender);
+        messageHelper.setTo(reciever);
         emailSender.send(message);
     }
 
