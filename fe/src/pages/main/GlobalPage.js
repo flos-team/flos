@@ -49,8 +49,9 @@ function Global() {
   useEffect(() => {
     // newPost가 새로 갱신되면
     // posts에 newPosts를 붙힌다.
-    if(newPosts.length > 0){
-      console.log(posts)
+    if (newPosts.length >= 1) {
+      console.log(posts);
+      console.log(newPosts);
       setPosts([...posts, ...newPosts]);
     }
   }, [newPosts]);
@@ -66,14 +67,14 @@ function Global() {
       });
     } else if (filterStandard === 2) {
       getPostListByComment().then((response) => {
-        setPosts([...response.content]);
+        setPosts(response.content);
         setNextPage(response.nextPage);
         SetHasNext(response.hasNext);
         setIsSearching(false);
       });
     } else if (filterStandard === 3) {
       getPostListByWeather("SUNNY").then((response) => {
-        setPosts([...response.content]);
+        setPosts(response.content);
         setNextPage(response.nextPage);
         SetHasNext(response.hasNext);
         setIsSearching(false);
@@ -98,6 +99,12 @@ function Global() {
   // console.log(posts);
   const postList = posts.map((key) => <PostItem post={key}></PostItem>);
 
+  // 필터 이동하면 스크롤을 상단으로 이동시킨다.
+  const MoveToTop = () => {
+    const top = document.getElementById("postMain").children.item(0);
+    top.scrollIntoView(false, { behavior: "smooth" });
+  };
+
   const clickFilterIcon = () => {
     setFiltering((pre) => !pre);
   };
@@ -107,19 +114,24 @@ function Global() {
   const searchValue = (e) => {
     // 태그 검색
     if (e.target.value.substr(0, 1) === "#" && e.target.value.length >= 2) {
-      getPostListByTagName(e.target.value.substr(1).toLowerCase()).then((response) => {
-        setIsSearching(true);
-        setSearchInput(e.target.value);
-        setPosts([...response.content]);
-      });
+      getPostListByTagName(e.target.value.substr(1).toLowerCase()).then(
+        (response) => {
+          setIsSearching(true);
+          setSearchInput(e.target.value);
+          setPosts([...response.content]);
+        }
+      );
     }
     // 사용자 검색
-    else if (e.target.value.substr(0, 1) !== "#" && e.target.value.length >= 1) {
+    else if (
+      e.target.value.substr(0, 1) !== "#" &&
+      e.target.value.length >= 1
+    ) {
       getPostListByNickname(e.target.value.toLowerCase()).then((response) => {
         if (response.content) {
           setIsSearching(true);
           setSearchInput(e.target.value);
-          setPosts([...response.content]);
+          setPosts(response.content);
         } else {
           setSearchInput(e.target.value);
           setIsSearching(true);
@@ -141,7 +153,10 @@ function Global() {
     // console.log(pos);
     // console.log(e.target);
     // if (pos < 1100 && hasNext.client) {
-      if(e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight && hasNext){
+    if (
+      e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight &&
+      hasNext
+    ) {
       switch (filterStandard) {
         case 1:
           getPostList(nextPage).then((response) => {
@@ -185,25 +200,18 @@ function Global() {
           });
           break;
       }
-      //   // console.log("스크롤 끝 감지");
-      //   getFollowerPostList(nextPage).then((response) => {
-      //     setNextPage(response.nextPage);
-      //     SetHasNext(response.hasNext);
-      //     setNewPosts(response.content);
-      //     setHasContent(response.hasContent);
-      //     setIsPostsLoading(true);
-      //   });
     }
   };
 
   const noPost = <div>게시물이 없습니다.</div>;
   const searchResult = (
-    <div>
+    <>
       <div>"{searchInput}"에 대한 검색 결과입니다.</div>
-      <div>{postList}</div>
-    </div>
+    </>
   );
-  const noSearchResult = <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>;
+  const noSearchResult = (
+    <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>
+  );
 
   return (
     <div className={styles.feedRoot}>
@@ -211,7 +219,11 @@ function Global() {
       <div className={styles.globalroot}>
         <div className={styles.searchdiv}>
           <img src={SearchIcon} className={styles.searchicon} alt=""></img>
-          <input className={styles.searchbar} alt="" onChange={searchValue}></input>
+          <input
+            className={styles.searchbar}
+            alt=""
+            onChange={searchValue}
+          ></input>
           <img
             src={FilterIcon}
             className={styles.filtericon}
@@ -224,8 +236,13 @@ function Global() {
           <div className={styles.filterselectbox}>
             <div className={styles.filtertextdiv}>
               <span
-                className={filterStandard === 1 ? styles.filtertextstandard : styles.filtertext}
+                className={
+                  filterStandard === 1
+                    ? styles.filtertextstandard
+                    : styles.filtertext
+                }
                 onClick={() => {
+                  MoveToTop();
                   setFilterStandard(1);
                   setIsSearching(false);
                 }}
@@ -233,8 +250,13 @@ function Global() {
                 최신순
               </span>
               <span
-                className={filterStandard === 2 ? styles.filtertextstandard : styles.filtertext}
+                className={
+                  filterStandard === 2
+                    ? styles.filtertextstandard
+                    : styles.filtertext
+                }
                 onClick={() => {
+                  MoveToTop();
                   setFilterStandard(2);
                   setIsSearching(false);
                 }}
@@ -247,9 +269,12 @@ function Global() {
                 src={SunnyIcon}
                 alt=""
                 className={
-                  filterStandard === 3 ? styles.filterweatherstandard : styles.filterweathericon
+                  filterStandard === 3
+                    ? styles.filterweatherstandard
+                    : styles.filterweathericon
                 }
                 onClick={() => {
+                  MoveToTop();
                   setFilterStandard(3);
                   setIsSearching(false);
                 }}
@@ -258,9 +283,12 @@ function Global() {
                 src={CloudyIcon}
                 alt=""
                 className={
-                  filterStandard === 4 ? styles.filterweatherstandard : styles.filterweathericon
+                  filterStandard === 4
+                    ? styles.filterweatherstandard
+                    : styles.filterweathericon
                 }
                 onClick={() => {
+                  MoveToTop();
                   setFilterStandard(4);
                   setIsSearching(false);
                 }}
@@ -269,9 +297,12 @@ function Global() {
                 src={RainyIcon}
                 alt=""
                 className={
-                  filterStandard === 5 ? styles.filterweatherstandard : styles.filterweathericon
+                  filterStandard === 5
+                    ? styles.filterweatherstandard
+                    : styles.filterweathericon
                 }
                 onClick={() => {
+                  MoveToTop();
                   setFilterStandard(5);
                   setIsSearching(false);
                 }}
@@ -279,7 +310,11 @@ function Global() {
             </div>
           </div>
         ) : null}
-        <div className={`${styles.main} ${styles.scroll}`} id="postMain" onScroll={handleScroll}>
+        <div
+          className={`${styles.main} ${styles.scroll}`}
+          id="postMain"
+          onScroll={handleScroll}
+        >
           {isSearching
             ? posts.length === 0
               ? noSearchResult
@@ -287,7 +322,6 @@ function Global() {
             : posts.length === 0
             ? noPost
             : postList}
-          {postList}
         </div>
       </div>
 
