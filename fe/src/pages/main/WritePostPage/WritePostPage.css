@@ -32,7 +32,8 @@
   flex-flow: row wrap;
   gap: 0.5rem;
   width: 100vw;
-  height: 90vh;
+  min-height: 90vh;
+  height: max-content;
   overflow: hidden;
   overflow-y: scroll;
 }
@@ -42,9 +43,10 @@
   /* Auto layout */
   display: flex;
   flex-flow: column wrap;
-  padding: 0.75rem 1rem;
+  padding: 8px;
   width: 100%;
-  height: 100%;
+  height: max-content;
+  gap: 0.3125rem;
   /* mono50 */
   background: #fcfcfc;
 }
@@ -52,15 +54,14 @@
   display: flex;
   flex-flow: row wrap;
   width: 100%;
+  height: max-content;
   order: 0;
-  flex-grow: 4;
 }
 .post-write-container .post-write-form .post-write-input-div .post-content-input {
   border: none;
   box-sizing: border-box;
   width: 100%;
-  height: 45%;
-  flex-grow: 5;
+  height: 200px;
   /* mono200 */
   border-bottom: 0.0625rem solid #bfbfbf;
   border-color: none;
@@ -76,7 +77,7 @@
   align-items: center;
   gap: 4px;
   height: max-content;
-  transform: translate(0, -50%);
+  min-height: 50px;
 }
 .post-write-container .post-write-form .post-write-input-div .post-tag-input-div .post-tag-input {
   width: max-content;
@@ -109,7 +110,6 @@
   gap: 0.5rem;
   width: 100%;
   height: 13%;
-  transform: translate(0, -80%);
   border-top: 1px solid #bfbfbf;
   order: 1;
   justify-content: space-between;
