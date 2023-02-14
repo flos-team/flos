@@ -143,9 +143,9 @@ function Feed() {
           <div className="following-list-div hide-scroll">
             {/** 친구 프로필을 나열한다.  */}
             {friends.length > 0 ? friendList : noFriend}
-            {[...Array(8)].map((e, i) => (
+            {/* {[...Array(8)].map((e, i) => (
               <div key={i} className="follower-info-item"></div>
-            ))}
+            ))} */}
           </div>
           <div className="post-container hide-scroll" id="postMain" onScroll={handleScroll}>
             {/** 친구들의 포스트를 나열한다.  */}
