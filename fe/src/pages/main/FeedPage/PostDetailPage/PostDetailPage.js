@@ -30,6 +30,9 @@ import none from "../../../../assets/ProfileAsset/question-mark.png";
 /* css import */
 import "./PostDetailPage.css";
 
+/* colors */
+import COLORS from "../../../../styles/colors";
+
 const PostDetailPage = () => {
   const user = useSelector((state) => state.user.userData);
   const params = useParams();
@@ -45,18 +48,36 @@ const PostDetailPage = () => {
 
   // 북마크 토글에 대한 state 및 function
   const [isBookmark, setIsBookmark] = useState(false);
-
   const [openModal, setOpenModal] = useState(false);
-
   const navigate = useNavigate();
 
   const handleCommentInputValue = (e) => {
     setInputValue(e.target.value);
-  };
+  };  
+
+  const [headColors, setHeadColors] = useState(COLORS.mono200);
+
+  const setColors = (weather) => {
+    switch (weather) {
+      case "SUNNY":
+        setHeadColors(COLORS.yellow100);
+        break;
+      case "CLOUDY":
+        setHeadColors(COLORS.mono200);
+        break;
+      case "RAINY":
+        setHeadColors(COLORS.skyBlue100);
+        break;
+      default:
+        setHeadColors(COLORS.mono200);
+        break;
+    }
+  }
 
   useEffect(() => {
     getPost(params.id).then((response) => {
       console.dir(response);
+      setColors(response.weather);
       setPost(response);
       setPostLoading(true);
     });
@@ -165,7 +186,7 @@ const PostDetailPage = () => {
           <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
-              <div className="user-info-container">
+              <div className="user-info-container" style={{background:headColors}} >
                 <div className="user-info-div">
                   <img
                     src={`${url}${post.writer.profileImage.saveName}`}
