@@ -1,0 +1,80 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.result-container {
+  color: none;
+  padding: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  gap: 16px;
+  text-decoration: none;
+  color: #141414;
+}
+.result-container .result-complete-text {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+}
+.result-container .result-img {
+  display: block;
+  margin: 0 auto;
+  width: fit-content;
+  height: max-content;
+  flex-shrink: 0;
+  display: block;
+}
+.result-container .result-greet-text {
+  width: 100%;
+  text-align: center;
+}
+.result-container .result-login-text {
+  width: 100%;
+  text-align: center;
+}
+
+/** 점멸 기능  */
+.blinking {
+  -webkit-animation: blink 1s ease-in-out infinite alternate;
+  -moz-animation: blink 1s ease-in-out infinite alternate;
+  animation: blink 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=Result.css.map */

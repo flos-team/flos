@@ -1,8 +1,14 @@
-.headertextframe{
-    margin: 2vh auto 0 auto;
-  }
-  
-  .headertext{
-    display: flex;
-    justify-content: center;
-  }
+.headertextframe {
+  margin: 2vh auto 0 auto;
+}
+
+.headertext {
+  display: flex;
+  justify-content: center;
+}
+
+.subText {
+  display: flex;
+  justify-content: center;
+  color: #04D000;
+}

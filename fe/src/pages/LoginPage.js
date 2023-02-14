@@ -55,7 +55,7 @@ function Login() {
       setLoginMsg("비밀번호를 입력해주세요.");
       onFocus.current[1].focus();
     } else {
-      doLogin(inputId, inputPw)
+      doLogin(inputId.toLowerCase(), inputPw)
         .then((response) => {
           if (response === false) {
             setLoginMsg("아이디 또는 비밀번호를 확인해주세요.");
