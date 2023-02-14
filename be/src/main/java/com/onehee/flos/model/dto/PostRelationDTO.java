@@ -1,8 +1,6 @@
 package com.onehee.flos.model.dto;
 
 import com.onehee.flos.model.dto.response.FileResponseDTO;
-import com.onehee.flos.model.dto.response.TagResponseDTO;
-import com.onehee.flos.model.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

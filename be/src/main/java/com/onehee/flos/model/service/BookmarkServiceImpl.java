@@ -1,8 +1,6 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
-import com.onehee.flos.model.dto.request.BookmarkRequestDTO;
-import com.onehee.flos.model.dto.request.UnbookmarkRequestDTO;
 import com.onehee.flos.model.entity.Bookmark;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;

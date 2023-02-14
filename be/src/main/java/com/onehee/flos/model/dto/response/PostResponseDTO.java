@@ -1,7 +1,6 @@
 package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.dto.PostRelationDTO;
-import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +25,7 @@ public class PostResponseDTO {
     private String content;
     @Schema(description = "게시글의 생성시간")
     private LocalDateTime regDate;
-//    private LocalDateTime modifyDate;
+    //    private LocalDateTime modifyDate;
     @Schema(description = "게시글의 날씨 정보")
     private WeatherType weather;
     @Schema(description = "게시글의 관계테이블 정보")

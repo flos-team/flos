@@ -4,11 +4,10 @@ package com.onehee.flos.auth.model.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.OAuth2UserDTO;
 import com.onehee.flos.auth.model.dto.TokenDTO;
-import com.onehee.flos.model.entity.Attendance;
-import com.onehee.flos.model.entity.FileEntity;
-import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.repository.AttendanceRepository;
-import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.MemberStatus;
+import com.onehee.flos.model.entity.type.MessageType;
+import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Component
@@ -37,6 +37,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final MemberRepository memberRepository;
     private final FilesHandler filesHandler;
     private final AttendanceRepository attendanceRepository;
+    private final PostRepository postRepository;
+    private final NotificationRepository notificationRepository;
+    private final WeatherResourceRepository weatherResourceRepository;
+    private final FlowerRepository flowerRepository;
 
     @Override
     @Transactional
@@ -56,13 +60,51 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             member = memberRepository.saveAndFlush(member);
             profileImage.setMember(member);
         }
+
         Member loginMember = memberRepository.findByEmailAndProviderType(oAuth2UserDTO.getEmail(), oAuth2UserDTO.getProviderType())
                 .orElseThrow(() -> new RuntimeException("소셜 회원 등록과정중에 에러가 발생했습니다."));
+
+        if (loginMember.getStatus().equals(MemberStatus.INACTIVE)) {
+            loginMember.setStatus(MemberStatus.ACTIVE);
+        }
 
         TokenDTO tokenDTO = jwtTokenProvider.generateTokenByMember(loginMember);
         log.info("{}", tokenDTO);
 
         LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime yesterday = now.minusDays(1);
+
+        if (
+                !postRepository.existsByWriterAndCreatedAtIsAfter(loginMember, yesterday)
+                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(loginMember, MessageType.NOFEED24H, yesterday)
+        ) {
+            Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(loginMember);
+            if (lastPost != null) {
+                long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
+                Notification notification = Notification.builder()
+                        .member(loginMember)
+                        .messageType(MessageType.NOFEED24H)
+                        .message(String.format(MessageType.NOFEED24H.getMessage(), loginMember.getNickname(), time))
+                        .build();
+                notificationRepository.save(notification);
+            }
+        }
+
+        if (
+                !weatherResourceRepository.existsByOwnerAndUsedAtAfter(loginMember, yesterday)
+                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(loginMember, MessageType.NOCAREPLANT24H, yesterday)
+        ) {
+            Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(loginMember).orElse(null);
+            if (flower != null) {
+                Notification notification = Notification.builder()
+                        .member(loginMember)
+                        .messageType(MessageType.NOCAREPLANT24H)
+                        .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), loginMember.getNickname(), flower.getName()))
+                        .build();
+                notificationRepository.save(notification);
+            }
+        }
 
         loginMember.setLastLoginAt(now);
         attendanceRepository.save(Attendance.builder()

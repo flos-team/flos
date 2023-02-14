@@ -13,11 +13,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Tag(name = "꽃API", description = "꽃 기능을 담당합니다.")
 @RestController
@@ -56,9 +58,7 @@ public class FlowerController {
     @Operation(summary = "가든 페이지 꽃 리스트", description = "가든 페이지의 꽃 정보를 반환합니다.")
     @GetMapping("/garden")
     public ResponseEntity<?> getFlowerList(@RequestParam(value="page", required = false) Integer page){
-        if (page==null)
-            page = 0;
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(Objects.requireNonNullElse(page, 0), size);
         return new ResponseEntity<SliceResponseDTO>(flowerService.getFlowerListInGarden(pageRequest), HttpStatus.OK);
     }
 

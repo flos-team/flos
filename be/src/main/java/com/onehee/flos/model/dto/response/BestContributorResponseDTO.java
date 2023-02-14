@@ -1,7 +1,5 @@
 package com.onehee.flos.model.dto.response;
 
-import com.onehee.flos.model.entity.Flower;
-import com.onehee.flos.model.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

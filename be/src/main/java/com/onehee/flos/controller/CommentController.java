@@ -1,19 +1,15 @@
 package com.onehee.flos.controller;
 
-import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.request.CommentApproveRequestDTO;
 import com.onehee.flos.model.dto.request.CommentCreateRequestDTO;
 import com.onehee.flos.model.dto.request.CommentModifyRequestDTO;
 import com.onehee.flos.model.dto.response.CommentResponseDTO;
-import com.onehee.flos.model.dto.response.PostResponseDTO;
-import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
