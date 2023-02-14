@@ -105,7 +105,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendReportMessage(EmailReportRequestDTO emailReportRequestDTO) throws MessagingException, UnsupportedEncodingException {
-        String from = SecurityManager.getCurrentMember().getEmail();
+        String from = emailReportRequestDTO.getSender();
         String message = emailReportRequestDTO.getMessage();
         String subject = "[Flos] 문의 메일 발송";
 

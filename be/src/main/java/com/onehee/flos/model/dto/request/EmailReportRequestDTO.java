@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class EmailReportRequestDTO {
+    private String sender;
     private String message;
 }
