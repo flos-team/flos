@@ -33,7 +33,7 @@ function Guide() {
     const [stage, setStage] = useState(1);
 
     const flowerNameClick = () => {
-        console.log("clicked - name");
+        // console.log("clicked - name");
         setSunAnimation(null);
         setRainAnimation(null);
         setChangeFlowerNamemodal(true);
@@ -41,7 +41,7 @@ function Guide() {
     
     const goNextStage = () => {
       setStage(stage+1)
-      console.log(stage)
+      // console.log(stage)
       return stage
     }
 
