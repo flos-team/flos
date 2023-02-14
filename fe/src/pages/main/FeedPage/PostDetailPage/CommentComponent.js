@@ -159,7 +159,7 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
               comment.id,
               comment.id
             ).then((response) => {
-              console.log(response);
+              // console.log(response);
               setReply(response);
               setReplyOnChange(!replyOnChange);
             });

@@ -217,7 +217,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
 
     getMyStatisticData().then((res) => {
       setUserData(res);
-      console.dir(res);
+      // console.dir(res);
       let loginRatio = (res.loginInfo.loginCount / res.loginInfo.lengthOfMonth) * 100;
       //let loginRatio = (28 / 28) * 100;
       judgeGrade(loginRatio);

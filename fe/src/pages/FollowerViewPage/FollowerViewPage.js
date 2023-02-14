@@ -109,7 +109,7 @@ const FollowerViewPage = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     // console.log(newValue)
-    console.dir(event.target);
+    // console.dir(event.target);
     if (isMine) {
       switch (Number(event.target.id.split("-")[2])) {
         case 0:
@@ -136,19 +136,19 @@ const FollowerViewPage = () => {
   };
 
   useEffect(() => {
-    console.log(`팔로워 리스트 길이 ${followerList.length}`);
-    console.dir(followerList.length);
-    console.log(`팔로잉 리스트 길이 ${followingList.length}`);
-    console.dir(followingList);
+    // console.log(`팔로워 리스트 길이 ${followerList.length}`);
+    // console.dir(followerList.length);
+    // console.log(`팔로잉 리스트 길이 ${followingList.length}`);
+    // console.dir(followingList);
 
     if(tabPosition === 0){
       if (param.id == user.id) {
-        console.log("나의 팔로워/팔로잉 페이지 입니다.");
+        // console.log("나의 팔로워/팔로잉 페이지 입니다.");
         setIsMine(true);
         setUserInfo(user);
         requestFollowerList();
       } else {
-        console.log("타인의 팔로워/팔로잉 페이지 입니다.");
+        // console.log("타인의 팔로워/팔로잉 페이지 입니다.");
         setIsMine(false);
         getOtherMemberInfo(param.id).then((res) => {
           setUserInfo(res);
@@ -157,12 +157,12 @@ const FollowerViewPage = () => {
       }
     } else if(tabPosition === 1){
       if (param.id == user.id) {
-        console.log("나의 팔로워/팔로잉 페이지 입니다.");
+        // console.log("나의 팔로워/팔로잉 페이지 입니다.");
         setIsMine(true);
         setUserInfo(user);
         requestFollowingList();
       } else {
-        console.log("타인의 팔로워/팔로잉 페이지 입니다.");
+        // console.log("타인의 팔로워/팔로잉 페이지 입니다.");
         setIsMine(false);
         getOtherMemberInfo(param.id).then((res) => {
           setUserInfo(res);

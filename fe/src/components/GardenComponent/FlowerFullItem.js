@@ -115,7 +115,7 @@ const FlowerFullItem = (props) => {
     const [contributorList, setContributorList] = useState([]);
 
     const EndingPlayButtonOnClick = () => {
-        console.log("엔딩 가져와야 함");
+        // console.log("엔딩 가져와야 함");
     };
 
     const ContributorButtonOnClick = () => {
@@ -126,8 +126,8 @@ const FlowerFullItem = (props) => {
         else {
             setContributorButtonColor("linear-gradient(360deg, #FFFFFF 0%, rgba(100, 100, 100, 0.5) 50.99%, rgba(0, 0, 0, 0) 100%)");
             getFlowerContributorList(props.flowerInfo.id).then((res) => {
-                console.log("기여자 가져와서 페이지 전환해야 함");
-                console.log(res);
+                // console.log("기여자 가져와서 페이지 전환해야 함");
+                // console.log(res);
                 setContributorList([...res].map((e, i) => {
                     return (<ContributorListItem key={i}>
                         <ContributorListItemImg src={`https://i8b210.p.ssafy.io/api/file/${e.profileImage.saveName}`} />

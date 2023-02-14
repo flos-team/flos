@@ -76,7 +76,7 @@ const PostDetailPage = () => {
 
   useEffect(() => {
     getPost(params.id).then((response) => {
-      console.dir(response);
+      // console.dir(response);
       setColors(response.weather);
       setPost(response);
       setPostLoading(true);
@@ -92,7 +92,7 @@ const PostDetailPage = () => {
 
   if (postLoading && commentLoading) {
     // console.log(comments);
-    console.log(post);
+    // console.log(post);
     const commentList = comments.map((key) => {
       return (
         <>
@@ -208,14 +208,14 @@ const PostDetailPage = () => {
                   onClick={(e) => {
                     // setIsBookmark(!isBookmark);
                     if (!post.relation.bookmarked) {
-                      console.log("post id : ", post.id);
+                      // console.log("post id : ", post.id);
                       setBookMark(post.id).then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setIsBookmark(!isBookmark);
                       });
                     } else {
                       deleteBookMark(post.id).then((response) => {
-                        console.log(response);
+                        // console.log(response);
                         setIsBookmark(!isBookmark);
                       });
                     }

@@ -53,7 +53,7 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost, judgeWe
   };
 
   const switchResult = () => {
-    console.log(swiperRef.current.swiper.realIndex);
+    // console.log(swiperRef.current.swiper.realIndex);
     switch (swiperRef.current.swiper.realIndex) {
       case 0:
         judgeWeatherIdx("positive");
