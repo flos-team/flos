@@ -72,6 +72,7 @@ const NotificationPage = () => {
 
             return (
               <AlarmItem
+                key={id}
                 AlarmImg={profileImg}
                 AlarmTextJSX={message}
                 AlarmTimeLog={RegBefore}

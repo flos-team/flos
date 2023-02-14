@@ -28,7 +28,7 @@ const LetterStep3Component = ({ step3Obj }) => {
           <textarea
             className="lettter-content-input"
             type="text"
-            placeholder="내용을 입력해주세요"
+            placeholder="당신의 꽃에게 전하고 싶은 이야기를 적어주세요"
             ref={letterInputRef}
             onChange={(e) => {
               setLetter(letterInputRef.current.value);

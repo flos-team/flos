@@ -11,7 +11,8 @@
   position: relative;
   width: 100%;
   height: 67.5vh;
-  background: $white;
+  // background: $white;
+  background: $red50;
   border-radius: 16 * $rpx1;
 
   .letter-user-nickname-div {
@@ -41,7 +42,6 @@
       height: 100%;
       border: none;
       outline: none;
-      background-color: $white-pure;
       line-height: 150%;
       word-break: keep-all;
     }

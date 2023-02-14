@@ -31,7 +31,6 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 0.5rem;
   gap: 0.5rem;
   width: 100vw;
   height: 88vh;
@@ -171,26 +170,34 @@
   font-size: 16px;
   text-align: center;
 }
-.profile-page-container .post-container {
+.profile-page-container .MuiBox-root {
+  padding: 0;
+  margin-top: 8px;
+}
+.profile-page-container .MuiBox-root .MuiTypography-root {
+  width: 100%;
+}
+.profile-page-container .MuiBox-root .MuiTypography-root .post-container {
   /* Auto layout */
   display: flex;
   flex-flow: row wrap;
   overflow-y: scroll;
-  gap: 1rem;
   width: 100%;
   height: 60vh;
   margin-bottom: 5rem;
+  padding: 8px;
+  gap: 16px;
 }
-.profile-page-container .post-container .post-item {
+.profile-page-container .MuiBox-root .MuiTypography-root .post-container .post-item {
   margin: 0 auto;
 }
-.profile-page-container .post-container .no-post-item {
+.profile-page-container .MuiBox-root .MuiTypography-root .post-container .no-post-item {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
 }
-.profile-page-container .post-container .no-post-item p {
+.profile-page-container .MuiBox-root .MuiTypography-root .post-container .no-post-item p {
   text-align: center;
 }
 
