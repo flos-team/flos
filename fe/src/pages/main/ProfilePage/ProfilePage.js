@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 /* import react-redux */
 import { useSelector, useDispatch } from "react-redux";
-import { setIsToastValue } from "../../../redux/toast";
+import { setUser } from "../../../redux/user";
 import { garden } from "../../../redux/page";
 
 /* import img */
@@ -16,7 +16,6 @@ import { garden } from "../../../redux/page";
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../components/PostItem/PostItem";
-import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 import Swal from "sweetalert2";
 ///// MUI ////////////////
 import Tabs from "@mui/material/Tabs";
@@ -24,12 +23,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 /* import module */
-import { getTimeDiffText } from "../../../api/DateModule";
-import MemberAPI, {
-  getMemberInfo,
-  getOtherMemberInfo,
-  doLogin,
-} from "../../../api/MemberAPI";
+import { getMemberInfo } from "../../../api/MemberAPI";
 import PostAPI, {
   getPostListByNickname,
   getBookMarkList,
@@ -134,53 +128,7 @@ const ProfilePage = ({ setIsToast }) => {
   // 사용자 이미지 state
   const [userImgURL, setUserImgURL] = useState("");
   // redux-toolkit
-  const toastValue = useSelector((state) => state.toast.isToast);
-
-  // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
-  useEffect(() => {
-    setIsToast(toastValue);
-    getMemberInfo().then((response) => {
-      // console.log(response);
-      setUserinfo({
-        nickname: response.nickname,
-        introduction: response.introduction,
-      });
-      setUserImgURL(
-        `https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`
-      );
-      let list = [
-        response.followerCount,
-        response.followingCount,
-        response.postCount,
-        response.blossomCount,
-      ];
-      setUserInfoList(
-        list.map((e, i) => {
-          let liEle = <></>;
-          if (i <= 1) {
-            liEle = (
-              <li
-                key={i}
-                onClick={(e) => {
-                  navigate(`/follower-view-page/${response.id}?${i}`);
-                }}
-              >
-                {e > 999 ? "999+" : e}
-              </li>
-            );
-          } else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>;
-          return liEle;
-        })
-      );
-      getPostListByNickname(response.nickname).then((data) => {
-        // console.log(data);
-        setPosts(data.content);
-        setNextPage(data.nextPage);
-        setHasNext(data.hasNext);
-      });
-      // setMyPostList(response.nickname);
-    });
-  }, []);
+  const toastValue = useSelector((state) => state.toast.isToast); 
 
   useEffect(() => {
     if (newPosts) {
@@ -254,11 +202,63 @@ const ProfilePage = ({ setIsToast }) => {
     }
   };
 
+ // 화면이 렌딩될 경우 사용자 정보를 요청하고 프로필에 세팅
+ useEffect(() => {
+  getMemberInfo().then((response) => {
+    // console.log(response);
+    setUserinfo({
+      nickname: response.nickname,
+      introduction: response.introduction,
+    });
+    setUserImgURL(
+      `https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`
+    );
+    let list = [
+      response.followerCount,
+      response.followingCount,
+      response.postCount,
+      response.blossomCount,
+    ];
+    setUserInfoList(
+      list.map((e, i) => {
+        let liEle = <></>;
+        if (i <= 1) {
+          liEle = (
+            <li
+              key={i}
+              onClick={(e) => {
+                navigate(`/follower-view-page/${response.id}?${i}`);
+              }}
+            >
+              {e > 999 ? "999+" : e}
+            </li>
+          );
+        } else liEle = <li key={i}>{e > 999 ? "999+" : e}</li>;
+        return liEle;
+      })
+    );
+    getPostListByNickname(response.nickname).then((data) => {
+      // console.log(data);
+      setPosts(data.content);
+      setNextPage(data.nextPage);
+      setHasNext(data.hasNext);
+    });
+    // setMyPostList(response.nickname);
+  });
+ }, []);
+  
+  // useEffect(() => {
+  //   // dispatch()
+  // },[user])
+  useEffect(() => {
+    console.log("리렌더링");
+  },[])
+
   return (
     <>
       <HeaderComponent
         backVisible={false}
-        pageName={userInfo.nickname}
+        pageName={user.nickname}
         menuOpt2={"SETTING"}
         menuOpt1={"STATISTICS"}
       ></HeaderComponent>
