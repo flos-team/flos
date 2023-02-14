@@ -56,6 +56,7 @@ const PostDetailPage = () => {
 
   useEffect(() => {
     getPost(params.id).then((response) => {
+      console.dir(response);
       setPost(response);
       setPostLoading(true);
     });

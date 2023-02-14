@@ -1,5 +1,5 @@
 /* import react */
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser, setFollowingIdList } from "../../../../redux/user";
 import { home } from "../../../../redux/page";
 
@@ -17,21 +17,23 @@ import HeaderComponent from "../../../../components/HeaderComponent/HeaderCompon
 import "./SettingPage.css";
 
 const AlarmPage = () => {
+  const user = useSelector((state) => state.user.userData);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const alarmOptItems = [
     { optId: 0, optName: "알림 설정" },
-    { optId: 1, optName: "새글 알림" },
-    { optId: 2, optName: "이메일 알림" },
-    { optId: 3, optName: "댓글 알림" },
-    { optId: 4, optName: "마을 날씨 알림" },
-    { optId: 5, optName: "나의 정원 알림" },
+    // { optId: 1, optName: "새글 알림" },
+    // { optId: 2, optName: "이메일 알림" },
+    // { optId: 3, optName: "댓글 알림" },
+    // { optId: 4, optName: "마을 날씨 알림" },
+    // { optId: 5, optName: "나의 정원 알림" },
   ];
 
   const themeOptItems = [
     { optId: 0, optName: "테마 설정" },
-    { optId: 1, optName: "시스템 설정에 맞춤" },
-    { optId: 2, optName: "다크 모드" },
+    // { optId: 1, optName: "시스템 설정에 맞춤" },
+    // { optId: 2, optName: "다크 모드" },
   ];
 
   // 알림 설정 리스트
@@ -120,11 +122,22 @@ const AlarmPage = () => {
   };
   // dispatch(setUser({}));
   // dispatch(setFollowingIdList([]));
+
+console.log(user);
+
   return (
     <div className="alarm-page">
       <HeaderComponent backVisible={true} pageName={"설정"}></HeaderComponent>
       <div className="alarm-main">{alarmOptList}</div>
       <div className="alarm-main">{themeOptList}</div>
+      <div className="alarm-main">불편사항 접수 <br>
+      </br>서비스 이용 중에 발생한 불편 사항을 알려주세요!
+        {/* 유저 정보와 입력된 정보를 폼에 담아 이메일로 전송한다. */}
+        <form>
+          <input type="text" placeholder="귀하의 소중한 의견이 서비스 개선에 큰 도움이 됩니다." ></input>
+          <button>제출</button>
+        </form>
+      </div>
       <div className="logout-container">
         <div onClick={confirmWithdrawalUser}>회원 탈퇴</div>
         <div className="logout-btn" onClick={confirmLogout}>
