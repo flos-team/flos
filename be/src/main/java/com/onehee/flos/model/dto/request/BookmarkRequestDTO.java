@@ -1,8 +1,5 @@
 package com.onehee.flos.model.dto.request;
 
-import com.onehee.flos.model.entity.Bookmark;
-import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.Post;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

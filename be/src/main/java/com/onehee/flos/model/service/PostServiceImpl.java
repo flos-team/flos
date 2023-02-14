@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @Log4j2
 public class PostServiceImpl implements PostService {
 
-    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
     private final FilesHandler filesHandler;
@@ -44,8 +43,6 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
-//        if (!memberRepository.existsByNicknameIgnoreCase(nickName))
-//            throw new BadRequestException("존재하지 않는 회원입니다.");
         if (Pattern.matches("^[a-zA-Z0-9]*$", nickName))
             nickName = nickName.toLowerCase();
         return SliceResponseDTO.toDto(postRepository.findSliceByNickname(nickName, pageable)
@@ -154,7 +151,7 @@ public class PostServiceImpl implements PostService {
 
         Member tempWriter = tempPost.getWriter();
 
-        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+        if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
@@ -191,7 +188,7 @@ public class PostServiceImpl implements PostService {
 
         Member tempWriter = tempPost.getWriter();
 
-        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+        if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
         postRepository.deleteAllByPost(tempPost);
@@ -203,19 +200,6 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(tempPost);
     }
 
-    // 게시글 관계테이블 정보
-//    private PostRelationDTO getPostRelation(Post post) {
-//        return PostRelationDTO.builder()
-//                .tagList(postRepository.getTagListByPost(post))
-//                .attachFiles(postRepository.getFileListByPost(post)
-//                        .stream()
-//                        .map(FileResponseDTO::toDTO)
-//                        .collect(Collectors.toList()))
-//                .isBookmarked(postRepository.isBookmarked(post, SecurityManager.getCurrentMember()))
-//                .isFollowed(postRepository.isFollowed(post, SecurityManager.getCurrentMember()))
-//                .countComment(postRepository.countCommentByPost(post))
-//                .build();
-//    }
     private PostRelationDTO getPostRelation(Post post) {
         return PostRelationDTO.builder()
                 .tagList(getTagListByPost(post))

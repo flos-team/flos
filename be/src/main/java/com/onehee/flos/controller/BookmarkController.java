@@ -1,10 +1,7 @@
 package com.onehee.flos.controller;
 
 import com.onehee.flos.exception.BadRequestException;
-import com.onehee.flos.model.dto.request.BookmarkRequestDTO;
-import com.onehee.flos.model.dto.request.UnbookmarkRequestDTO;
 import com.onehee.flos.model.service.BookmarkService;
-import com.onehee.flos.model.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
