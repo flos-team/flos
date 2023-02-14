@@ -27,8 +27,8 @@ import "./PostDetailPage.css";
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
 const CommentComponent = ({ comment, postWriterId, weather }) => {
-  console.log("here");
-  console.log(comment);
+  // console.log("here");
+  // console.log(comment);
   const user = useSelector((state) => state.user.userData);
 
   const [inputFocus, setInputFocus] = useState(false);

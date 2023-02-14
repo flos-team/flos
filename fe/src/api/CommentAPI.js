@@ -90,7 +90,7 @@ const createReply = async (content, postId, primitiveId, parentId) => {
     parentId: parentId,
     primitiveId: primitiveId,
   };
-  console.log(newComment);
+  // console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)

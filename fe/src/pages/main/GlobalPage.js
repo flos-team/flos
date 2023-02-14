@@ -34,7 +34,7 @@ function Global() {
   // 기본 렌더링 = 최신순
   useEffect(() => {
     getPostList().then((response) => {
-      console.log(response);
+      // console.log(response);
       setPosts(response.postList);
       setNextPage(response.nextPage);
       SetHasNext(response.hasNext);

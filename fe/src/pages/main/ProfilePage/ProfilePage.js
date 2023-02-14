@@ -251,7 +251,7 @@ const ProfilePage = ({ setIsToast }) => {
   //   // dispatch()
   // },[user])
   useEffect(() => {
-    console.log("리렌더링");
+    // console.log("리렌더링");
   },[])
 
   return (

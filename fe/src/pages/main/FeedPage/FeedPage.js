@@ -25,7 +25,7 @@ function Feed() {
 
   useEffect(() => {
     getFollowerPostList().then((response) => {
-      console.log(response);
+      // console.log(response);
       setNextPage(response.nextPage);
       SetHasNext(response.hasNext);
       setPosts(response.content);
