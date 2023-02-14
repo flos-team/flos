@@ -130,7 +130,7 @@ public class MailServiceImpl implements MailService {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
         messageHelper.setSubject(subject);
-        messageHelper.setText(msg);
+        messageHelper.setText("<html><body><h2>[<span style=\"color:deepskyblue\">FLOS</span> 문의 발송] " + from +" 회원</h2><p>" + msg +"</p></body></html>");
         messageHelper.setFrom(from);
         messageHelper.setTo(reciever);
         emailSender.send(message);
