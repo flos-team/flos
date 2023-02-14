@@ -54,11 +54,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 기간안에 특정 사용자가 작성한 포스트 모두 반환
     List<Post> findAllByWriterAndCreatedAtBetween(Member writer, LocalDateTime start, LocalDateTime end);
 
-    @Query(value = "delete from post_tag pt where pt.post_id = :post", nativeQuery = true)
+    @Query(value = "delete from post_tag where post_id = :post", nativeQuery = true)
     void deleteTagByPost(@Param("post") Post post);
-    @Query(value = "delete from post_file pf where pf.post_id = :post", nativeQuery = true)
+    @Query(value = "delete from post_file where post_id = :post", nativeQuery = true)
     void deleteFileByPost(@Param("post") Post post);
-    @Query(value = "delete from bookmark bm where bm.post_id = :post", nativeQuery = true)
+    @Query(value = "delete from bookmark where post_id = :post", nativeQuery = true)
     void deleteBookmarkByPost(@Param("post") Post post);
 
     @Query(value = "delete from comment where post_id = :post and pri_comment_id is not null", nativeQuery = true)
