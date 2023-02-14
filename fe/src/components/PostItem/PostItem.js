@@ -116,7 +116,7 @@ const PostItem = ({ post }) => {
   return (
     <div className="post-item">
       {topComponent}
-      <div
+      <div className="bottom-component"
         onClick={(e) => {
           navigate(`/main/post/${post.id}`);
         }}
