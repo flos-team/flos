@@ -1,6 +1,7 @@
 package com.onehee.flos.controller;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.request.EmailReportRequestDTO;
 import com.onehee.flos.model.dto.request.EmailVerificationRequestDTO;
 import com.onehee.flos.model.service.MailService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,6 +77,18 @@ public class EmailController {
             return new ResponseEntity<Void>(HttpStatus.OK);
         }
         throw new BadRequestException("인증에 실패했습니다.");
+    }
+    @Tag(name = "이메일API")
+    @Operation(summary = "이메일 문의 전송 메서드", description = "관리자에게 문의 메일을 보냅니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "이메일이 정상적으로 발송되었습니다."),
+            @ApiResponse(responseCode = "400", description = "올바르지 않은 메세지를 입력했습니다."),
+            @ApiResponse(responseCode = "500", description = "이메일을 보내는 과정에 문제가 생겼습니다.")
+    })
+    @PostMapping("/report")
+    public ResponseEntity<?> sendReportMessage(@RequestBody EmailReportRequestDTO emailReportRequestDTO) throws MessagingException, UnsupportedEncodingException {
+        mailService.sendReportMessage(emailReportRequestDTO);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
 }
