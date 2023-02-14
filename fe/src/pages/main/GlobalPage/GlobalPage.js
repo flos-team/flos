@@ -5,19 +5,20 @@ import {
   getPostListByComment,
   getPostListByNickname,
   getPostListByTagName,
-} from "../../api/PostAPI";
+} from "../../../api/PostAPI";
 
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import MoveToTopToggle from "../../components/MoveToTop/MoveToTopToggle";
-import PostItem from "../../components/PostItem/PostItem";
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
+import MoveToTopToggle from "../../../components/MoveToTop/MoveToTopToggle";
+import PostItem from "../../../components/PostItem/PostItem";
 
-import SearchIcon from "../../assets/GlobalAsset/Search.png";
-import FilterIcon from "../../assets/GlobalAsset/Filter.png";
-import SunnyIcon from "../../assets/GlobalAsset/sunny.png";
-import CloudyIcon from "../../assets/GlobalAsset/cloudy.png";
-import RainyIcon from "../../assets/GlobalAsset/rainy.png";
+import SearchIcon from "../../../assets/GlobalAsset/Search.png";
+import FilterIcon from "../../../assets/GlobalAsset/Filter.png";
+import SunnyIcon from "../../../assets/GlobalAsset/sunny.png";
+import CloudyIcon from "../../../assets/GlobalAsset/cloudy.png";
+import RainyIcon from "../../../assets/GlobalAsset/rainy.png";
 
 import styles from "./GlobalPage.module.css";
+import "./GlobalPageStyle.css";
 
 function Global() {
   const [posts, setPosts] = useState([]);
@@ -114,19 +115,14 @@ function Global() {
   const searchValue = (e) => {
     // 태그 검색
     if (e.target.value.substr(0, 1) === "#" && e.target.value.length >= 2) {
-      getPostListByTagName(e.target.value.substr(1).toLowerCase()).then(
-        (response) => {
-          setIsSearching(true);
-          setSearchInput(e.target.value);
-          setPosts([...response.content]);
-        }
-      );
+      getPostListByTagName(e.target.value.substr(1).toLowerCase()).then((response) => {
+        setIsSearching(true);
+        setSearchInput(e.target.value);
+        setPosts([...response.content]);
+      });
     }
     // 사용자 검색
-    else if (
-      e.target.value.substr(0, 1) !== "#" &&
-      e.target.value.length >= 1
-    ) {
+    else if (e.target.value.substr(0, 1) !== "#" && e.target.value.length >= 1) {
       getPostListByNickname(e.target.value.toLowerCase()).then((response) => {
         if (response.content) {
           setIsSearching(true);
@@ -153,10 +149,7 @@ function Global() {
     // console.log(pos);
     // console.log(e.target);
     // if (pos < 1100 && hasNext.client) {
-    if (
-      e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight &&
-      hasNext
-    ) {
+    if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight && hasNext) {
       switch (filterStandard) {
         case 1:
           getPostList(nextPage).then((response) => {
@@ -209,38 +202,98 @@ function Global() {
       <div>"{searchInput}"에 대한 검색 결과입니다.</div>
     </>
   );
-  const noSearchResult = (
-    <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>
-  );
+  const noSearchResult = <div>"{searchInput}"에 대한 검색 결과가 없습니다.</div>;
 
   return (
-    <div className={styles.feedRoot}>
+    // <div className={styles.feedRoot}>
+    //   <HeaderComponent pageName={"둘러보기"} optType={0}></HeaderComponent>
+    //   <div className={styles.globalroot}>
+    //     <div className={styles.searchdiv}>
+    //       <img src={SearchIcon} className={styles.searchicon} alt=""></img>
+    //       <input className={styles.searchbar} alt="" onChange={searchValue}></input>
+    //       <img src={FilterIcon} className={styles.filtericon} alt="" onClick={clickFilterIcon}></img>
+    //     </div>
+    //     {/* 필터 아이콘 누른 상태 */}
+    //     {filtering ? (
+    //       <div className={styles.filterselectbox}>
+    //         <div className={styles.filtertextdiv}>
+    //           <span
+    //             className={filterStandard === 1 ? styles.filtertextstandard : styles.filtertext}
+    //             onClick={() => {
+    //               MoveToTop();
+    //               setFilterStandard(1);
+    //               setIsSearching(false);
+    //             }}
+    //           >
+    //             최신순
+    //           </span>
+    //           <span
+    //             className={filterStandard === 2 ? styles.filtertextstandard : styles.filtertext}
+    //             onClick={() => {
+    //               MoveToTop();
+    //               setFilterStandard(2);
+    //               setIsSearching(false);
+    //             }}
+    //           >
+    //             댓글 많은 순
+    //           </span>
+    //         </div>
+    //         <div className={styles.filtertextdiv}>
+    //           <img
+    //             src={SunnyIcon}
+    //             alt=""
+    //             className={filterStandard === 3 ? styles.filterweatherstandard : styles.filterweathericon}
+    //             onClick={() => {
+    //               MoveToTop();
+    //               setFilterStandard(3);
+    //               setIsSearching(false);
+    //             }}
+    //           ></img>
+    //           <img
+    //             src={CloudyIcon}
+    //             alt=""
+    //             className={filterStandard === 4 ? styles.filterweatherstandard : styles.filterweathericon}
+    //             onClick={() => {
+    //               MoveToTop();
+    //               setFilterStandard(4);
+    //               setIsSearching(false);
+    //             }}
+    //           ></img>
+    //           <img
+    //             src={RainyIcon}
+    //             alt=""
+    //             className={filterStandard === 5 ? styles.filterweatherstandard : styles.filterweathericon}
+    //             onClick={() => {
+    //               MoveToTop();
+    //               setFilterStandard(5);
+    //               setIsSearching(false);
+    //             }}
+    //           ></img>
+    //         </div>
+    //       </div>
+    //     ) : null}
+    //     <div className={`${styles.main} ${styles.scroll}`} id="postMain" onScroll={handleScroll}>
+    //       {isSearching ? (posts.length === 0 ? noSearchResult : searchResult) : posts.length === 0 ? noPost : postList}
+    //     </div>
+    //   </div>
+
+    //   <MoveToTopToggle></MoveToTopToggle>
+    // </div>
+
+    <div className="global-page-container">
       <HeaderComponent pageName={"둘러보기"} optType={0}></HeaderComponent>
-      <div className={styles.globalroot}>
-        <div className={styles.searchdiv}>
-          <img src={SearchIcon} className={styles.searchicon} alt=""></img>
-          <input
-            className={styles.searchbar}
-            alt=""
-            onChange={searchValue}
-          ></input>
-          <img
-            src={FilterIcon}
-            className={styles.filtericon}
-            alt=""
-            onClick={clickFilterIcon}
-          ></img>
+      <div className="global-page-root">
+        <div className="global-search-div">
+          <img src={SearchIcon} className="search-icon" alt=""></img>
+          <input className="search-input" alt="" onChange={searchValue}></input>
+          <img src={FilterIcon} className="filter-btn" alt="" onClick={clickFilterIcon}></img>
         </div>
         {/* 필터 아이콘 누른 상태 */}
         {filtering ? (
-          <div className={styles.filterselectbox}>
+          <div className={`${styles.filterselectbox} filter-div`}>
             <div className={styles.filtertextdiv}>
               <span
-                className={
-                  filterStandard === 1
-                    ? styles.filtertextstandard
-                    : styles.filtertext
-                }
+                className={filterStandard === 1 ? styles.filtertextstandard : styles.filtertext}
                 onClick={() => {
                   MoveToTop();
                   setFilterStandard(1);
@@ -250,11 +303,7 @@ function Global() {
                 최신순
               </span>
               <span
-                className={
-                  filterStandard === 2
-                    ? styles.filtertextstandard
-                    : styles.filtertext
-                }
+                className={filterStandard === 2 ? styles.filtertextstandard : styles.filtertext}
                 onClick={() => {
                   MoveToTop();
                   setFilterStandard(2);
@@ -268,11 +317,7 @@ function Global() {
               <img
                 src={SunnyIcon}
                 alt=""
-                className={
-                  filterStandard === 3
-                    ? styles.filterweatherstandard
-                    : styles.filterweathericon
-                }
+                className={filterStandard === 3 ? styles.filterweatherstandard : styles.filterweathericon}
                 onClick={() => {
                   MoveToTop();
                   setFilterStandard(3);
@@ -282,11 +327,7 @@ function Global() {
               <img
                 src={CloudyIcon}
                 alt=""
-                className={
-                  filterStandard === 4
-                    ? styles.filterweatherstandard
-                    : styles.filterweathericon
-                }
+                className={filterStandard === 4 ? styles.filterweatherstandard : styles.filterweathericon}
                 onClick={() => {
                   MoveToTop();
                   setFilterStandard(4);
@@ -296,11 +337,7 @@ function Global() {
               <img
                 src={RainyIcon}
                 alt=""
-                className={
-                  filterStandard === 5
-                    ? styles.filterweatherstandard
-                    : styles.filterweathericon
-                }
+                className={filterStandard === 5 ? styles.filterweatherstandard : styles.filterweathericon}
                 onClick={() => {
                   MoveToTop();
                   setFilterStandard(5);
@@ -310,18 +347,8 @@ function Global() {
             </div>
           </div>
         ) : null}
-        <div
-          className={`${styles.main} ${styles.scroll}`}
-          id="postMain"
-          onScroll={handleScroll}
-        >
-          {isSearching
-            ? posts.length === 0
-              ? noSearchResult
-              : searchResult
-            : posts.length === 0
-            ? noPost
-            : postList}
+        <div className={`${styles.main} ${styles.scroll}`} id="postMain" onScroll={handleScroll}>
+          {isSearching ? (posts.length === 0 ? noSearchResult : searchResult) : posts.length === 0 ? noPost : postList}
         </div>
       </div>
 
