@@ -119,7 +119,7 @@ public class PostServiceImpl implements PostService {
                 );
             }
         }
-        if (postCreateRequestDTO.getAttachFiles() != null) {
+        if (postCreateRequestDTO.getTagList() != null) {
             for (String e : postCreateRequestDTO.getTagList()) {
                 Tag tempTag = tagRepository.findByTagName(e).orElse(null);
                 postTagRepository.saveAndFlush(
