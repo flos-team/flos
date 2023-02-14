@@ -1,9 +1,12 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
+
 import { doLogin, getMemberInfo } from "../api/MemberAPI";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setFollowingIdList } from "../redux/user";
+
 import Swal from "sweetalert2";
 import loginlogo from "../assets/GoormAsset/goorm-smile.png";
 import kakaologo from "../assets/LoginAsset/kakao-logo.png";
