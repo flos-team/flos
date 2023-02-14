@@ -2,9 +2,11 @@ package com.onehee.flos.model.service;
 
 import com.onehee.flos.auth.model.repository.RedisRepository;
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.request.EmailReportRequestDTO;
 import com.onehee.flos.model.dto.request.EmailVerificationRequestDTO;
 import com.onehee.flos.model.entity.type.ProviderType;
 import com.onehee.flos.model.repository.MemberRepository;
+import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.utility.RandomString;
@@ -37,6 +39,9 @@ public class MailServiceImpl implements MailService {
 
     @Value("${spring.mail.description}")
     private String senderDescription;
+
+    @Value("${spring.mail.reportfrom}")
+    private String reciever;
 
     private final JavaMailSender emailSender;
     private final RedisRepository redisRepository;
@@ -98,6 +103,15 @@ public class MailServiceImpl implements MailService {
         return verifyEmail(email, code, table);
     }
 
+    @Override
+    public void sendReportMessage(EmailReportRequestDTO emailReportRequestDTO) throws MessagingException, UnsupportedEncodingException {
+        String from = SecurityManager.getCurrentMember().getEmail();
+        String message = emailReportRequestDTO.getMessage();
+        String subject = "[Flos] 문의 메일 발송";
+
+        sendReport(subject, message, from);
+    }
+
     private String getCode() {
         return RandomString.make(10);
     }
@@ -109,6 +123,16 @@ public class MailServiceImpl implements MailService {
         messageHelper.setText("인증 코드: " + code);
         messageHelper.setFrom(sender, senderDescription);
         messageHelper.setTo(to);
+        emailSender.send(message);
+    }
+
+    private void sendReport(String subject, String msg, String from) throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+        messageHelper.setSubject(subject);
+        messageHelper.setText(msg);
+        messageHelper.setFrom(from);
+        messageHelper.setTo(sender);
         emailSender.send(message);
     }
 
