@@ -227,6 +227,7 @@ const getPostListByTagName = async (tagName) => {
 const createPost = async (content, weather, tagList, attachFiles = []) => {
   let url = "/api/post";
   const formData = new FormData();
+  // console.dir(formData);
   formData.append("content", content);
   formData.append("weather", weather);
   formData.append("tagList", tagList);
