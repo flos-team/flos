@@ -38,7 +38,7 @@ function FindPage() {
     const sendEmail = () => {
         axios.get('/email/reset-password?email=' + inputId, {withCredentials : false})
             .then((res) => {
-                console.log(res)        
+                // console.log(res)        
                 Swal.fire({
                   icon: 'success',
                   title: '메일 발송되었습니다.',
@@ -46,7 +46,7 @@ function FindPage() {
                 setIsMailSend(true);
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 Swal.fire({
                   icon: 'warning',
                   title: '가입되지 않은 이메일입니다.',
@@ -60,7 +60,7 @@ function FindPage() {
         }
         axios.post('/email/reset-password', axiosInfo, {withCredentials : false})
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 Swal.fire({
                   icon: 'success',
                   title: '인증이 완료되었습니다.',
@@ -69,7 +69,7 @@ function FindPage() {
                 setIsResetPw(true);
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 Swal.fire({
                   icon: 'warning',
                   title: '인증에 실패했습니다.'
@@ -130,14 +130,14 @@ function FindPage() {
     }
     axios.put('/member/reset-password', axiosInfo)
     .then((res) => {
-        console.log(res)
+        // console.log(res)
         Swal.fire({
           icon: 'success',
           title: '비밀번호 재설정 완료',
         })
     })
     .catch((err) => {
-        console.log(err)
+        // console.log(err)
         Swal.fire({
           icon: 'warning',
           title: '인증에 실패하였습니다.',
@@ -155,7 +155,7 @@ function FindPage() {
         }
         if (parseInt(seconds) === 0) {
           if(parseInt(minutes) === 0) {
-            console.log('end')
+            // console.log('end')
             clearInterval(countdown);
           } else {
             setMinutes(parseInt(minutes) - 1)
