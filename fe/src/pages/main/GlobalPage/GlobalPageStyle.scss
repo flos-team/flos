@@ -1,0 +1,46 @@
+@import "../../../styles/commons.scss";
+
+.global-page-container {
+  width: 100vw;
+  height: 90vh;
+  .global-page-root {
+    width: 100%;
+    height: 100%;
+    // border: 1px solid black; /* temp */
+    .global-search-div {
+      //border: 1px solid black;
+      width: 100vw;
+      height: 50px;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      position: relative;
+      border-bottom: 1px solid $mono300;
+      box-sizing: border-box;
+      padding-bottom: 10px;
+      .search-icon {
+        position: absolute;
+        left: 5px;
+        top: 0;
+        transform: translate(25%, 25%);
+        display: block;
+      }
+      .search-input {
+        margin-left: 5px;
+        width: 100%;
+        border: 1px solid $mono600;
+        border-radius: 8px;
+        padding-left: 35px;
+        font-size: 20px;
+      }
+      .filter-btn {
+        margin-right: 5px;
+        display: block;
+        scale: (0.6);
+      }
+    }
+    .filter-div {
+      height: 45px;
+    }
+  }
+}

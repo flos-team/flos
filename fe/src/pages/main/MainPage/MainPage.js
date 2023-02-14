@@ -13,7 +13,7 @@ import Feed from "../FeedPage/FeedPage";
 /* import Page */
 import ProfilePage from "../ProfilePage/ProfilePage";
 import HomePage from "../HomePage";
-import GlobalPage from "../GlobalPage";
+import GlobalPage from "../GlobalPage/GlobalPage";
 import GardenPage from "../GardenPage";
 
 function Main() {

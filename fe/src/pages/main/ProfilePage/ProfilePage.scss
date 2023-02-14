@@ -5,7 +5,7 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 8 * $rpx1;
+  //padding: 8 * $rpx1;
   gap: 8 * $rpx1;
   width: 100vw;
   // height: 656 * $rpx1;
@@ -152,26 +152,34 @@
     }
   }
 
-  .post-container {
-    /* Auto layout */
-    display: flex;
-    flex-flow: row wrap;
-    overflow-y: scroll;
-    // padding: 8 * $rpx1 0px;
-    gap: 16 * $rpx1;
-    width: 100%;
-    height: 60vh;
-    margin-bottom: 80 * $rpx1;
-    .post-item {
-      margin: 0 auto;
-    }
-    .no-post-item {
+  .MuiBox-root {
+    padding: 0;
+    margin-top: 8px;
+    .MuiTypography-root {
+      // background: black;
       width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      p {
-        text-align: center;
+      .post-container {
+        /* Auto layout */
+        display: flex;
+        flex-flow: row wrap;
+        overflow-y: scroll;
+        // padding: 8 * $rpx1 0px;
+        // gap: 16 * $rpx1;
+        width: 100%;
+        height: 60vh;
+        margin-bottom: 80 * $rpx1;
+        .post-item {
+          margin: 0 auto;
+        }
+        .no-post-item {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          p {
+            text-align: center;
+          }
+        }
       }
     }
   }
