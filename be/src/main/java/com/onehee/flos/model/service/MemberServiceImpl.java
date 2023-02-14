@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -88,41 +89,43 @@ public class MemberServiceImpl implements MemberService {
 
         LocalDateTime yesterday = now.minusDays(1);
 
-        if (
-                !postRepository.existsByWriterAndCreatedAtIsAfter(member, yesterday)
-                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
-        ) {
-            Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(member);
-            if (lastPost != null) {
-                long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
-                Notification notification = Notification.builder()
-                        .member(member)
-                        .messageType(MessageType.NOFEED24H)
-                        .message(String.format(MessageType.NOFEED24H.getMessage(), member.getNickname(), time))
-                        .build();
-                notificationRepository.save(notification);
+        if (member.getCreatedAt().plusDays(1).isBefore(now)) {
+            if (
+                    !postRepository.existsByWriterAndCreatedAtIsAfter(member, yesterday)
+                            && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
+            ) {
+                Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(member);
+                if (lastPost != null) {
+                    long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
+                    Notification notification = Notification.builder()
+                            .member(member)
+                            .messageType(MessageType.NOFEED24H)
+                            .message(String.format(MessageType.NOFEED24H.getMessage(), member.getNickname(), time))
+                            .build();
+                    notificationRepository.save(notification);
+                }
             }
-        }
 
-        if (
-                !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
-                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
-        ) {
-            Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(member).orElse(null);
-            if (flower != null) {
-                Notification notification = Notification.builder()
-                        .member(member)
-                        .messageType(MessageType.NOCAREPLANT24H)
-                        .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), member.getNickname(), flower.getName()))
-                        .build();
-                notificationRepository.save(notification);
+            if (
+                    !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
+                            && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
+            ) {
+                Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(member).orElse(null);
+                if (flower != null) {
+                    Notification notification = Notification.builder()
+                            .member(member)
+                            .messageType(MessageType.NOCAREPLANT24H)
+                            .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), member.getNickname(), flower.getName()))
+                            .build();
+                    notificationRepository.save(notification);
+                }
             }
         }
 
 
         member.setLastLoginAt(now);
         if (!attendanceRepository.existsByMemberAndLoginDate(member, now.toLocalDate())) {
-                     attendanceRepository.save(Attendance.builder()
+            attendanceRepository.save(Attendance.builder()
                     .member(member)
                     .loginDate(now.toLocalDate())
                     .build()
