@@ -27,7 +27,7 @@ function Main() {
   const dispatch = useDispatch();
   useEffect(() => {
     getMemberInfo().then((response) => {
-      console.log(response);
+      // console.log(response);
       dispatch(setUser(response));
     });
   });

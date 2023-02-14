@@ -310,7 +310,7 @@ const Home = () => {
      *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
      */
     getFlowerInfo().then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res === "NO_FLOWER_EXISTS") {
         setMakeFlowerModal(true);
         console.log("꽃이 존재하지 않습니다.");
@@ -322,7 +322,7 @@ const Home = () => {
       flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
       flowerInfo.MaxGrowthValue = res.maxGrowthValue;
       flowerInfo.color = res.color;
-      console.log("꽃 정보 가져옴");
+      // console.log("꽃 정보 가져옴");
     });
     getMemberInfo().then((res) => {
       flowerInfo.sunElementCount = res.light;

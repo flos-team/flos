@@ -32,7 +32,7 @@ const NotificationPage = () => {
   }, []); // 너무 많은 요청 발생합니다...
   const bringNoticeList = () => {
     getNotification().then((res) => {
-      console.log(res)
+      // console.log(res)
       setNotiList(res.notifications);
 
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");

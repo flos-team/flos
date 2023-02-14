@@ -46,7 +46,7 @@ const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather, id, render, 
 
   const deleteNoti = (id) => {
     deleteNotification(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       render();
     });
   };
