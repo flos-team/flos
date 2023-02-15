@@ -36,12 +36,18 @@
   gap: 8px;
 }
 .comment-component-div .comment-component-input {
-  width: 80%;
+  width: 75%;
   height: 30px;
+  border: 1px solid #e8e8e8;
 }
 .comment-component-div .comment-component-button {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #96c6e0;
+  border: none;
+  border: 1px solid #bfbfbf;
+  border-radius: 5px;
+  color: #f9f9f9;
 }
 
 /*# sourceMappingURL=CommentComponent.css.map */

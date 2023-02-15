@@ -9,14 +9,18 @@
     padding-bottom: 8px;
     gap: 8px;
     .comment-component-input {
-        width: 80%;
+        width: 75%;
         height: 30px;
-
+        border: 1px solid $mono100;
     }
     .comment-component-button{
-        padding-left: 10px;
-        padding-right: 10px;
-
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: $sky-blue300;
+        border: none;
+        border: 1px solid $mono300;
+        border-radius: 5px;
+        color: $white;
     }
 
 }
