@@ -100,6 +100,7 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+//    FLOS 서비스 특성상 폐기의 필요성
 //    @Tag(name = "게시글API")
 //    @Operation(summary = "게시글 수정", description = "게시글 내용을 수정합니다.")
 //    @PutMapping("/modify")

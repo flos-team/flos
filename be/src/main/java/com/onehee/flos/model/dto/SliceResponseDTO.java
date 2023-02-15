@@ -31,7 +31,7 @@ public class SliceResponseDTO {
         Pageable pageable = data.nextPageable();
         if (data.getContent() != null) // null일 때 있음!
             tempContent = data.getContent();
-        if (data.nextPageable().isPaged()) {
+        if (data.nextPageable().isPaged()) { // PageRequest로 들어왔다면...
             pageNumber = pageable.getPageNumber();
             pageSize = pageable.getPageSize();
         }
