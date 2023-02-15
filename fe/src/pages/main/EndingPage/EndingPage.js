@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import background from "../../../assets/GardenAsset/garden-background-img.jpg";
 
 /* import module */
-import { getGardenList, getFlowerContributorList, getFlowerInfoById, getFlowerMVPInfo, writeEndLetter } from "../../../api/FlowerAPI";
+import { getGardenList, getFlowerInfoById, getFlowerMVPInfo, writeEndLetter, getFlowerContributorList } from "../../../api/FlowerAPI";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -37,8 +37,12 @@ import "./EndingPage.css";
 
 const SampleCircle = styled.div`
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: ${(p) => p.width}px;
+  height: ${(p) => p.height}px;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 
@@ -114,27 +118,33 @@ const EndingPage = () => {
   const [endingList, setEndingList] = useState([]);
   const [letterText, setLetterText] = useState("");
   const [flowerObj, setFlowerObj] = useState({});
-  const circleRef = useRef();
+  const [contributorList, setContributorList] = useState([]);
+  const CircleRef1 = useRef();
+  const CircleRef2 = useRef();
+  const CircleRef3 = useRef();
+  const CircleRef4 = useRef();
+  const CircleRef5 = useRef();
+  const timeline = gsap.timeline({ yoyo: true, repeatDelay: 1});
 
-  useEffect(() => {
-    // getFlowerMVPInfo(1).then((res) => {
-    //   console.dir(res);
-    // });
-    // getGardenList().then((res) => {
-    //   console.dir(res);
-    // });
-    getFlowerInfoById(params.id).then((res) => {
+  const endingPageInit = async () => {
+    let step1Obj = {} // 엔딩페이지 1 컴포넌트 정보 담을 Object
+    let step2Obj = {} // 엔딩페이지 2 컴포넌트 정보 담을 Object
+    let step3Obj = {} // 엔딩 페이지 3 컴포넌트 정보 담을 Object
+    let step4Obj = {} // 엔딩 페이지 4 컴포넌트 정보 담을 Object
+    let imgList = [];
+
+    await getFlowerInfoById(params.id).then((res) => {
       // console.dir(res);
       let obj = flowerInfoList[`${res.flowerColor}`];
       //console.dir(obj);
       setFlowerObj({ ...res });
-      let step1Obj = {
+      step1Obj = {
         flowerImg: obj.img,
         flowerMeans: res.flowerMeaning.split(","),
         flowerName: obj.name,
       };
 
-      let step2Obj = {
+      step2Obj = {
         createdAt: res.createdAt,
         blossomAt: res.blossomAt,
         capacity: res.capacity,
@@ -143,56 +153,94 @@ const EndingPage = () => {
         name: res.name,
       };
 
-      let step3Obj = {
+      step3Obj = {
         name: res.name,
         id: res.id,
         setLetterText,
         letter: res.letter,
       };
 
-      // console.log(res.letter);
-
-      let list = [
-        <LetterStep1Component step1Obj={step1Obj} />,
-        <LetterStep2Component step2Obj={step2Obj} />,
-        <LetterStep3Component step3Obj={step3Obj} isDisable={res&&res.letter&&res.letter===null&&res.letter.length===0} />,
-        <LetterStep4Component name={res.name} />,
-      ];
-      setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
+      step4Obj = {
+        name: res.name,
+        color: res.flowerColor,
+      }
     });
 
+    let url = "https://i8b210.p.ssafy.io/api/";    
+    
+    await getFlowerContributorList(params.id)
+    .then((res) => {
+      // console.dir(res);
+      let list = res.map((e) => `${url}file/${e.profileImage.saveName}`);
+      console.dir(list);
+      step2Obj['peopleImgURLs'] = list;
+      setContributorList(list);
+    })
 
-    let sampleList = [{
-      id: "sampleId1",
-      img: background
-    },
-    {
-      id: "sampleId2",
-      img: background
-    },
-    {
-      id: "sampleId3",
-      img: background
-    }];
+    // console.log(res.letter);
+    let list = [
+      <LetterStep1Component step1Obj={step1Obj} />,
+      <LetterStep2Component step2Obj={step2Obj} />,
+      <LetterStep3Component step3Obj={step3Obj} isDisable={false} />,
+      <LetterStep4Component step4Obj={step4Obj} />,
+    ];
+    setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
+
+
+  };
+  
+
+  useEffect(() => {
+    endingPageInit();
+    console.log("contributorList");
+    console.log(contributorList);
 
     let contributorIdx = 0;
 
-    setInterval(() => {
+    const contributorInterval = setInterval(() => {
       // 2초마다 하나씩 만들어서 위로 띄운다.
-      if(contributorIdx++ == sampleList.length){
+      if(contributorIdx++ == contributorList.length){
         contributorIdx = 0;
       }
-
-      const xPos = Math.random() * 1000;
+      const xPos1 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos2 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos3 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos4 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos5 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
       // sampleList[contributorIdx].id
-      gsap.fromTo(circleRef, {x: xPos, y: 0 }, {x: xPos, y: 1000});
-    }, 2000);
 
+      CircleRef1.current.style.backgroundImage = `url(${contributorList[contributorIdx%10]})`;
+      CircleRef2.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 1]})`;
+      CircleRef3.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 2]})`;
+      CircleRef4.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 3]})`;
+      CircleRef5.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 4]})`;
+
+      timeline.fromTo(CircleRef1.current, {x: xPos1, y: 500 }, {x: xPos1, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef2.current, {x: xPos2, y: 500 }, {x: xPos2, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef3.current, {x: xPos3, y: 500 }, {x: xPos3, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef4.current, {x: xPos4, y: 500 }, {x: xPos4, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef5.current, {x: xPos5, y: 500 }, {x: xPos5, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      
+
+    }, 1000);
+
+    return () => {
+      clearInterval(contributorInterval);
+    };
+   
   }, []);
 
   useEffect(() => {
     console.log(letterText);
     console.log(flowerObj.id);
+    console.log(params.id);
+    // getFlowerContributorList(params.id)
+    //   .then((res) => {
+    //     console.dir(res);
+    //   })
+    // profileImage.saveName
+
+    
   }, [letterText]);
 
 
@@ -200,52 +248,17 @@ const EndingPage = () => {
     <>
       <div className="ending-page" style={{ backgroundImage: `url(${background})` }}>
         <HeaderComponent backVisible={true} isClear={true} pageName={"엔딩페이지"}></HeaderComponent>
+        <SampleCircle width={45} height={45} ref={CircleRef1}></SampleCircle>
+        <SampleCircle width={40} height={40} ref={CircleRef2}></SampleCircle>
+        <SampleCircle width={50} height={50} ref={CircleRef3}></SampleCircle>
+        <SampleCircle width={100} height={100} ref={CircleRef4}></SampleCircle>
+        <SampleCircle width={70} height={70} ref={CircleRef5}></SampleCircle>
         <div className="ending-page-root">
           <Swiper
             spaceBetween={1}
             slidesPerView={1}
             onSlideChange={(swiper) => {
-              if (swiper.realIndex === endingList.length - 1) {
-                // console.log("타이머 시작!");
-                setTimeout(() => {
-                  let timerInterval;
-                  Swal.fire({
-                    title: "메인 페이지로 이동합니다.",
-                    html: "<b></b> 초 후 창이 닫힙니다.",
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showCancelButton: true,
-                    cancelButtonText: "취소",
-                    didOpen: () => {
-                      Swal.showLoading();
-                      const b = Swal.getHtmlContainer().querySelector("b");
-                      timerInterval = setInterval(() => {
-                        b.textContent = Swal.getTimerLeft();
-                      }, 100);
-                    },
-                    willClose: () => {
-                      clearInterval(timerInterval);
-                    },
-                  }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                      // console.log(letterText);
-                      if (letterText.length > 0) {
-                        writeEndLetter(flowerObj.id, letterText).then((res) => {
-                          // console.dir(res);
-                          navigate("/main", { replace: true });
-                        });
-                      }
-                      if (flowerObj.letter && flowerObj.letter.length) {
-                        // console.log("엔딩페이지 다시 보기 종료");
-                        navigate("/main", { replace: true });
-                      }
-                    } else {
-                      Swal.fire("타이머가 취소되었습니다.");
-                    }
-                  });
-                }, 3000);
-              }
+             
             }}
             style={swiperClass}
             ref={swiperRef}
@@ -254,7 +267,6 @@ const EndingPage = () => {
             {endingList}
           </Swiper>
         </div>
-        <SampleCircle ref={circleRef}></SampleCircle>
       </div>
     </>
   );
