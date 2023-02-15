@@ -139,6 +139,29 @@ const AlarmPage = () => {
     });
   };
 
+  const clickDelete = () => {
+    Swal.fire({
+      title: "불편 사항을 등록하시겠습니까?",
+      // text: "삭제된 게시물은 되돌릴 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "등록",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        ComplaintReceived(complaint, user.email).then((res) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "불편사항이 등록되었습니다.",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        });
+      }
+    });
+  };
+
   return (
     <div className="alarm-page">
       <HeaderComponent backVisible={true} pageName={"설정"}></HeaderComponent>
@@ -168,7 +191,7 @@ const AlarmPage = () => {
           </form>
           <button
             type="button"
-            // onClick={onSubmit}
+            onClick={clickDelete}
             className="input-complaint-btn"
           >
             제출

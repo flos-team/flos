@@ -95,19 +95,19 @@ function Login() {
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    console.log("카카오 로그인");
+    // console.log("카카오 로그인");
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
-    console.log("네이버 로그인");
+    // console.log("네이버 로그인");
   };
   const imgStyle = {
     width: "143px",
   };
 
   useEffect(() => {
-    console.log("====LOGIN PAGE useEffect 결과 ====");
-    console.dir(user);
+    // console.log("====LOGIN PAGE useEffect 결과 ====");
+    // console.dir(user);
   }, []);
 
   return (

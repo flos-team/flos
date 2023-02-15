@@ -159,18 +159,18 @@ function FillPage() {
         navigate('/register/result', { state: res.data })
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
     }
 }
 
   // 카카오 로그인 버튼 클릭 이벤트
   const onClickKakaoLogin = () => {
-    console.log("카카오 로그인");
+    // console.log("카카오 로그인");
   };
   // 네이버 로그인 버튼 클릭 이벤트
   const onClickNaverLogin = () => {
-    console.log("네이버 로그인");
+    // console.log("네이버 로그인");
   };
 
   // 이용약관 버튼
@@ -234,9 +234,9 @@ const xBtnAppear = () =>{
   }
   
   // 타이머
+  const [minutes, setMinutes] = useState(4);
+  const [seconds, setSeconds] = useState(59);
   function Timer() {
-    const [minutes, setMinutes] = useState(4);
-    const [seconds, setSeconds] = useState(59);
     useEffect(() => {
       const countdown = setInterval(() => {
         if (parseInt(seconds) > 0) {
@@ -292,7 +292,7 @@ const xBtnAppear = () =>{
   const mailSend = () => {
       axios.get('api/email/sign-up?email=' + inputId, {withCredentials : false})
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         Swal.fire({
           icon: 'success',
           title: '메일 발송되었습니다.',
@@ -343,7 +343,7 @@ const xBtnAppear = () =>{
             "Authorization"
           ] = `Bearer ${accessToken}`;
           // accessToken을 localStorage, cookie 등에 저장하지 않는다!
-          console.log("input Nickname: ", inputNickname)
+          // console.log("input Nickname: ", inputNickname)
           if (res.data === true) {
             setCanUseNickname(false)
             setNicknameMsgColor(false);

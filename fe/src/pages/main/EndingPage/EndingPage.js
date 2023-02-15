@@ -17,6 +17,8 @@ import flowerWhite from "../../../assets/EndingAsset/flower-white.png";
 import flowerGreen from "../../../assets/EndingAsset/flower-green.png";
 import flowerBlue from "../../../assets/EndingAsset/flower-blue.png";
 import Swal from "sweetalert2";
+// 배경
+import background from "../../../assets/GardenAsset/garden-background-img.jpg";
 
 /* import module */
 import { getGardenList, getFlowerInfoById, getFlowerMVPInfo, writeEndLetter } from "../../../api/FlowerAPI";
@@ -112,7 +114,7 @@ const EndingPage = () => {
     //   console.dir(res);
     // });
     getFlowerInfoById(params.id).then((res) => {
-      console.dir(res);
+      // console.dir(res);
       let obj = flowerInfoList[`${res.flowerColor}`];
       //console.dir(obj);
       setFlowerObj({ ...res });
@@ -142,7 +144,7 @@ const EndingPage = () => {
         <LetterStep1Component step1Obj={step1Obj} />,
         <LetterStep2Component step2Obj={step2Obj} />,
         <LetterStep3Component step3Obj={step3Obj} />,
-        <LetterStep4Component />,
+        <LetterStep4Component name={res.name} />,
       ];
       setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
     });
@@ -155,60 +157,62 @@ const EndingPage = () => {
 
   return (
     <>
-      <HeaderComponent backVisible={true} pageName={"엔딩페이지"}></HeaderComponent>
-      <div className="ending-page">
-        <Swiper
-          spaceBetween={1}
-          slidesPerView={1}
-          onSlideChange={(swiper) => {
-            if (swiper.realIndex === endingList.length - 1) {
-              console.log("타이머 시작!");
-              setTimeout(() => {
-                let timerInterval;
-                Swal.fire({
-                  title: "메인 페이지로 이동합니다.",
-                  html: "<b></b> 초 후 창이 닫힙니다.",
-                  timer: 2000,
-                  timerProgressBar: true,
-                  showCancelButton: true,
-                  cancelButtonText: "취소",
-                  didOpen: () => {
-                    Swal.showLoading();
-                    const b = Swal.getHtmlContainer().querySelector("b");
-                    timerInterval = setInterval(() => {
-                      b.textContent = Swal.getTimerLeft();
-                    }, 100);
-                  },
-                  willClose: () => {
-                    clearInterval(timerInterval);
-                  },
-                }).then((result) => {
-                  /* Read more about handling dismissals below */
-                  if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log(letterText);
-                    if (letterText.length > 0) {
-                      writeEndLetter(flowerObj.id, letterText).then((res) => {
-                        console.dir(res);
+      <div className="ending-page" style={{ backgroundImage: `url(${background})` }}>
+        <HeaderComponent backVisible={true} isClear={true} pageName={"엔딩페이지"}></HeaderComponent>
+        <div className="ending-page-root">
+          <Swiper
+            spaceBetween={1}
+            slidesPerView={1}
+            onSlideChange={(swiper) => {
+              if (swiper.realIndex === endingList.length - 1) {
+                // console.log("타이머 시작!");
+                setTimeout(() => {
+                  let timerInterval;
+                  Swal.fire({
+                    title: "메인 페이지로 이동합니다.",
+                    html: "<b></b> 초 후 창이 닫힙니다.",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showCancelButton: true,
+                    cancelButtonText: "취소",
+                    didOpen: () => {
+                      Swal.showLoading();
+                      const b = Swal.getHtmlContainer().querySelector("b");
+                      timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft();
+                      }, 100);
+                    },
+                    willClose: () => {
+                      clearInterval(timerInterval);
+                    },
+                  }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                      // console.log(letterText);
+                      if (letterText.length > 0) {
+                        writeEndLetter(flowerObj.id, letterText).then((res) => {
+                          // console.dir(res);
+                          navigate("/main", { replace: true });
+                        });
+                      }
+                      if (flowerObj.letter && flowerObj.letter.length) {
+                        // console.log("엔딩페이지 다시 보기 종료");
                         navigate("/main", { replace: true });
-                      });
+                      }
+                    } else {
+                      Swal.fire("타이머가 취소되었습니다.");
                     }
-                    if (flowerObj.letter && flowerObj.letter.length) {
-                      console.log("엔딩페이지 다시 보기 종료");
-                      navigate("/main", { replace: true });
-                    }
-                  } else {
-                    Swal.fire("타이머가 취소되었습니다.");
-                  }
-                });
-              }, 3000);
-            }
-          }}
-          style={swiperClass}
-          ref={swiperRef}
-          direction={"vertical"}
-        >
-          {endingList}
-        </Swiper>
+                  });
+                }, 3000);
+              }
+            }}
+            style={swiperClass}
+            ref={swiperRef}
+            direction={"vertical"}
+          >
+            {endingList}
+          </Swiper>
+        </div>
       </div>
     </>
   );
