@@ -13,14 +13,12 @@ axios.defaults.withCredentials = true;
 /**
  */
 const setBookMark = async (id) => {
-  // console.log(id)
   let url = `/api/book/${id}`;
   let value = false;
   await axios
     .post(url)
     .then((response) => {
       value = true;
-      // console.dir(response);
     })
     .catch((error) => {
       console.log("북마크 중 오류 발생");
@@ -30,14 +28,12 @@ const setBookMark = async (id) => {
 };
 
 const deleteBookMark = async (id) => {
-  // console.log(id)
   let url = `/api/book/${id}`;
   let value = true;
   await axios
     .delete(url)
     .then((response) => {
       value = false;
-      // console.dir(response);
     })
     .catch((error) => {
       console.log("북마크 삭제 중 오류 발생");

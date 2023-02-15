@@ -20,7 +20,6 @@ const getPost = async (postId) => {
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response.data)
       if (response.status === 200) {
         post = response.data;
       }
@@ -42,10 +41,8 @@ const getBookMarkList = async (page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      //console.dir(response);
       if (response.status === 200) {
         bookmarkListObject = { ...response.data };
-        //console.dir(response);
       }
     })
     .catch((error) => {
@@ -83,7 +80,6 @@ const getPostListByNickname = async (nickName, page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response);
       if (response.status === 200) {
         userPostListObject = response.data;
       }
@@ -102,7 +98,6 @@ const getSearchNickname = async (nickName) => {
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response.data);
       if (response.status === 200) {
         searchNicknamePostListObject = response.data;
       }
@@ -128,7 +123,6 @@ const getPostList = async (page = 0) => {
     .then((response) => {
       if (response.status === 200) {
         let data = response.data;
-        // console.dir(response.data);
         postListObject = {
           postList: [...data.content],
           hasContent: data.hasContent,
@@ -158,7 +152,6 @@ const getPostListByWeather = async (weather, page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response.data);
       if (response.status === 200) {
         weatherPostListObject = response.data;
       }
@@ -180,8 +173,6 @@ const getPostListByComment = async (page = 0) => {
   await axios
     .get(url)
     .then((response) => {
-      // console.dir(response.data);
-
       if (response.status === 200) {
         commentPostListObject = response.data;
       }
