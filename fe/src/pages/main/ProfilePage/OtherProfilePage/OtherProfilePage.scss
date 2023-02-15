@@ -1,4 +1,5 @@
-@import "../../styles/commons.scss";
+@import "../../../../styles/commons.scss";
+
 
 .other-profile-page {
   /* Auto layout */
@@ -20,7 +21,7 @@
     gap: 8px;
     width: 328px;
     height: 124px;
-    .user-img {
+    .user-img { 
       width: 80px;
       height: 80px;
       border: 1 * $rpx1 solid $mono200;

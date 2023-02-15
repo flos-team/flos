@@ -15,7 +15,6 @@ axios.defaults.withCredentials = true;
  * @returns
  */
 const getCommentList = async (id) => {
-  // let url = `/post/list?page=${page}`;
   let url = `/api/comment/list/post/${id}`;
   let commentList = [];
   await axios
@@ -48,7 +47,7 @@ const getPriComment = async (id) => {
     });
   return commentList;
 };
-
+  
 /**
  * 해당 게시글에 댓글을 추가 각 인자 머임?
  * @param {*} content
@@ -65,7 +64,6 @@ const createComment = async (content, postId, parentId = 0, primitiveId = 0) => 
     postId: postId,
     primitiveId: primitiveId,
   };
-  // console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -74,7 +72,6 @@ const createComment = async (content, postId, parentId = 0, primitiveId = 0) => 
         console.dir(response);
         isCreated = true;
       }
-      // console.log(response);
     })
     .catch((error) => {
       console.log(error);
@@ -90,7 +87,6 @@ const createReply = async (content, postId, primitiveId, parentId) => {
     parentId: parentId,
     primitiveId: primitiveId,
   };
-  // console.log(newComment);
   let isCreated = false;
   await axios
     .post(url, newComment)
@@ -99,7 +95,6 @@ const createReply = async (content, postId, primitiveId, parentId) => {
         console.dir(response);
         isCreated = true;
       }
-      // console.log(response);
     })
     .catch((error) => {
       console.log(error);
@@ -109,7 +104,6 @@ const createReply = async (content, postId, primitiveId, parentId) => {
 
 const commentApprove = async (commentId) => {
   let url = `/api/comment/approve`;
-  // console.log(commentId);
   const data = {
     id: commentId,
   };
@@ -117,7 +111,6 @@ const commentApprove = async (commentId) => {
     .post(url, data)
     .then((response) => {
       if (response.status === 200) {
-        // console.dir(response);
         return true;
       }
     })

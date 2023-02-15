@@ -10,7 +10,7 @@ import WeatherBtnComponent from "./WeatherBtnComponent/WeatherBtnComponent";
 
 /* import css */
 import "./AlarmItem.css";
-import { jsx } from "@emotion/react";
+// import { jsx } from "@emotion/react";
 
 // axios
 import { deleteNotification } from "../../api/NotificationAPI";

@@ -19,8 +19,6 @@ import sendCommentBtn from "../../../../assets/GlobalAsset/send-comment-btn.png"
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 import bookMarkIcon from "../../../../assets/GlobalAsset/book-mark-icon.png";
 import bookMarkActive from "../../../../assets/GlobalAsset/book-mark-active.png";
-import dotMarkIcon from "../../../../assets/GlobalAsset/dot-mark-icon.png";
-import PostEditModal from "../../../../components/PostEditModal/PostEditModal";
 
 import rainy from "../../../../assets/GlobalAsset/rainy.png";
 import sunny from "../../../../assets/GlobalAsset/sunny.png";
@@ -82,7 +80,7 @@ const PostDetailPage = () => {
       setPost(response);
       setPostLoading(true);
     });
-  }, [isBookmark]);
+  }, [isBookmark, params.id]);
 
   useEffect(() => {                     
     // console.log("useEffect");      
@@ -91,7 +89,7 @@ const PostDetailPage = () => {
       setComments([...response]);
       setCommentLoading(true);
     });
-  }, [commentOnChange]);
+  }, [commentOnChange, params.id]);
 
 
   if (postLoading && commentLoading) {
@@ -140,7 +138,7 @@ const PostDetailPage = () => {
     if (post.relation.attachFiles.length >= 1) {
       imgs = post.relation.attachFiles.map(({ key, saveName }) => (
         <div id={key}>
-          <img src={`${url}${saveName}`}></img>
+          <img alt="profileImg" src={`${url}${saveName}`}></img>
         </div>
       ));
       imgs = (
@@ -202,6 +200,7 @@ const PostDetailPage = () => {
               >
                 <div className="user-info-div">
                   <img
+                  alt="profileImg"
                     src={`${url}${post.writer.profileImage.saveName}`}
                     onClick={(e) => {
                       if (post.writer.id !== user.id) {
@@ -213,7 +212,7 @@ const PostDetailPage = () => {
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
                       {RegBefore}{" "}
-                      <img className="post-emotion" src={emotionWeather}></img>
+                      <img alt="emotionWeather" className="post-emotion" src={emotionWeather}></img>
                     </p>
                   </div>
                 </div>
@@ -236,6 +235,7 @@ const PostDetailPage = () => {
                   }}
                 >
                   <img
+                  alt="bookMarkIcon"
                     src={
                       post.relation.bookmarked ? bookMarkActive : bookMarkIcon
                     }
@@ -261,6 +261,7 @@ const PostDetailPage = () => {
           </div>
           <div className="user-content-input-div">
             <img
+            alt="profileImg"
               className="user-icon"
               src={`${url}${user.profileImage.saveName}`}
             />
@@ -271,7 +272,7 @@ const PostDetailPage = () => {
                 value={inputValue}
                 onChange={handleCommentInputValue}
                 onKeyDown={(e) => {
-                  if (e.key == "Enter" && inputValue) {
+                  if (e.key === "Enter" && inputValue) {
                     createComment(inputValue, post.id).then(() => {
                       setCommentOnChange(!commentOnChange);
                       setInputValue("");

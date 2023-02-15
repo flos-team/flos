@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
-
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
 
@@ -17,7 +15,6 @@ import cloudyActivate from "../../../../assets/FeedAsset/cloudy-img-181.png";
 import cloudyDeActivate from "../../../../assets/FeedAsset/cloudy-line-181.png";
 
 import {
-  getCommentList,
   getPriComment,
   commentApprove,
   deleteComment,
@@ -35,8 +32,6 @@ const CommentComponent = ({
   setCommentOnChange,
   commentOnChange,
 }) => {
-  // console.log("here");
-  // console.log(comment);
   const user = useSelector((state) => state.user.userData);
 
   const [inputFocus, setInputFocus] = useState(false);
@@ -77,7 +72,7 @@ const CommentComponent = ({
     getPriComment(comment.id).then((response) => {
       setReply(response);
     });
-  }, [replyOnChange]);
+  }, [replyOnChange, comment.id]);
 
   const handleCommentInputValue = (e) => {
     setInputValue(e.target.value);
@@ -154,6 +149,7 @@ const CommentComponent = ({
       const result = (
         <div className="comment-item-reply">
           <img
+            alt="profileImg"
             className="user-img"
             src={`${url}${comment.writer.profileImage.saveName}`}
             onClick={() => {
@@ -207,7 +203,7 @@ const CommentComponent = ({
           setInputValue("");
         }}
         onKeyDown={(e) => {
-          if (e.key == "Enter" && inputValue) {
+          if (e.key === "Enter" && inputValue) {
             createReply(
               inputValue,
               comment.postId,
@@ -230,6 +226,7 @@ const CommentComponent = ({
 
   const emotionBtn = (
     <img
+      alt="ApproveIcon"
       className="check-btn"
       id="ApproveIcon"
       onClick={() => {
@@ -237,11 +234,9 @@ const CommentComponent = ({
           // alert("안돼")
           // 이미 처리되어있으면 아무일도 안일어나게 해야함
         } else {
-          // console.log(commentOnChange);
           commentApprove(comment.id).then(() => {
             setIsApprove(!isApprove);
             setCommentOnChange(!commentOnChange);
-            // console.log(commentOnChange);
           });
         }
       }}
@@ -253,6 +248,7 @@ const CommentComponent = ({
     <>
       <div className="comment-item">
         <img
+          alt="profileImg"
           className="user-img"
           src={`${url}${comment.writer.profileImage.saveName}`}
           onClick={() => {
