@@ -38,10 +38,10 @@ const deleteNotification = async (id) => {
   await axios
     .delete(url)
     .then((response) => {
-      console.log(url)
-      console.dir(response);
+      // console.log(url)
+      // console.dir(response);
       if (response.status === 200) {
-        console.log("알림 삭제 완료");
+        // console.log("알림 삭제 완료");
         isDeleted = true;
       }
     })

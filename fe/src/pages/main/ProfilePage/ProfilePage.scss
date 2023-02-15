@@ -5,7 +5,7 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 16 * $rpx1;
+  padding: 8 * $rpx1;
   gap: 8 * $rpx1;
   width: 100vw;
   // height: 656 * $rpx1;
@@ -155,7 +155,7 @@
   .post-container {
     /* Auto layout */
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: row wrap;
     overflow-y: scroll;
     // padding: 8 * $rpx1 0px;
     gap: 16 * $rpx1;
@@ -235,3 +235,12 @@
 //     }
 //   }
 // }
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}

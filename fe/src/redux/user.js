@@ -12,7 +12,6 @@ export const memberSlice = createSlice({
     setUser: (state, action) => {
       //   const ID = action.payload;
       state.userData = action.payload;
-      //console.log(action.payload);
     },
     setFollowingIdList: (state, action) => {
       state.followingIdList = action.payload;

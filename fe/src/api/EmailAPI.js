@@ -95,4 +95,16 @@ const verifySignUpCode = async (email, code) => {
     });
 };
 
-export { sendResetPasswordMail, sendSignUpEmail, verifyResetPasswordCode, verifySignUpCode };
+const ComplaintReceived = async(message, sender) =>{
+  let url = `/api/email/report`
+  console.log(message)
+  let data = {
+    message,
+    sender
+  }
+  await axios.post(url, data).then(response => {
+    console.log(response)
+  })
+}
+
+export { sendResetPasswordMail, sendSignUpEmail, verifyResetPasswordCode, verifySignUpCode, ComplaintReceived };

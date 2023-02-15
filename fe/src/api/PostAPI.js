@@ -20,6 +20,7 @@ const getPost = async (postId) => {
   await axios
     .get(url)
     .then((response) => {
+      // console.dir(response.data)
       if (response.status === 200) {
         post = response.data;
       }
@@ -119,7 +120,7 @@ const getSearchNickname = async (nickName) => {
  * @param {number} page 페이지번호 (1 ~ N)
  * @returns {Promise} A Promise Object contains PostListObject
  */
-const getPostList = async (page = 1) => {
+const getPostList = async (page = 0) => {
   let url = `/api/post/list?page=${page}`;
   let postListObject = {};
   await axios
@@ -223,9 +224,10 @@ const getPostListByTagName = async (tagName) => {
  * @param {Array:ImageBitmap} attachFiles 게시글에 첨부한 비트맵 리소스 배열
  * @returns {Promise} A Promise object containing Boolean
  */
-const createPost = async (content, weather, tagList = [], attachFiles = []) => {
+const createPost = async (content, weather, tagList, attachFiles = []) => {
   let url = "/api/post";
   const formData = new FormData();
+  // console.dir(formData);
   formData.append("content", content);
   formData.append("weather", weather);
   formData.append("tagList", tagList);

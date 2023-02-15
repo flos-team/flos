@@ -1,27 +1,57 @@
-.bigframe{
+a{
+  display: block;
+  width: 100vw;
+}
+.registerComplete {
+  border: 1px solid red;
+  
+  position: absolute;
+  
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+
+  width: max-content;
+  height: 29px;
+  /* left: calc(50% - 142px / 2); */
+  top: 500px;
+
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 120%;
+  /* identical to box height, or 29px */
+
+  text-align: center;
+
+  color: #000000;
+}
+
+.bigframe {
   width: 100%;
   height: 100vh;
 }
 
-.headertextframe{
+.headertextframe {
   margin: 2vh auto 0 auto;
 }
 
-.headertext{
+.headertext {
   display: flex;
   justify-content: center;
 }
 
-.videodiv{
+.videodiv {
   position: absolute;
   width: 70%;
   height: 50vh;
   left: 15%;
-  top: calc(50% - 50vh/2);
+  top: calc(50% - 50vh / 2);
 }
 
 .test {
-  display: 'block';
+  display: "block";
   max-width: 360px;
   max-height: 740px;
 }
