@@ -22,7 +22,7 @@ const WeatherBtnComponent = ({ weather }) => {
       case "SUNNY":
         setWeatherBtn(
           <div className="accept-btn" style={{ backgroundColor: COLORS.yellowP }}>
-            <img src={sunnyImg} />
+            <img alt="sunnyImg" src={sunnyImg} />
           </div>
         );
         break;
@@ -36,7 +36,7 @@ const WeatherBtnComponent = ({ weather }) => {
       case "RAINY":
         setWeatherBtn(
           <div className="accept-btn" style={{ backgroundColor: COLORS.blueP }}>
-            <img src={rainyImg} />
+            <img alt="rainyImg" src={rainyImg} />
           </div>
         );
         break;
@@ -51,7 +51,7 @@ const WeatherBtnComponent = ({ weather }) => {
       <div className="weather-btn-component">
         {weatherBtn}
         <div className="cancel-btn" style={{ backgroundColor: COLORS.mono100 }}>
-          <img src={closeBtn} />
+          <img alt="closeBtn" src={closeBtn} />
         </div>
       </div>
     </>

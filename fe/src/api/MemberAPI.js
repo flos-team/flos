@@ -1,8 +1,4 @@
 import axios from "axios";
-// redux/toolkit
-import { useSelector, useDispatch } from "react-redux";
-import { setIsToastValue, setToastMessage } from "../redux/toast";
-
 import Swal from "sweetalert2";
 
 /**
@@ -82,7 +78,6 @@ const getOtherMemberInfo = async (id) => {
   await axios
     .get(url)
     .then((response) => {
-      //userObject = { ...response.data }
       userObject = { ...response.data };
     })
     .catch((err) => {
@@ -125,7 +120,6 @@ const sendCodeToEmail = async (email) => {
   await axios
     .get(url)
     .then((response) => {
-      //console.dir(response);
       if (response.status === 204) {
         console.log("정상 전송");
         Swal.fire({
@@ -136,7 +130,6 @@ const sendCodeToEmail = async (email) => {
       }
     })
     .catch((error) => {
-      //console.dir(error);
       Swal.fire({
         icon: "warning",
         title: "회원 정보가 존재하지 않습니다.",
@@ -155,7 +148,6 @@ const getMyStatisticData = async () => {
   await axios
     .get(url)
     .then((res) => {
-      // console.dir(res);
       statisticsObject = res.data;
     })
     .catch((err) => {
@@ -185,7 +177,6 @@ const doLogin = async (email, password) => {
     .then((response) => {
       if (response.status === 200) console.log("로그인 성공");
       const accessToken = response.data.atk;
-      // console.log(accessToken);
       // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
       axios.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
       loginResult = true;
