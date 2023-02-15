@@ -14,7 +14,7 @@ import FlowerGlassBottle from "../../GardenComponent/FlowerGlassBottleItem";
 /* import css */
 import "./LetterStep4Component.css";
 
-const LetterStep4Component = ({ name }) => {
+const LetterStep4Component = ({ step4Obj }) => {
   const user = useSelector((state) => state.user.userData);
 
   return (
@@ -23,17 +23,20 @@ const LetterStep4Component = ({ name }) => {
         <div className="end-result-text-container">
           <p>
             <b>
-              "{user.nickname}" 님과 {name}의 추억이 기록되었어요.
+              "{user.nickname}" 님과 {step4Obj.name}의 추억이 기록되었어요.
             </b>
           </p>
-          <p>당신과 {name}가 함께한 추억은 한 병의 향수가 되어</p>
+          <p>당신과 {step4Obj.name}가 함께한 추억은 한 병의 향수가 되어</p>
           <p>
             오랫동안 {user.nickname} 님이 풍기는 <span>향기</span>가 되어줄 것입니다.
           </p>
         </div>
         <div className="flower-container">
-          <FlowerGlassBottle width={"256px"} height={"256px"}></FlowerGlassBottle>
+          <FlowerGlassBottle width={"256px"} height={"256px"} color={step4Obj.color}></FlowerGlassBottle>
         </div>
+      </div>
+      <div className="final-guide-text">
+        <p>종료 메세지</p>
       </div>
     </>
   );
