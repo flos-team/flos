@@ -5,6 +5,7 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 /* import img css */
 import goormSad from "../../assets/GoormAsset/goorm-sad.png";
 import defaultImg from "../../assets/GoormAsset/goorm-sunglass.png";
+import goormError from "../../assets/HomeAsset/error-noti.png"
 
 /* import component */
 import AlarmItem from "../../components/AlarmItem/AlarmItem";
@@ -32,12 +33,10 @@ const NotificationPage = () => {
   }, []); // 너무 많은 요청 발생합니다...
   const bringNoticeList = () => {
     getNotification().then((res) => {
-      // console.log(res)
       setNotiList(res.notifications);
 
       let curDay = dayjs(new Date(), "YYYY-MM-DD HH:mm:ss");
-
-      if (notiList !== undefined) {
+      if (res.notifications && res.notifications.length > 0) {
         setNotiItemList(
           res.notifications.map(({ id, message, createdAt, data, messageType }) => {
 
@@ -55,7 +54,7 @@ const NotificationPage = () => {
               case "NEWCOMMENT":
               case "NEWREPLY":
                 profileImg = `${url}${data.commenter.profileImage.saveName}`
-                notiSource = data.commenter.id
+                notiSource = data.id
                 break;
               case "FOLLOW":
                 profileImg = `${url}${data.profileImage.saveName}`
@@ -64,6 +63,9 @@ const NotificationPage = () => {
               case "NOCAREPLANT24H":
               case "NOFEED24H":
                 profileImg = `${goormSad}`
+                break;
+              case "UNAVAILABLE":
+                profileImg = `${goormError}`
                 break;
               default:
                 profileImg = `${goormSad}`
@@ -100,11 +102,11 @@ const NotificationPage = () => {
   return (
     <div style={{ backgroundColor: "#e8e8e8" }}>
       <HeaderComponent backVisible={true} pageName={"알림"}></HeaderComponent>
-      {notiList === undefined ? (
+      {(notiList === undefined || notiList.length === 0) ? (
         <div className="noalarm-container">{noItem}</div>
       ) : (
         <div className="alarm-container">{notiItemList}</div>
-      )}
+      )}  
     </div>
   );
 };

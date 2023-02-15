@@ -12,11 +12,12 @@ import { useSelector, useDispatch } from "react-redux";
 /* import css */
 import "./LetterStep3Component.css";
 
-const LetterStep3Component = ({ step3Obj }) => {
+const LetterStep3Component = ({ step3Obj, isDisable }) => {
   const user = useSelector((state) => state.user.userData);
 
   const letterInputRef = useRef(1);
   const [letter, setLetter] = useState("");
+  console.log(isDisable);
 
   return (
     <>
@@ -28,7 +29,7 @@ const LetterStep3Component = ({ step3Obj }) => {
           <textarea
             className="lettter-content-input"
             type="text"
-            placeholder="당신의 꽃에게 전하고 싶은 이야기를 적어주세요"
+            placeholder={isDisable?"당신의 꽃에게 전하고 싶은 이야기를 적어주세요":""}
             ref={letterInputRef}
             onChange={(e) => {
               setLetter(letterInputRef.current.value);
@@ -36,10 +37,12 @@ const LetterStep3Component = ({ step3Obj }) => {
             }}
             onBlur={(e) => {
               // console.log("포커스 아웃");
-              if (step3Obj.letter && step3Obj.letter.length) step3Obj.setLetterText(letter);
+              // if (step3Obj.letter && step3Obj.letter.length)
+              if(!isDisable) step3Obj.setLetterText(letter);
             }}
-            disabled={step3Obj.letter && step3Obj.letter.length}
-            value={step3Obj.letter && step3Obj.letter.length ? step3Obj.letter && step3Obj.letter : ""}
+            disabled={!isDisable}
+            // value={step3Obj.letter && step3Obj.letter.length ? step3Obj.letter && step3Obj.letter : ""}
+            value = {step3Obj.letter}
           />
         </div>
         <div className="letter-flower-name-div">
@@ -49,5 +52,10 @@ const LetterStep3Component = ({ step3Obj }) => {
     </>
   );
 };
+
+LetterStep3Component.defaultProps = {
+  isDisable: false,  
+  step3Obj:{},
+}
 
 export default LetterStep3Component;
