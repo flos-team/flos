@@ -43,6 +43,10 @@ const SampleCircle = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  display: flex;
+  color: white;
+  justify-contet: center;
+  align-items: center;
 `;
 
 
@@ -124,6 +128,11 @@ const EndingPage = () => {
   const CircleRef3 = useRef();
   const CircleRef4 = useRef();
   const CircleRef5 = useRef();
+  const CircleRef6 = useRef();
+  const CircleRef7 = useRef();
+  const CircleRef8 = useRef();
+  const CircleRef9 = useRef();
+  const CircleRef10 = useRef();
   const timeline = gsap.timeline({ yoyo: true, repeatDelay: 1});
 
   const endingPageInit = async () => {
@@ -207,22 +216,36 @@ const EndingPage = () => {
       const xPos3 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
       const xPos4 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
       const xPos5 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
-      // sampleList[contributorIdx].id
+      const xPos6 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos7 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos8 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos9 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos10 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
 
       CircleRef1.current.style.backgroundImage = `url(${contributorList[contributorIdx%10]})`;
       CircleRef2.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 1]})`;
       CircleRef3.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 2]})`;
       CircleRef4.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 3]})`;
       CircleRef5.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 4]})`;
+      CircleRef6.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 5]})`;
+      CircleRef7.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 6]})`;
+      CircleRef8.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 7]})`;
+      CircleRef9.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 8]})`;
+      CircleRef10.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 9]})`;
 
       timeline.fromTo(CircleRef1.current, {x: xPos1, y: 500 }, {x: xPos1, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
       timeline.fromTo(CircleRef2.current, {x: xPos2, y: 500 }, {x: xPos2, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
       timeline.fromTo(CircleRef3.current, {x: xPos3, y: 500 }, {x: xPos3, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
       timeline.fromTo(CircleRef4.current, {x: xPos4, y: 500 }, {x: xPos4, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
       timeline.fromTo(CircleRef5.current, {x: xPos5, y: 500 }, {x: xPos5, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef6.current, {x: xPos6, y: 500 }, {x: xPos6, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef7.current, {x: xPos7, y: 500 }, {x: xPos7, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef8.current, {x: xPos8, y: 500 }, {x: xPos8, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef9.current, {x: xPos9, y: 500 }, {x: xPos9, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef10.current, {x: xPos10, y: 500 }, {x: xPos10, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
       
 
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearInterval(contributorInterval);
@@ -243,7 +266,6 @@ const EndingPage = () => {
     
   }, [letterText]);
 
-
   return (
     <>
       <div className="ending-page" style={{ backgroundImage: `url(${background})` }}>
@@ -253,6 +275,11 @@ const EndingPage = () => {
         <SampleCircle width={50} height={50} ref={CircleRef3}></SampleCircle>
         <SampleCircle width={100} height={100} ref={CircleRef4}></SampleCircle>
         <SampleCircle width={70} height={70} ref={CircleRef5}></SampleCircle>
+        <SampleCircle width={45} height={45} ref={CircleRef6}></SampleCircle>
+        <SampleCircle width={40} height={40} ref={CircleRef7}></SampleCircle>
+        <SampleCircle width={50} height={50} ref={CircleRef8}></SampleCircle>
+        <SampleCircle width={100} height={100} ref={CircleRef9}></SampleCircle>
+        <SampleCircle width={70} height={70} ref={CircleRef10}></SampleCircle>
         <div className="ending-page-root">
           <Swiper
             spaceBetween={1}
