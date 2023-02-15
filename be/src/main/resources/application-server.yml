@@ -1,7 +1,7 @@
 spring:
   redis:
     host: i8b210.p.ssafy.io
-    port: 6379
+    port: 6363
     password: 1q2w3e4r
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
