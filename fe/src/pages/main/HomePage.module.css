@@ -172,19 +172,6 @@
     position: absolute;
 }
 
-.musicBtn{
-    position: absolute;
-    background-color: white;
-    color: red;
-    top: 60px;
-    right: 20px;
-    z-index: 20;
-}
-
-.audiocontrols{
-    width: 100px;
-}
-
 .redpoint{
     position: absolute;
     font-size: 32px;

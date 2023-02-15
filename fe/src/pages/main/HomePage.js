@@ -240,6 +240,8 @@ const Home = () => {
      * 알림 확인
      */
     isHaveNoti();
+    getNotification();
+    updateInfo();
 
     return () => {
       clearInterval(interval);
@@ -248,12 +250,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    updateInfo();
-  }, [flowerInfo]);
-
-  useEffect(() => {
     if (elementStatus === "sun") {
-      // console.log("useEffect");
       setRainAnimation(null);
       let sunTimeLine = gsap.timeline();
       sunTimeLine
@@ -271,16 +268,9 @@ const Home = () => {
           y: "0",
           duration: 1.5,
         });
-      // sunTimeLine.to(sunshine.current, {
-      //   y: "-2000",
-      // });
-      // sunTimeLine.to(sunBox.current, { y: "-2000" });
+
       setElementStatus("");
-      // setTimeout(function() {
-      //     if(Animation !== null){
-      //         setAnimation(null);
-      //     }
-      //   }, 10000);
+
     } else if (elementStatus === "rain") {
       setSunAnimation(null);
       let rainTimeLine = gsap.timeline();
@@ -324,6 +314,7 @@ const Home = () => {
       flowerInfo.color = res.color;
       // console.log("꽃 정보 가져옴");
     });
+
     getMemberInfo().then((res) => {
       flowerInfo.sunElementCount = res.light;
       flowerInfo.rainElementCount = res.water;
@@ -481,10 +472,6 @@ const Home = () => {
     });
   };
 
-  useEffect(() => {
-    getNotification();
-  }, []);
-
   return (
     <HomePageDiv url={backgroundImgUrl}>
       <div className={styles.HomeRoot}>
@@ -528,16 +515,6 @@ const Home = () => {
           </Link>
           {haveNoti ? <span className={styles.redpoint}>˙</span> : null}
         </div>
-        <div className={styles.musicBtn}>
-          {/* <button onClick={onClickPlayMusicButton}>{isPlay ? '⏹' : '▶'}</button> */}
-
-          {/* <button id="play-icon"></button> */}
-          {/* {isPlay ?<audio
-            src='https://docs.google.com/uc?export=open&id=14JlzHWUE2TqAsN237ft43SOw02xDPori'
-            autoPlay={false} controls="controls" className={styles.audiocontrols}></audio> 
-            : null} */}
-        </div>
-
         {flowerMessage}
         <div className={styles.FlowerInfo}>
           <div className={styles.FlowerName}>
