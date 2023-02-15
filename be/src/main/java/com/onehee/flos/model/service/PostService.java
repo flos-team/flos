@@ -19,6 +19,7 @@ public interface PostService {
 
     // 게시글 날씨별 검색
     SliceResponseDTO getPostListByWeather(WeatherType weatherType, Pageable pageable);
+
     // 게시글 최신순 검색
     SliceResponseDTO getLatestPostList(Pageable pageable);
 

@@ -144,39 +144,39 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
+    @Transactional // 사용되지 않습니다.
     public void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
 
-        Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
-
-        Member tempWriter = tempPost.getWriter();
-
-        if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
-            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
-
-        for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
-            FileEntity tempFile = filesHandler.saveFile(e);
-            postFileRepository.save(
-                    PostFile.builder()
-                            .post(tempPost)
-                            .file(tempFile)
-                            .build()
-            );
-        }
-
-        for (String e : postModifyRequestDTO.getTagList()) {
-            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
-            if (tempTag == null || !postTagRepository.existsByTagAndPost(tempPost, tempTag))
-                postTagRepository.saveAndFlush(
-                        PostTag.builder()
-                                .post(tempPost)
-                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
-                                .build()
-                );
-        }
-
-
-        postRepository.saveAndFlush(postModifyRequestDTO.toAccept(tempPost, tempWriter));
+//        Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
+//
+//        Member tempWriter = tempPost.getWriter();
+//
+//        if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
+//            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
+//
+//        for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
+//            FileEntity tempFile = filesHandler.saveFile(e);
+//            postFileRepository.save(
+//                    PostFile.builder()
+//                            .post(tempPost)
+//                            .file(tempFile)
+//                            .build()
+//            );
+//        }
+//
+//        for (String e : postModifyRequestDTO.getTagList()) {
+//            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
+//            if (tempTag == null || !postTagRepository.existsByTagAndPost(tempTag, tempPost))
+//                postTagRepository.saveAndFlush(
+//                        PostTag.builder()
+//                                .post(tempPost)
+//                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
+//                                .build()
+//                );
+//        }
+//
+//
+//        postRepository.saveAndFlush(postModifyRequestDTO.toAccept(tempPost, tempWriter));
 
     }
 
@@ -191,17 +191,20 @@ public class PostServiceImpl implements PostService {
         if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
+        // M:N 관계테이블
         postRepository.deleteTagByPost(tempPost);
         postRepository.deleteFileByPost(tempPost);
         postRepository.deleteBookmarkByPost(tempPost);
 
+        // 직접 연관 테이블 - 상위 댓글
         postRepository.deletePriCommentByPost(tempPost);
-
+        // 직접 연관 테이블 - 하위 댓글
         postRepository.deleteCommentByPost(tempPost);
 
         postRepository.delete(tempPost);
     }
 
+    // 게시글과 관계테이블로 연관된 모든 테이블 한번에 불러오기
     private PostRelationDTO getPostRelation(Post post) {
         return PostRelationDTO.builder()
                 .tagList(getTagListByPost(post))

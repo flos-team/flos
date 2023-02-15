@@ -81,12 +81,6 @@ public class FlowerServiceImpl implements FlowerService {
     }
 
     @Override
-    public FlowerResponseDTO getFlowerInfoById(Long flowerId) throws BadRequestException {
-        Flower flower = flowerRepository.findById(flowerId).orElseThrow(() -> new BadRequestException("해당 꽃이 존재하지 않습니다."));
-        return FlowerResponseDTO.toDto(flower);
-    }
-
-    @Override
     public FlowerResponseDTO getFlowerInfo() {
         return FlowerResponseDTO.toDto(flowerRepository.findByOwnerAndGardeningIsFalse(SecurityManager.getCurrentMember()).orElseThrow(FlowerNotExistsException::new));
     }

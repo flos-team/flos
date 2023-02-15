@@ -18,12 +18,12 @@ import java.util.List;
 public interface CommentService {
     // 특정 댓글 정보
     CommentResponseDTO getCommentById(Long commentId) throws BadRequestException;
-    // 게시글의 댓글 리스트
+    // 게시글의 상위 댓글 리스트
     List<CommentResponseDTO> getCommentListByPost(Long postId) throws BadRequestException;
+    // 게시글의 하위 댓글 리스트
+    List<CommentResponseDTO> getCommentListByPrimitive(Long primitiveId) throws BadRequestException;
     // 회원의 댓글 리스트
     List<CommentResponseDTO> getCommentListByMember();
-
-    List<CommentResponseDTO> getCommentListByPrimitive(Long primitiveId) throws BadRequestException;
 
     // 댓글 등록
     void createComment(CommentCreateRequestDTO commentCreateRequestDTO) throws BadRequestException;
