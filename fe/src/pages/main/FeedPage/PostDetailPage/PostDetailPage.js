@@ -43,8 +43,11 @@ const PostDetailPage = () => {
   const [commentOnChange, setCommentOnChange] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+
+
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
+
 
   // 북마크 토글에 대한 state 및 function
   const [isBookmark, setIsBookmark] = useState(false);
@@ -53,7 +56,7 @@ const PostDetailPage = () => {
 
   const handleCommentInputValue = (e) => {
     setInputValue(e.target.value);
-  };  
+  };
 
   const [headColors, setHeadColors] = useState(COLORS.mono200);
 
@@ -72,27 +75,27 @@ const PostDetailPage = () => {
         setHeadColors(COLORS.mono200);
         break;
     }
-  }
+  };
 
   useEffect(() => {
     getPost(params.id).then((response) => {
-      // console.dir(response);
       setColors(response.weather);
       setPost(response);
       setPostLoading(true);
     });
   }, [isBookmark]);
 
-  useEffect(() => {
+  useEffect(() => {                           
+    console.log("실행됨")
     getCommentList(params.id).then((response) => {
+      console.log(response)
       setComments(response);
       setCommentLoading(true);
     });
+
   }, [commentOnChange]);
 
   if (postLoading && commentLoading) {
-    // console.log(comments);
-    // console.log(post);
     const commentList = comments.map((key) => {
       return (
         <>
@@ -100,6 +103,8 @@ const PostDetailPage = () => {
             comment={key}
             postWriterId={post.writer.id}
             weather={post.weather}
+            setCommentOnChange = {setCommentOnChange}
+            commentOnChange = {commentOnChange}
           ></CommentComponent>
         </>
       );
@@ -145,6 +150,7 @@ const PostDetailPage = () => {
         </Carousel>
       );
     }
+
     const clickOutSideCloseModal = () => {
       if (openModal === true) {
         setOpenModal(false);
@@ -170,7 +176,7 @@ const PostDetailPage = () => {
                 showConfirmButton: false,
                 timer: 1000,
               });
-              navigate(-1)
+              navigate(-1);
             })
             .catch((err) => {
               console.log(err);
@@ -180,13 +186,21 @@ const PostDetailPage = () => {
         }
       });
     };
+    
     return (
       <>
         <div className="post-detail-page" onClick={clickOutSideCloseModal}>
-          <HeaderComponent backVisible={true} pageName={"피드"} optType={0}></HeaderComponent>
+          <HeaderComponent
+            backVisible={true}
+            pageName={"피드"}
+            optType={0}
+          ></HeaderComponent>
           <div className="post-detail-container">
             <div className="post-container">
-              <div className="user-info-container" style={{background:headColors}} >
+              <div
+                className="user-info-container"
+                style={{ background: headColors }}
+              >
                 <div className="user-info-div">
                   <img
                     src={`${url}${post.writer.profileImage.saveName}`}
@@ -199,7 +213,8 @@ const PostDetailPage = () => {
                   <div className="text-div">
                     <p className="user-name">{post.writer.nickname}</p>
                     <p className="time-log">
-                      {RegBefore} <img className="post-emotion" src={emotionWeather}></img>
+                      {RegBefore}{" "}
+                      <img className="post-emotion" src={emotionWeather}></img>
                     </p>
                   </div>
                 </div>
@@ -221,7 +236,11 @@ const PostDetailPage = () => {
                     }
                   }}
                 >
-                  <img src={post.relation.bookmarked ? bookMarkActive : bookMarkIcon} />
+                  <img
+                    src={
+                      post.relation.bookmarked ? bookMarkActive : bookMarkIcon
+                    }
+                  />
                 </div>
                 {post.writer.id === user.id ? (
                   <div className="dot-btn">
@@ -241,7 +260,11 @@ const PostDetailPage = () => {
             </div>
           </div>
           <div className="user-content-input-div">
-            <img className="user-icon" src={`${url}${user.profileImage.saveName}`} />
+            <img
+              className="user-icon"
+              src={`${url}${user.profileImage.saveName}`}
+            />
+            {/* 댓글 입력 부분 */}
             <div className="comment-input-div">
               <input
                 className="comment-input"
@@ -256,6 +279,7 @@ const PostDetailPage = () => {
                   }
                 }}
               />
+              {/* 제출 버튼 */}
               <button
                 style={{ backgroundImage: `url(${sendCommentBtn})` }}
                 onClick={() => {

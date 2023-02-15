@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 
 import { getTimeDiffText } from "../../../../api/DateModule";
 
+import Swal from "sweetalert2";
 import dayjs from "dayjs";
+
 import sunnyActivate from "../../../../assets/FeedAsset/sunny-img-181.png";
 import sunnyDeActivate from "../../../../assets/FeedAsset/sunny-line-181.png";
 import rainyActivate from "../../../../assets/FeedAsset/rainy-img-181.png";
@@ -26,7 +28,13 @@ import "./PostDetailPage.css";
 
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
-const CommentComponent = ({ comment, postWriterId, weather }) => {
+const CommentComponent = ({
+  comment,
+  postWriterId,
+  weather,
+  setCommentOnChange,
+  commentOnChange,
+}) => {
   // console.log("here");
   // console.log(comment);
   const user = useSelector((state) => state.user.userData);
@@ -59,6 +67,12 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
       break;
   }
 
+  // useEffect(() => {
+  //   getPriComment(comment.id).then((response) => {
+  //     setReply([...response]);
+  //   });
+  // }, []);
+
   useEffect(() => {
     getPriComment(comment.id).then((response) => {
       setReply(response);
@@ -76,8 +90,30 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
         <span
           className="comment-header-right"
           onClick={() => {
-            deleteComment(commentId).then(() => {
-              setReplyOnChange(!replyOnChange);
+            Swal.fire({
+              title: "댓글을 삭제하시겠습니까?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "삭제",
+              cancelButtonText: "취소",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                deleteComment(commentId)
+                  .then(() => {
+                    setReplyOnChange(!replyOnChange);
+                    // setCommentOnChange(!commentOnChange);
+                    // console.log(replyOnChange)
+                  })
+                  .then(() => {
+                    getPriComment(comment.id).then((response) => {
+                      setReply([...response]);
+                      console.log(reply);
+                    });
+                  }).then(() =>{
+                    Swal.fire("댓글 삭제 완료");
+                  });
+              } else {
+              }
             });
           }}
         >
@@ -106,6 +142,7 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
     </div>
   );
 
+  // 대댓글을 불러오는 부분 replyList에 저장한다.
   let replyList = "";
   if (reply) {
     replyList = reply.map((comment) => {
@@ -142,6 +179,7 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
     });
   }
 
+  // 대댓글을 입력하는 프레임
   const replyInput = (
     <div>
       <input
@@ -152,7 +190,8 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
         onBlur={() => {
           setInputFocus(false);
           if (inputValue) {
-            // 입력된 값이 있으면
+            // 포커스가 나갔을 때 입력된 값이 있으면
+            // 대댓글을 입력한다.
             createReply(
               inputValue,
               comment.postId,
@@ -197,6 +236,9 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
           // alert("안돼")
           // 이미 처리되어있으면 아무일도 안일어나게 해야함
         } else {
+          console.log(commentOnChange);
+          setCommentOnChange(!commentOnChange);
+          console.log(commentOnChange);
           commentApprove(comment.id).then((response) => {
             if (response) {
               setReplyOnChange(!replyOnChange);
@@ -235,7 +277,10 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
           {inputFocus ? replyInput : addComment}
         </div>
         {/* 포스트 작성자거나, 댓글이 채택되었을 때만 표시한다. */}
-        {user.id === postWriterId && (comment.writer.id !== postWriterId) || comment.isApprove ? emotionBtn : ""}
+        {(user.id === postWriterId && comment.writer.id !== postWriterId) ||
+        comment.isApprove
+          ? emotionBtn
+          : ""}
       </div>
       {replyList ? replyList : ""}
     </>
