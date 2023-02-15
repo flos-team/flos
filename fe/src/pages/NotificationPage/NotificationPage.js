@@ -55,7 +55,8 @@ const NotificationPage = () => {
               case "NEWCOMMENT":
               case "NEWREPLY":
                 profileImg = `${url}${data.commenter.profileImage.saveName}`
-                notiSource = data.commenter.id
+                console.log(data)
+                notiSource = data.id
                 break;
               case "FOLLOW":
                 profileImg = `${url}${data.profileImage.saveName}`
