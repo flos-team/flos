@@ -14,6 +14,7 @@ import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.model.service.StatisticsService;
 import com.onehee.flos.util.CookieUtil;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,7 +43,10 @@ public class MemberController {
     private final MemberService memberService;
     private final StatisticsService statisticsService;
 
-    @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.")
+    @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.", responses = {
+            @ApiResponse(responseCode = "201", description = "회원가입이 정상적으로 처리되었습니다."),
+            @ApiResponse(responseCode = "400", description = "회원가입이 실패했습니다.")
+    })
     @PostMapping("/sign-up")
     @Tag(name = "멤버API")
     public ResponseEntity<?> signUp(@RequestBody MemberSignUpRequestDTO memberSignUpRequestDTO) {
@@ -50,7 +54,10 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.")
+    @Operation(summary = "로그인 메서드", description = "로그인에 성공하면 엑세스 토큰과 리프레시 토큰을 발행합니다.", responses = {
+            @ApiResponse(responseCode = "200", description = "로그인에 성공했습니다.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TokenDTO.class))),
+            @ApiResponse(responseCode = "400", description = "아이디 또는 비밀번호가 잘못되었습니다.")
+    })
     @PostMapping("/login")
     @Tag(name = "멤버API")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO, HttpServletResponse response) throws JsonProcessingException {
@@ -61,7 +68,9 @@ public class MemberController {
         return new ResponseEntity<TokenDTO>(tokenDTO, HttpStatus.OK);
     }
 
-    @Operation(summary = "로그아웃 메서드", description = "요청사용자의 리프레시토큰을 만료시키고 사용된 엑세스 토큰을 사용할 수 없게 만듭니다.")
+    @Operation(summary = "로그아웃 메서드", description = "요청사용자의 리프레시토큰을 만료시키고 사용된 엑세스 토큰을 사용할 수 없게 만듭니다.", responses = {
+            @ApiResponse(responseCode = "204", description = "로그아웃이 정상적으로 처리되었습니다.")
+    })
     @GetMapping("/logout")
     @Tag(name = "멤버API")
     public ResponseEntity<?> logout(@AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization") String atk, HttpServletRequest request, HttpServletResponse response) {
@@ -72,7 +81,9 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    @Operation(summary = "나의 회원정보 메서드", description = "나의 정보를 반환합니다.")
+    @Operation(summary = "나의 회원정보 메서드", description = "나의 정보를 반환합니다.", responses = {
+            @ApiResponse(responseCode = "200", description = "멤버 정보를 반환합니다.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MemberInfoResponseDTO.class))),
+    })
     @GetMapping("/info")
     @Tag(name = "멤버API")
     public ResponseEntity<?> getMyInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
