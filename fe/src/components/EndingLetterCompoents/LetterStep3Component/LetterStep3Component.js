@@ -12,12 +12,11 @@ import { useSelector, useDispatch } from "react-redux";
 /* import css */
 import "./LetterStep3Component.css";
 
-const LetterStep3Component = ({ step3Obj, isDisable }) => {
+const LetterStep3Component = ({ step3Obj }) => {
   const user = useSelector((state) => state.user.userData);
 
   const letterInputRef = useRef(1);
-  const [letter, setLetter] = useState("");
-  console.log(isDisable);
+  const [letter, setLetter] = useState(step3Obj.letter);
 
   return (
     <>
@@ -28,8 +27,9 @@ const LetterStep3Component = ({ step3Obj, isDisable }) => {
         <div className="lettter-content-div">
           <textarea
             className="lettter-content-input"
+            style={step3Obj.isDisable ? { backgroundColor: "rgba(#fff, 0)" } :{backgroundColor: "rgba(#fff, 0.8)"}}
             type="text"
-            placeholder={isDisable?"당신의 꽃에게 전하고 싶은 이야기를 적어주세요":""}
+            placeholder={step3Obj.isDisable?"":"당신의 꽃에게 전하고 싶은 이야기를 적어주세요"}
             ref={letterInputRef}
             onChange={(e) => {
               setLetter(letterInputRef.current.value);
@@ -38,11 +38,12 @@ const LetterStep3Component = ({ step3Obj, isDisable }) => {
             onBlur={(e) => {
               // console.log("포커스 아웃");
               // if (step3Obj.letter && step3Obj.letter.length)
-              if(!isDisable) step3Obj.setLetterText(letter);
+              if(!step3Obj.isDisable) step3Obj.setLetterText(letter);
             }}
-            disabled={!isDisable}
+            disabled={step3Obj.isDisable}
+            readOnly={step3Obj.isDisable}
             // value={step3Obj.letter && step3Obj.letter.length ? step3Obj.letter && step3Obj.letter : ""}
-            value = {step3Obj.letter}
+            value = {letter}
           />
         </div>
         <div className="letter-flower-name-div">
@@ -54,8 +55,13 @@ const LetterStep3Component = ({ step3Obj, isDisable }) => {
 };
 
 LetterStep3Component.defaultProps = {
-  isDisable: false,  
-  step3Obj:{},
+  step3Obj: {
+    name: "",
+    id: -1,
+    setLetterText:()=>{},
+    letter: "",
+    isDisable: false,
+  },
 }
 
 export default LetterStep3Component;

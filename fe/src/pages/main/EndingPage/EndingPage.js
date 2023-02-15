@@ -119,9 +119,16 @@ const EndingPage = () => {
     height: "100%",
   };
   const navigate = useNavigate();
+  // 다시보기 페이지인지 엔딩 페이지인지 구분하기 위한 불리언 state
+  const [isReplay, setIsReplay] = useState(false); 
+  //
   const [endingList, setEndingList] = useState([]);
+  // 편지 쓰는 데 사용하는 state 변수
   const [letterText, setLetterText] = useState("");
+  // 꽃 정보를 담아둘 Object
   const [flowerObj, setFlowerObj] = useState({});
+  // 마지막 스와이프 뷰에서 메인으로 이동할지 물어보는 문구 여부 관리용 boolean state
+  const [isShowEndText, setIsShowEndText] = useState(false);
   const [contributorList, setContributorList] = useState([]);
   const CircleRef1 = useRef();
   const CircleRef2 = useRef();
@@ -167,7 +174,9 @@ const EndingPage = () => {
         id: res.id,
         setLetterText,
         letter: res.letter,
+        isDisable: res.lettering,
       };
+      setIsReplay(res.lettering);
 
       step4Obj = {
         name: res.name,
@@ -180,17 +189,15 @@ const EndingPage = () => {
     await getFlowerContributorList(params.id)
     .then((res) => {
       // console.dir(res);
-      let list = res.map((e) => `${url}file/${e.profileImage.saveName}`);
-      console.dir(list);
+      let list = res.map((e) => `${url}/${e.profileImage.saveName}`);
       step2Obj['peopleImgURLs'] = list;
-      setContributorList(list);
     })
 
     // console.log(res.letter);
     let list = [
       <LetterStep1Component step1Obj={step1Obj} />,
       <LetterStep2Component step2Obj={step2Obj} />,
-      <LetterStep3Component step3Obj={step3Obj} isDisable={false} />,
+      <LetterStep3Component step3Obj={step3Obj} />,
       <LetterStep4Component step4Obj={step4Obj} />,
     ];
     setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
@@ -252,19 +259,11 @@ const EndingPage = () => {
     };
    
   }, []);
+  
+  // 편지 글의 작성유무, 마지막 페이지 여부에 따른 재렌더링용 useEffect
+  useEffect(() => {    
+  }, [letterText, isShowEndText]);
 
-  useEffect(() => {
-    console.log(letterText);
-    console.log(flowerObj.id);
-    console.log(params.id);
-    // getFlowerContributorList(params.id)
-    //   .then((res) => {
-    //     console.dir(res);
-    //   })
-    // profileImage.saveName
-
-    
-  }, [letterText]);
 
   return (
     <>
@@ -285,7 +284,11 @@ const EndingPage = () => {
             spaceBetween={1}
             slidesPerView={1}
             onSlideChange={(swiper) => {
-             
+              if (swiper.realIndex == 3) {
+                setIsShowEndText(true);
+              } else {
+                setIsShowEndText(false);
+              }
             }}
             style={swiperClass}
             ref={swiperRef}
@@ -293,6 +296,32 @@ const EndingPage = () => {
           >
             {endingList}
           </Swiper>
+          {isShowEndText ?
+            <div className="final-guide-text">
+              <p onClick={(e) => {
+                if (!isReplay) {
+                  writeEndLetter(params.id, letterText)
+                    .then((res) => {
+                    // console.log("글작성 결과 : ", res);
+                    Swal.fire(
+                      '편지 작성 완료',
+                      '메인 페이지로 이동합니다.',
+                      'success'
+                      )
+                      navigate("/main");                    
+                  })                  
+                } else {
+                  Swal.fire(
+                    '다시 보기 종료',
+                    '메인 페이지로 이동합니다.',
+                    'success'
+                  )
+                  navigate("/main");                    
+                }
+              }}>클릭하면 메인으로 이동합니다.</p>
+            </div>
+            :<></>}
+
         </div>
       </div>
     </>
