@@ -62,6 +62,53 @@
       height: 20%;
     }
   }
+
+  // 컴플레인 접수폼
+  .complaint-container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    gap: 8px;
+    .complaint-title {
+      width: 100%;
+      // border: 1px solid black;
+      font-size: 20px;
+    }
+    .complaint-guide-text {
+      width: 100%;
+      font-size: 13px;
+    }
+    .complaint-guide-text {
+    }
+
+    .input-complaint {
+      // border: 1px solid red;
+      display: flex;
+      flex-direction: column;
+      // height: 30vh;
+      .input-complaint-input {
+        padding: 8px;
+        width: 100%;
+        min-height: 200px;
+        height: max-content;
+        border: 1px solid $mono300;
+        border-radius: 8px;
+        resize: none;
+        color: $mono600;
+      }
+    }
+    .input-complaint-btn {
+      border-radius: 8px;
+      height: 30px;
+      border: 1px solid $mono300;
+      transition: 0.15s;
+    }
+    .input-complaint-btn:active {
+      background-color: $mono400;
+      transition: 0.15s;
+    }
+  }
+
   .logout-container {
     display: flex;
     justify-content: space-between;

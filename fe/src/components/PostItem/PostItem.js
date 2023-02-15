@@ -68,7 +68,7 @@ const PostItem = ({ post }) => {
       setPostUserId(post.writer.id);
       if (post.relation.attachFiles.length) {
         let list = post.relation.attachFiles;
-        //console.dir(list)
+        // console.dir(list)
         setBottomComponent(
           <PostPhotoComponent imgURLList={list}></PostPhotoComponent>
         );
@@ -116,7 +116,7 @@ const PostItem = ({ post }) => {
   return (
     <div className="post-item">
       {topComponent}
-      <div
+      <div className="bottom-component"
         onClick={(e) => {
           navigate(`/main/post/${post.id}`);
         }}

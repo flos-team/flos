@@ -72,7 +72,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:3000");
         configuration.addAllowedOriginPattern("https://i8b210.p.ssafy.io:3000");
-        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedOriginPattern("https://i8b210.p.ssafy.io");
+//        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("authorization");

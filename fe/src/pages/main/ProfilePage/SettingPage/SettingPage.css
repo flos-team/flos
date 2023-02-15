@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .alarm-page {
   width: 100vw;
   min-height: 100vh;
@@ -73,6 +83,44 @@
 .alarm-page .alarm-main .title {
   border-bottom: 0.0625rem solid #aaa8a8;
   height: 20%;
+}
+.alarm-page .complaint-container {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.alarm-page .complaint-container .complaint-title {
+  width: 100%;
+  font-size: 20px;
+}
+.alarm-page .complaint-container .complaint-guide-text {
+  width: 100%;
+  font-size: 13px;
+}
+.alarm-page .complaint-container .input-complaint {
+  display: flex;
+  flex-direction: column;
+}
+.alarm-page .complaint-container .input-complaint .input-complaint-input {
+  padding: 8px;
+  width: 100%;
+  min-height: 200px;
+  height: max-content;
+  border: 1px solid #bfbfbf;
+  border-radius: 8px;
+  resize: none;
+  color: #827c7c;
+}
+.alarm-page .complaint-container .input-complaint-btn {
+  border-radius: 8px;
+  height: 30px;
+  border: 1px solid #bfbfbf;
+  transition: 0.15s;
+}
+.alarm-page .complaint-container .input-complaint-btn:active {
+  background-color: #aaa8a8;
+  transition: 0.15s;
 }
 .alarm-page .logout-container {
   display: flex;

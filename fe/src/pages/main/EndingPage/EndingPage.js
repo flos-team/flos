@@ -112,7 +112,7 @@ const EndingPage = () => {
     //   console.dir(res);
     // });
     getFlowerInfoById(params.id).then((res) => {
-      console.dir(res);
+      // console.dir(res);
       let obj = flowerInfoList[`${res.flowerColor}`];
       //console.dir(obj);
       setFlowerObj({ ...res });
@@ -162,7 +162,7 @@ const EndingPage = () => {
           slidesPerView={1}
           onSlideChange={(swiper) => {
             if (swiper.realIndex === endingList.length - 1) {
-              console.log("타이머 시작!");
+              // console.log("타이머 시작!");
               setTimeout(() => {
                 let timerInterval;
                 Swal.fire({
@@ -185,15 +185,15 @@ const EndingPage = () => {
                 }).then((result) => {
                   /* Read more about handling dismissals below */
                   if (result.dismiss === Swal.DismissReason.timer) {
-                    console.log(letterText);
+                    // console.log(letterText);
                     if (letterText.length > 0) {
                       writeEndLetter(flowerObj.id, letterText).then((res) => {
-                        console.dir(res);
+                        // console.dir(res);
                         navigate("/main", { replace: true });
                       });
                     }
                     if (flowerObj.letter && flowerObj.letter.length) {
-                      console.log("엔딩페이지 다시 보기 종료");
+                      // console.log("엔딩페이지 다시 보기 종료");
                       navigate("/main", { replace: true });
                     }
                   } else {

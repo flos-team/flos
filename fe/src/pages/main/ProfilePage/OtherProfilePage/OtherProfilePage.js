@@ -31,7 +31,7 @@ const OtherProfilePage = ({ userNickName }) => {
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
   const [titleList, setTitleList] = useState(
-    ["팔로잉", "팔로우", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>)
+    ["팔로워", "팔로잉", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>)
   );
   const [userInfoList, setUserInfoList] = useState([0, 0, 0, 0].map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
 
@@ -146,7 +146,7 @@ const OtherProfilePage = ({ userNickName }) => {
     data.then((res) => {
       setUserInfo({ nickname: res.nickname, introduction: res.introduction });
       // .map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
-      let list = [res.followingCount, res.followerCount, res.postCount, res.blossomCount];
+      let list = [res.followerCount, res.followingCount, res.postCount, res.blossomCount];
       setUserInfoList(
         list.map((e, i) => {
           let liEle = <></>;
@@ -155,7 +155,7 @@ const OtherProfilePage = ({ userNickName }) => {
               <li
                 key={i}
                 onClick={(e) => {
-                  navigate(`/follower-view-page/${res.id}`);
+                  navigate(`/follower-view-page/${res.id}?${i}`);
                 }}
               >
                 {e > 999 ? "999+" : e}

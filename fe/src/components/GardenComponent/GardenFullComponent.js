@@ -99,7 +99,7 @@ const GardenFullComponent = () => {
     const getGardenListFunc = () => {
         setIsLoading(true);
         getGardenList(page).then((e) => {
-            console.log(e);
+            // console.log(e);
             hasNext = e.hasNext;
             setGardenListData(gardenListData.concat(e.content));
             setIsLoading(false);
@@ -133,7 +133,7 @@ const GardenFullComponent = () => {
         setGardenList([...gardenListData].map((e, i) => <SwiperSlide key={i}><FlowerFullItem flowerInfo={e}></FlowerFullItem></SwiperSlide>));
     }, [gardenListData])
 
-    console.dir(SwiperRef.current);
+    // console.dir(SwiperRef.current);
 
     return (
         <>
@@ -171,8 +171,8 @@ const GardenFullComponent = () => {
                             setPresentCount(swiper.activeIndex + 1);
                         }}
                         onSwiper={(swiper) => {
-                            console.log("onSwiper");
-                            console.log(swiper);
+                            // console.log("onSwiper");
+                            // console.log(swiper);
                         }}
                         navigation
                         centeredSlides={true}

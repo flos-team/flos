@@ -1,18 +1,17 @@
-import axios from "axios";
-
 /* import react */
 import React, { useEffect } from "react";
 import { useState, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // redux/toolkit
-import { useSelector, useDispatch } from "react-redux";
-import { setIsToastValue, setToastMessage } from "../../../redux/toast";
+// import { useDispatch } from "react-redux";
+// import { setIsToastValue, setToastMessage } from "../../../redux/toast";
 
 /* import img */
 import pictureIcon from "../../../assets/GlobalAsset/picture-btn.png";
+import closeBtn from "../../../assets/GlobalAsset/close-btn.png";
 
 /* import compoents */
-import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
+// import ToggleBtn from "../../../components/ToggleBtn/ToggleBtn";
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 import PostResultModal from "../../../components/PostResultModal/PostResultModal";
 import Swal from "sweetalert2";
@@ -59,13 +58,14 @@ const WritePostPage = () => {
   };
   const [tagList, setTagList] = useState([<></>]);
   const [tagTextList, setTagTextList] = useState([]);
-  const handleKeyPress = (e) => {
+  const onChangeWatcher = () => {
     let value = tagRef.current.value;
-    if (value.includes("#") && value.indexOf("#") !== 0) tagRef.current.value = "";
+    //console.log(`value : ${value}`);
+    if (value.includes("#") && value.indexOf("#") !== 0) tagRef.current.value = ""; //이상하게 입력받는 경우 예외처리
     if (value.includes("#")) {
-      let text = value.slice(1, value.length - 1);
-      if (e.key === " ") {
-        if (value.length - 2 > 0) {
+      if (value.includes(" ")) {
+        let text = value.slice(1, value.length - 1).trim();
+        if (text.length > 0) {
           const nextList = tagList.concat(<span className="tag-span">{text}</span>);
           setTagList(nextList);
           const nextTag = tagTextList.concat(text);
@@ -76,6 +76,7 @@ const WritePostPage = () => {
     }
   };
 
+  const [imgPreviewList, setImgPreviewList] = useState([<></>]);
   const [imgBase64, setImgBase64] = useState([]); // 파일 base64
   const [imgFile, setImgFile] = useState([]); //파일
   const handleOnChange = (event) => {
@@ -105,9 +106,43 @@ const WritePostPage = () => {
     }
   };
   // redux-toolkit
-  const toastValue = useSelector((state) => state.toast.isToast);
-  const toastMessage = useSelector((state) => state.toast.toastMessage);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+
+  const deleteImgPreview = (idx) => {
+    //console.log(idx);
+
+    const dataTranster = new DataTransfer();
+    let i = 0;
+    Array.prototype.forEach.call(imgFile, function (file) {
+      if (i !== idx) {
+        dataTranster.items.add(file);
+      }
+      i++;
+    });
+    setImgFile(dataTranster.files);
+
+    let decImgBase64 = imgBase64.filter((e, i) => i !== idx);
+    setImgBase64(decImgBase64);
+  };
+
+  useEffect(() => {
+    // console.dir(tagTextList);
+    setImgPreviewList(
+      imgBase64.map((item, i) => (
+        <div key={i} className={`img-holder ${i}`}>
+          <img className="img-preview" alt="업로드 이미지" src={item} />
+          <img
+            className="close-btn"
+            alt="닫기 버튼"
+            src={closeBtn}
+            onClick={(e) => {
+              deleteImgPreview(i);
+            }}
+          />
+        </div>
+      ))
+    );
+  }, [imgBase64, tagTextList]);
 
   return (
     <>
@@ -163,7 +198,7 @@ const WritePostPage = () => {
                 className="post-tag-input"
                 placeholder="#태그를 입력하세요"
                 ref={tagRef}
-                onKeyUp={handleKeyPress}
+                onChange={onChangeWatcher}
               />
             </div>
           </div>
@@ -181,11 +216,7 @@ const WritePostPage = () => {
                 <img src={pictureIcon} alt="이미지 버튼" />
               </div>
             </label>
-            <div className="img-preview-container hide-scroll">
-              {imgBase64.map((item) => {
-                return <img className="img-preview" src={item} />;
-              })}
-            </div>
+            <div className="img-preview-container hide-scroll">{imgPreviewList}</div>
           </div>
         </form>
         {isVisible ? (
@@ -195,6 +226,7 @@ const WritePostPage = () => {
               navigate("/main");
             }}
             weatherIdx={weatherIndex}
+            judgeWeatherIdx={judgeWeatherIdx}
             createPost={async () => {
               let postObj = {
                 content: content,
@@ -202,11 +234,10 @@ const WritePostPage = () => {
                 weather: weatherText,
                 attachFiles: imgFile,
               };
-              let ans = createPost(postObj.content, postObj.weather, postObj.tagList, postObj.attachFiles)
+              // console.dir(postObj);
+              createPost(postObj.content, postObj.weather, postObj.tagList, postObj.attachFiles)
                 .then((res) => {
                   //console.dir(res);
-                  // dispatch(setToastMessage("글 작성이 완료되었습니다."));
-                  // dispatch(setIsToastValue(true));
                   Swal.fire({
                     position: "center",
                     icon: "success",

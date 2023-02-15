@@ -27,7 +27,7 @@ import COLORS from "../../styles/colors";
 /* import css */
 import "./PostResultModal.css";
 
-const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
+const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost, judgeWeatherIdx }) => {
   const swiperRef = useRef(null);
   const imgList = [sunny128, cloudy128, rainy128];
   const handleOnRightClick = () => {
@@ -50,6 +50,25 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
   const swiperClass = {
     width: "150px",
     height: "128px",
+  };
+
+  const switchResult = () => {
+    // console.log(swiperRef.current.swiper.realIndex);
+    switch (swiperRef.current.swiper.realIndex) {
+      case 0:
+        judgeWeatherIdx("positive");
+        break;
+      case 1:
+        judgeWeatherIdx("neutral");
+        break;
+      case 2:
+        judgeWeatherIdx("negative");
+        break;
+      default:
+        judgeWeatherIdx("neutral");
+        break;
+    }
+    // judgeWeatherIdx()
   };
 
   useEffect(() => {
@@ -91,6 +110,8 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
               let idx = swiper.realIndex;
               setWeatherTextIdx(idx);
               setWeatherTextColorIdx(idx);
+              // console.log(idx);
+              switchResult();
             }}
             style={swiperClass}
             ref={swiperRef}
@@ -109,6 +130,7 @@ const PostResultModal = ({ setVisible, moveMain, weatherIdx, createPost }) => {
           className="confirm-btn"
           onClick={async (e) => {
             await createPost();
+
             moveMain();
           }}
         >

@@ -14,9 +14,15 @@ import java.time.LocalDateTime;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotificationDTO {
+
     private Long id;
+
+    @Setter
     private MessageType messageType;
+
+    @Setter
     private String message;
+
     private LocalDateTime createdAt;
 
     @Setter

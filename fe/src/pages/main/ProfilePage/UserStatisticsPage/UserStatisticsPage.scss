@@ -140,6 +140,8 @@
         border-radius: 8 * $rpx1;
         position: relative;
         background: $mono100;
+        display: flex;
+        align-items: center;
         .graph-gage {
           position: absolute;
           height: 16 * $rpx1;
@@ -147,6 +149,13 @@
           top: 0px;
           background-blend-mode: darken;
           border-radius: 8 * $rpx1 0px 0px 8 * $rpx1;
+        }
+        .graph-number {
+          position: absolute;
+          right: 10px;
+          font-size: 10px;
+          text-align: center;
+          color: $black;
         }
       }
     }
@@ -161,7 +170,7 @@
     .cloudy-item-static-div {
       .graph-div {
         .graph-gage {
-          background: $mono100;
+          background: $mono300;
         }
       }
     }
@@ -259,7 +268,7 @@
   }
 
   .user-active-log-item {
-    border-bottom: 1px solid $mono600;
+    //border-bottom: 1px solid $mono600;
     /* user-active-log-item */
     box-sizing: border-box;
     /* Auto layout */
@@ -269,7 +278,7 @@
     padding: 12 * $rpx1 16 * $rpx1;
     gap: 8 * $rpx1;
     width: 100%;
-    height: 200 * $rpx1;
+    min-height: 100 * $rpx1;
     /* Inside auto layout */
     order: 3;
     .user-active-title {
