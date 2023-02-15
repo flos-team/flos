@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 /* import lib */
 import { Swiper, SwiperSlide } from "swiper/react";
+import styled from "@emotion/styled";
+import gsap from "gsap";
 
 /* import img */
 import flowerRed from "../../../assets/EndingAsset/flower-red.png";
@@ -21,7 +23,7 @@ import Swal from "sweetalert2";
 import background from "../../../assets/GardenAsset/garden-background-img.jpg";
 
 /* import module */
-import { getGardenList, getFlowerInfoById, getFlowerMVPInfo, writeEndLetter } from "../../../api/FlowerAPI";
+import { getGardenList, getFlowerContributorList, getFlowerInfoById, getFlowerMVPInfo, writeEndLetter } from "../../../api/FlowerAPI";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -32,6 +34,13 @@ import LetterStep4Component from "../../../components/EndingLetterCompoents/Lett
 
 /* import css */
 import "./EndingPage.css";
+
+const SampleCircle = styled.div`
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+`;
+
 
 const EndingPage = () => {
   const params = useParams();
@@ -105,6 +114,7 @@ const EndingPage = () => {
   const [endingList, setEndingList] = useState([]);
   const [letterText, setLetterText] = useState("");
   const [flowerObj, setFlowerObj] = useState({});
+  const circleRef = useRef();
 
   useEffect(() => {
     // getFlowerMVPInfo(1).then((res) => {
@@ -150,12 +160,41 @@ const EndingPage = () => {
       ];
       setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
     });
+
+
+    let sampleList = [{
+      id: "sampleId1",
+      img: background
+    },
+    {
+      id: "sampleId2",
+      img: background
+    },
+    {
+      id: "sampleId3",
+      img: background
+    }];
+
+    let contributorIdx = 0;
+
+    setInterval(() => {
+      // 2초마다 하나씩 만들어서 위로 띄운다.
+      if(contributorIdx++ == sampleList.length){
+        contributorIdx = 0;
+      }
+
+      const xPos = Math.random() * 1000;
+      // sampleList[contributorIdx].id
+      gsap.fromTo(circleRef, {x: xPos, y: 0 }, {x: xPos, y: 1000});
+    }, 2000);
+
   }, []);
 
   useEffect(() => {
     console.log(letterText);
     console.log(flowerObj.id);
   }, [letterText]);
+
 
   return (
     <>
@@ -215,6 +254,7 @@ const EndingPage = () => {
             {endingList}
           </Swiper>
         </div>
+        <SampleCircle ref={circleRef}></SampleCircle>
       </div>
     </>
   );
