@@ -44,7 +44,6 @@ const PostDetailPage = () => {
   const [inputValue, setInputValue] = useState("");
 
 
-
   const [postLoading, setPostLoading] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
 
@@ -85,15 +84,15 @@ const PostDetailPage = () => {
     });
   }, [isBookmark]);
 
-  useEffect(() => {                           
-    console.log("실행됨")
+  useEffect(() => {                     
+    // console.log("useEffect");      
     getCommentList(params.id).then((response) => {
-      console.log(response)
-      setComments(response);
+      // console.log(response)
+      setComments([...response]);
       setCommentLoading(true);
     });
-
   }, [commentOnChange]);
+
 
   if (postLoading && commentLoading) {
     const commentList = comments.map((key) => {
@@ -186,7 +185,7 @@ const PostDetailPage = () => {
         }
       });
     };
-    
+
     return (
       <>
         <div className="post-detail-page" onClick={clickOutSideCloseModal}>
@@ -256,6 +255,7 @@ const PostDetailPage = () => {
             </div>
             <div className="comment-container">
               <div className="comment-title-div">댓글</div>
+              {/* 댓글 리스트 렌더링 */}
               {commentList}
             </div>
           </div>

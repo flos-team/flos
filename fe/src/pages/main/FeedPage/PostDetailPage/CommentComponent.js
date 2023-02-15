@@ -109,7 +109,8 @@ const CommentComponent = ({
                       setReply([...response]);
                       console.log(reply);
                     });
-                  }).then(() =>{
+                  })
+                  .then(() => {
                     Swal.fire("댓글 삭제 완료");
                   });
               } else {
@@ -236,14 +237,11 @@ const CommentComponent = ({
           // alert("안돼")
           // 이미 처리되어있으면 아무일도 안일어나게 해야함
         } else {
-          console.log(commentOnChange);
-          setCommentOnChange(!commentOnChange);
-          console.log(commentOnChange);
-          commentApprove(comment.id).then((response) => {
-            if (response) {
-              setReplyOnChange(!replyOnChange);
-              setIsApprove(!isApprove);
-            }
+          // console.log(commentOnChange);
+          commentApprove(comment.id).then(() => {
+            setIsApprove(!isApprove);
+            setCommentOnChange(!commentOnChange);
+            // console.log(commentOnChange);
           });
         }
       }}

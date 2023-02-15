@@ -109,7 +109,7 @@ const createReply = async (content, postId, primitiveId, parentId) => {
 
 const commentApprove = async (commentId) => {
   let url = `/api/comment/approve`;
-  console.log(commentId);
+  // console.log(commentId);
   const data = {
     id: commentId,
   };
@@ -117,7 +117,7 @@ const commentApprove = async (commentId) => {
     .post(url, data)
     .then((response) => {
       if (response.status === 200) {
-        console.dir(response);
+        // console.dir(response);
         return true;
       }
     })
