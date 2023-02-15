@@ -79,6 +79,7 @@ const FlowerMessageText = styled.div`
   justify-content: center;
   color: #000000;
   padding: 20px;
+  word-break: keep-all;
 `;
 
 /*
@@ -349,19 +350,20 @@ const Home = () => {
     /*
      *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
      */
+  
     getFlowerInfo().then((res) => {
-      // console.log(res);
       if (res === "NO_FLOWER_EXISTS") {
         setMakeFlowerModal(true);
-        // console.log("꽃이 존재하지 않습니다.");
         return;
       }
+
       flowerInfo.id = res.id;
       flowerInfo.isFullGrown = res.isFullGrown;
       flowerInfo.name = res.name;
       flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
       flowerInfo.MaxGrowthValue = res.maxGrowthValue;
       flowerInfo.color = res.color;
+      
     });
 
     getMemberInfo().then((res) => {

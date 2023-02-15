@@ -56,33 +56,8 @@ const COLORS = {
   }
 };
 
-const Avatars = styled.div`
-    display: flex;
-    align-items: center;
-    .title {
-      min-width: 20px;
-      margin: 20px;
-    }
-    .box {
-      padding: 0px 20px;
-      cursor: pointer;
-    }
-  `;
-
 const ButtonGroup = styled.div`
     display: flex;
-  `;
-
-const FacePicker = styled.button`
-    border: 0;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 20px;
-    min-width: 130px;
-    background-color: ${(p) => COLORS[p.colorType].face};
-    color: ${(p) => COLORS[p.colorType].color};
-  
-    cursor: pointer;
   `;
 
 const Eyes = styled.div`
