@@ -69,6 +69,7 @@ public class FlowerServiceImpl implements FlowerService {
         if (!Objects.equals(flower.getOwner().getId(), SecurityManager.getCurrentMember().getId()))
             throw new BadRequestException("내 꽃이 아닙니다.");
         flower.setLetter(flowerLastLetterRequestDTO.getLetter());
+        flower.setLettering(true);
         flowerRepository.saveAndFlush(flower);
     }
 

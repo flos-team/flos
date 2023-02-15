@@ -36,7 +36,7 @@ public class FlowerResponseDTO {
     private Boolean isFullGrown;
     @Schema(description = "성장한 꽃이 가든으로 갔는지 여부")
     private Boolean gardening;
-    @Schema(description = "성장한 꽃이 가든으로 갔는지 여부")
+    @Schema(description = "꽃이 생성된 시간")
     private LocalDateTime createdAt;
     @Schema(description = "꽃이 다 성장한 시간")
     private LocalDateTime blossomAt;
@@ -52,6 +52,8 @@ public class FlowerResponseDTO {
     private int light;
     @Schema(description = "꽃에게 보내는 마지막 편지")
     private String letter;
+    @Schema(description = "꽃에게 보내는 마지막 편지를 보냈는지 여부")
+    private Boolean lettering;
 
 
     public static FlowerResponseDTO toDto(Flower flower) {
@@ -75,6 +77,7 @@ public class FlowerResponseDTO {
                 .blossomAt(flower.getBlossomAt())
                 .duration(flower.getBlossomAt() == null ? null : ChronoUnit.DAYS.between(flower.getCreatedAt(), flower.getBlossomAt()))
                 .letter(flower.getLetter())
+                .lettering(flower.getLettering())
                 .build();
 
     }
