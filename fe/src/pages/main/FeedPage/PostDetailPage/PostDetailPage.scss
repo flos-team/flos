@@ -151,7 +151,7 @@
           border-radius: 18 * $rpx1;
         }
         .comment-container {
-          width: 230 * $rpx1;
+          width: 100%;
           height: max-content;
           min-height: 50 * $rpx1;
           gap: 2 * $rpx1;
@@ -200,6 +200,7 @@
         background-color: $mono50;
         position: relative;
         border-top: 1px solid $mono200;
+        background-color: red;
         img {
           position: relative;
           top: 0;

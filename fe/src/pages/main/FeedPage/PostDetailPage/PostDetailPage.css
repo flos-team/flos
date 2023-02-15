@@ -175,7 +175,7 @@
   border-radius: 1.125rem;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item .comment-container {
-  width: 14.375rem;
+  width: 100%;
   height: max-content;
   min-height: 3.125rem;
   gap: 0.125rem;
@@ -221,6 +221,7 @@
   background-color: #fcfcfc;
   position: relative;
   border-top: 1px solid #d3d3d3;
+  background-color: red;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item-reply img {
   position: relative;

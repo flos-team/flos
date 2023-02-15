@@ -84,7 +84,10 @@
     margin: 0 0 0 8px;
     font-size: 14px;
     text-decoration: underline;
+    text-decoration: none;
+    color: black;
 }
+
 
 .socialbtn {
     width: 80%;

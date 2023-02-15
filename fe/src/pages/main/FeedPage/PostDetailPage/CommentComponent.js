@@ -23,6 +23,7 @@ import {
 } from "../../../../api/CommentAPI";
 
 import "./PostDetailPage.css";
+import "./CommentComponent.css";
 
 const url = "https://i8b210.p.ssafy.io/api/file/";
 
@@ -143,9 +144,9 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
   }
 
   const replyInput = (
-    <div>
+    <div className="comment-component-div">
       <input
-        className="comment-input"
+        className="comment-component-input"
         autoFocus
         value={inputValue}
         onChange={handleCommentInputValue}
@@ -180,7 +181,7 @@ const CommentComponent = ({ comment, postWriterId, weather }) => {
           }
         }}
       ></input>
-      <button>제출</button>
+      <button className="comment-component-button">제출</button>
     </div>
   );
 
