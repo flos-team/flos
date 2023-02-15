@@ -6,7 +6,6 @@ import { ReactComponent as EditIcon } from "../../assets/HomeAsset/edit.svg";
 import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
-import { css, keyframes } from "@emotion/react";
 import GrowProgressBar from "../../components/homepage/GrowProgressBar";
 import { gsap } from "gsap";
 import rainObjectData from "../../assets/HomeAsset/8368-cloud.json";
@@ -28,21 +27,20 @@ import MakeFlowerModal from "../../components/homepage/MakeFlowerModal";
 import Swal from "sweetalert2";
 import {commonMsg, commonMsgLength} from "../../constants/flowerMessage.js"
 
-const Title = styled.h1`
-  color: #007bff;
-  font-size: 32px;
-  ${(props) =>
-    `transform: translateY(${props.translateY}px); 
-   opacity: ${props.opacity};
-  `}
-`;
-
+/*
+* @css
+* 날씨 애니메이션 영역
+*/
 const WeatherAnimation = styled.div`
   position: relative;
   width: 100%;
   hegiht: 100%;
 `;
 
+/*
+* @css
+* 홈 페이지 외곽의 영역
+*/
 const HomePageDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,6 +57,10 @@ const HomePageDiv = styled.div`
   overflow: hidden;
 `;
 
+/*
+* @css
+* 꽃의 메세지 영역
+*/
 const FlowerMessageText = styled.div`
   position: absolute;
   width: 235px;
@@ -79,6 +81,10 @@ const FlowerMessageText = styled.div`
   padding: 20px;
 `;
 
+/*
+* @css
+* 개화 버튼
+*/
 const FloweringButton = styled.button`
   width: 40%;
   height: 50px;
@@ -93,6 +99,10 @@ const FloweringButton = styled.button`
   }
 `;
 
+/*
+* @css
+* 개화가 충족될 경우 생성되는 영역
+*/
 const Flowering = styled.div`
   width: 100%;
   height: 100vh;
@@ -102,32 +112,18 @@ const Flowering = styled.div`
   position: absolute;
 `;
 
+/*
+* @css
+* 개화 시 나타나는 축하 애니메이션
+*/
 const Congratulation = styled.div`
   pointer-events: none;
 `;
 
-// 낮인지 확인하는 메소드
-const isDay = (hour) => {
-  if (hour >= 6 && hour < 18) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-const show = {
-  opacity: 1,
-  display: "block",
-  scale: 1,
-};
-
-const hide = {
-  opacity: 0,
-  transitionEnd: {
-    display: "none",
-  },
-};
-
+/*
+* @css
+* 산 배경
+*/
 const BackgroundMountain = styled.div`
   position: fixed;
   width: 1000px;
@@ -137,16 +133,59 @@ const BackgroundMountain = styled.div`
   z-index: -2;
 `;
 
+/*
+* @css
+* 배경 영역
+*/
 const Background = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
+/*
+* @css
+* 배경에 있는 구름 영역
+*/
 const BackgroundCloud = styled.div`
   position: fixed;
   top: -100px;
   left: -200px;
   z-index: -5;
 `;
+
+/*
+* @method
+* 낮인지 밤인지 파악
+*/
+const isDay = (hour) => {
+  if (hour >= 6 && hour < 18) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/*
+* @object
+* 꽃 메세지가 보이는 상태
+*/
+const show = {
+  opacity: 1,
+  display: "block",
+  scale: 1,
+};
+
+/*
+* @object
+* 꽃 메세지가 보이지 않는 상태
+*/
+const hide = {
+  opacity: 0,
+  transitionEnd: {
+    display: "none",
+  },
+};
 
 const Home = () => {
   const sunBox = useRef();
@@ -413,30 +452,46 @@ const Home = () => {
   };
 
   const flowerNameClick = () => {
-    // console.log("clicked - name");
     setSunAnimation(null);
     setRainAnimation(null);
     setChangeFlowerNamemodal(true);
+    console.log(flowerInfo.name);
   };
 
   /*
-   * 이름 변경 함수
+   * @method
+   * 꽃 이름 변경
+   * [Error Fix: 이름 변경 시 값이 혼동되어 사용되는 버그 수정] (2023-02-15 10:35)
+   * - modifyFlower() 메소드가 성공적으로 종료할 경우에만 updateInfo()를 진행하도록 수정 
    */
   const ChangeFlowerNameOnclick = (newName) => {
-    // console.log("바꾸기 시작");
-    // console.log("새로운 이름", newName);
-    flowerInfo.name = newName;
-    modifyFlower(flowerInfo.id, flowerInfo.name);
-    setChangeFlowerNamemodal(false);
-    updateInfo();
+    if(newName.length > 6){ // 꽃의 이름 길이가 6 이상일 경우,
+      Swal.fire({
+        icon: "warning",
+        title: "꽃의 이름이 너무 길어요!",
+        text: "좀 더 간결한 이름으로 바꿔주세요.",
+      });
+    }
+    else {
+      flowerInfo.name = newName;
+      modifyFlower(flowerInfo.id, flowerInfo.name).then(() => {
+        updateInfo();
+      });
+      setChangeFlowerNamemodal(false);
+    }
   };
 
+  /*
+  * @method
+  * 이름 변경 모달 닫기
+  */
   const CancelChangingFlowerNameOnclick = () => {
     setChangeFlowerNamemodal(false);
   };
 
   /*
-   * 꽃 생성 함수
+   * @method
+   * 꽃을 처음 생성하는 함수
    */
   const MakeFlowerOnclick = (name) => {
     if(name === ""){
@@ -456,10 +511,6 @@ const Home = () => {
   const doFlowering = () => {
     flowering(flowerInfo.id);
     window.location.replace(`/flower-end-page/${flowerInfo.id}`);
-  };
-
-  const onClickPlayMusicButton = () => {
-    setIsPlay((pre) => !pre);
   };
 
   const isHaveNoti = () => {
@@ -482,7 +533,7 @@ const Home = () => {
                 doFlowering();
               }}
             >
-              개화
+              꽃 영원히 기억하기
             </FloweringButton>
             <Congratulation>
               <Lottie
