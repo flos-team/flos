@@ -39,8 +39,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token;
         try {
             if (authorization.startsWith(TokenType)) {
-//                log.info("그냥");
-//                log.info("{}", authorization);
                 // 토큰앞부분에 있는 "Bearer "을 제거해서 토큰만 남긴다.
                 token = authorization.substring(TokenType.length());
                 Subject subject = jwtTokenProvider.getSubject(token);
@@ -53,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (NullPointerException | JwtException e) {
-//            log.info("재발행");
+            // 재발행
             try {
                 token = CookieUtil.getRtk(request);
                 Subject subject = jwtTokenProvider.getSubject(token);
