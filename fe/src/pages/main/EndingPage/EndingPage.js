@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 /* import lib */
 import { Swiper, SwiperSlide } from "swiper/react";
+import styled from "@emotion/styled";
+import gsap from "gsap";
 
 /* import img */
 import flowerRed from "../../../assets/EndingAsset/flower-red.png";
@@ -32,6 +34,21 @@ import LetterStep4Component from "../../../components/EndingLetterCompoents/Lett
 
 /* import css */
 import "./EndingPage.css";
+
+const SampleCircle = styled.div`
+  border-radius: 50%;
+  width: ${(p) => p.width}px;
+  height: ${(p) => p.height}px;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  color: white;
+  justify-contet: center;
+  align-items: center;
+`;
+
 
 const EndingPage = () => {
   const params = useParams();
@@ -102,10 +119,28 @@ const EndingPage = () => {
     height: "100%",
   };
   const navigate = useNavigate();
-  const [isReplay, setIsReplay] = useState(false);
+  // 다시보기 페이지인지 엔딩 페이지인지 구분하기 위한 불리언 state
+  const [isReplay, setIsReplay] = useState(false); 
+  //
   const [endingList, setEndingList] = useState([]);
+  // 편지 쓰는 데 사용하는 state 변수
   const [letterText, setLetterText] = useState("");
+  // 꽃 정보를 담아둘 Object
   const [flowerObj, setFlowerObj] = useState({});
+  // 마지막 스와이프 뷰에서 메인으로 이동할지 물어보는 문구 여부 관리용 boolean state
+  const [isShowEndText, setIsShowEndText] = useState(false);
+  const [contributorList, setContributorList] = useState([]);
+  const CircleRef1 = useRef();
+  const CircleRef2 = useRef();
+  const CircleRef3 = useRef();
+  const CircleRef4 = useRef();
+  const CircleRef5 = useRef();
+  const CircleRef6 = useRef();
+  const CircleRef7 = useRef();
+  const CircleRef8 = useRef();
+  const CircleRef9 = useRef();
+  const CircleRef10 = useRef();
+  const timeline = gsap.timeline({ yoyo: true, repeatDelay: 1});
 
   const endingPageInit = async () => {
     let step1Obj = {} // 엔딩페이지 1 컴포넌트 정보 담을 Object
@@ -149,7 +184,7 @@ const EndingPage = () => {
       }
     });
 
-    let url = "https://i8b210.p.ssafy.io/api";    
+    let url = "https://i8b210.p.ssafy.io/api/";    
     
     await getFlowerContributorList(params.id)
     .then((res) => {
@@ -168,15 +203,64 @@ const EndingPage = () => {
     setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
 
 
-  }
+  };
   
 
   useEffect(() => {
+    endingPageInit();
+    console.log("contributorList");
+    console.log(contributorList);
 
-    endingPageInit();   
+    let contributorIdx = 0;
+
+    const contributorInterval = setInterval(() => {
+      // 2초마다 하나씩 만들어서 위로 띄운다.
+      if(contributorIdx++ == contributorList.length){
+        contributorIdx = 0;
+      }
+      const xPos1 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos2 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos3 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos4 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos5 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos6 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos7 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos8 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos9 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+      const xPos10 = Math.random() * 400 * ( (-1) * (Math.random() < 0.5));
+
+      CircleRef1.current.style.backgroundImage = `url(${contributorList[contributorIdx%10]})`;
+      CircleRef2.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 1]})`;
+      CircleRef3.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 2]})`;
+      CircleRef4.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 3]})`;
+      CircleRef5.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 4]})`;
+      CircleRef6.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 5]})`;
+      CircleRef7.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 6]})`;
+      CircleRef8.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 7]})`;
+      CircleRef9.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 8]})`;
+      CircleRef10.current.style.backgroundImage = `url(${contributorList[contributorIdx%10 + 9]})`;
+
+      timeline.fromTo(CircleRef1.current, {x: xPos1, y: 500 }, {x: xPos1, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef2.current, {x: xPos2, y: 500 }, {x: xPos2, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef3.current, {x: xPos3, y: 500 }, {x: xPos3, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef4.current, {x: xPos4, y: 500 }, {x: xPos4, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef5.current, {x: xPos5, y: 500 }, {x: xPos5, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef6.current, {x: xPos6, y: 500 }, {x: xPos6, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef7.current, {x: xPos7, y: 500 }, {x: xPos7, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef8.current, {x: xPos8, y: 500 }, {x: xPos8, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef9.current, {x: xPos9, y: 500 }, {x: xPos9, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      timeline.fromTo(CircleRef10.current, {x: xPos10, y: 500 }, {x: xPos10, y: -500, duration:  Math.floor(Math.random() * 8) + 6});
+      
+
+    }, 2000);
+
+    return () => {
+      clearInterval(contributorInterval);
+    };
+   
   }, []);
   
-  const [isShowEndText, setIsShowEndText] = useState(false);
+  // 편지 글의 작성유무, 마지막 페이지 여부에 따른 재렌더링용 useEffect
   useEffect(() => {    
   }, [letterText, isShowEndText]);
 
@@ -184,7 +268,17 @@ const EndingPage = () => {
   return (
     <>
       <div className="ending-page" style={{ backgroundImage: `url(${background})` }}>
-        <HeaderComponent  isClear={true} pageName={""}></HeaderComponent>
+        <HeaderComponent backVisible={true} isClear={true} pageName={"엔딩페이지"}></HeaderComponent>
+        <SampleCircle width={45} height={45} ref={CircleRef1}></SampleCircle>
+        <SampleCircle width={40} height={40} ref={CircleRef2}></SampleCircle>
+        <SampleCircle width={50} height={50} ref={CircleRef3}></SampleCircle>
+        <SampleCircle width={100} height={100} ref={CircleRef4}></SampleCircle>
+        <SampleCircle width={70} height={70} ref={CircleRef5}></SampleCircle>
+        <SampleCircle width={45} height={45} ref={CircleRef6}></SampleCircle>
+        <SampleCircle width={40} height={40} ref={CircleRef7}></SampleCircle>
+        <SampleCircle width={50} height={50} ref={CircleRef8}></SampleCircle>
+        <SampleCircle width={100} height={100} ref={CircleRef9}></SampleCircle>
+        <SampleCircle width={70} height={70} ref={CircleRef10}></SampleCircle>
         <div className="ending-page-root">
           <Swiper
             spaceBetween={1}
