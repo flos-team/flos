@@ -140,20 +140,22 @@ const EndingPage = () => {
         letter: res.letter,
       };
 
+      // console.log(res.letter);
+
       let list = [
         <LetterStep1Component step1Obj={step1Obj} />,
         <LetterStep2Component step2Obj={step2Obj} />,
-        <LetterStep3Component step3Obj={step3Obj} />,
+        <LetterStep3Component step3Obj={step3Obj} isDisable={res&&res.letter&&res.letter===null&&res.letter.length===0} />,
         <LetterStep4Component name={res.name} />,
       ];
       setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log(letterText);
-  //   console.log(flowerObj.id);
-  // }, [letterText]);
+  useEffect(() => {
+    console.log(letterText);
+    console.log(flowerObj.id);
+  }, [letterText]);
 
   return (
     <>

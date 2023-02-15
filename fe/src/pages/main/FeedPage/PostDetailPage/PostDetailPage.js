@@ -63,13 +63,13 @@ const PostDetailPage = () => {
         setHeadColors(COLORS.yellow100);
         break;
       case "CLOUDY":
-        setHeadColors(COLORS.mono200);
+        setHeadColors(COLORS.mono100);
         break;
       case "RAINY":
         setHeadColors(COLORS.skyBlue100);
         break;
       default:
-        setHeadColors(COLORS.mono200);
+        setHeadColors(COLORS.mono100);
         break;
     }
   };
