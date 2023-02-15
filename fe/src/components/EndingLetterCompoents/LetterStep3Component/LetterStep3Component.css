@@ -63,7 +63,6 @@
   flex-grow: 0;
 }
 .letter-step3-component .lettter-content-div .lettter-content-input {
-  background: rgba(255, 255, 255, 0.8);
   width: 100%;
   height: 100%;
   border: none;
@@ -71,9 +70,7 @@
   outline: none;
   border-radius: 0.3125rem;
   resize: none;
-}
-.letter-step3-component .lettter-content-div .lettter-content-input:focus {
-  outline: 1px solid #bfbfbf;
+  background-color: rgba(255, 255, 255, 0);
 }
 .letter-step3-component .letter-flower-name-div {
   /* letter-flower-name-div */

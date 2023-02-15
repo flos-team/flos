@@ -102,6 +102,7 @@ const EndingPage = () => {
     height: "100%",
   };
   const navigate = useNavigate();
+  const [isReplay, setIsReplay] = useState(false);
   const [endingList, setEndingList] = useState([]);
   const [letterText, setLetterText] = useState("");
   const [flowerObj, setFlowerObj] = useState({});
@@ -138,7 +139,9 @@ const EndingPage = () => {
         id: res.id,
         setLetterText,
         letter: res.letter,
+        isDisable: res.lettering,
       };
+      setIsReplay(res.lettering);
 
       step4Obj = {
         name: res.name,
@@ -152,16 +155,14 @@ const EndingPage = () => {
     .then((res) => {
       // console.dir(res);
       let list = res.map((e) => `${url}/${e.profileImage.saveName}`);
-      console.dir(list);
       step2Obj['peopleImgURLs'] = list;
-      console.dir(step2Obj);
     })
 
     // console.log(res.letter);
     let list = [
       <LetterStep1Component step1Obj={step1Obj} />,
       <LetterStep2Component step2Obj={step2Obj} />,
-      <LetterStep3Component step3Obj={step3Obj} isDisable={false} />,
+      <LetterStep3Component step3Obj={step3Obj} />,
       <LetterStep4Component step4Obj={step4Obj} />,
     ];
     setEndingList(list.map((e, i) => <SwiperSlide key={i}>{e}</SwiperSlide>));
@@ -171,39 +172,29 @@ const EndingPage = () => {
   
 
   useEffect(() => {
-    // getFlowerMVPInfo(1).then((res) => {
-    //   console.dir(res);
-    // });
-    // getGardenList().then((res) => {
-    //   console.dir(res);
-    // });
-    endingPageInit();
-   
+
+    endingPageInit();   
   }, []);
+  
+  const [isShowEndText, setIsShowEndText] = useState(false);
+  useEffect(() => {    
+  }, [letterText, isShowEndText]);
 
-  useEffect(() => {
-    console.log(letterText);
-    console.log(flowerObj.id);
-    console.log(params.id);
-    // getFlowerContributorList(params.id)
-    //   .then((res) => {
-    //     console.dir(res);
-    //   })
-    // profileImage.saveName
-
-    
-  }, [letterText]);
 
   return (
     <>
       <div className="ending-page" style={{ backgroundImage: `url(${background})` }}>
-        <HeaderComponent backVisible={true} isClear={true} pageName={"엔딩페이지"}></HeaderComponent>
+        <HeaderComponent  isClear={true} pageName={""}></HeaderComponent>
         <div className="ending-page-root">
           <Swiper
             spaceBetween={1}
             slidesPerView={1}
             onSlideChange={(swiper) => {
-             
+              if (swiper.realIndex == 3) {
+                setIsShowEndText(true);
+              } else {
+                setIsShowEndText(false);
+              }
             }}
             style={swiperClass}
             ref={swiperRef}
@@ -211,6 +202,32 @@ const EndingPage = () => {
           >
             {endingList}
           </Swiper>
+          {isShowEndText ?
+            <div className="final-guide-text">
+              <p onClick={(e) => {
+                if (!isReplay) {
+                  writeEndLetter(params.id, letterText)
+                    .then((res) => {
+                    // console.log("글작성 결과 : ", res);
+                    Swal.fire(
+                      '편지 작성 완료',
+                      '메인 페이지로 이동합니다.',
+                      'success'
+                      )
+                      navigate("/main");                    
+                  })                  
+                } else {
+                  Swal.fire(
+                    '다시 보기 종료',
+                    '메인 페이지로 이동합니다.',
+                    'success'
+                  )
+                  navigate("/main");                    
+                }
+              }}>클릭하면 메인으로 이동합니다.</p>
+            </div>
+            :<></>}
+
         </div>
       </div>
     </>

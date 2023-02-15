@@ -35,9 +35,6 @@ const LetterStep4Component = ({ step4Obj }) => {
           <FlowerGlassBottle width={"256px"} height={"256px"} color={step4Obj.color}></FlowerGlassBottle>
         </div>
       </div>
-      <div className="final-guide-text">
-        <p>종료 메세지</p>
-      </div>
     </>
   );
 };
