@@ -11,8 +11,8 @@
   position: relative;
   width: 100%;
   height: 67.5vh;
-  // background: $white;
-  background: $red50;
+  // background: $red50;
+  background: rgba($color: $sky-blue100, $alpha: .7);
   border-radius: 16 * $rpx1;
 
   .letter-user-nickname-div {
