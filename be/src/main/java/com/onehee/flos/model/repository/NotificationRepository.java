@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    List<Notification> findAllByMemberAndCheckedAtIsNull(Member member);
+    List<Notification> findAllByMemberAndCheckedAtIsNullOrderByCreatedAtDesc(Member member);
 
     boolean existsByMemberAndMessageTypeAndCheckedAtAfter(Member member, MessageType messageType, LocalDateTime checkedAt);
 }
