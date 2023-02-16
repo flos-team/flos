@@ -1,0 +1,39 @@
+.searchcontainer{
+    display:flex;
+    justify-content: flex-end;
+    
+}
+
+.tablecontainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.tablegap{
+    margin: 8px;
+}
+
+.pk {
+    width: 32px;
+}
+
+.reporter{
+    width: 80px;
+}
+.defendant{
+    width: 80px;
+}
+.detail{
+    width: 120px;
+    max-height: 80px;
+    overflow: hidden;
+}
+.result{
+    width: 89px;
+}
+.reportTime{
+    width: 96px;
+}
+.resultTime{
+    width: 96px;
+}
