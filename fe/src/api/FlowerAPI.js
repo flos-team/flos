@@ -68,7 +68,7 @@ const getFlowerContributorList = async (flowerId) => {
   await axios
     .get(url)
     .then(({ data }) => {
-      console.log(data);
+      //console.log(data);
       value = data;
     })
     .catch((err) => {

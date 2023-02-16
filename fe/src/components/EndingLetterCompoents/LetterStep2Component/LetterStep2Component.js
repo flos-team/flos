@@ -44,8 +44,23 @@ const LetterStep2Component = ({ step2Obj }) => {
           <p>FROM. {step2Obj.name}</p>
         </div>
       </div>
+      <div className="img-container">
+        {step2Obj.peopleImgURLs.map((e)=><div className="img-div" style={{backgroundImage:`url${e}`}}></div>)}
+      </div>
     </>
   );
 };
+
+LetterStep2Component.defaultProps = {
+  step2Obj : {
+    createdAt: "",
+    blossomAt: "",
+    capacity: 0,
+    light: 0,
+    water: 0,
+    name: "",
+    peopleImgURLs:[],
+  }
+}
 
 export default LetterStep2Component;

@@ -149,7 +149,7 @@ const FlowerFullItem = (props) => {
                 </ContributorModalContainer> : null}
             <FullItem>
                 <FlowerView>
-                    <FlowerGlassBottle width={"200px"} height={"200px"}></FlowerGlassBottle>
+                    <FlowerGlassBottle width={"200px"} height={"200px"} color={props.flowerInfo.flowerColor}></FlowerGlassBottle>
                 </FlowerView>
                 <FlowerDetailData>
                     <GardenFullComponentDetailData flowerData={props.flowerInfo} />

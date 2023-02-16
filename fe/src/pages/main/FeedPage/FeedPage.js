@@ -50,8 +50,8 @@ function Feed() {
   // console.log(posts);
 
   const handleScroll = (e) => {
-    const pos = e.target.scrollHeight - e.target.scrollTop; // 지환이 로직
-    const isEnd = e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight;
+    const isEnd =
+      e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight;
     if (isEnd) {
       // console.log("스크롤 끝 감지");
       getFollowerPostList(nextPage).then((response) => {
@@ -69,41 +69,20 @@ function Feed() {
     if (posts) {
       postList = posts.map((key) => <PostItem post={key}></PostItem>);
     }
+
     let friendList = "";
-    // if (friends) {
-    //   friendList = friends.map((key) => {
-    //     let url = "https://i8b210.p.ssafy.io/api/file/" + key.profileImage.saveName;
-    //     // console.log(EachFriend);
-    //     const result = (
-    //       <div className={`${styles.friendThumbnail}`}>
-    //         <img
-    //           src={url}
-    //           alt="test"
-    //           className={styles.friendProfileImg}
-    //           onClick={() => {
-    //             navigate(`/other-profile-page/${key.id}`);
-    //           }}
-    //         ></img>
-    //       </div>
-    //     );
-    //     return result;
-    //   });
-    // }
     if (friends) {
       friendList = friends.map((key) => {
-        let url = "https://i8b210.p.ssafy.io/api/file/" + key.profileImage.saveName;
-        // console.log(EachFriend);
+        let url =
+          "https://i8b210.p.ssafy.io/api/file/" + key.profileImage.saveName;
         const result = (
-          <div className="follower-info-item" style={{ backgroundImage: `url(${url})` }}>
-            {/* <img
-              src={url}
-              alt="test"
-              className="follower-info-img"
-              onClick={() => {
-                navigate(`/other-profile-page/${key.id}`);
-              }}
-            ></img> */}
-          </div>
+          <div
+            className="follower-info-item"
+            style={{ backgroundImage: `url(${url})` }}
+            onClick={() => {
+              navigate(`/other-profile-page/${key.id}`);
+            }}
+          ></div>
         );
         return result;
       });
@@ -118,36 +97,18 @@ function Feed() {
     );
 
     return (
-      // <div className={`${styles.feedRoot} ${styles.scroll}`}>
-      //   <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
-      //   <div className={styles.globalroot}>
-      //     <div className={styles.friendListBar}>
-      //       {/** 친구 프로필을 나열한다.  */}
-      //       {friends.length > 0 ? friendList : noFriend}
-      //     </div>
-      //     <div
-      //       className={`${styles.main} ${styles.scroll}`}
-      //       id="postMain"
-      //       onScroll={handleScroll}
-      //     >
-      //       {/** 친구들의 포스트를 나열한다.  */}
-      //       {/* {posts.length > 0 ? postList : noPost} */}
-      //       {hasContent ? postList : noPost}
-      //     </div>
-      //     <MoveToTopToggle></MoveToTopToggle>
-      //   </div>
-      // </div>
       <div className="feed-page-container">
         <HeaderComponent pageName={"피드"} optType={0}></HeaderComponent>
         <div className="feed-header-container">
           <div className="following-list-div hide-scroll">
             {/** 친구 프로필을 나열한다.  */}
             {friends.length > 0 ? friendList : noFriend}
-            {/* {[...Array(8)].map((e, i) => (
-              <div key={i} className="follower-info-item"></div>
-            ))} */}
           </div>
-          <div className="post-container hide-scroll" id="postMain" onScroll={handleScroll}>
+          <div
+            className="post-container hide-scroll"
+            id="postMain"
+            onScroll={handleScroll}
+          >
             {/** 친구들의 포스트를 나열한다.  */}
             {/* {posts.length > 0 ? postList : noPost} */}
             {hasContent ? postList : noPost}

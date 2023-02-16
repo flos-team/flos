@@ -1,0 +1,26 @@
+@import "../../../../styles//commons.scss";
+
+.comment-component-div{
+    width: 100%;
+    height: 46px;
+    display: flex;
+    flex-flow: row ;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    gap: 8px;
+    .comment-component-input {
+        width: 75%;
+        height: 30px;
+        border: 1px solid $mono100;
+    }
+    .comment-component-button{
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: $sky-blue300;
+        border: none;
+        border: 1px solid $mono300;
+        border-radius: 5px;
+        color: $white;
+    }
+
+}

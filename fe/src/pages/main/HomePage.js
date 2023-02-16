@@ -79,6 +79,7 @@ const FlowerMessageText = styled.div`
   justify-content: center;
   color: #000000;
   padding: 20px;
+  word-break: keep-all;
 `;
 
 /*
@@ -188,23 +189,19 @@ const hide = {
 };
 
 const Home = () => {
-  const sunBox = useRef();
-  const rainBox = useRef();
-  const sunshine = useRef();
-  const rain = useRef();
-  const flowerRef = useRef();
-  const [elementStatus, setElementStatus] = useState("");
-  const [sunAnimation, setSunAnimation] = useState(null);
-  const [rainAnimation, setRainAnimation] = useState(null);
-  const [changeFlowerNamemodal, setChangeFlowerNamemodal] = useState(false);
-  const [makeFlowermodal, setMakeFlowerModal] = useState(false);
-  const [isFlowering, setIsFlowering] = useState(false);
-  const [isPlay, setIsPlay] = useState(true);
-  const [haveNoti, setHaveNoti] = useState(false);
-  const [backgroundImgUrl, setBackgroundImgUrl] = useState(0);
+  const sunBox = useRef();  // 해 애니메이션 Ref
+  const rainBox = useRef(); // 비 애니메이션의 구름 Ref
+  const rain = useRef();  // 비 애니메이션의 빗물 Ref
+  const flowerRef = useRef(); // 꽃 컴포넌트 Ref
 
-  const [elementImg, setElementImg] = useState(require("../../assets/HomeAsset/sun-img.png"));
-  const [flowerInfo, setFlowerInfo] = useState({
+  // useState(string)
+  const [elementStatus, setElementStatus] = useState(""); // 선택된 Element의 상태를 저장하는 state
+
+  // useState(object)
+  const [sunAnimation, setSunAnimation] = useState(null); // 햇빛 Animation 컴포넌트를 저장할 state
+  const [rainAnimation, setRainAnimation] = useState(null); // 빗물 Animation 컴포넌트를 저장할 state
+  const [flowerMessage, setFlowerMessage] = useState(null); // 꽃의 말 컴포넌트를 저장할 state
+  const [flowerInfo, setFlowerInfo] = useState({  // 꽃 정보를 저장할 state
     id: -1,
     isFullGrown: false, // 존재 여부
     name: "", // 이름
@@ -214,16 +211,16 @@ const Home = () => {
     MaxGrowthValue: 50,
   });
 
-  const doFullGrown = () => {
-    flowerInfo.isFullGrown = true;
-    // console.log("개화 시작");
-    setIsFlowering(true);
-  };
+  // useState(boolean)
+  const [changeFlowerNamemodal, setChangeFlowerNamemodal] = useState(false);  // 이름 변경 모달의 상태를 저장할 state (켜짐:true, 꺼짐:false)
+  const [makeFlowermodal, setMakeFlowerModal] = useState(false);  // 꽃 초기 세팅 상태를 저장할 state (켜짐:true, 꺼짐:false)
+  const [isFlowering, setIsFlowering] = useState(false);  // 개화 모달의 상태를 저장할 state (켜짐:true, 꺼짐:false)
+  const [haveNoti, setHaveNoti] = useState(false);  // 알림 여부를 저장할 state (켜짐:true, 꺼짐:false)
+  const [flowerMessageIsVisible, setFlowerMessageIsVisible] = useState(true); // 꽃의 말이 보이는지 안보이는지 저장할 state
 
-
-  const [flowerMessage, setFlowerMessage] = useState(null);
-  const [flowerMessageIsVisible, setFlowerMessageIsVisible] = useState(true);
-
+  // useState(integer)
+  const [backgroundImgUrl, setBackgroundImgUrl] = useState(0);
+  
   // ----------------------- 시간에 따른 배경화면 지정 -------------------------
 
   let timer;
@@ -334,24 +331,39 @@ const Home = () => {
     }
   }, [elementStatus]);
 
+
+  /*
+  * @method
+  * 개화 상태로 변경하는 메소드
+  */
+  const doFullGrown = () => {
+    flowerInfo.isFullGrown = true;
+    setIsFlowering(true);
+  };
+
+
+  /*
+  * @method
+  * 사용자 정보를 가져오는 메소드
+  */
   const updateInfo = () => {
     /*
      *   꽃 상태와 햇빛, 빗물 정보를 가져와서 저장함
      */
+  
     getFlowerInfo().then((res) => {
-      // console.log(res);
       if (res === "NO_FLOWER_EXISTS") {
         setMakeFlowerModal(true);
-        // console.log("꽃이 존재하지 않습니다.");
         return;
       }
+
       flowerInfo.id = res.id;
       flowerInfo.isFullGrown = res.isFullGrown;
       flowerInfo.name = res.name;
       flowerInfo.CurrentGrowthValue = res.currentGrowthValue;
       flowerInfo.MaxGrowthValue = res.maxGrowthValue;
       flowerInfo.color = res.color;
-      // console.log("꽃 정보 가져옴");
+      
     });
 
     getMemberInfo()
@@ -361,9 +373,12 @@ const Home = () => {
     });
   };
 
+  /*
+  * @method
+  * 해 버튼을 클릭 했을 때 실행되는 메소드
+  */
   const sunClick = () => {
     // 해 버튼을 클릭 했을 경우,
-    // console.log("clicked - sun");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
         icon: "warning",
@@ -380,7 +395,6 @@ const Home = () => {
 
       return;
     }
-    setElementImg(require("../../assets/HomeAsset/sun-img.png"));
     setElementStatus("sun");
     const sunObjectOptions = {
       autoplay: true,
@@ -404,9 +418,12 @@ const Home = () => {
     );
   };
 
+  /*
+  * @method
+  * 비 버튼을 클릭 했을 때 실행되는 메소드
+  */
   const rainClick = () => {
     // 비 버튼을 클릭 했을 경우,
-    // console.log("clicked - rain");
     if (flowerInfo.MaxGrowthValue == flowerInfo.CurrentGrowthValue) {
       Swal.fire({
         icon: "warning",
@@ -422,7 +439,6 @@ const Home = () => {
       });
       return;
     }
-    setElementImg(require("../../assets/HomeAsset/rain-img.png"));
     setElementStatus("rain");
     const rainAnimationOptions = {
       // loop: true,
@@ -452,6 +468,10 @@ const Home = () => {
     );
   };
 
+  /*
+  * @method
+  * 꽃 이름 변경 클릭시 실행되는 메소드
+  */
   const flowerNameClick = () => {
     setSunAnimation(null);
     setRainAnimation(null);
@@ -466,7 +486,8 @@ const Home = () => {
    * - modifyFlower() 메소드가 성공적으로 종료할 경우에만 updateInfo()를 진행하도록 수정 
    */
   const ChangeFlowerNameOnclick = (newName) => {
-    if(newName.length > 6){ // 꽃의 이름 길이가 6 이상일 경우,
+    // 꽃의 이름 길이가 6 이상일 경우,
+    if(newName.length > 6){
       Swal.fire({
         icon: "warning",
         title: "꽃의 이름이 너무 길어요!",
@@ -495,6 +516,7 @@ const Home = () => {
    * 꽃을 처음 생성하는 함수
    */
   const MakeFlowerOnclick = (name) => {
+    // 꽃 이름이 비어있을 경우,
     if(name === ""){
       Swal.fire({
         icon: "warning",
@@ -509,11 +531,19 @@ const Home = () => {
     }
   };
 
+  /*
+  * @method
+  * 개화 진행 메소드
+  */
   const doFlowering = () => {
     flowering(flowerInfo.id);
     window.location.replace(`/flower-end-page/${flowerInfo.id}`);
   };
 
+  /*
+  * @method
+  * 알림 여부 확인 메소드
+  */
   const isHaveNoti = () => {
     getNotification().then((res) => {
       if (res.length === 0) {
