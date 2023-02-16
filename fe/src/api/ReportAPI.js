@@ -16,14 +16,16 @@ axios.defaults.withCredentials = true;
  */
 const getMaliciousList = async () => {
   let url = `/api/member/member-report`;
+  let value = "";
   await axios
     .get(url)
     .then((response) => {
-      console.log(response);
+      value = response.data;
     })
     .catch((err) => {
       console.log(err);
     });
+    return value
 };
 
 /**
@@ -143,6 +145,19 @@ const reportUser = async (userId, description) => {
     });
 };
 
+
+const getMemberList = async() =>{
+  let url = `/api/member/all-member`;
+  let result = [];
+  await axios.get(url).then(response => {
+    result = [...response.data];
+    console.log(result)
+  }).catch(err => {
+    console.log(err);
+  })
+  return result
+}
+
 export {
   getMaliciousList,
   getMaliciousListByReporterID,
@@ -151,4 +166,5 @@ export {
   getHandledReportList,
   postHandleReport,
   reportUser,
+  getMemberList
 };
