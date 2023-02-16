@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .swal2-popup {
   font-size: 12px !important;
 }
@@ -45,7 +55,7 @@
   justify-content: center;
   align-items: center;
   gap: 4px;
-  width: 160px;
+  flex-grow: 1;
   height: 48px;
 }
 .user-info-item .follower-info-div .user-nickname,
