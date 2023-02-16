@@ -74,4 +74,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "delete from comment where post_id = :post", nativeQuery = true)
     void deleteCommentByPost(@Param("post") Post post);
 
+    @Query(value = "delete from post where members_id = :member", nativeQuery = true)
+    void deletePostByMember(@Param("member") Member member);
+
 }
