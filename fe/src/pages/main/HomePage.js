@@ -4,7 +4,7 @@ import Info from "../../components/homepage/Info";
 import Noti from "../../components/homepage/Noti";
 import { ReactComponent as EditIcon } from "../../assets/HomeAsset/edit.svg";
 import styles from "./HomePage.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import GrowProgressBar from "../../components/homepage/GrowProgressBar";
 import { gsap } from "gsap";
@@ -354,7 +354,8 @@ const Home = () => {
       // console.log("꽃 정보 가져옴");
     });
 
-    getMemberInfo().then((res) => {
+    getMemberInfo()
+    .then((res) => {
       flowerInfo.sunElementCount = res.light;
       flowerInfo.rainElementCount = res.water;
     });

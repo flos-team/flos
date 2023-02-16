@@ -31,6 +31,7 @@ const NotificationPage = () => {
     // });
     bringNoticeList();
   }, []); // 너무 많은 요청 발생합니다...
+
   const bringNoticeList = () => {
     getNotification().then((res) => {
       setNotiList(res.notifications);

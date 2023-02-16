@@ -18,6 +18,7 @@ const getNotification = async () => {
   await axios
     .get(url)
     .then((response) => {
+      console.log(response)
       value = response.data
     })
     .catch((err) => {
