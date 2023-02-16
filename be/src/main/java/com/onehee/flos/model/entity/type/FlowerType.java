@@ -1,12 +1,11 @@
 package com.onehee.flos.model.entity.type;
 
-import com.onehee.flos.model.entity.FileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum FlowerType {
+public enum FlowerType { // 성장도 70%일 때 변경됨
     Tulip("튤립", "", ""),
     TulipRed("튤립", "사랑의 고백, 열정적인 사랑", "red"),
     TulipOrange("튤립", "매혹, 온정, 수줍음, 부끄러움", "orange"),

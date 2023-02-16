@@ -24,22 +24,20 @@ public interface FlowerService {
     // 꽃 유언
     void modifyLastLetter(FlowerLastLetterRequestDTO flowerWillRequestDTO);
 
+    // 특정 꽃 정보
     FlowerResponseDTO getFlowerById(FlowerInfoRequestDTO flowerInfoRequestDTO);
     // 회원 꽃 정보
     FlowerResponseDTO getFlowerInfo();
-    // 특정 꽃 정보
-    FlowerResponseDTO getFlowerInfoById(Long flowerId) throws BadRequestException;
     // 회원의 가든 꽃 리스트
     SliceResponseDTO getFlowerListInGarden(Pageable pageable) throws BadRequestException;
-
-    List<MemberResponseDTO> getContributorByFlower(Long flowerId, Pageable pageable) throws BadRequestException;
-
+    // 특정 꽃의 기여자 리스트
+    List<MemberResponseDTO> getContributorByFlower(Long flowerId) throws BadRequestException;
+    // 특정 꽃의 최고 기여자 정보
     BestContributorResponseDTO getBestContributorByFlower(Long flowerId) throws BadRequestException;
-
+    // 가든에 있는 꽃의 수
     GardenCountResponseDTO getCountInGarden();
     // 물주기
     FlowerResponseDTO giveWater();
-
     // 햇빛주기
     FlowerResponseDTO giveLight();
 }

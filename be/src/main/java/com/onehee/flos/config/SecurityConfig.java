@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .antMatchers("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
                         "/swagger-ui/**", "/swagger-resources/**")
                 .permitAll()
+                .antMatchers("/admin/**", "/member/member-report", "/member/all-member")
+                .hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -72,7 +74,8 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOriginPattern("http://localhost:3000");
         configuration.addAllowedOriginPattern("https://i8b210.p.ssafy.io:3000");
-        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedOriginPattern("https://i8b210.p.ssafy.io");
+//        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader("authorization");

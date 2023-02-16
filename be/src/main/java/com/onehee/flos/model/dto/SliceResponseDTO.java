@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -31,9 +29,9 @@ public class SliceResponseDTO {
         Integer pageNumber = null;
         Integer pageSize = null;
         Pageable pageable = data.nextPageable();
-        if (data.getContent() != null)
+        if (data.getContent() != null) // null일 때 있음!
             tempContent = data.getContent();
-        if (data.nextPageable().isPaged()) {
+        if (data.nextPageable().isPaged()) { // PageRequest로 들어왔다면...
             pageNumber = pageable.getPageNumber();
             pageSize = pageable.getPageSize();
         }

@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BookmarkService {
 
+    // 북마크 정보 생성
     void createBookmark(Long postId) throws BadRequestException;
-
+    // 북마크 정보 삭제
     void deleteBookmark(Long postId) throws BadRequestException;
 }

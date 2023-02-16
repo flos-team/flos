@@ -3,7 +3,6 @@ package com.onehee.flos.model.dto.request;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onehee.flos.model.entity.Flower;
 import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.type.FlowerType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

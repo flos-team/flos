@@ -1,20 +1,14 @@
 package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.entity.Comment;
-import com.onehee.flos.model.entity.Member;
-import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.util.SecurityManager;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Formula;
 
-import javax.persistence.Basic;
-import javax.persistence.FetchType;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -47,9 +41,7 @@ public class CommentResponseDTO {
     public static CommentResponseDTO toDto(Comment comment) {
         Long parent = null;
         Long primitive = null;
-        boolean isCommented = false;
-        if (comment.getDescendants().size() > 0)
-            isCommented = true;
+        boolean isCommented = comment.getDescendants().size() > 0;
         if (comment.getParent() != null)
             parent = comment.getParent().getId();
         if (comment.getPrimitive() != null)
@@ -59,12 +51,12 @@ public class CommentResponseDTO {
                 .postId(comment.getPost().getId())
                 .parentId(parent)
                 .primitiveId(primitive)
-                .writer(comment.getContent()==null ? null : MemberResponseDTO.toDto(comment.getWriter()))
+                .writer(comment.getContent() == null ? null : MemberResponseDTO.toDto(comment.getWriter()))
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
 //                .modifyAt(comment.getModifiedAt())
                 .isApprove(comment.getIsApprove())
-                .isMine(comment.getWriter().getId() == SecurityManager.getCurrentMember().getId())
+                .isMine(SecurityManager.getCurrentMember().getId().equals(comment.getWriter().getId()))
                 .isCommented(isCommented)
                 .build();
     }

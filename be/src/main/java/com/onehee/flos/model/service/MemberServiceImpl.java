@@ -9,9 +9,11 @@ import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberReportResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.Conclusion;
 import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.entity.type.ProviderType;
@@ -25,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -46,6 +50,8 @@ public class MemberServiceImpl implements MemberService {
     private final PostRepository postRepository;
     private final WeatherResourceRepository weatherResourceRepository;
     private final AttendanceRepository attendanceRepository;
+    private final ReportRepository reportRepository;
+    private final BanRepository banRepository;
 
     @Override
     @Transactional
@@ -80,45 +86,55 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다.");
         }
 
+        if (MemberStatus.INACTIVE.equals(member.getStatus())) {
+            member.setStatus(MemberStatus.ACTIVE);
+        }
+
+        if (banRepository.existsByMemberAndReleaseDateAfter(member, LocalDate.now())) {
+            throw new BadRequestException("이용정지 처분을 받은 계정입니다.");
+        }
+
         LocalDateTime now = LocalDateTime.now();
 
         LocalDateTime yesterday = now.minusDays(1);
 
-        if (
-                !postRepository.existsByWriterAndCreatedAtIsAfter(member, yesterday)
-                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
-        ) {
-            Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(member);
-            if (lastPost != null) {
-                long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
-                Notification notification = Notification.builder()
-                        .member(member)
-                        .messageType(MessageType.NOFEED24H)
-                        .message(String.format(MessageType.NOFEED24H.getMessage(), member.getNickname(), time))
-                        .build();
-                notificationRepository.save(notification);
+        if (member.getCreatedAt().plusDays(1).isBefore(now)) {
+            if (
+                    !postRepository.existsByWriterAndCreatedAtIsAfter(member, yesterday)
+                            && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOFEED24H, yesterday)
+            ) {
+                Post lastPost = postRepository.findFirstByWriterOrderByCreatedAtDesc(member);
+                if (lastPost != null) {
+                    long time = ChronoUnit.HOURS.between(lastPost.getCreatedAt(), LocalDateTime.now());
+                    Notification notification = Notification.builder()
+                            .member(member)
+                            .messageType(MessageType.NOFEED24H)
+                            .message(String.format(MessageType.NOFEED24H.getMessage(), member.getNickname(), time))
+                            .build();
+                    notificationRepository.save(notification);
+                }
             }
-        }
 
-        if (
-                !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
-                        && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
-        ) {
-            Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(member).orElse(null);
-            if (flower != null) {
-                Notification notification = Notification.builder()
-                        .member(member)
-                        .messageType(MessageType.NOCAREPLANT24H)
-                        .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), member.getNickname(), flower.getName()))
-                        .build();
-                notificationRepository.save(notification);
+            if (
+                    !weatherResourceRepository.existsByOwnerAndUsedAtAfter(member, yesterday)
+                            && !notificationRepository.existsByMemberAndMessageTypeAndCheckedAtAfter(member, MessageType.NOCAREPLANT24H, yesterday)
+            ) {
+                Flower flower = flowerRepository.findByOwnerAndGardeningIsFalse(member).orElse(null);
+                if (flower != null) {
+                    Notification notification = Notification.builder()
+                            .member(member)
+                            .messageType(MessageType.NOCAREPLANT24H)
+                            .message(String.format(MessageType.NOCAREPLANT24H.getMessage(), member.getNickname(), flower.getName()))
+                            .build();
+                    notificationRepository.save(notification);
+                }
             }
         }
 
 
         member.setLastLoginAt(now);
         if (!attendanceRepository.existsByMemberAndLoginDate(member, now.toLocalDate())) {
-                     attendanceRepository.save(Attendance.builder()
+            attendanceRepository.save(Attendance.builder()
                     .member(member)
                     .loginDate(now.toLocalDate())
                     .build()
@@ -239,5 +255,105 @@ public class MemberServiceImpl implements MemberService {
         Member me = SecurityManager.getCurrentMember();
         List<Member> memberList = memberRepository.findAllByNicknameLikeIgnoreCase(memberSearchRequestDTO.getNickname() + "%");
         return memberList.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void sueMember(MemberSueRequestDTO memberSueRequestDTO) {
+        Member me = SecurityManager.getCurrentMember();
+        Member target = memberRepository.findById(memberSueRequestDTO.getId())
+                .orElseThrow(() -> new BadRequestException("회원 정보를 조회할 수 없습니다."));
+
+        Report report = Report.builder()
+                .reporter(me)
+                .target(target)
+                .description(memberSueRequestDTO.getDescription())
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        reportRepository.save(report);
+    }
+
+    @Override
+    @Transactional
+    public List<MemberReportResponseDTO> getMemberReport(MemberReportRequestDTO memberReportRequestDTO) {
+        List<Report> result;
+        if (memberReportRequestDTO.getReporterId() != null && memberReportRequestDTO.getTargetId() != null) {
+            Member reporter = memberRepository.findById(memberReportRequestDTO.getReporterId())
+                    .orElseThrow(() -> new BadRequestException("신고한 사람의 계정이 존재하지 않습니다."));
+            Member target = memberRepository.findById(memberReportRequestDTO.getTargetId())
+                    .orElseThrow(() -> new BadRequestException("신고당한 사람의 계정이 존재하지 않습니다."));
+            result = reportRepository.findAllByReporterAndTarget(reporter, target);
+        } else if (memberReportRequestDTO.getReporterId() != null) {
+            Member reporter = memberRepository.findById(memberReportRequestDTO.getReporterId())
+                    .orElseThrow(() -> new BadRequestException("신고한 사람의 계정이 존재하지 않습니다."));
+            result = reportRepository.findAllByReporter(reporter);
+        } else if (memberReportRequestDTO.getTargetId() != null) {
+            Member target = memberRepository.findById(memberReportRequestDTO.getTargetId())
+                    .orElseThrow(() -> new BadRequestException("신고당한 사람의 계정이 존재하지 않습니다."));
+            result = reportRepository.findAllByTarget(target);
+        } else {
+            result = reportRepository.findAll();
+        }
+        List<MemberReportResponseDTO> body;
+        if (memberReportRequestDTO.getIsConclusion() != null && memberReportRequestDTO.getIsConclusion()) {
+            body = result.stream().filter((report) -> report.getConclusion() != null).map(MemberReportResponseDTO::toDTO).collect(Collectors.toList());
+        } else if (memberReportRequestDTO.getIsConclusion() != null) {
+            body = result.stream().filter((report) -> report.getConclusion() == null).map(MemberReportResponseDTO::toDTO).collect(Collectors.toList());
+        } else {
+            body = result.stream().map(MemberReportResponseDTO::toDTO).collect(Collectors.toList());
+        }
+        return body;
+    }
+
+    @Override
+    @Transactional
+    public List<MemberReportResponseDTO> processReport(MemberReportProcessRequestDTO memberReportProcessRequestDTO) {
+        Report report = reportRepository.findById(memberReportProcessRequestDTO.getId())
+                .orElseThrow(() -> new BadRequestException("해당 신고건을 찾을 수 없습니다."));
+
+        if (!Conclusion.REJECT.equals(report.getConclusion()) && !Conclusion.REJECT.equals(memberReportProcessRequestDTO.getConclusion())) {
+            throw new BadRequestException("이미 처리된 신고건에 중복 징계 할 수 없습니다.");
+        }
+
+        if (!Conclusion.REJECT.equals(report.getConclusion())) {
+            int sentence = report.getConclusion().getDay();
+            Ban oldBan = banRepository.findByMember(report.getTarget());
+            oldBan.setReleaseDate(oldBan.getReleaseDate().minusDays(sentence));
+        }
+
+        List<Report> reports = reportRepository.findAllByTargetAndConclusionIsNull(report.getTarget());
+        LocalDateTime now = LocalDateTime.now();
+
+
+        reports.forEach(r -> {
+            r.setConclusion(memberReportProcessRequestDTO.getConclusion());
+            r.setConfirmedAt(now);
+        });
+
+        reportRepository.saveAllAndFlush(reports);
+
+        if (Conclusion.REJECT.equals(memberReportProcessRequestDTO.getConclusion())) {
+            return getMemberReport(new MemberReportRequestDTO());
+        }
+
+        Ban ban = banRepository.findByMember(report.getTarget());
+
+        if (ban == null) {
+            ban = Ban.builder()
+                    .member(report.getTarget())
+                    .releaseDate(LocalDate.now().plusDays(memberReportProcessRequestDTO.getConclusion().ordinal()))
+                    .build();
+        } else {
+            ban.setReleaseDate(ban.getReleaseDate().plusDays(memberReportProcessRequestDTO.getConclusion().ordinal()));
+        }
+
+        banRepository.save(ban);
+
+        return getMemberReport(new MemberReportRequestDTO());
+    }
+
+    @Override
+    public List<MemberResponseDTO> getAllMember() {
+        return memberRepository.findAll().stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
     }
 }

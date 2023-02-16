@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 @Log4j2
 public class PostServiceImpl implements PostService {
 
-    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
     private final PostFileRepository postFileRepository;
     private final FilesHandler filesHandler;
@@ -44,8 +43,6 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
-//        if (!memberRepository.existsByNicknameIgnoreCase(nickName))
-//            throw new BadRequestException("존재하지 않는 회원입니다.");
         if (Pattern.matches("^[a-zA-Z0-9]*$", nickName))
             nickName = nickName.toLowerCase();
         return SliceResponseDTO.toDto(postRepository.findSliceByNickname(nickName, pageable)
@@ -122,7 +119,7 @@ public class PostServiceImpl implements PostService {
                 );
             }
         }
-        if (postCreateRequestDTO.getAttachFiles() != null) {
+        if (postCreateRequestDTO.getTagList() != null) {
             for (String e : postCreateRequestDTO.getTagList()) {
                 Tag tempTag = tagRepository.findByTagName(e).orElse(null);
                 postTagRepository.saveAndFlush(
@@ -147,39 +144,39 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
+    @Transactional // 사용되지 않습니다.
     public void modifyPost(PostModifyRequestDTO postModifyRequestDTO) throws BadRequestException, IOException {
 
-        Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
-
-        Member tempWriter = tempPost.getWriter();
-
-        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
-            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
-
-        for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
-            FileEntity tempFile = filesHandler.saveFile(e);
-            postFileRepository.save(
-                    PostFile.builder()
-                            .post(tempPost)
-                            .file(tempFile)
-                            .build()
-            );
-        }
-
-        for (String e : postModifyRequestDTO.getTagList()) {
-            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
-            if (tempTag == null || !postTagRepository.existsByTagAndPost(tempPost, tempTag))
-                postTagRepository.saveAndFlush(
-                        PostTag.builder()
-                                .post(tempPost)
-                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
-                                .build()
-                );
-        }
-
-
-        postRepository.saveAndFlush(postModifyRequestDTO.toAccept(tempPost, tempWriter));
+//        Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
+//
+//        Member tempWriter = tempPost.getWriter();
+//
+//        if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
+//            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
+//
+//        for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
+//            FileEntity tempFile = filesHandler.saveFile(e);
+//            postFileRepository.save(
+//                    PostFile.builder()
+//                            .post(tempPost)
+//                            .file(tempFile)
+//                            .build()
+//            );
+//        }
+//
+//        for (String e : postModifyRequestDTO.getTagList()) {
+//            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
+//            if (tempTag == null || !postTagRepository.existsByTagAndPost(tempTag, tempPost))
+//                postTagRepository.saveAndFlush(
+//                        PostTag.builder()
+//                                .post(tempPost)
+//                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
+//                                .build()
+//                );
+//        }
+//
+//
+//        postRepository.saveAndFlush(postModifyRequestDTO.toAccept(tempPost, tempWriter));
 
     }
 
@@ -191,31 +188,23 @@ public class PostServiceImpl implements PostService {
 
         Member tempWriter = tempPost.getWriter();
 
-        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+        if (!SecurityManager.getCurrentMember().getId().equals(tempWriter.getId()))
             throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
-        postRepository.deleteAllByPost(tempPost);
+        // M:N 관계테이블
+        postRepository.deleteTagByPost(tempPost);
+        postRepository.deleteFileByPost(tempPost);
+        postRepository.deleteBookmarkByPost(tempPost);
 
+        // 직접 연관 테이블 - 상위 댓글
         postRepository.deletePriCommentByPost(tempPost);
-
+        // 직접 연관 테이블 - 하위 댓글
         postRepository.deleteCommentByPost(tempPost);
 
         postRepository.delete(tempPost);
     }
 
-    // 게시글 관계테이블 정보
-//    private PostRelationDTO getPostRelation(Post post) {
-//        return PostRelationDTO.builder()
-//                .tagList(postRepository.getTagListByPost(post))
-//                .attachFiles(postRepository.getFileListByPost(post)
-//                        .stream()
-//                        .map(FileResponseDTO::toDTO)
-//                        .collect(Collectors.toList()))
-//                .isBookmarked(postRepository.isBookmarked(post, SecurityManager.getCurrentMember()))
-//                .isFollowed(postRepository.isFollowed(post, SecurityManager.getCurrentMember()))
-//                .countComment(postRepository.countCommentByPost(post))
-//                .build();
-//    }
+    // 게시글과 관계테이블로 연관된 모든 테이블 한번에 불러오기
     private PostRelationDTO getPostRelation(Post post) {
         return PostRelationDTO.builder()
                 .tagList(getTagListByPost(post))

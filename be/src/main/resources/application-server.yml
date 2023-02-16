@@ -1,7 +1,8 @@
 spring:
   redis:
     host: i8b210.p.ssafy.io
-    port: 6379
+    port: 6363
+    password: 'flos1q2w3e4r'
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://i8b210.p.ssafy.io:3306/flosdev
@@ -9,12 +10,12 @@ spring:
     password: test1234
   jpa:
     hibernate:
-      ddl-auto: update
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:import.sql
+      ddl-auto: none
+#    defer-datasource-initialization: true
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: classpath:import.sql
   security:
     oauth2:
       client:

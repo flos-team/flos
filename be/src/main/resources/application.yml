@@ -21,8 +21,8 @@ spring:
   jwt:
     key: seeeeeeeeeeeecret-keeeeeeeeeeeeeeeeeeeeeey
     expire:
-      atk: 60000000
-      rtk: 300000000
+      atk: 180000
+      rtk: 1800000
   mail:
     host: smtp.gmail.com
     port: 587
@@ -44,6 +44,7 @@ spring:
     expire:
       verification: 300000
       approved: 1800000
+    reportfrom: tykimdream@gmail.com
   security:
     oauth2:
       client:

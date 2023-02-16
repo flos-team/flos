@@ -54,27 +54,27 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // 기간안에 특정 사용자가 작성한 포스트 모두 반환
     List<Post> findAllByWriterAndCreatedAtBetween(Member writer, LocalDateTime start, LocalDateTime end);
 
-    @Query(value = "delete from pt, pf, bm using post_tag as pt left join post_file as pf on pt.post_id = pf.post_id left join bookmark as bm on pt.post_id = bm.post_id where pt.post_id = :post", nativeQuery = true)
-    void deleteAllByPost(@Param("post") Post post);
+    // 게시글의 태그 연결정보 삭제 (태그삭제 x)
+    @Query(value = "delete from post_tag where post_id = :post", nativeQuery = true)
+    void deleteTagByPost(@Param("post") Post post);
 
+    // 게시글의 파일 연결정보 삭제 (파일삭제 x)
+    @Query(value = "delete from post_file where post_id = :post", nativeQuery = true)
+    void deleteFileByPost(@Param("post") Post post);
+
+    // 게시글의 북마크 정보 삭제
+    @Query(value = "delete from bookmark where post_id = :post", nativeQuery = true)
+    void deleteBookmarkByPost(@Param("post") Post post);
+
+    // 게시글의 종속댓글 삭제
     @Query(value = "delete from comment where post_id = :post and pri_comment_id is not null", nativeQuery = true)
     void deletePriCommentByPost(@Param("post") Post post);
 
+    // 게시글의 상위댓글 삭제
     @Query(value = "delete from comment where post_id = :post", nativeQuery = true)
     void deleteCommentByPost(@Param("post") Post post);
 
-//    @Query(value = "select t.tag_name from tag t where t.tag_id in (select tag_id from post_tag where post_id = ?1.post_id)", nativeQuery = true)
-//    List<String> getTagListByPost(Post post);
-//
-//    @Query(value = "select * from file_entity f where f.files_id in (select files_id from post_file where post_id = ?1.post_id)", nativeQuery = true)
-//    List<FileEntity> getFileListByPost(Post post);
-//
-//    @Query(value = "select count(1) from bookmark bm where bm.post_id = ?1.post_id and bm.members_id = ?2.members_id", nativeQuery = true)
-//    Boolean isBookmarked(Post post, Member member);
-//
-//    @Query(value = "select count(1) from follow f where f.owner_id = ?1.writer.members_id and f.follower_id = ?2.members_id", nativeQuery = true)
-//    Boolean isFollowed(Post post, Member member);
-//
-//    @Query(value = "select count(c) from comment c where c.post_id = ?1.post_id", nativeQuery = true)
-//    Long countCommentByPost(Post post);
+    @Query(value = "delete from post where members_id = :member", nativeQuery = true)
+    void deletePostByMember(@Param("member") Member member);
+
 }

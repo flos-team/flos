@@ -2,7 +2,6 @@ package com.onehee.flos.model.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.onehee.flos.model.entity.Comment;
-import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

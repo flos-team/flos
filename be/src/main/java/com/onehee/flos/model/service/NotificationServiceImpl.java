@@ -38,23 +38,30 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public NotificationResponseDTO getNotification() {
         Member member = SecurityManager.getCurrentMember();
-        List<Notification> notifications = notificationRepository.findAllByMemberAndCheckedAtIsNull(member);
+        List<Notification> notifications = notificationRepository.findAllByMemberAndCheckedAtIsNullOrderByCreatedAtDesc(member);
         return new NotificationResponseDTO(
                 notifications.stream()
-                        .map(notification -> {
-                            NotificationDTO notificationDTO = NotificationDTO.toDTO(notification);
-                            if (List.of(2, 3).contains(notificationDTO.getMessageType().ordinal())) {
-                                Comment comment = (Comment) getReference(notification);
-                                Map<String, Object> data = objectMapper.convertValue(postService.getPost(comment.getPost().getId()), Map.class);
-                                data.put("commenter", MemberResponseDTO.toDto(comment.getWriter()));
-                                notificationDTO.setData(data);
-                            } else {
-                                notificationDTO.setData(getReference(notification));
-                            }
-                            return notificationDTO;
-                        })
+                        .map(this::getNotificationDTO)
                         .collect(Collectors.toList())
         );
+    }
+
+    private NotificationDTO getNotificationDTO(Notification notification) {
+        NotificationDTO notificationDTO = NotificationDTO.toDTO(notification);
+        try {
+            if (List.of(2, 3).contains(notificationDTO.getMessageType().ordinal())) {
+                Comment comment = (Comment) getReference(notification);
+                Map<String, Object> data = objectMapper.convertValue(postService.getPost(comment.getPost().getId()), Map.class);
+                data.put("commenter", MemberResponseDTO.toDto(comment.getWriter()));
+                notificationDTO.setData(data);
+            } else {
+                notificationDTO.setData(getReference(notification));
+            }
+        } catch (BadRequestException e) {
+            notificationDTO.setMessage("[삭제됨]" + notificationDTO.getMessage());
+            notificationDTO.setMessageType(MessageType.UNAVAILABLE);
+        }
+        return notificationDTO;
     }
 
     @Override
