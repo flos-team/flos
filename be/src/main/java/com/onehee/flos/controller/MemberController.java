@@ -73,7 +73,8 @@ public class MemberController {
     }
 
     @Operation(summary = "로그아웃 메서드", description = "요청사용자의 리프레시토큰을 만료시키고 사용된 엑세스 토큰을 사용할 수 없게 만듭니다.", responses = {
-            @ApiResponse(responseCode = "204", description = "로그아웃이 정상적으로 처리되었습니다.")
+            @ApiResponse(responseCode = "204", description = "로그아웃이 정상적으로 처리되었습니다."),
+            @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.")
     })
     @GetMapping("/logout")
     @Tag(name = "멤버API")
@@ -87,6 +88,7 @@ public class MemberController {
 
     @Operation(summary = "나의 회원정보 메서드", description = "나의 정보를 반환합니다.", responses = {
             @ApiResponse(responseCode = "200", description = "멤버 정보를 반환합니다.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MemberInfoResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.")
     })
     @GetMapping("/info")
     @Tag(name = "멤버API")
@@ -97,7 +99,11 @@ public class MemberController {
         return new ResponseEntity<MemberInfoResponseDTO>(info, HttpStatus.OK);
     }
 
-    @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
+    @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.", responses = {
+            @ApiResponse(responseCode = "200", description = "멤버 정보를 반환합니다.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = MemberInfoResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "없는 회원을 조회했습니다."),
+            @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.")
+    })
     @GetMapping("/info/{id}")
     @Tag(name = "멤버API")
     public ResponseEntity<?> getInfo(@PathVariable("id") Long id) {
