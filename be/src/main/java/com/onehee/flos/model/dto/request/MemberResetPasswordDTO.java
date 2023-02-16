@@ -1,12 +1,10 @@
 package com.onehee.flos.model.dto.request;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class MemberResetPasswordDTO {
-    private final String email;
-    private final String code;
-    private final String password;
+    private String email;
+    private String code;
+    private String password;
 }

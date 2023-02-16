@@ -255,28 +255,28 @@ const EndingPage = () => {
         const xPos10 = Math.random() * 400 * ((-1) * (Math.random() < 0.5));
 
         // 각 Ref에 이미지 삽입
-        CircleRef1.current.style.backgroundImage = `url(${url}file/${contributorList[contributorIdx % 10].profileImage.saveName})`;
-        CircleRef2.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 1) % 10].profileImage.saveName})`;
-        CircleRef3.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 2) % 10].profileImage.saveName})`;
-        CircleRef4.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 3) % 10].profileImage.saveName})`;
-        CircleRef5.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 4) % 10].profileImage.saveName})`;
-        CircleRef6.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 5) % 10].profileImage.saveName})`;
-        CircleRef7.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 6) % 10].profileImage.saveName})`;
-        CircleRef8.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 7) % 10].profileImage.saveName})`;
-        CircleRef9.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 8) % 10].profileImage.saveName})`;
-        CircleRef10.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 9) % 10].profileImage.saveName})`;
+        CircleRef1.current.style.backgroundImage = `url(${url}file/${contributorList[contributorIdx % contributorList.length].profileImage.saveName})`;
+        CircleRef2.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 1) % contributorList.length].profileImage.saveName})`;
+        CircleRef3.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 2) % contributorList.length].profileImage.saveName})`;
+        CircleRef4.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 3) % contributorList.length].profileImage.saveName})`;
+        CircleRef5.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 4) % contributorList.length].profileImage.saveName})`;
+        CircleRef6.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 5) % contributorList.length].profileImage.saveName})`;
+        CircleRef7.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 6) % contributorList.length].profileImage.saveName})`;
+        CircleRef8.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 7) % contributorList.length].profileImage.saveName})`;
+        CircleRef9.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 8) % contributorList.length].profileImage.saveName})`;
+        CircleRef10.current.style.backgroundImage = `url(${url}file/${contributorList[(contributorIdx + 9) % contributorList.length].profileImage.saveName})`;
 
         // 각 Ref에 아이디 삽입
-        CircleRef1.current.innerText = contributorList[contributorIdx % 10].nickname;
-        CircleRef2.current.innerText = contributorList[(contributorIdx + 1) % 10].nickname;
-        CircleRef3.current.innerText = contributorList[(contributorIdx + 2) % 10].nickname;
-        CircleRef4.current.innerText = contributorList[(contributorIdx + 3) % 10].nickname;
-        CircleRef5.current.innerText = contributorList[(contributorIdx + 4) % 10].nickname;
-        CircleRef6.current.innerText = contributorList[(contributorIdx + 5) % 10].nickname;
-        CircleRef7.current.innerText = contributorList[(contributorIdx + 6) % 10].nickname;
-        CircleRef8.current.innerText = contributorList[(contributorIdx + 7) % 10].nickname;
-        CircleRef9.current.innerText = contributorList[(contributorIdx + 8) % 10].nickname;
-        CircleRef10.current.innerText = contributorList[(contributorIdx + 9) % 10].nickname;
+        CircleRef1.current.innerText = contributorList[contributorIdx % contributorList.length].nickname;
+        CircleRef2.current.innerText = contributorList[(contributorIdx + 1) % contributorList.length].nickname;
+        CircleRef3.current.innerText = contributorList[(contributorIdx + 2) % contributorList.length].nickname;
+        CircleRef4.current.innerText = contributorList[(contributorIdx + 3) % contributorList.length].nickname;
+        CircleRef5.current.innerText = contributorList[(contributorIdx + 4) % contributorList.length].nickname;
+        CircleRef6.current.innerText = contributorList[(contributorIdx + 5) % contributorList.length].nickname;
+        CircleRef7.current.innerText = contributorList[(contributorIdx + 6) % contributorList.length].nickname;
+        CircleRef8.current.innerText = contributorList[(contributorIdx + 7) % contributorList.length].nickname;
+        CircleRef9.current.innerText = contributorList[(contributorIdx + 8) % contributorList.length].nickname;
+        CircleRef10.current.innerText = contributorList[(contributorIdx + 9) % contributorList.length].nickname;
 
         // 각 Ref 움직임 지정
         timeline.fromTo(CircleRef1.current, { x: xPos1, y: 1000 }, { x: xPos1, y: -1000, duration: Math.floor(Math.random() * 8) + 10 });
@@ -290,7 +290,7 @@ const EndingPage = () => {
         timeline.fromTo(CircleRef9.current, { x: xPos9, y: 1000 }, { x: xPos9, y: -1000, duration: Math.floor(Math.random() * 8) + 10 });
         timeline.fromTo(CircleRef10.current, { x: xPos10, y: 1000 }, { x: xPos10, y: -1000, duration: Math.floor(Math.random() * 8) + 10 });
 
-      }, 3000);
+      }, 2000);
     });
 
     return () => {

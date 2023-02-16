@@ -1,29 +1,33 @@
 package com.onehee.flos.model.service;
 
 import com.onehee.flos.exception.BadRequestException;
+import com.onehee.flos.model.dto.PostRelationDTO;
+import com.onehee.flos.model.dto.SliceResponseDTO;
 import com.onehee.flos.model.dto.request.PostCreateRequestDTO;
 import com.onehee.flos.model.dto.request.PostModifyRequestDTO;
 import com.onehee.flos.model.dto.response.FileResponseDTO;
-import com.onehee.flos.model.dto.PostRelationDTO;
 import com.onehee.flos.model.dto.response.PostResponseDTO;
 import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.entity.type.WeatherType;
 import com.onehee.flos.model.repository.*;
 import com.onehee.flos.util.FilesHandler;
 import com.onehee.flos.util.SecurityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PostServiceImpl implements PostService {
 
     private final MemberRepository memberRepository;
@@ -33,33 +37,65 @@ public class PostServiceImpl implements PostService {
     private final PostTagRepository postTagRepository;
     private final TagRepository tagRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final CommentRepository commentRepository;
+    private final FollowRepository followRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
-    public Slice<PostResponseDTO> getPostListByWriter(Long memberId, Pageable pageable) throws BadRequestException {
-        Member writer = memberRepository.findById(memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 회원입니다."));
-        return postRepository.findSliceByWriter(writer, pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListByWriter(String nickName, Pageable pageable) throws BadRequestException {
+//        if (!memberRepository.existsByNicknameIgnoreCase(nickName))
+//            throw new BadRequestException("존재하지 않는 회원입니다.");
+        if (Pattern.matches("^[a-zA-Z0-9]*$", nickName))
+            nickName = nickName.toLowerCase();
+        return SliceResponseDTO.toDto(postRepository.findSliceByNickname(nickName, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    public Slice<PostResponseDTO> getPostListByWeather(WeatherType weatherType, Pageable pageable) {
-        return postRepository.findSliceByWeather(weatherType, pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListByWeather(WeatherType weatherType, Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByWeather(weatherType, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    public Slice<PostResponseDTO> getLatestPostList(Pageable pageable) {
-        return postRepository.findSliceBy(pageable)
-                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e)));
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getLatestPostList(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceBy(pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
-    public Slice<PostResponseDTO> getBookmarkedListByMember(Pageable pageable) {
-        return bookmarkRepository.findSliceAllByMember(SecurityManager.getCurrentMember(), pageable)
-                .map(e -> PostResponseDTO.toDto(e.getPost(), getPostRelation(e.getPost())));
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getBookmarkedListByMember(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByBookmark(SecurityManager.getCurrentMember(), pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListOrderByCountComment(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByCountComment(pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListByTagName(String tagName, Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByTagName(tagName, pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SliceResponseDTO getPostListByFollow(Pageable pageable) {
+        return SliceResponseDTO.toDto(postRepository.findSliceByFollow(SecurityManager.getCurrentMember(), pageable)
+                .map(e -> PostResponseDTO.toDto(e, getPostRelation(e))));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PostResponseDTO getPost(Long id) throws BadRequestException {
         Post post = postRepository.findById(id).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
         return PostResponseDTO.toDto(post, getPostRelation(post));
@@ -69,28 +105,45 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void createPost(PostCreateRequestDTO postCreateRequestDTO) throws BadRequestException, IOException {
 
-        // weatherType 확인해서 객체 추가 기능 넣어야함
-        
-        Post tempPost = postRepository.save(postCreateRequestDTO.toEntity());
+        Member writer = SecurityManager.getCurrentMember();
 
-        for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
-            FileEntity tempFile = filesHandler.saveFile(e);
-            postFileRepository.save(
-                    PostFile.builder()
-                            .post(tempPost)
-                            .file(tempFile)
-                            .build()
-            );
-        }
+        Post tempPost = postRepository.saveAndFlush(postCreateRequestDTO.toEntity(writer));
 
-        for (Tag e : postCreateRequestDTO.getTagList()) {
-            postTagRepository.save(
-                    PostTag.builder()
-                            .post(tempPost)
-                            .tag(tagRepository.saveAndFlush(e))
-                            .build()
-            );
+        if (postCreateRequestDTO.getAttachFiles() != null) {
+            for (MultipartFile e : postCreateRequestDTO.getAttachFiles()) {
+                FileEntity tempFile = filesHandler.saveFile(e);
+                log.info("{}", tempFile);
+                tempFile.setMember(writer);
+                postFileRepository.saveAndFlush(
+                        PostFile.builder()
+                                .post(tempPost)
+                                .file(tempFile)
+                                .build()
+                );
+            }
         }
+        if (postCreateRequestDTO.getAttachFiles() != null) {
+            for (String e : postCreateRequestDTO.getTagList()) {
+                Tag tempTag = tagRepository.findByTagName(e).orElse(null);
+                postTagRepository.saveAndFlush(
+                        PostTag.builder()
+                                .post(tempPost)
+                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
+                                .build()
+                );
+            }
+        }
+        followRepository.findAllByOwnerByNickname(writer)
+                .forEach(follower ->
+                        notificationRepository.save(
+                                Notification.builder()
+                                        .member(follower)
+                                        .messageType(MessageType.NEWFEED)
+                                        .message(String.format(MessageType.NEWFEED.getMessage(), writer.getNickname()))
+                                        .referenceKey(tempPost.getId())
+                                        .build()
+                )
+        );
     }
 
     @Override
@@ -99,17 +152,10 @@ public class PostServiceImpl implements PostService {
 
         Post tempPost = postRepository.findById(postModifyRequestDTO.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 게시글입니다."));
 
-        postFileRepository.deleteAll(
-                postFileRepository.findAllByPost(
-                        tempPost
-                )
-        );
+        Member tempWriter = tempPost.getWriter();
 
-        postTagRepository.deleteAll(
-                postTagRepository.findAllByPost(
-                        tempPost
-                )
-        );
+        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
         for (MultipartFile e : postModifyRequestDTO.getAttachFiles()) {
             FileEntity tempFile = filesHandler.saveFile(e);
@@ -121,59 +167,69 @@ public class PostServiceImpl implements PostService {
             );
         }
 
-        for (Tag e : postModifyRequestDTO.getTagList()) {
-            postTagRepository.save(
-                    PostTag.builder()
-                            .post(tempPost)
-                            .tag(tagRepository.saveAndFlush(e))
-                            .build()
-            );
+        for (String e : postModifyRequestDTO.getTagList()) {
+            Tag tempTag = tagRepository.findByTagName(e).orElse(null);
+            if (tempTag == null || !postTagRepository.existsByTagAndPost(tempPost, tempTag))
+                postTagRepository.saveAndFlush(
+                        PostTag.builder()
+                                .post(tempPost)
+                                .tag(tempTag == null ? tagRepository.saveAndFlush(Tag.builder().tagName(e).build()) : tempTag)
+                                .build()
+                );
         }
 
-        postRepository.save(postModifyRequestDTO.toAccept(tempPost));
+
+        postRepository.saveAndFlush(postModifyRequestDTO.toAccept(tempPost, tempWriter));
 
     }
 
     @Override
+    @Transactional
     public void deletePost(Long id) throws BadRequestException {
 
         Post tempPost = postRepository.findById(id).orElseThrow(() -> new BadRequestException("이미 삭제된 게시글입니다."));
 
-        postFileRepository.deleteAll(
-                postFileRepository.findAllByPost(
-                        tempPost
-                )
-        );
+        Member tempWriter = tempPost.getWriter();
 
-        postTagRepository.deleteAll(
-                postTagRepository.findAllByPost(
-                        tempPost
-                )
-        );
+        if (tempWriter.getId() != SecurityManager.getCurrentMember().getId())
+            throw new BadRequestException("해당 요청을 처리할 권한이 없습니다.");
 
-        bookmarkRepository.deleteAll(
-                bookmarkRepository.findAllByPost(
-                        tempPost
-                )
-        );
+        postRepository.deleteAllByPost(tempPost);
+
+        postRepository.deletePriCommentByPost(tempPost);
+
+        postRepository.deleteCommentByPost(tempPost);
 
         postRepository.delete(tempPost);
     }
 
     // 게시글 관계테이블 정보
+//    private PostRelationDTO getPostRelation(Post post) {
+//        return PostRelationDTO.builder()
+//                .tagList(postRepository.getTagListByPost(post))
+//                .attachFiles(postRepository.getFileListByPost(post)
+//                        .stream()
+//                        .map(FileResponseDTO::toDTO)
+//                        .collect(Collectors.toList()))
+//                .isBookmarked(postRepository.isBookmarked(post, SecurityManager.getCurrentMember()))
+//                .isFollowed(postRepository.isFollowed(post, SecurityManager.getCurrentMember()))
+//                .countComment(postRepository.countCommentByPost(post))
+//                .build();
+//    }
     private PostRelationDTO getPostRelation(Post post) {
         return PostRelationDTO.builder()
                 .tagList(getTagListByPost(post))
                 .attachFiles(getFileListByPost(post))
                 .isBookmarked(isBookmarked(post))
+                .isFollowed(isFollowed(post))
+                .countComment(countCommentByPost(post))
                 .build();
     }
-
     // 게시글의 태그 리스트
-    private List<Tag> getTagListByPost(Post post) {
+    private List<String> getTagListByPost(Post post) {
         return postTagRepository.findAllByPost(post)
                 .stream()
-                .map(PostTag::getTag)
+                .map(e -> e.getTag().getTagName())
                 .collect(Collectors.toList());
     }
 
@@ -186,11 +242,19 @@ public class PostServiceImpl implements PostService {
     }
 
     // 게시글의 북마크 여부
-    private Boolean isBookmarked(Post post) {
-        return bookmarkRepository.findByPostAndMember(post, SecurityManager.getCurrentMember()) != null;
+    private boolean isBookmarked(Post post) {
+        return bookmarkRepository.existsByPostAndMember(post, SecurityManager.getCurrentMember());
     }
 
     // 게시글의 팔로우 여부
+    private boolean isFollowed(Post post) {
+        Member owner = post.getWriter();
+        Member follower = SecurityManager.getCurrentMember();
+        return followRepository.existsByOwnerAndFollower(owner, follower);
+    }
+
     // 게시글의 댓글 수
-    // 게시글의 댓글 리스트
+    private Long countCommentByPost(Post post) {
+        return commentRepository.countByPost(post);
+    }
 }

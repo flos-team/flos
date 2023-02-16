@@ -44,9 +44,9 @@ public class FilesHandler {
         String uuid = UUID.randomUUID().toString();
         // 확장자 추출
         String extension = oriName.substring(oriName.lastIndexOf("."));
-        log.info("extension: {}", extension);
-        log.info("regex: {}", regex);
-        log.info("result: {}", Pattern.matches(regex, extension));
+//        log.info("extension: {}", extension);
+//        log.info("regex: {}", regex);
+//        log.info("result: {}", Pattern.matches(regex, extension));
         if (!Pattern.matches(regex, extension)) {
             throw new BadRequestException("지원하지 않는 파일 확장자 입니다.");
         }
@@ -58,8 +58,7 @@ public class FilesHandler {
         // 최상위경로/날짜/UUID.확장자
         String savedPath = fileDir + uploadDate + File.separator + savedName;
         // 업로더
-        MemberDetails memberDetails = (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Member uploader = memberDetails.getMember();
+        Member uploader = SecurityManager.getCurrentMember();
 
         // DB에 저장하기위해서 엔티티로 변환
         FileEntity fileEntity = FileEntity.builder()
@@ -71,6 +70,13 @@ public class FilesHandler {
                 .build();
 
         // 실제 파일 저장
+
+        // 폴더 없으면 만들기
+        File saveFolder = new File(fileDir + uploadDate);
+        if (!saveFolder.exists()) {
+            saveFolder.mkdirs();
+        }
+
         file.transferTo(new File(savedPath));
 
         // DB에 등록

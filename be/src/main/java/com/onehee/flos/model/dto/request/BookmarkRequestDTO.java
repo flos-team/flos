@@ -3,28 +3,13 @@ package com.onehee.flos.model.dto.request;
 import com.onehee.flos.model.entity.Bookmark;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@RequiredArgsConstructor
+@Schema(description = "북마크 요청 DTO")
 public class BookmarkRequestDTO {
-
-    private Post post;
-
-    public static BookmarkRequestDTO toDto(Bookmark bookmark) {
-        return BookmarkRequestDTO.builder()
-                .post(bookmark.getPost())
-                .build();
-    }
-
-    public Bookmark toEntity() {
-        return Bookmark.builder()
-                .post(this.getPost())
-                .build();
-    }
+    @Schema(description = "북마크 대상 게시글의 pk")
+    private Long id;
 }

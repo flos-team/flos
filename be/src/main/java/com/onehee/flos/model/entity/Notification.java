@@ -1,5 +1,6 @@
 package com.onehee.flos.model.entity;
 
+import com.onehee.flos.model.entity.type.MessageType;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -11,29 +12,30 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
-public class Water {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "light_id")
+public class Notification {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "notification_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "own_members_id")
-    private Member owner;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "con_members_id")
-    private Member contributer;
+    private String message;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "flower_id")
-    private Flower flower;
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType;
 
     @ColumnDefault("now()")
     private LocalDateTime createdAt;
+
+    private Long referenceKey;
+
+    private LocalDateTime checkedAt;
 }
