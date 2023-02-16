@@ -4,11 +4,11 @@ import com.onehee.flos.model.entity.Comment;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.Post;
 import com.onehee.flos.model.entity.type.WeatherType;
-import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,4 +36,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // 채택된 댓글이 존재하는지
     boolean existsByWriterAndPostAndIsApproveIs(Member writer, Post post, boolean isApproved);
 
+    @Query(value = "delete from comment where members_id = :member", nativeQuery = true)
+    void deleteCommentByMember(@Param("member") Member member);
 }

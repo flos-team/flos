@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .antMatchers("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
                         "/swagger-ui/**", "/swagger-resources/**")
                 .permitAll()
+                .antMatchers("/admin/**")
+                .hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
