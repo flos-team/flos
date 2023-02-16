@@ -215,4 +215,11 @@ public class MemberController {
         HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return new ResponseEntity<List<MemberReportResponseDTO>>(body, httpStatus);
     }
+
+    @Tag(name = "멤버API")
+    @Operation(summary = "전체 회원 조회 메서드", description = "전체 회원을 반환합니다. 관리자 용입니다.")
+    @GetMapping("/all-member")
+    public ResponseEntity<?> getAllMember() {
+        return new ResponseEntity<List<MemberResponseDTO>>(memberService.getAllMember(), HttpStatus.OK);
+    }
 }
