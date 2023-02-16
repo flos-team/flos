@@ -13,6 +13,7 @@ import com.onehee.flos.model.dto.response.MemberReportResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.*;
+import com.onehee.flos.model.entity.type.Conclusion;
 import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.MessageType;
 import com.onehee.flos.model.entity.type.ProviderType;
@@ -310,8 +311,19 @@ public class MemberServiceImpl implements MemberService {
         Report report = reportRepository.findById(memberReportProcessRequestDTO.getId())
                 .orElseThrow(() -> new BadRequestException("해당 신고건을 찾을 수 없습니다."));
 
+        if (!Conclusion.REJECT.equals(report.getConclusion()) && !Conclusion.REJECT.equals(memberReportProcessRequestDTO.getConclusion())) {
+            throw new BadRequestException("이미 처리된 신고건에 중복 징계 할 수 없습니다.");
+        }
+
+        if (!Conclusion.REJECT.equals(report.getConclusion())) {
+            int sentence = report.getConclusion().getDay();
+            Ban oldBan = banRepository.findByMember(report.getTarget());
+            oldBan.setReleaseDate(oldBan.getReleaseDate().minusDays(sentence));
+        }
+
         List<Report> reports = reportRepository.findAllByTargetAndConclusionIsNull(report.getTarget());
         LocalDateTime now = LocalDateTime.now();
+
 
         reports.forEach(r -> {
             r.setConclusion(memberReportProcessRequestDTO.getConclusion());
@@ -320,7 +332,7 @@ public class MemberServiceImpl implements MemberService {
 
         reportRepository.saveAllAndFlush(reports);
 
-        if (memberReportProcessRequestDTO.getConclusion().ordinal() == 0) {
+        if (Conclusion.REJECT.equals(memberReportProcessRequestDTO.getConclusion())) {
             return getMemberReport(new MemberReportRequestDTO());
         }
 
