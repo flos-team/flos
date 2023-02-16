@@ -81,7 +81,7 @@ public class MemberServiceImpl implements MemberService {
             throw new BadRequestException("아이디 혹은 비밀번호가 잘못되었습니다.");
         }
 
-        if (member.getStatus().equals(MemberStatus.INACTIVE)) {
+        if (MemberStatus.INACTIVE.equals(member.getStatus())) {
             member.setStatus(MemberStatus.ACTIVE);
         }
 

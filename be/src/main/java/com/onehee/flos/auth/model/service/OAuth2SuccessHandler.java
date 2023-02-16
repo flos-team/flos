@@ -64,7 +64,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Member loginMember = memberRepository.findByEmailAndProviderType(oAuth2UserDTO.getEmail(), oAuth2UserDTO.getProviderType())
                 .orElseThrow(() -> new RuntimeException("소셜 회원 등록과정중에 에러가 발생했습니다."));
 
-        if (loginMember.getStatus().equals(MemberStatus.INACTIVE)) {
+        if (MemberStatus.INACTIVE.equals(loginMember.getStatus())) {
             loginMember.setStatus(MemberStatus.ACTIVE);
         }
 
