@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -44,11 +45,40 @@ public class Member {
     @JoinColumn(name = "files_id")
     private FileEntity profileImage;
 
-    @ColumnDefault("0")
+    @ColumnDefault("'안녕하세요~'")
+    private String introduction;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'RAINY' AND wr.flower_id IS NULL)")
     private int water;
 
-    @ColumnDefault("0")
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'SUNNY' AND wr.flower_id IS NULL)")
     private int light;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'RAINY')")
+    private int totalWater;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM weather_resource wr WHERE wr.owner_id = members_id AND wr.weather_type = 'SUNNY')")
+    private int totalLight;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.owner_id = members_id)")
+    private int followerCount;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM follow f WHERE f.follower_id = members_id)")
+    private int followingCount;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM post p WHERE p.members_id = members_id)")
+    private int postCount;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Formula("(SELECT COUNT(1) FROM flower f WHERE f.members_id = members_id AND f.blossom_at IS NOT NULL)")
+    private int blossomCount;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'ACTIVE'")
@@ -58,5 +88,7 @@ public class Member {
     private LocalDateTime createdAt;
 
     private LocalDateTime modifiedAt;
+
+    private LocalDateTime lastLoginAt;
 
 }

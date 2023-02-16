@@ -4,8 +4,10 @@ package com.onehee.flos.auth.model.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.OAuth2UserDTO;
 import com.onehee.flos.auth.model.dto.TokenDTO;
+import com.onehee.flos.model.entity.Attendance;
 import com.onehee.flos.model.entity.FileEntity;
 import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.repository.AttendanceRepository;
 import com.onehee.flos.model.repository.MemberRepository;
 import com.onehee.flos.util.FilesHandler;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Component
@@ -33,14 +33,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
-    @Value("${spring.jwt.expire.rtk}")
-    private Long rtkExpire;
-
-
     private final JwtTokenProvider jwtTokenProvider;
-    private final ObjectMapper objectMapper;
     private final MemberRepository memberRepository;
     private final FilesHandler filesHandler;
+    private final AttendanceRepository attendanceRepository;
 
     @Override
     @Transactional
@@ -66,6 +62,15 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         TokenDTO tokenDTO = jwtTokenProvider.generateTokenByMember(loginMember);
         log.info("{}", tokenDTO);
 
+        LocalDateTime now = LocalDateTime.now();
+
+        loginMember.setLastLoginAt(now);
+        attendanceRepository.save(Attendance.builder()
+                .member(loginMember)
+                .loginDate(now.toLocalDate())
+                .build()
+        );
+
         writeTokenResponse(response, tokenDTO);
     }
 
@@ -73,10 +78,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json;charset=UTF-8");
         ResponseCookie cookie = jwtTokenProvider.getRtkCookie(tokenDTO.getRtk());
         response.setHeader("Set-Cookie", cookie.toString());
-        PrintWriter writer = response.getWriter();
-        Map<String, String> atk = new HashMap<>();
-        atk.put("atk", tokenDTO.getAtk());
-        writer.println(objectMapper.writeValueAsString(atk));
-        writer.flush();
+        response.setHeader("Authorization", "Bearer " + tokenDTO.getAtk());
+        response.sendRedirect("https://i8b210.p.ssafy.io/main");
     }
 }

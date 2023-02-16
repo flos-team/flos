@@ -1,9 +1,9 @@
 package com.onehee.flos.model.dto.request;
 
-import lombok.*;
+import lombok.Data;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class FollowRequestDTO {
     private Long id;
+    private Boolean orderByName = false;
 }

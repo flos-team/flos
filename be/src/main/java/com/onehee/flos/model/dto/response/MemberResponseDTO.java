@@ -1,27 +1,32 @@
 package com.onehee.flos.model.dto.response;
 
 import com.onehee.flos.model.entity.Member;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
+import lombok.Setter;
 
-@Getter
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Data
+@Setter(AccessLevel.NONE)
 @Builder
 public class MemberResponseDTO {
     private Long id;
     private String email;
     private String nickname;
-    private FileResponseDTO picture;
+    private FileResponseDTO profileImage;
+    private String introduction;
 
     public static MemberResponseDTO toDto(Member member) {
         return MemberResponseDTO.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .picture(FileResponseDTO.toDTO(member.getProfileImage()))
+                .profileImage(getImage(member))
+                .introduction(member.getIntroduction())
                 .build();
+    }
+
+    private static FileResponseDTO getImage(Member member) {
+        return FileResponseDTO.toDTO(member.getProfileImage());
     }
 }

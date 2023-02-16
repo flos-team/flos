@@ -5,7 +5,6 @@ import com.onehee.flos.auth.model.dto.Subject;
 import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.util.CookieUtil;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -31,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final MemberDetailsService memberDetailsService;
     // 헤더에 오는 토큰의 형식은 "Bearer " + 토큰으로 날아온다.
     private final String TokenType = "Bearer ";
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -38,8 +39,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token;
         try {
             if (authorization.startsWith(TokenType)) {
-                log.info("그냥");
-                log.info("{}", authorization);
+//                log.info("그냥");
+//                log.info("{}", authorization);
                 // 토큰앞부분에 있는 "Bearer "을 제거해서 토큰만 남긴다.
                 token = authorization.substring(TokenType.length());
                 Subject subject = jwtTokenProvider.getSubject(token);
@@ -52,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (NullPointerException | JwtException e) {
-            log.info("재발행");
+//            log.info("재발행");
             try {
                 token = CookieUtil.getRtk(request);
                 Subject subject = jwtTokenProvider.getSubject(token);
@@ -72,8 +73,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         return Stream.of("/member/sign-up", "/member/login", "/member/check/*", "/email/*", "/file/**", "/member/reset-password", "/v3/api-docs/**",
-                "/swagger-ui/**", "/swagger-resources/**").anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
+                "/swagger-ui/**", "/swagger-resources/**").anyMatch(exclude -> antPathMatcher.match(exclude, request.getServletPath()));
     }
+
 }

@@ -7,8 +7,12 @@ import com.onehee.flos.auth.model.service.JwtTokenProvider;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberResponseDTO;
+import com.onehee.flos.model.dto.response.StatisticsResponseDTO;
+import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.service.MemberService;
+import com.onehee.flos.model.service.StatisticsService;
 import com.onehee.flos.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Tag(name = "멤버API", description = "멤버, 토큰 관련 처리를 담당합니다.")
 @RestController
@@ -32,6 +37,7 @@ public class MemberController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
+    private final StatisticsService statisticsService;
 
     @Operation(summary = "자체 회원가입 메서드", description = "flos 자체 회원가입 메서드입니다.")
     @PostMapping("/sign-up")
@@ -63,12 +69,21 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
+    @Operation(summary = "나의 회원정보 메서드", description = "나의 정보를 반환합니다.")
     @GetMapping("/info")
     @Tag(name = "멤버API")
-    public ResponseEntity<?> getInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<?> getMyInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
         Member member = memberDetails.getMember();
-        return new ResponseEntity<MemberInfoResponseDTO>(MemberInfoResponseDTO.toDto(member), HttpStatus.OK);
+        MemberInfoResponseDTO info = MemberInfoResponseDTO.toDto(member);
+        info.setMemberRelation(MemberRelation.ME);
+        return new ResponseEntity<MemberInfoResponseDTO>(info, HttpStatus.OK);
+    }
+
+    @Operation(summary = "회원정보 메서드", description = "로그인 중인 회원의 정보를 반환합니다.")
+    @GetMapping("/info/{id}")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getInfo(@PathVariable("id") Long id) {
+        return new ResponseEntity<MemberInfoResponseDTO>(memberService.getMemberInfo(new MemberSelectRequestDTO(id)), HttpStatus.OK);
     }
 
     @Operation(summary = "중복이메일 체크 메서드", description = "이메일의 중복 여부를 확인합니다. 회원가입시 keyUp 이벤트에 사용합니다.")
@@ -104,11 +119,40 @@ public class MemberController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "비밀번호 변경 메서드", description = "비밀번호를 변경합니다.")
+    @PutMapping("/update-password")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> updatePassword(@RequestBody MemberPasswordUpdateRequestDTO memberPasswordUpdateRequestDTO, @AuthenticationPrincipal MemberDetails memberDetails, @RequestHeader(name = "Authorization", required = false) String atk) {
+        log.info("{}", memberDetails);
+        memberService.updatePassword(memberPasswordUpdateRequestDTO);
+        if (memberDetails != null) {
+            memberService.logout(LogoutDTO.builder().atk(atk.substring("Bearer ".length())).email(memberDetails.getMember().getEmail()).build());
+        }
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
     @Operation(summary = "회원 탈퇴 메서드", description = "회원을 비활성화 상태로 만듭니다.")
     @DeleteMapping("/quit")
     @Tag(name = "멤버API")
     public ResponseEntity<?> quitMember() {
         memberService.deleteMember();
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+
+    @Operation(summary = "이용 통계 메서드", description = "이용 통계 보고서를 반환합니다.")
+    @GetMapping("/report")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getReport() {
+        return new ResponseEntity<StatisticsResponseDTO>(statisticsService.getReport(), HttpStatus.OK);
+    }
+
+    @Operation(summary = "닉네임으로 회원목록 검색", description = "닉네임으로 회원목록을 검색합니다. keyup이벤트 사용 컨트롤러로 의도되었습니다.")
+    @GetMapping("/search")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getMemberListByNickname(MemberSearchRequestDTO memberSearchRequestDTO) {
+        List<MemberResponseDTO> body = memberService.getMemberListByNickname(memberSearchRequestDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
     }
 }
