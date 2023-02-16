@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "echo";
+  font-family: "surround-air";
 }
 
 html,
@@ -25,5 +25,17 @@ a {
 @font-face { /* 문화체 */
   font-family: "culture";
   src: url("./assets/font/cultrue-font.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face { /* 카페24 써라운드 에어체 */
+  font-family: "surround-air";
+  src: url("./assets/font/Cafe24SsurroundAir.ttf") format("truetype");
+  font-weight: normal;
+}
+
+@font-face { /* 카페24 써라운드체 */
+  font-family: "surround";
+  src: url("./assets/font/Cafe24Ssurround.ttf") format("truetype");
   font-weight: normal;
 }
