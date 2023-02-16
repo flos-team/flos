@@ -31,7 +31,7 @@
 }
 .post-detail-page .post-detail-container {
   width: 100vw;
-  height: max-content;
+  height: calC(100vh - 120px);
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -143,7 +143,7 @@
   padding: 0px;
   gap: 0.5rem;
   width: 100vw;
-  min-height: 22.5rem;
+  min-height: 66.5rem;
 }
 .post-detail-page .post-detail-container .comment-container .comment-title-div {
   width: 100%;
