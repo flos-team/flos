@@ -1,20 +1,22 @@
 import { useState } from "react";
 
 import "./ReportModal.css";
+import closeBtn from "../../assets/GlobalAsset/close-btn.png";
 
-const ReportModal = () => {
+const ReportModal = ({setClose}) => {
     
     return (<>
+        <div className="background" onClick={(e)=>{setClose(false)}}></div>
         <div className="report-item">
             <div className="report-header">
                 <div className="report-header-div">
                     <p>해당 사용자를 신고하시겠습니까?</p>
                 </div>
-                <input className="report-input"></input>
-                <div className="close-btn"></div>
+                <textarea className="report-textarea"></textarea>
+                <div className="close-btn" style={{backgroundImage:`url(${closeBtn})`}} onClick={(e)=>{setClose(false)}}></div>
             </div>
             <div className="report-btn">
-                <p>제출하기</p>
+                <p>신고하기</p>
             </div>
         </div>
         

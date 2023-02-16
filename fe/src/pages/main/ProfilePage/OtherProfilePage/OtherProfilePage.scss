@@ -39,7 +39,8 @@
     padding: 8px 16px;
     width: 100%;
     height: 36px;
-    background: #ffffff;
+    background-color: $white-pure;
+    gap: 8px;
     .user-introduce-text {
       /* Auto layout */
       display: flex;
@@ -54,6 +55,8 @@
         height: 19px;
         font-size: 16px;
         color: #817c7c;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .following-btn,
@@ -80,6 +83,14 @@
     .followed-btn {
       /* 뭔색하지 */
       background: $mono300;
+    }
+    .show-report{
+      width: 30px;
+      height: 30px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      // margin-left: 10px;
     }
   }
   .user-social-info-box {
