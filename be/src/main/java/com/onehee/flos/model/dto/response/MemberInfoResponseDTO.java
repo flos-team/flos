@@ -3,6 +3,7 @@ package com.onehee.flos.model.dto.response;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
 import com.onehee.flos.model.entity.type.MemberStatus;
+import com.onehee.flos.model.entity.type.RoleType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class MemberInfoResponseDTO {
     private int blossomCount;
     private int totalWater;
     private int totalLight;
+    private RoleType roleType;
     @Setter
     private MemberRelation memberRelation;
 
@@ -46,6 +48,7 @@ public class MemberInfoResponseDTO {
                 .followingCount(member.getFollowingCount())
                 .postCount(member.getPostCount())
                 .blossomCount(member.getBlossomCount())
+                .roleType(member.getRoleType())
                 .build();
     }
 
@@ -68,6 +71,7 @@ public class MemberInfoResponseDTO {
                 .followingCount(0)
                 .postCount(0)
                 .blossomCount(0)
+                .roleType(RoleType.USER)
                 .build();
     }
 
