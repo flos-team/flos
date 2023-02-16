@@ -33,7 +33,7 @@ a{
             align-items: center;
             padding: 4*$rpx1 8*$rpx1;
             gap: 8*$rpx1;
-            width: 180*$rpx1;
+            width: max-content;
             height: 87*$rpx1;
             color: $white;
         }
@@ -43,7 +43,8 @@ a{
             flex-direction: row;
             align-items: flex-start;
             padding: 12*$rpx1 16*$rpx1;
-            width: 141*$rpx1;
+            // width: 141*$rpx1;
+            width: max-content;
             height: 47*$rpx1;
             color: $mono600;
         }
