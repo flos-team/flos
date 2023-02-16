@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
+
 import { setUser } from "../../../redux/user";
 import { getMemberInfo } from "../../../api/MemberAPI";
 
@@ -8,9 +10,9 @@ import "./MainPage.css";
 
 /* immport compoent */
 import BottomNavigation from "../../../components/BottomNavigation/BottomNavigation";
-import Feed from "../FeedPage/FeedPage";
 
 /* import Page */
+import Feed from "../FeedPage/FeedPage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import HomePage from "../HomePage";
 import GlobalPage from "../GlobalPage/GlobalPage";
@@ -26,10 +28,14 @@ function Main() {
   // }, [isToast]);
   const dispatch = useDispatch();
   useEffect(() => {
-    getMemberInfo().then((response) => {
-      // console.log(response);
-      dispatch(setUser(response));
-    });
+    getMemberInfo()
+      .then((response) => {
+        console.log(response);
+        dispatch(setUser(response));
+      })
+      .catch((err) => {
+        console.log("this");
+      });
   });
 
   const position = useSelector((state) => state.page.value);
