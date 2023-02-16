@@ -9,24 +9,31 @@
     flex-direction: row;
     justify-content: space-evenly;
 }
+.tablecontainerHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-bottom: 1px solid red;
+    padding: 8px;
+}
 .tablegap{
     margin: 8px;
 }
 
 .pk {
-    width: 32px;
+    width: 8px;
 }
 
 .reporter{
-    width: 80px;
+    width: 64px;
 }
 .defendant{
-    width: 80px;
+    width: 64px;
 }
 .detail{
-    width: 120px;
+    width: 150px;
     max-height: 80px;
-    overflow: hidden;
+    overflow: scroll;
 }
 .result{
     width: 89px;

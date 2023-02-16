@@ -5,7 +5,9 @@ import LandingPage1 from "./pages/landing/LandingPage1";
 
 import MainPage from "./pages/main/MainPage/MainPage";
 import LoginPage from "./pages/LoginPage";
-// import FeedDetailPage from "./pages/main/FeedPage/FeedDetailPage";
+
+import AdminPage from "./pages/main/AdminPage/AdminPage";
+
 import PostDetailPage from "./pages/main/FeedPage/PostDetailPage/PostDetailPage";
 import WritePostPage from "./pages/main/WritePostPage/WritePostPage";
 
@@ -39,6 +41,9 @@ function Transition() {
           <Route path="/landing1" element={<LandingPage1 />}></Route>
 
           <Route path="/main" element={<MainPage />}></Route>
+
+          <Route path = "/admin" element = {<AdminPage/>}> </Route>
+
           <Route path="/login" element={<LoginPage />}></Route>
 
           {/* <Link to ={`/post/${1}`} > 로 전달 */}

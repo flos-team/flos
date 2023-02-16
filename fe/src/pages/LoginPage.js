@@ -13,9 +13,9 @@ import kakaologo from "../assets/LoginAsset/kakao-logo.png";
 import naverlogo from "../assets/LoginAsset/naver-logo.png";
 import { getFollowingList } from "../api/FollowAPI";
 import { useEffect } from "react";
-import cancelImg from '../assets/RegisterAsset/Cancel.png'
-import showPwImg from '../assets/RegisterAsset/fi-br-eye-crossed.png'
-import noshowPwImg from '../assets/RegisterAsset/fi-br-eye.png'
+import cancelImg from "../assets/RegisterAsset/Cancel.png";
+import showPwImg from "../assets/RegisterAsset/fi-br-eye-crossed.png";
+import noshowPwImg from "../assets/RegisterAsset/fi-br-eye.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function Login() {
   const [inputPw, setInputPw] = useState("");
 
   const [loginMsg, setLoginMsg] = useState("");
-  const [showPw, setShowPw] = useState(false)
+  const [showPw, setShowPw] = useState(false);
 
   const handleInputId = (e) => {
     setInputId(e.target.value);
@@ -37,19 +37,19 @@ function Login() {
 
   // 아이디 지우기
   const clearInputId = () => {
-    setInputId('')
-  }
+    setInputId("");
+  };
   // pw type 변경
   const pwEyeIcon = () => {
     if (showPw) {
-      setShowPw(false)
+      setShowPw(false);
     } else {
-      setShowPw(true)
+      setShowPw(true);
     }
-  }
+  };
 
   // 로그인 버튼 클릭 이벤트
-  const onFocus = useRef([])
+  const onFocus = useRef([]);
   const onClickLogin = async () => {
     if (inputId.length === 0) {
       setLoginMsg("아이디를 입력해주세요.");
@@ -64,23 +64,28 @@ function Login() {
             setLoginMsg("아이디 또는 비밀번호를 확인해주세요.");
           } else if (response === true) {
             getMemberInfo().then((res) => {
-              // console.dir(res);
-              dispatch(setUser(res));
-              getFollowingList(false).then((res) => {
-                // console.log("로그인후 응답받은 팔로잉 리스트 결과");
-                let useIdList = [];
-                if (res) {
-                  res.map((e, i) => {
-                    useIdList = [...useIdList, e.id];
-                  });
-                }
-                // console.log(useIdList);
-                // console.dir(res);
-                dispatch(setFollowingIdList(useIdList));
-              });
-              setTimeout(() => {
-                navigate("/main", { replace: true });
-              }, 300);
+              console.dir(res);
+              if (res.roleType === "ADMIN") {
+                dispatch(setUser(res));
+                navigate("/admin", { replace: true });
+              } else {
+                dispatch(setUser(res));
+                getFollowingList(false).then((res) => {
+                  // console.log("로그인후 응답받은 팔로잉 리스트 결과");
+                  let useIdList = [];
+                  if (res) {
+                    res.map((e, i) => {
+                      useIdList = [...useIdList, e.id];
+                    });
+                  }
+                  // console.log(useIdList);
+                  // console.dir(res);
+                  dispatch(setFollowingIdList(useIdList));
+                });
+                setTimeout(() => {
+                  navigate("/main", { replace: true });
+                }, 300);
+              }
             });
           }
         })
@@ -113,7 +118,12 @@ function Login() {
   return (
     <div className={styles.bigframe}>
       <div className={styles.loginframe}>
-        <img src={loginlogo} alt="no-image" className={styles.groomimg} style={imgStyle}></img>
+        <img
+          src={loginlogo}
+          alt="no-image"
+          className={styles.groomimg}
+          style={imgStyle}
+        ></img>
         <br></br>
         <h1>Flos</h1>
         <br></br>
@@ -124,20 +134,25 @@ function Login() {
             <input
               type="text"
               name="inputId"
-              id='xbtn'
+              id="xbtn"
               placeholder="flos@example.com"
               value={inputId}
               className={styles.inputdiv}
               onChange={handleInputId}
               ref={(el) => (onFocus.current[0] = el)}
             />
-            { inputId.length>=1 ?
-            <img alt='' onClick={clearInputId} className={styles.icon} src={cancelImg}></img> :
-            null }
+            {inputId.length >= 1 ? (
+              <img
+                alt=""
+                onClick={clearInputId}
+                className={styles.icon}
+                src={cancelImg}
+              ></img>
+            ) : null}
           </div>
           <div className={styles.fullsize}>
             <input
-              type = {showPw ? "text" : "password"}
+              type={showPw ? "text" : "password"}
               name="input_pw"
               value={inputPw}
               className={styles.inputdiv}
@@ -147,16 +162,24 @@ function Login() {
                   onClickLogin();
                 }
               }}
-
               ref={(el) => (onFocus.current[1] = el)}
             />
-          { inputPw.length >=1 ? 
-          <img src={showPw ? showPwImg : noshowPwImg} alt='' onClick={pwEyeIcon} className={styles.icon}></img> : null }
-              
+            {inputPw.length >= 1 ? (
+              <img
+                src={showPw ? showPwImg : noshowPwImg}
+                alt=""
+                onClick={pwEyeIcon}
+                className={styles.icon}
+              ></img>
+            ) : null}
           </div>
           <div className={styles.loginmsg}>{loginMsg}</div>
           <div className={styles.loginbtndiv}>
-            <button type="button" className={styles.loginbtn} onClick={onClickLogin}>
+            <button
+              type="button"
+              className={styles.loginbtn}
+              onClick={onClickLogin}
+            >
               로그인
             </button>
           </div>
