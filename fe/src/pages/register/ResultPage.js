@@ -4,7 +4,9 @@ import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import TextLogoComponent from "../../components/TextLogoComponent";
 
 
-import Sample from "../../assets/DummyData/dummy-sample.jpg"
+// import Sample from "../../assets/DummyData/dummy-sample.jpg"
+import Sample from "../../assets/DummyData/EndingGIF.gif"
+
 // import styles from "./ResultPage.module.css";
 
 import "./Result.css";

@@ -1,6 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
+import { useNavigate } from "react-router-dom";
+
+
 /**
  * @author 1-hee
  *
@@ -62,6 +65,7 @@ const getMemberInfo = async () => {
     .then((response) => (userObject = { ...response.data }))
     .catch((err) => {
       console.log("회원정보 가져오는 중 에러 발생");
+      return true;
     });
   return userObject;
 };
