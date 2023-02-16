@@ -21,6 +21,10 @@
     order: 0;
     align-self: stretch;
     flex-grow: 0;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%,0);
     .report-header{
         /* report-header */
         box-sizing: border-box;
@@ -39,6 +43,7 @@
         order: 0;
         align-self: stretch;
         flex-grow: 0;
+        position: relative;
         .report-header-div{
             /* report-header-div */
             width: 312px;
@@ -49,8 +54,12 @@
             align-self: stretch;
             flex-grow: 0;
             z-index: 0;
+            p{
+                text-align: center;
+                color: $mono600;
+            }
         }
-        .report-input{
+        .report-textarea{
             /* report-input */
             box-sizing: border-box;
             width: 312px;
@@ -63,6 +72,8 @@
             align-self: stretch;
             flex-grow: 0;
             z-index: 1;
+            resize: none;
+            padding: 8px;
         }
         .close-btn{
             /* close-btn */
@@ -72,10 +83,11 @@
             right: 0px;
             top: 0px;
             /* Inside auto layout */
-            flex: none;
-            order: 2;
             flex-grow: 0;
             z-index: 2;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
         }
     }   
     .report-btn{
@@ -89,5 +101,20 @@
         flex: none;
         order: 1;
         flex-grow: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        p{
+            text-align: center;
+            color: $white;
+        }
     }
+}
+.background{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: $black, $alpha: .5);
+    position: absolute;
+    top: 0;
+    
 }

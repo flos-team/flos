@@ -46,6 +46,10 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 .report-item .report-header {
   /* report-header */
@@ -65,6 +69,7 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  position: relative;
 }
 .report-item .report-header .report-header-div {
   /* report-header-div */
@@ -77,7 +82,11 @@
   flex-grow: 0;
   z-index: 0;
 }
-.report-item .report-header .report-input {
+.report-item .report-header .report-header-div p {
+  text-align: center;
+  color: #827c7c;
+}
+.report-item .report-header .report-textarea {
   /* report-input */
   box-sizing: border-box;
   width: 312px;
@@ -90,6 +99,8 @@
   align-self: stretch;
   flex-grow: 0;
   z-index: 1;
+  resize: none;
+  padding: 8px;
 }
 .report-item .report-header .close-btn {
   /* close-btn */
@@ -99,10 +110,11 @@
   right: 0px;
   top: 0px;
   /* Inside auto layout */
-  flex: none;
-  order: 2;
   flex-grow: 0;
   z-index: 2;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .report-item .report-btn {
   /* report-btn */
@@ -115,6 +127,21 @@
   flex: none;
   order: 1;
   flex-grow: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.report-item .report-btn p {
+  text-align: center;
+  color: #f9f9f9;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(20, 20, 20, 0.5);
+  position: absolute;
+  top: 0;
 }
 
 /*# sourceMappingURL=ReportModal.css.map */
