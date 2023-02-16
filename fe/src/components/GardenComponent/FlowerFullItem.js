@@ -50,8 +50,8 @@ const EndingPlayButton = styled.button`
     
     box-sizing: border-box;
 
-    background: white;
-    border: 1px solid #FBFBFB;
+    background: linear-gradient(360deg, #FFFFFF 0%, rgba(255, 255, 255, 0.0572917) 50.99%, rgba(255, 255, 255, 0) 100%);
+    border: 0px;
 `;
 
 const ButtonArea = styled.div`
@@ -73,6 +73,7 @@ const ContributorModalContainer = styled.div`
     flex-direction: column;
     top: 0px;
     padding-top: 40px;
+    z-index: 50;
 `;
 
 const ContributorListItem = styled.div`
@@ -82,12 +83,13 @@ const ContributorListItem = styled.div`
     align-items: center;
     padding: 10px 0;
     margin-bottom: 5px;
-    background-color: #CDCDCD;
+    background-color: #f9f9f9;
 `;
 
 const ContributorModalContainerTitle = styled.div`
     margin-bottom: 20px;
     font-size: 1.2rem;
+    font-weight: 600;
 
     &:after {
         border: 1px;
@@ -149,7 +151,7 @@ const FlowerFullItem = (props) => {
                 </ContributorModalContainer> : null}
             <FullItem>
                 <FlowerView>
-                    <FlowerGlassBottle width={"200px"} height={"200px"}></FlowerGlassBottle>
+                    <FlowerGlassBottle width={"200px"} height={"200px"} color={props.flowerInfo.flowerColor}></FlowerGlassBottle>
                 </FlowerView>
                 <FlowerDetailData>
                     <GardenFullComponentDetailData flowerData={props.flowerInfo} />

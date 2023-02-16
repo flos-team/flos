@@ -5,10 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFollowingIdList } from "../../../../redux/user";
 
 /* import img */
+import reportIcon from "../../../../assets/GlobalAsset/report-icon.png";
+
 
 /* import component */
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../../components/PostItem/PostItem";
+import ReportModal from "../../../../components/ReportModal/ReportModal";
 
 /* import modules */
 import { getOtherMemberInfo } from "../../../../api/MemberAPI";
@@ -177,6 +180,11 @@ const OtherProfilePage = ({ userNickName }) => {
     });
   }, []);
 
+  const [isClose, setIsClose] = useState(false);
+  useEffect(() => {
+    
+  },[isClose])
+
   return (
     <>
       <HeaderComponent backVisible={true} pageName={userInfo.nickname}></HeaderComponent>
@@ -189,6 +197,9 @@ const OtherProfilePage = ({ userNickName }) => {
             <p>{userInfo.introduction}</p>
           </div>
           {followingBtn}
+          <div className="show-report" style={{ backgroundImage: `url(${reportIcon})` }} onClick={(e) => {
+            setIsClose(true);
+          }}></div>
         </div>
         <div className="user-social-info-box">
           <ul className="social-info-title">{titleList}</ul>
@@ -196,6 +207,7 @@ const OtherProfilePage = ({ userNickName }) => {
         </div>
         <div className="post-container hide-scroll">{postList}</div>
       </div>
+      {isClose?<ReportModal setClose={setIsClose}></ReportModal>:<></>}
     </>
   );
 };

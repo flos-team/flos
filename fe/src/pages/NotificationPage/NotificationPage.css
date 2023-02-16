@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .alarm-container {
   width: 100vw;
   min-height: 91.3vh;
@@ -30,29 +40,3 @@
 }
 
 /*# sourceMappingURL=NotificationPage.css.map */
-
-.noalarm-container{
-  width: 100vw;
-  min-height: 91.3vh;
-  height: max-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  background-color: #fcfcfc;
-  align-items: center;
-}
-
-.no-noti-text{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  font-size: 20px;
-}
-
-.defaultimg {
-  height: 120px;
-  width: 200px;
-}

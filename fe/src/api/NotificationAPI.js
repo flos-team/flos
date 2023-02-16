@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true;
  */
 const getNotification = async () => {
   let url = `/api/notification`;
-  let value = {};
+  let value = [];
   await axios
     .get(url)
     .then((response) => {
@@ -31,7 +31,6 @@ export { getNotification };
 
 
 /////////* DELETE *///////////////////
-// 맹신 ㄴㄴ made by 범규입니다
 const deleteNotification = async (id) => {
   let url = `/api/notification/${id}`;
   let isDeleted = false;

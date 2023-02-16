@@ -141,6 +141,7 @@
         background-color: $mono50;
         position: relative;
         img {
+          flex-shrink: 0;
           position: relative;
           top: 0;
           display: block;
@@ -151,18 +152,18 @@
           border-radius: 18 * $rpx1;
         }
         .comment-container {
-          width: 230 * $rpx1;
+          width: 100%;
           height: max-content;
           min-height: 50 * $rpx1;
           gap: 2 * $rpx1;
           .comment-header {
             width: 100%;
             display: flex;
-            flex-flow: row nowrap;
+            flex-flow: row wrap;
             justify-content: space-between;
             gap: 8 * $rpx1;
             div {
-              width: max-content;
+              // width: max-content;
               gap: 8px;
               display: flex;
             }
@@ -193,12 +194,16 @@
         display: flex;
         flex-direction: row;
         padding: 8 * $rpx1 16 * $rpx1;
+        // padding-top: 8px;
+        // padding-bottom: 8px;
+        margin-left: 5vw;
         gap: 8 * $rpx1;
-        width: 80vw;
+        width: 95vw;
         height: max-height;
         min-height: 50 * $rpx1;
         background-color: $mono50;
         position: relative;
+        right: 0;
         border-top: 1px solid $mono200;
         img {
           position: relative;
@@ -258,6 +263,8 @@
     padding-right: 8 * $rpx1;
     background-color: $mono50;
     border-top: 1 * $rpx1 solid $mono100;
+    position: fixed;
+    bottom: 0;
     img {
       display: block;
       width: 36 * $rpx1;
@@ -265,10 +272,10 @@
       border-radius: 18 * $rpx1;
     }
     .comment-input-div {
-      width: 300 * $rpx1;
+      // width: 300 * $rpx1;
+      flex-grow: 1;
       height: 40 * $rpx1;
       display: flex;
-      position: relative;
       input {
         width: 100%;
         border: 1 * $rpx1 solid $mono100;

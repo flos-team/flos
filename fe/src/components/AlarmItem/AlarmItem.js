@@ -10,10 +10,12 @@ import WeatherBtnComponent from "./WeatherBtnComponent/WeatherBtnComponent";
 
 /* import css */
 import "./AlarmItem.css";
-import { jsx } from "@emotion/react";
+// import { jsx } from "@emotion/react";
 
 // axios
 import { deleteNotification } from "../../api/NotificationAPI";
+
+import Swal from 'sweetalert2'
 
 /**
  * @param {ImageBitmap} AlarmImg 알람 왼쪽에 배치될 이미지 비트맵 파일
@@ -58,12 +60,17 @@ const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather, id, render, 
       navigate(`/main/post/${notiSrc}`) // 해당 피드로 이동
     } else if (messageType === 'NOCAREPLANT24H' || messageType === 'NOFEED24H'){
       navigate('/main')
+    } else if (messageType === 'UNAVAILABLE'){
+      Swal.fire({
+        icon: "error",
+        title: "삭제된 게시글입니다.",
+      });
     }
   }
 
   return (
     <div className="alarm-item">
-      <div onClick={goNotiSource}>
+      <div className="alram-div" onClick={goNotiSource}>
         <AlarmItemHeader AlarmImg={AlarmImg} AlarmTextJSX={AlarmTextJSX} AlarmTimeLog={AlarmTimeLog}></AlarmItemHeader>
       </div>
       <div className="close-btn">

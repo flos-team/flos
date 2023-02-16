@@ -16,20 +16,33 @@
   box-sizing: border-box;
 }
 
-.alarm-header-div {
-  width: 20.875rem;
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.alram-div {
+  width: 100%;
+}
+.alram-div .alarm-header-div {
+  width: 100%;
   height: 3.75rem;
   display: flex;
   flex-flow: row;
   gap: 0.5rem;
 }
-.alarm-header-div img {
+.alram-div .alarm-header-div img {
   display: block;
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 1.125rem;
 }
-.alarm-header-div .alarm-text-div {
+.alram-div .alarm-header-div .alarm-text-div {
   /* Auto layout */
   display: flex;
   flex-direction: column;
@@ -37,16 +50,16 @@
   align-items: flex-start;
   padding: 0.25rem 0px;
   gap: 0.25rem;
-  width: 18.125rem;
+  flex-grow: 1;
   height: 3.75rem;
 }
-.alarm-header-div .alarm-text-div .alarm-text {
-  width: 16.75rem;
+.alram-div .alarm-header-div .alarm-text-div .alarm-text {
+  width: 95%;
   height: 2.125rem;
   font-size: 0.875rem;
   text-overflow: wrap;
 }
-.alarm-header-div .alarm-text-div .alarm-time-log {
+.alram-div .alarm-header-div .alarm-text-div .alarm-time-log {
   width: max-content;
   height: 0.8125rem;
   font-size: 0.625rem;

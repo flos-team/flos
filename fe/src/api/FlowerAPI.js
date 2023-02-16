@@ -20,8 +20,6 @@ const getFlowerInfo = async () => {
   await axios
     .get(url)
     .then(({ data }) => {
-      // console.log("데이터");
-      // console.log(data);
       value = {
         id: data.id,
         name: data.name,
@@ -51,7 +49,6 @@ const getGardenList = async (page = 0) => {
   await axios
     .get(url)
     .then(({ data }) => {
-      // console.log(data);
       value = data;
     })
     .catch((err) => {
@@ -71,7 +68,7 @@ const getFlowerContributorList = async (flowerId) => {
   await axios
     .get(url)
     .then(({ data }) => {
-      console.log(data);
+      //console.log(data);
       value = data;
     })
     .catch((err) => {

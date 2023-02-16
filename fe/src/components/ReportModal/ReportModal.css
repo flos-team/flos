@@ -1,0 +1,147 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.report-item {
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+  width: 328px;
+  height: 180px;
+  /* mono50 */
+  background: #fcfcfc;
+  /* mono600 */
+  border: 1px solid #827c7c;
+  border-radius: 8px;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.report-item .report-header {
+  /* report-header */
+  box-sizing: border-box;
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  isolation: isolate;
+  width: 312px;
+  height: 125px;
+  /* mono400 */
+  border-bottom: 1px solid #aaa8a8;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  position: relative;
+}
+.report-item .report-header .report-header-div {
+  /* report-header-div */
+  width: 312px;
+  height: 30px;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  z-index: 0;
+}
+.report-item .report-header .report-header-div p {
+  text-align: center;
+  color: #827c7c;
+}
+.report-item .report-header .report-textarea {
+  /* report-input */
+  box-sizing: border-box;
+  width: 312px;
+  height: 95px;
+  /* mono100 */
+  border: 1px solid #e8e8e8;
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+  z-index: 1;
+  resize: none;
+  padding: 8px;
+}
+.report-item .report-header .close-btn {
+  /* close-btn */
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 0px;
+  top: 0px;
+  /* Inside auto layout */
+  flex-grow: 0;
+  z-index: 2;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.report-item .report-btn {
+  /* report-btn */
+  width: 249.6px;
+  height: 30px;
+  /* skyblue200-primary */
+  background: #aae0f9;
+  border-radius: 8px;
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.report-item .report-btn p {
+  text-align: center;
+  color: #f9f9f9;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(20, 20, 20, 0.5);
+  position: absolute;
+  top: 0;
+}
+
+/*# sourceMappingURL=ReportModal.css.map */

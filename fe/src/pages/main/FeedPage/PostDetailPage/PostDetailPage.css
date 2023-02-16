@@ -31,7 +31,7 @@
 }
 .post-detail-page .post-detail-container {
   width: 100vw;
-  height: max-content;
+  height: calC(100vh - 120px);
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -143,7 +143,6 @@
   padding: 0px;
   gap: 0.5rem;
   width: 100vw;
-  min-height: 22.5rem;
 }
 .post-detail-page .post-detail-container .comment-container .comment-title-div {
   width: 100%;
@@ -165,6 +164,7 @@
   position: relative;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item img {
+  flex-shrink: 0;
   position: relative;
   top: 0;
   display: block;
@@ -175,7 +175,7 @@
   border-radius: 1.125rem;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item .comment-container {
-  width: 14.375rem;
+  width: 100%;
   height: max-content;
   min-height: 3.125rem;
   gap: 0.125rem;
@@ -183,12 +183,11 @@
 .post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header {
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: space-between;
   gap: 0.5rem;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item .comment-container .comment-header div {
-  width: max-content;
   gap: 8px;
   display: flex;
 }
@@ -214,12 +213,14 @@
   display: flex;
   flex-direction: row;
   padding: 0.5rem 1rem;
+  margin-left: 5vw;
   gap: 0.5rem;
-  width: 80vw;
+  width: 95vw;
   height: max-height;
   min-height: 3.125rem;
   background-color: #fcfcfc;
   position: relative;
+  right: 0;
   border-top: 1px solid #d3d3d3;
 }
 .post-detail-page .post-detail-container .comment-container .comment-item-reply img {
@@ -274,6 +275,8 @@
   padding-right: 0.5rem;
   background-color: #fcfcfc;
   border-top: 0.0625rem solid #e8e8e8;
+  position: fixed;
+  bottom: 0;
 }
 .post-detail-page .user-content-input-div img {
   display: block;
@@ -282,10 +285,9 @@
   border-radius: 1.125rem;
 }
 .post-detail-page .user-content-input-div .comment-input-div {
-  width: 18.75rem;
+  flex-grow: 1;
   height: 2.5rem;
   display: flex;
-  position: relative;
 }
 .post-detail-page .user-content-input-div .comment-input-div input {
   width: 100%;

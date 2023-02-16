@@ -60,6 +60,8 @@ pipeline {
 										cleanRemote: false, 
 										excludes: '', 
 										execCommand: '''
+sudo rm -rf /mariadb
+sudo rm -rf ~/mariadb
 cd springapp
 sudo docker-compose pull
 sudo docker-compose up --force-recreate -d''', 

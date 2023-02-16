@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.noPost {
+  margin-left: 16px;
+  margin-top: 10px;
+}
+
+.feed-page-container {
+  width: 100vw;
+  height: 90vh;
+}
+.feed-page-container .feed-header-container {
+  width: 100%;
+  height: 100%;
+}
+.feed-page-container .feed-header-container .following-list-div {
+  width: 100%;
+  height: 66px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 4px 8px 8px 16px;
+  gap: 8px;
+  border-bottom: 1px solid #bfbfbf;
+}
+.feed-page-container .feed-header-container .following-list-div .follower-info-item {
+  flex: 0 0 auto;
+  border: 1px solid #bfbfbf;
+  width: 50px;
+  height: 50px;
+  background-position: center;
+  background-size: contain;
+  border-radius: 25px;
+  background-repeat: no-repeat;
+}
+.feed-page-container .feed-header-container .post-container {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  display: flex;
+  flex-flow: row wrap;
+  scroll-behavior: smooth;
+  background: #f9f9f9;
+}
+
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+/*# sourceMappingURL=FeedPageStyle.css.map */

@@ -234,9 +234,9 @@ const xBtnAppear = () =>{
   }
   
   // 타이머
+  const [minutes, setMinutes] = useState(4);
+  const [seconds, setSeconds] = useState(59);
   function Timer() {
-    const [minutes, setMinutes] = useState(4);
-    const [seconds, setSeconds] = useState(59);
     useEffect(() => {
       const countdown = setInterval(() => {
         if (parseInt(seconds) > 0) {

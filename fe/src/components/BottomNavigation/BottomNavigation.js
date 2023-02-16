@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { feed, global, home, garden, profile, test } from "../../redux/page";
+import { feed, global, home, garden, profile } from "../../redux/page";
 import { Link } from "react-router-dom";
 import { setIsToastValue } from "../../redux/toast";
 
@@ -63,7 +63,6 @@ const BottomNavigation = ({ isToast, setIsToast, isChecked, setIsChecked }) => {
   const toastValue = useSelector((state) => state.toast.isToast);
   const toastText = useSelector((state) => state.toast.toastMessage);
   useEffect(() => {
-    //console.log(toastValue, toastText);
     setToastItem(toastValue ? toastDivUp : toastDiv);
   }, [toastValue]);
   const [toastItem, setToastItem] = useState();

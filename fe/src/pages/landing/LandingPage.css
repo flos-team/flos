@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 a .landing-page-container {
   /* landing-page-blue */
   /* Auto layout */
@@ -48,7 +58,7 @@ a .landing-page-container .main-title-div {
   align-items: center;
   padding: 0.25rem 0.5rem;
   gap: 0.5rem;
-  width: 11.25rem;
+  width: max-content;
   height: 5.4375rem;
   color: #f9f9f9;
 }
@@ -58,7 +68,7 @@ a .landing-page-container .tab-text-div {
   flex-direction: row;
   align-items: flex-start;
   padding: 0.75rem 1rem;
-  width: 8.8125rem;
+  width: max-content;
   height: 2.9375rem;
   color: #827c7c;
 }

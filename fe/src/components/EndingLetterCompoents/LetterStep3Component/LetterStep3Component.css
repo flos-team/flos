@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .letter-step3-component {
   /* Auto layout */
   display: flex;
@@ -27,7 +37,7 @@
   position: relative;
   width: 100%;
   height: 67.5vh;
-  background: #f9f9f9;
+  background: rgba(211, 239, 255, 0.7);
   border-radius: 16px;
 }
 .letter-step3-component .letter-user-nickname-div {
@@ -46,7 +56,7 @@
   height: 70%;
   flex-grow: 4;
   /* white2 */
-  background: #ffffff;
+  border-radius: 10px;
   /* Inside auto layout */
   flex: none;
   order: 1;
@@ -59,9 +69,8 @@
   padding: 1rem;
   outline: none;
   border-radius: 0.3125rem;
-}
-.letter-step3-component .lettter-content-div .lettter-content-input:focus {
-  outline: 1px solid #bfbfbf;
+  resize: none;
+  background-color: rgba(255, 255, 255, 0);
 }
 .letter-step3-component .letter-flower-name-div {
   /* letter-flower-name-div */

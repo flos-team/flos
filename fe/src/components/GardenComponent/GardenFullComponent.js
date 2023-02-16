@@ -115,7 +115,6 @@ const GardenFullComponent = () => {
 
     useEffect(() => {
         if (gardenListData.length > 0 && presentCount == gardenListData.length) {
-            console.log("끝에 도달", presentCount, page);
             if (hasNext) {
                 page++;
                 getGardenListFunc();
@@ -123,7 +122,7 @@ const GardenFullComponent = () => {
             else {  
                 Swal.fire({
                     icon: 'warning',
-                    title: '더 이상의 자료가 없어요!',
+                    title: '마지막 꽃이에요.',
                   })
             }
         }
