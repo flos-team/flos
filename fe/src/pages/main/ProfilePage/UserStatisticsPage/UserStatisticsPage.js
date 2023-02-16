@@ -19,6 +19,8 @@ import flowerRed from "../../../../assets/EndingAsset/flower-red.png";
 import flowerOrange from "../../../../assets/EndingAsset/flower-orange.png";
 import flowerYellow from "../../../../assets/EndingAsset/flower-yellow.png";
 import flowerPurple from "../../../../assets/EndingAsset/flower-purple.png";
+import flowerMango from "../../../../assets/EndingAsset/flower-mango.png";
+import flowerGrapefruit from "../../../../assets/EndingAsset/flower-grapefruit.png"
 import flowerPink from "../../../../assets/EndingAsset/flower-pink.png";
 import flowerWhite from "../../../../assets/EndingAsset/flower-white.png";
 import flowerGreen from "../../../../assets/EndingAsset/flower-green.png";
@@ -164,11 +166,13 @@ const UserStatisticsPage = () => {
       color: "mango", // 에셋 없음
       name: "망고 튤립",
       means: ["수줍은 사랑의 표시", "매혹적인 사랑"],
+      img: flowerMango,
     },
     grapefruit: {
       color: "grapefruit", // 에셋 없음
       name: "자몽 튤립",
       means: ["사랑의 고백"],
+      img: flowerGrapefruit,
     },
     green: {
       color: "green",

@@ -14,8 +14,8 @@ import flowerYellow from "../../../assets/EndingAsset/flower-yellow.png";
 import flowerPurple from "../../../assets/EndingAsset/flower-purple.png";
 import flowerPink from "../../../assets/EndingAsset/flower-pink.png";
 import flowerWhite from "../../../assets/EndingAsset/flower-white.png";
-// 망고 TODO...
-// 자몽 TODO...
+import flowerMango from "../../../assets/EndingAsset/flower-mango.png";
+import flowerGrapefruit from "../../../assets/EndingAsset/flower-grapefruit.png"
 import flowerGreen from "../../../assets/EndingAsset/flower-green.png";
 import flowerBlue from "../../../assets/EndingAsset/flower-blue.png";
 import Swal from "sweetalert2";
