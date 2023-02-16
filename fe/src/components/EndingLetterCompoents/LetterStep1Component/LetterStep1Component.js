@@ -37,7 +37,7 @@ const LetterStep1Component = ({ step1Obj }) => {
           </p>
         </div>
         <div className="flower-container">
-          <img width="61px" height="206px" src={step1Obj.flowerImg} />
+          <img src={step1Obj.flowerImg} />
           {/* <FlowerGlassBottle width={"256px"} height={"256px"}></FlowerGlassBottle> */}
         </div>
       </div>
