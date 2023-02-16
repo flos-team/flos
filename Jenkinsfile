@@ -59,8 +59,13 @@ pipeline {
 										cleanRemote: false, 
 										excludes: '', 
 										execCommand: '''
+cd springapp
+sudo docker-compose down
+cd ../nginxapp
+sudo docker-compose down
+cd ..
 sudo docker-compose pull
-sudo docker-compose up --force-recreate -d''', 
+sudo docker-compose up --force-recreate -d''',
 										execTimeout: 120000, 
 										flatten: false, 
 										makeEmptyDirs: false, 
