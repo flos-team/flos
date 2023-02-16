@@ -19,7 +19,7 @@
     align-items: center;
     padding: 12px 16px;
     gap: 8px;
-    width: 328px;
+    width: 100%;
     height: 124px;
     .user-img { 
       width: 80px;
@@ -37,7 +37,7 @@
     justify-content: center;
     align-items: center;
     padding: 8px 16px;
-    width: 328px;
+    width: 100%;
     height: 36px;
     background: #ffffff;
     .user-introduce-text {
@@ -83,7 +83,8 @@
     }
   }
   .user-social-info-box {
-    width: 328 * $rpx1;
+    // width: 328 * $rpx1;
+    width: 100%;
     height: 80 * $rpx1;
     background: $white;
     border-radius: 10 * $rpx1;
@@ -111,13 +112,15 @@
   .post-container {
     /* Auto layout */
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     overflow-y: scroll;
+    justify-content: flex-start;
     align-items: center;
     padding: 8 * $rpx1 0px;
     gap: 8 * $rpx1;
-    width: 328 * $rpx1;
-    height: 400 * $rpx1;
+    // width: 328 * $rpx1;
+    width: 100%;
+    height: 656 * $rpx1;
     .post-item {
       margin: 0 auto;
     }
