@@ -20,7 +20,7 @@ const LetterStep1Component = ({ step1Obj }) => {
       <div className="letter-step1-component">
         <div className="end-result-text-container">
           <p>
-            " {user.nickname} " 의 사랑으로 예쁜 꽃이 탄생했어요.
+            " {step1Obj.nickname} " 의 사랑으로 예쁜 꽃이 탄생했어요.
             <br />
             꽃의 종류는 <b>{step1Obj.flowerName}</b> <br /> 꽃말은
           </p>

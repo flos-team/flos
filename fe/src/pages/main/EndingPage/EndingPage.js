@@ -1,6 +1,7 @@
 /* import react */
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 /* import lib */
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,6 +25,7 @@ import background from "../../../assets/EndingAsset/ending-background-img.jpg";
 
 /* import module */
 import { getGardenList, getFlowerInfoById, getFlowerMVPInfo, writeEndLetter, getFlowerContributorList } from "../../../api/FlowerAPI";
+import { getMemberInfo } from "../../../api/MemberAPI";
 
 /* import component */
 import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
@@ -54,6 +56,8 @@ const SampleCircle = styled.div`
 
 const EndingPage = () => {
   const params = useParams();
+  const user = useSelector((state) => state.user.userData);
+
   const [flowerInfoList, setFlowerInfoList] = useState({
     red: {
       color: "red",
@@ -163,13 +167,22 @@ const EndingPage = () => {
     let step3Obj = {} // 엔딩 페이지 3 컴포넌트 정보 담을 Object
     let step4Obj = {} // 엔딩 페이지 4 컴포넌트 정보 담을 Object
     let imgList = [];
+    let userInfo = {}
+
+    await getMemberInfo()
+      .then((res) => {
+      userInfo = {...res}
+      })
+    
 
     await getFlowerInfoById(params.id).then((res) => {
       // console.dir(res);
       let obj = flowerInfoList[`${res.flowerColor}`];
+      // console.log(userInfo.nickname);
       //console.dir(obj);
       setFlowerObj({ ...res });
       step1Obj = {
+        nickname: userInfo.nickname,
         flowerImg: obj.img,
         flowerMeans: res.flowerMeaning.split(","),
         flowerName: obj.name,

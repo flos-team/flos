@@ -58,7 +58,6 @@ const ProfilePage = ({ setIsToast }) => {
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.userData);
-
   ///////// temp //////////////
   // 경고창용 swal
   // 팔로잉/팔로우 오류 시 swal 창
