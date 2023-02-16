@@ -1,0 +1,120 @@
+@import "../../styles/commons.scss";
+
+
+.report-item{
+    box-sizing: border-box;
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    width: 328px;
+    height: 180px;
+    /* mono50 */
+    background: $mono50;
+    /* mono600 */
+    border: 1px solid $mono600;
+    border-radius: 8px;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%,0);
+    .report-header{
+        /* report-header */
+        box-sizing: border-box;
+        /* Auto layout */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0px;
+        isolation: isolate;
+        width: 312px;
+        height: 125px;
+        /* mono400 */
+        border-bottom: 1px solid $mono400;
+        /* Inside auto layout */
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+        position: relative;
+        .report-header-div{
+            /* report-header-div */
+            width: 312px;
+            height: 30px;
+            /* Inside auto layout */
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+            z-index: 0;
+            p{
+                text-align: center;
+                color: $mono600;
+            }
+        }
+        .report-textarea{
+            /* report-input */
+            box-sizing: border-box;
+            width: 312px;
+            height: 95px;
+            /* mono100 */
+            border: 1px solid $mono100;
+            /* Inside auto layout */
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+            z-index: 1;
+            resize: none;
+            padding: 8px;
+        }
+        .close-btn{
+            /* close-btn */
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            right: 0px;
+            top: 0px;
+            /* Inside auto layout */
+            flex-grow: 0;
+            z-index: 2;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    }   
+    .report-btn{
+        /* report-btn */
+        width: 249.6px;
+        height: 30px;
+        /* skyblue200-primary */
+        background: $sky-blue200;
+        border-radius: 8px;
+        /* Inside auto layout */
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        p{
+            text-align: center;
+            color: $white;
+        }
+    }
+}
+.background{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: $black, $alpha: .5);
+    position: absolute;
+    top: 0;
+    
+}

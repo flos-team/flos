@@ -17,7 +17,9 @@ const Modal = styled.div`
 const ChangeNameInput = styled.input`
     width: 80%;
     height: 20px;
-    margin-bottom: 5px;
+    margin: 10px 5px;
+    border: 1px solid #FFFFFF;
+    background-color: #efefef;
 `;
 
 const Background = styled.div`
@@ -30,19 +32,30 @@ const Background = styled.div`
 `;
 
 const ModalText = styled.div`
-    margin-bottom: 5px;
+    font-weight: 600;
 `;
 
 const ButtonContainer = styled.div`
-    width: 80%;
+    width: 100%;
     display: flex;
 `;
 const ChangeButton = styled.button`
+    border: 0px;
+    padding: 6px;
     flex-grow: 1;
+    margin-right: 6px;
+    border-radius: 10px;
+    background-color: green;
+    color: white;
 `;
 
 const CancelButton = styled.button`
-flex-grow: 1;
+    border: 0px;
+    padding: 6px;
+    flex-grow: 1;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
 `;
 
 const ChangeFlowerNamemodal = (props) => {
@@ -60,11 +73,11 @@ const ChangeFlowerNamemodal = (props) => {
         <>
             <Background onClick={props.cancelOnclick}></Background>
             <Modal>
-                <ModalText>바꿀 이름을 입력해주세요.</ModalText>
+                <ModalText>이름 바꾸기</ModalText>
                 <ChangeNameInput value={name} onChange={onChange}></ChangeNameInput>
                 <ButtonContainer>
-                    <ChangeButton onClick={() => props.changeOnclick(name)}>바꾸기</ChangeButton>
-                    <CancelButton onClick={props.cancelOnclick}>취소하기</CancelButton>
+                    <ChangeButton onClick={() => props.changeOnclick(name)}>변경</ChangeButton>
+                    <CancelButton onClick={props.cancelOnclick}>취소</CancelButton>
                 </ButtonContainer>
             </Modal>
         </>

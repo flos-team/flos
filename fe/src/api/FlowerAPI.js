@@ -20,8 +20,6 @@ const getFlowerInfo = async () => {
   await axios
     .get(url)
     .then(({ data }) => {
-      console.log("데이터");
-      console.log(data);
       value = {
         id: data.id,
         name: data.name,
@@ -51,7 +49,6 @@ const getGardenList = async (page = 0) => {
   await axios
     .get(url)
     .then(({ data }) => {
-      console.log(data);
       value = data;
     })
     .catch((err) => {
@@ -65,13 +62,13 @@ const getGardenList = async (page = 0) => {
  * getFlowerContributorList : 꽃의 성장에 기여한 회원 리스트를 반환함
  * @returns
  */
-const getFlowerContributorList = async (page, flowerId) => {
-  let url = `/api/flower/${flowerId}?page=${page}`;
+const getFlowerContributorList = async (flowerId) => {
+  let url = `/api/flower/${flowerId}`;
   let value = null;
   await axios
     .get(url)
     .then(({ data }) => {
-      console.log(data);
+      //console.log(data);
       value = data;
     })
     .catch((err) => {

@@ -31,7 +31,7 @@ function Global() {
   useEffect(() => {
     getPostList().then((response) => {
       setPosts(response.postList);
-      console.log(posts);
+      // console.log(posts);
     });
   }, []);
 
@@ -43,7 +43,6 @@ function Global() {
   // 필터를 위한 상태관리
   // const changeFilterStandard = (num) => {
   //   setFilterStandard(num)
-  //   console.log(filterStandard)
   //   setIsSearching(false)
   // }
   // 상태관리에 따른 필터
@@ -66,19 +65,16 @@ function Global() {
     } else if (filterStandard === 4) {
       getPostListByWeather("CLOUDY").then((response) => {
         setPosts(response.content);
-        console.log(posts);
         setIsSearching(false);
       });
     } else if (filterStandard === 5) {
       getPostListByWeather("RAINY").then((response) => {
-        console.log(response);
         setPosts(response.content);
         setIsSearching(false);
       });
     }
   };
 
-  console.log(posts);
   const postList = posts.map((key) => <PostItem post={key}></PostItem>);
 
   const clickFilterIcon = () => {

@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true;
  */
 const getNotification = async () => {
   let url = `/api/notification`;
-  let value = {};
+  let value = [];
   await axios
     .get(url)
     .then((response) => {
@@ -31,17 +31,16 @@ export { getNotification };
 
 
 /////////* DELETE *///////////////////
-// 맹신 ㄴㄴ made by 범규입니다
 const deleteNotification = async (id) => {
   let url = `/api/notification/${id}`;
   let isDeleted = false;
   await axios
     .delete(url)
     .then((response) => {
-      console.log(url)
-      console.dir(response);
+      // console.log(url)
+      // console.dir(response);
       if (response.status === 200) {
-        console.log("알림 삭제 완료");
+        // console.log("알림 삭제 완료");
         isDeleted = true;
       }
     })

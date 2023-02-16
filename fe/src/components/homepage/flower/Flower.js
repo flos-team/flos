@@ -56,33 +56,8 @@ const COLORS = {
   }
 };
 
-const Avatars = styled.div`
-    display: flex;
-    align-items: center;
-    .title {
-      min-width: 20px;
-      margin: 20px;
-    }
-    .box {
-      padding: 0px 20px;
-      cursor: pointer;
-    }
-  `;
-
 const ButtonGroup = styled.div`
     display: flex;
-  `;
-
-const FacePicker = styled.button`
-    border: 0;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 20px;
-    min-width: 130px;
-    background-color: ${(p) => COLORS[p.colorType].face};
-    color: ${(p) => COLORS[p.colorType].color};
-  
-    cursor: pointer;
   `;
 
 const Eyes = styled.div`
@@ -367,7 +342,7 @@ const Flower = forwardRef((props, ref) => {
 
 
   const FlowerClick = () => {
-    console.log("clicked - flower");
+    // console.log("clicked - flower");
 
     gsap.timeline({ yoyo: true, repeatDelay: 0, defaults: { duration: 1 } })
       .fromTo(wholeFlowerRef.current, { y: -10 }, { y: 5 });
@@ -376,7 +351,7 @@ const Flower = forwardRef((props, ref) => {
 
 
   const FlowerSmile = () => {
-    console.log("웃자!");
+    // console.log("웃자!");
     setEyesElement(eyes[2]);
     smileInterval = setInterval(() => {
       setEyesElement(eyes[0]);

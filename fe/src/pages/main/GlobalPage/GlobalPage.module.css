@@ -1,0 +1,103 @@
+.feedRoot {
+  /* feed-page */
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  align-items: center;
+  padding: 20 20 20 0px;
+  gap: 8px;
+
+  position: relative;
+  width: 100%;
+  height: 95vh;
+
+  /* white2 */
+
+  background: #fbfbfb;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.main {
+  margin-top: 0.25rem;
+  /* margin-bottom: 0.25rem; */
+  width: 100%;
+  height: 74vh;
+  /* overflow-y: scroll; */
+  /* overflow-x: hidden; */
+  overflow: scroll;
+  display: flex;
+  flex-flow: row wrap;
+  scroll-behavior: smooth;
+  background: #ffffff;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+.globalroot {
+  width: 80%;
+}
+
+.searchdiv {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.searchbar {
+  background-color: white;
+  width: 88%;
+  height: 32px;
+  border: solid 1px black;
+  border-radius: 45px;
+  padding-left: 48px;
+  font-size: 14px;
+}
+
+.searchicon {
+  position: absolute;
+  top: 4px;
+  left: 16px;
+}
+
+.filtericon {
+  position: absolute;
+  top: 4px;
+  right: 1%;
+}
+
+.filterselectbox {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.filtertextdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filtertext {
+  margin: 0 8px;
+}
+
+.filtertextstandard {
+  margin: 0 8px;
+  color: #3bace2;
+  /* padding-top: 4px; */
+}
+
+.filterweathericon {
+  margin: 0 4px;
+}
+
+.filterweatherstandard {
+  margin: 0 4px;
+  border: 1px solid #3bace2;
+  padding: 2px;
+}

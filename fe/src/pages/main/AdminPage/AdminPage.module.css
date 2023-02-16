@@ -1,0 +1,46 @@
+.searchcontainer{
+    display:flex;
+    justify-content: flex-end;
+    
+}
+
+.tablecontainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.tablecontainerHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-bottom: 1px solid red;
+    padding: 8px;
+}
+.tablegap{
+    margin: 8px;
+}
+
+.pk {
+    width: 8px;
+}
+
+.reporter{
+    width: 64px;
+}
+.defendant{
+    width: 64px;
+}
+.detail{
+    width: 150px;
+    max-height: 80px;
+    overflow: scroll;
+}
+.result{
+    width: 89px;
+}
+.reportTime{
+    width: 96px;
+}
+.resultTime{
+    width: 96px;
+}

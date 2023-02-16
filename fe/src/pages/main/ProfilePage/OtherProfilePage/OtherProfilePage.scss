@@ -1,4 +1,5 @@
-@import "../../styles/commons.scss";
+@import "../../../../styles/commons.scss";
+
 
 .other-profile-page {
   /* Auto layout */
@@ -18,9 +19,9 @@
     align-items: center;
     padding: 12px 16px;
     gap: 8px;
-    width: 328px;
+    width: 100%;
     height: 124px;
-    .user-img {
+    .user-img { 
       width: 80px;
       height: 80px;
       border: 1 * $rpx1 solid $mono200;
@@ -36,9 +37,10 @@
     justify-content: center;
     align-items: center;
     padding: 8px 16px;
-    width: 328px;
+    width: 100%;
     height: 36px;
-    background: #ffffff;
+    background-color: $white-pure;
+    gap: 8px;
     .user-introduce-text {
       /* Auto layout */
       display: flex;
@@ -53,6 +55,8 @@
         height: 19px;
         font-size: 16px;
         color: #817c7c;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     .following-btn,
@@ -80,9 +84,18 @@
       /* 뭔색하지 */
       background: $mono300;
     }
+    .show-report{
+      width: 30px;
+      height: 30px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      // margin-left: 10px;
+    }
   }
   .user-social-info-box {
-    width: 328 * $rpx1;
+    // width: 328 * $rpx1;
+    width: 100%;
     height: 80 * $rpx1;
     background: $white;
     border-radius: 10 * $rpx1;
@@ -110,13 +123,15 @@
   .post-container {
     /* Auto layout */
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     overflow-y: scroll;
+    justify-content: flex-start;
     align-items: center;
     padding: 8 * $rpx1 0px;
     gap: 8 * $rpx1;
-    width: 328 * $rpx1;
-    height: 400 * $rpx1;
+    // width: 328 * $rpx1;
+    width: 100%;
+    height: 656 * $rpx1;
     .post-item {
       margin: 0 auto;
     }

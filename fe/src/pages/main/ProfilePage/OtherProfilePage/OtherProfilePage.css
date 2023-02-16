@@ -16,6 +16,16 @@
   box-sizing: border-box;
 }
 
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
 .other-profile-page {
   /* Auto layout */
   display: flex;
@@ -35,7 +45,7 @@
   align-items: center;
   padding: 12px 16px;
   gap: 8px;
-  width: 328px;
+  width: 100%;
   height: 124px;
 }
 .other-profile-page .user-info-header .user-img {
@@ -53,9 +63,10 @@
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-  width: 328px;
+  width: 100%;
   height: 36px;
-  background: #ffffff;
+  background-color: #ffffff;
+  gap: 8px;
 }
 .other-profile-page .user-introduce-container .user-introduce-text {
   /* Auto layout */
@@ -72,6 +83,8 @@
   height: 19px;
   font-size: 16px;
   color: #817c7c;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .other-profile-page .user-introduce-container .following-btn,
 .other-profile-page .user-introduce-container .followed-btn {
@@ -99,8 +112,15 @@
   /* 뭔색하지 */
   background: #bfbfbf;
 }
+.other-profile-page .user-introduce-container .show-report {
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .other-profile-page .user-social-info-box {
-  width: 20.5rem;
+  width: 100%;
   height: 5rem;
   background: #f9f9f9;
   border-radius: 0.625rem;
@@ -128,13 +148,14 @@
 .other-profile-page .post-container {
   /* Auto layout */
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   overflow-y: scroll;
+  justify-content: flex-start;
   align-items: center;
   padding: 0.5rem 0px;
   gap: 0.5rem;
-  width: 20.5rem;
-  height: 25rem;
+  width: 100%;
+  height: 41rem;
 }
 .other-profile-page .post-container .post-item {
   margin: 0 auto;

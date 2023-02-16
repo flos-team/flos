@@ -90,7 +90,7 @@ const ProfileModifyPage = () => {
   // functions;
   const modifyMemberInfoFunc = async () => {
     if (imgFile) {
-      console.log("이미지 있음");
+      // console.log("이미지 있음");
       modifyUserInfo(nickname, introduction, imgFile[0]).then((res) => {
         if (res) {
           Swal.fire({
@@ -120,7 +120,7 @@ const ProfileModifyPage = () => {
         menuOpt2Func={async () => {
           if (isChanged) {
             await modifyMemberInfoFunc();
-          } else console.log("값이 비어서 수정 안함");
+          }
           navigate("/main");
         }}
       />

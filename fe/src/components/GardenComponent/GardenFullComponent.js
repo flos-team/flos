@@ -99,7 +99,7 @@ const GardenFullComponent = () => {
     const getGardenListFunc = () => {
         setIsLoading(true);
         getGardenList(page).then((e) => {
-            console.log(e);
+            // console.log(e);
             hasNext = e.hasNext;
             setGardenListData(gardenListData.concat(e.content));
             setIsLoading(false);
@@ -115,7 +115,6 @@ const GardenFullComponent = () => {
 
     useEffect(() => {
         if (gardenListData.length > 0 && presentCount == gardenListData.length) {
-            console.log("끝에 도달", presentCount, page);
             if (hasNext) {
                 page++;
                 getGardenListFunc();
@@ -123,7 +122,7 @@ const GardenFullComponent = () => {
             else {  
                 Swal.fire({
                     icon: 'warning',
-                    title: '더 이상의 자료가 없어요!',
+                    title: '마지막 꽃이에요.',
                   })
             }
         }
@@ -133,7 +132,7 @@ const GardenFullComponent = () => {
         setGardenList([...gardenListData].map((e, i) => <SwiperSlide key={i}><FlowerFullItem flowerInfo={e}></FlowerFullItem></SwiperSlide>));
     }, [gardenListData])
 
-    console.dir(SwiperRef.current);
+    // console.dir(SwiperRef.current);
 
     return (
         <>
@@ -171,8 +170,8 @@ const GardenFullComponent = () => {
                             setPresentCount(swiper.activeIndex + 1);
                         }}
                         onSwiper={(swiper) => {
-                            console.log("onSwiper");
-                            console.log(swiper);
+                            // console.log("onSwiper");
+                            // console.log(swiper);
                         }}
                         navigation
                         centeredSlides={true}

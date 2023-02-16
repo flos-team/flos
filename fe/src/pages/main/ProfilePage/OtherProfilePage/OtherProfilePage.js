@@ -5,10 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFollowingIdList } from "../../../../redux/user";
 
 /* import img */
+import reportIcon from "../../../../assets/GlobalAsset/report-icon.png";
+
 
 /* import component */
 import HeaderComponent from "../../../../components/HeaderComponent/HeaderComponent";
 import PostItem from "../../../../components/PostItem/PostItem";
+import ReportModal from "../../../../components/ReportModal/ReportModal";
 
 /* import modules */
 import { getOtherMemberInfo } from "../../../../api/MemberAPI";
@@ -31,7 +34,7 @@ const OtherProfilePage = ({ userNickName }) => {
   // temp, 다른사람 페이지로 이동하는 메서드
   const navigate = useNavigate();
   const [titleList, setTitleList] = useState(
-    ["팔로잉", "팔로우", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>)
+    ["팔로워", "팔로잉", "게시글", "꽃송이"].map((e, i) => <li key={i}>{e}</li>)
   );
   const [userInfoList, setUserInfoList] = useState([0, 0, 0, 0].map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>));
 
@@ -146,7 +149,7 @@ const OtherProfilePage = ({ userNickName }) => {
     data.then((res) => {
       setUserInfo({ nickname: res.nickname, introduction: res.introduction });
       // .map((e, i) => <li key={i}>{e > 999 ? "999+" : e}</li>);
-      let list = [res.followingCount, res.followerCount, res.postCount, res.blossomCount];
+      let list = [res.followerCount, res.followingCount, res.postCount, res.blossomCount];
       setUserInfoList(
         list.map((e, i) => {
           let liEle = <></>;
@@ -155,7 +158,7 @@ const OtherProfilePage = ({ userNickName }) => {
               <li
                 key={i}
                 onClick={(e) => {
-                  navigate(`/follower-view-page/${res.id}`);
+                  navigate(`/follower-view-page/${res.id}?${i}`);
                 }}
               >
                 {e > 999 ? "999+" : e}
@@ -177,6 +180,11 @@ const OtherProfilePage = ({ userNickName }) => {
     });
   }, []);
 
+  const [isClose, setIsClose] = useState(false);
+  useEffect(() => {
+    
+  },[isClose])
+
   return (
     <>
       <HeaderComponent backVisible={true} pageName={userInfo.nickname}></HeaderComponent>
@@ -189,6 +197,9 @@ const OtherProfilePage = ({ userNickName }) => {
             <p>{userInfo.introduction}</p>
           </div>
           {followingBtn}
+          <div className="show-report" style={{ backgroundImage: `url(${reportIcon})` }} onClick={(e) => {
+            setIsClose(true);
+          }}></div>
         </div>
         <div className="user-social-info-box">
           <ul className="social-info-title">{titleList}</ul>
@@ -196,6 +207,7 @@ const OtherProfilePage = ({ userNickName }) => {
         </div>
         <div className="post-container hide-scroll">{postList}</div>
       </div>
+      {isClose?<ReportModal setClose={setIsClose}></ReportModal>:<></>}
     </>
   );
 };

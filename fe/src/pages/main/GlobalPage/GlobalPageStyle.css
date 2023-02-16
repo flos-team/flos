@@ -1,0 +1,75 @@
+@charset "UTF-8";
+/* rem unit */
+/* red-tokens */
+/* sky-blue-tokens */
+/* blue-tokens */
+/* gray-blue-tokens */
+/* green-tokens */
+/* apricot-tokens */
+/* yellow-tokens */
+/* mono-tokens */
+/* black & white tokens */
+/* general css 속성 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 스크롤바 숨기는 속성 */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.global-page-container {
+  width: 100vw;
+  height: 90vh;
+}
+.global-page-container .global-page-root {
+  width: 100%;
+  height: 100%;
+}
+.global-page-container .global-page-root .global-search-div {
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  position: relative;
+  border-bottom: 1px solid #bfbfbf;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  justify-content: center;
+}
+.global-page-container .global-page-root .global-search-div .search-icon {
+  position: absolute;
+  left: 25px;
+  top: 0;
+  transform: translate(25%, 25%);
+  display: block;
+}
+.global-page-container .global-page-root .global-search-div .search-input {
+  margin-left: 5px;
+  width: 80%;
+  border: 0px;
+  background-color: #ebebeb;
+  border-radius: 8px;
+  padding-left: 35px;
+  font-size: 20px;
+}
+.global-page-container .global-page-root .global-search-div .filter-btn {
+  margin-right: 5px;
+  display: block;
+  scale: 0.6;
+}
+.global-page-container .global-page-root .filter-div {
+  height: 45px;
+  background-color: #ebebeb;
+}
+
+/*# sourceMappingURL=GlobalPageStyle.css.map */

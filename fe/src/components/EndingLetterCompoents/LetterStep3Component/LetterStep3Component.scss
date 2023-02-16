@@ -1,70 +1,71 @@
 @import "../../../styles/commons.scss";
 
-.letter-step3-component{
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    gap: 32px;
+.letter-step3-component {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  gap: 32px;
 
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: 67.5vh;
+  // background: $white;
+  // background: $red50;
+  background: rgba($color: $sky-blue100, $alpha: .7);
+  border-radius: 16px;
+  .letter-user-nickname-div {
+    /* letter-user-nickname-div */
+    // width: 296px;
     width: 100%;
-    height: 67.5vh;
-
-    background: $white;
-    border-radius: 16px;
-    .letter-user-nickname-div{
-        /* letter-user-nickname-div */
-        // width: 296px;
-        width: 100%;
-        // height: 19px;
-        flex-grow: 1;
-        /* Inside auto layout */
-        flex: none;
-        order: 0;
-        align-self: stretch;
-        flex-grow: 0;
-        p{}
+    // height: 19px;
+    flex-grow: 1;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    p {
     }
-    .lettter-content-div{
-        /* lettter-content-div */
-        width: 296px;
-        // height: 304px;
-        height: 70%;
-        flex-grow: 4;
-        /* white2 */
-        background: $white-pure;
-        /* Inside auto layout */
-        flex: none;
-        order: 1;
-        flex-grow: 0;
-        .lettter-content-input{
-            width: 100%;
-            height: 100%;
-            border: none;
-            padding: 16*$rpx1;
-            outline: none;
-            border-radius: 5*$rpx1;
-        }
-        .lettter-content-input:focus{
-            outline: 1px solid $mono300;
-        }
+  }
+  .lettter-content-div {
+    /* lettter-content-div */
+    width: 296px;
+    // height: 304px;
+    height: 70%;
+    flex-grow: 4;
+    /* white2 */
+    border-radius: 10px;
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    .lettter-content-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 16 * $rpx1;
+      outline: none;
+      border-radius: 5 * $rpx1;
+      resize: none;
+      background-color: rgba($color: #fff, $alpha: 0);
     }
-    .letter-flower-name-div{
-        /* letter-flower-name-div */
-        width: 100%;
-        // height: 19px;
-        flex-grow: 1;
-        /* Inside auto layout */
-        flex: none;
-        order: 2;
-        align-self: stretch;
-        flex-grow: 0;        
-        p{
-            width: 100%;
-            text-align: right;
-        }
+  }
+  .letter-flower-name-div {
+    /* letter-flower-name-div */
+    width: 100%;
+    // height: 19px;
+    flex-grow: 1;
+    /* Inside auto layout */
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+    p {
+      width: 100%;
+      text-align: right;
     }
+  }
 }

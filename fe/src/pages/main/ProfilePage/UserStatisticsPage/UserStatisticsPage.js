@@ -19,6 +19,8 @@ import flowerRed from "../../../../assets/EndingAsset/flower-red.png";
 import flowerOrange from "../../../../assets/EndingAsset/flower-orange.png";
 import flowerYellow from "../../../../assets/EndingAsset/flower-yellow.png";
 import flowerPurple from "../../../../assets/EndingAsset/flower-purple.png";
+import flowerMango from "../../../../assets/EndingAsset/flower-mango.png";
+import flowerGrapefruit from "../../../../assets/EndingAsset/flower-grapefruit.png"
 import flowerPink from "../../../../assets/EndingAsset/flower-pink.png";
 import flowerWhite from "../../../../assets/EndingAsset/flower-white.png";
 import flowerGreen from "../../../../assets/EndingAsset/flower-green.png";
@@ -123,67 +125,70 @@ const UserStatisticsPage = () => {
   };
 
   // 꽃 렌더링을 위한 정보 init
-  const [flowerInfoList, setFlowerInfoList] = useState([
-    {
+  const [flowerInfoList, setFlowerInfoList] = useState({
+    red: {
       color: "red",
       name: "빨간 튤립",
       means: ["사랑의 고백", "열정적인 사랑"],
       img: flowerRed,
     },
-    {
+    orange: {
       color: "orange",
       name: "주황 튤립",
       means: ["매혹", "온정", "수줍음", "부끄러움"],
       img: flowerOrange,
     },
-    ,
-    {
+    yellow: {
       color: "yellow",
       name: "노랑 튤립",
       means: ["헛된 사랑", "이루어질 수 없는"],
       img: flowerYellow,
     },
-    {
+    purple: {
       color: "purple",
       name: "보라 튤립",
       means: ["영원한 사랑", "영원하지 않은 사랑"],
       img: flowerPurple,
     },
-    {
+    pink: {
       color: "pink",
       name: "핑크 튤립",
       means: ["사랑의 시작", "애정", "배려"],
       img: flowerPink,
     },
-    {
+    white: {
       color: "white",
       name: "하얀 튤립",
       means: ["과거의 우정", "실연", "추억", "새로운 시작", "순결"],
       img: flowerWhite,
     },
-    {
+    mango: {
       color: "mango", // 에셋 없음
       name: "망고 튤립",
       means: ["수줍은 사랑의 표시", "매혹적인 사랑"],
+      img: flowerMango,
     },
-    {
+    grapefruit: {
       color: "grapefruit", // 에셋 없음
       name: "자몽 튤립",
       means: ["사랑의 고백"],
+      img: flowerGrapefruit,
     },
-    {
+    green: {
       color: "green",
       name: "초록 튤립",
       means: ["아름다운 눈"],
       img: flowerGreen,
     },
-    {
+    blue: {
       color: "blue",
       name: "파란 튤립",
       means: ["사랑합니다 여러분"],
       img: flowerBlue,
     },
-  ]);
+  });
+
+  //
 
   useEffect(() => {
     /*
@@ -195,16 +200,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
       //console.dir(res);
       if (res && res.content && res.content.length) {
         let flowerListJSX = res.content.map((e, i) => {
-          let flowerRenderObj = {};
-          L: for (let i = 0; i < flowerInfoList.length; i++) {
-            let obj = flowerInfoList[i];
-            if (obj) {
-              if (obj.color == e.flowerColor) {
-                flowerRenderObj = obj;
-                break L;
-              }
-            }
-          }
+          let flowerRenderObj = flowerInfoList[e.flowerColor];
           let dateString = dayjs(e.blossomAt, "YYYY-MM-DD HH:mm:ss").format("YYYY년 MM월 DD일");
           let item = (
             <div key={i} className="plant-item">
@@ -225,7 +221,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
 
     getMyStatisticData().then((res) => {
       setUserData(res);
-      console.dir(res);
+      // console.dir(res);
       let loginRatio = (res.loginInfo.loginCount / res.loginInfo.lengthOfMonth) * 100;
       //let loginRatio = (28 / 28) * 100;
       judgeGrade(loginRatio);
@@ -233,15 +229,20 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
         castItem.map(({ castId, castImg, className }) => {
           let modifiedClassName = `cast-statistics-item-div ${className}`;
           let ratio = 0;
+          let postNumber = 0;
           switch (castId) {
             case 1:
               ratio = res.postInfo.ratio.sunny;
+              postNumber = res.postInfo.sunny;
               break;
             case 2:
               ratio = res.postInfo.ratio.cloudy;
+              postNumber = res.postInfo.cloudy;
+
               break;
             case 3:
               ratio = res.postInfo.ratio.rainy;
+              postNumber = res.postInfo.rainy;
               break;
             default:
               break;
@@ -257,6 +258,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
               </div>
               <div className="graph-div">
                 <div className="graph-gage" style={itemStyle}></div>
+                <span className="graph-number">{postNumber}</span>
               </div>
             </div>
           );
@@ -306,7 +308,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
         </div>
         <div className="user-active-log-item">
           <div className="user-active-title">
-            <p>활동 기록</p>
+            <p>포스트</p>
           </div>
           <div className="user-post-count-div">
             <div className="post-count-title">

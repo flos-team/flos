@@ -59,6 +59,7 @@ const DateCountText = styled.div`
 // 날짜 세부 속성 Tag
 const DateDetailText = styled.div`
     color: gray;
+    font-size: 0.8rem;
 `;
 
 const FlowerType = styled.div`
