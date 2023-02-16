@@ -1,9 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { useNavigate } from "react-router-dom";
-
-
 /**
  * @author 1-hee
  *
@@ -327,6 +324,8 @@ const MemberAPI = {
   resetUserPassword,
   withdrawalUser,
 };
+
+
 
 export {
   getCheckEmail,

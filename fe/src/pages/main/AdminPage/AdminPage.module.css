@@ -1,46 +1,95 @@
-.searchcontainer{
-    display:flex;
-    justify-content: flex-end;
-    
+.searchcontainer {
+  /* display: flex; */
+  justify-content: flex-end;
+  /* top : 15px; */
+  /* position: inherit; */
 }
 
-.tablecontainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.tablecontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid red;
 }
-.tablecontainerHeader{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    border-bottom: 1px solid red;
-    padding: 8px;
+.tablegap {
+  margin: 8px;
 }
-.tablegap{
-    margin: 8px;
+.pkTitle {
+  text-align: center;
+  width: 8px;
 }
-
 .pk {
-    width: 8px;
+  text-align: center;
+  width: 8px;
 }
 
-.reporter{
-    width: 64px;
+.reporterTitle {
+  text-align: center;
+  width: 64px;
 }
-.defendant{
-    width: 64px;
+.reporter {
+  text-align: center;
+  width: 64px;
 }
-.detail{
-    width: 150px;
-    max-height: 80px;
-    overflow: scroll;
+.defendant {
+  text-align: center;
+  width: 72px;
 }
-.result{
-    width: 89px;
+.detailTitle {
+  width: 80px;
+  text-overflow: clip;
+  max-height: 80px;
+  overflow-x: scroll;
+  text-align: center;
 }
-.reportTime{
-    width: 96px;
+.detail {
+  width: 180px;
+  text-overflow: clip;
+  max-height: 80px;
+  overflow-x: scroll;
+  border-left: 1px solid grey;
+  border-right: 1px solid grey;
+  padding: 4px;
 }
-.resultTime{
-    width: 96px;
+.resultTitle {
+  text-align: right;
+  width: 88px;
+}
+.result {
+  text-align: center;
+  width: 64px;
+}
+.reportTime {
+  width: 72px;
+  text-align: center;
+}
+.resultTime {
+  width: 72px;
+  text-align: center;
+}
+.confirmTitle {
+  text-align: center;
+}
+.confirmDiv {
+  justify-content: center;
+  /* border: 1px solid red; */
+}
+.confirm {
+  text-align: center;
+  padding: 8px;
+}
+
+
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20%;
+  padding-right: 20%;
+  width: 100%;
+  height: 20px;
+  top:0px;
+  position: absolute;
 }

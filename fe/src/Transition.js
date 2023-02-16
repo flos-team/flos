@@ -7,6 +7,7 @@ import MainPage from "./pages/main/MainPage/MainPage";
 import LoginPage from "./pages/LoginPage";
 
 import AdminPage from "./pages/main/AdminPage/AdminPage";
+import MemberManagePage from "./pages/main/AdminPage/MemberManagePage";
 
 import PostDetailPage from "./pages/main/FeedPage/PostDetailPage/PostDetailPage";
 import WritePostPage from "./pages/main/WritePostPage/WritePostPage";
@@ -43,7 +44,8 @@ function Transition() {
           <Route path="/main" element={<MainPage />}></Route>
 
           <Route path = "/admin" element = {<AdminPage/>}> </Route>
-
+          <Route path = "/admin/memberManager" element = {<MemberManagePage/>}> </Route>
+          
           <Route path="/login" element={<LoginPage />}></Route>
 
           {/* <Link to ={`/post/${1}`} > 로 전달 */}
