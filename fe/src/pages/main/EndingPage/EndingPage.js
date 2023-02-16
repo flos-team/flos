@@ -101,13 +101,16 @@ const EndingPage = () => {
       color: "mango", // 에셋 없음
       name: "망고 튤립",
       means: ["수줍은 사랑의 표시", "매혹적인 사랑"],
+      img: flowerMango,
       foryou: "매일매일이 매력적인"
     },
     grapefruit: {
       color: "grapefruit", // 에셋 없음
       name: "자몽 튤립",
       means: ["사랑의 고백"],
+      img: flowerGrapefruit,
       foryou: "즐거운 날들을 즐기며 항상 사랑스러운"
+      
     },
     green: {
       color: "green",
