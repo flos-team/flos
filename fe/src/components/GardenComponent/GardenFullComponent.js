@@ -111,7 +111,6 @@ const GardenFullComponent = () => {
         hasNext = false;
         getGardenListFunc();
         refreshDate();
-        console.dir(gardenListData);
     }, []);
 
     useEffect(() => {

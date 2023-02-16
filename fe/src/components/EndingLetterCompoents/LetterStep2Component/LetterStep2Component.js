@@ -38,6 +38,9 @@ const LetterStep2Component = ({ step2Obj }) => {
             너로부터 햇살은 {step2Obj.light} 번, 빗물은 총 {step2Obj.water} 번 받았어! 나는 지난 시간동안 너와 함께
             지내면서 정말 행복했어. 너도 나와 같은 마음이었으면 좋겠다. 가끔 가든으로 놀러와서 나를 추억해줘! 정말
             고마워!
+            <br />
+            <br />
+            P.S. 편지 뒤에도 한번 봐줄래? 도움을 주신 분들과의 추억을 담았어!
           </p>
         </div>
         <div className="letter-flower-name-div">

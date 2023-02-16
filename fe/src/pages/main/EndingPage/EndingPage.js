@@ -60,54 +60,64 @@ const EndingPage = () => {
       name: "빨간 튤립",
       means: ["사랑의 고백", "열정적인 사랑"],
       img: flowerRed,
+      foryou: "열정적인 삶을 살고 있는"
     },
     orange: {
       color: "orange",
       name: "주황 튤립",
       means: ["매혹", "온정", "수줍음", "부끄러움"],
       img: flowerOrange,
+      foryou: "매혹적이고 따뜻한"
     },
     yellow: {
       color: "yellow",
       name: "노랑 튤립",
       means: ["헛된 사랑", "이루어질 수 없는"],
       img: flowerYellow,
+      foryou: "이루어질 수 없는 많은 행복한 일들을 겪고 있는"
     },
     purple: {
       color: "purple",
       name: "보라 튤립",
       means: ["영원한 사랑", "영원하지 않은 사랑"],
       img: flowerPurple,
+      foryou: "영원할 것 같던 순간을 지나 금새 행복해질"
     },
     pink: {
       color: "pink",
       name: "핑크 튤립",
       means: ["사랑의 시작", "애정", "배려"],
       img: flowerPink,
+      foryou: "다시 새롭게 즐거운 시작을 할"
     },
     white: {
       color: "white",
       name: "하얀 튤립",
       means: ["과거의 우정", "실연", "추억", "새로운 시작", "순결"],
       img: flowerWhite,
+      foryou: "과거를 추억하며 개운하게 새로운 시작을 할"
     },
     mango: {
       color: "mango", // 에셋 없음
       name: "망고 튤립",
       means: ["수줍은 사랑의 표시", "매혹적인 사랑"],
-      img:flowerMango,
+      img: flowerMango,
+      foryou: "매일매일이 매력적인"
     },
     grapefruit: {
       color: "grapefruit", // 에셋 없음
       name: "자몽 튤립",
       means: ["사랑의 고백"],
-      img:flowerGrapefruit,
+      img: flowerGrapefruit,
+      foryou: "즐거운 날들을 즐기며 항상 사랑스러운"
+      
     },
     green: {
       color: "green",
       name: "초록 튤립",
       means: ["아름다운 눈"],
       img: flowerGreen,
+      foryou: "아름다운 눈으로 미래를 바라보며 내일을 준비하는"
     },
     blue: {
       color: "blue",
@@ -163,6 +173,7 @@ const EndingPage = () => {
         flowerImg: obj.img,
         flowerMeans: res.flowerMeaning.split(","),
         flowerName: obj.name,
+        foryou: obj.foryou
       };
 
       step2Obj = {
@@ -312,7 +323,7 @@ const EndingPage = () => {
           </Swiper>
           {isShowEndText ?
             <div className="final-guide-text blinking">
-              <p onClick={(e) => {
+              <p className="clickMeText" onClick={(e) => {
                 if (!isReplay) {
                   writeEndLetter(params.id, letterText)
                     .then((res) => {

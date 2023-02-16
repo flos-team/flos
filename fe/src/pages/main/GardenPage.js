@@ -19,7 +19,7 @@ const Header = styled.div`
     font-weight: bold;
     letter-spacing: -4px;
     width: 100%;
-    height: 80px;
+    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;

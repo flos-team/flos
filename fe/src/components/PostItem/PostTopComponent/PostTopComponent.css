@@ -37,7 +37,7 @@
   flex-grow: 1;
   max-height: 4.375rem;
   /* yellow100 */
-  border-bottom: 1px solid #bfbfbf;
+  border-bottom: 1px solid #f9f9f9;
   order: 0;
 }
 .post-top-component .user-info-div {
@@ -75,6 +75,7 @@
   flex-flow: row nowrap;
   gap: 8px;
   align-items: center;
+  font-size: 0.8rem;
   justify-content: center;
   width: max-content;
   height: max-content;

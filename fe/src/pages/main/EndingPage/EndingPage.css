@@ -55,6 +55,12 @@
   display: none;
 }
 
+/* 클릭시 이동 텍스트 */
+.clickMeText {
+  color: white;
+  font-weight: 500;
+}
+
 /** 점멸 기능  */
 .blinking {
   color: #aae0f9;

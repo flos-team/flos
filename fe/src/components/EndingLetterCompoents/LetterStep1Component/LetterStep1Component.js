@@ -32,6 +32,9 @@ const LetterStep1Component = ({ step1Obj }) => {
               </b>
             ))}
           </p>
+          <p>
+            {step1Obj.foryou} 당신을 위해 준비했어요.
+          </p>
         </div>
         <div className="flower-container">
           <img width="61px" height="206px" src={step1Obj.flowerImg} />
