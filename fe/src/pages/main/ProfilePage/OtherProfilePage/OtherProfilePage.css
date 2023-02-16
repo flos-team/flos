@@ -65,7 +65,8 @@
   padding: 8px 16px;
   width: 100%;
   height: 36px;
-  background: #ffffff;
+  background-color: #ffffff;
+  gap: 8px;
 }
 .other-profile-page .user-introduce-container .user-introduce-text {
   /* Auto layout */
@@ -82,6 +83,8 @@
   height: 19px;
   font-size: 16px;
   color: #817c7c;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .other-profile-page .user-introduce-container .following-btn,
 .other-profile-page .user-introduce-container .followed-btn {
@@ -108,6 +111,13 @@
 .other-profile-page .user-introduce-container .followed-btn {
   /* 뭔색하지 */
   background: #bfbfbf;
+}
+.other-profile-page .user-introduce-container .show-report {
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .other-profile-page .user-social-info-box {
   width: 100%;

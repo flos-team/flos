@@ -319,7 +319,7 @@ const EndingPage = () => {
             {endingList}
           </Swiper>
           {isShowEndText ?
-            <div className="final-guide-text">
+            <div className="final-guide-text blinking">
               <p className="clickMeText" onClick={(e) => {
                 if (!isReplay) {
                   writeEndLetter(params.id, letterText)
