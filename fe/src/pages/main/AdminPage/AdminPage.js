@@ -19,7 +19,7 @@ function AdminPage() {
         </form>
       </div>
 
-      <div className={styles.tablecontainer}>
+      <div className={styles.tablecontainerHeader}>
         <div className={styles.pk}>pk</div>
         <div className={styles.reporter}>신고자</div>
         <div className={styles.defendant}>피신고자</div>
