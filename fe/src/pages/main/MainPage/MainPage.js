@@ -30,7 +30,7 @@ function Main() {
   useEffect(() => {
     getMemberInfo()
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         dispatch(setUser(response));
       })
       .catch((err) => {
