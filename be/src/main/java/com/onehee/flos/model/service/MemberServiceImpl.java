@@ -9,6 +9,7 @@ import com.onehee.flos.exception.UnauthorizedEmailException;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberReportResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.*;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -47,6 +49,8 @@ public class MemberServiceImpl implements MemberService {
     private final PostRepository postRepository;
     private final WeatherResourceRepository weatherResourceRepository;
     private final AttendanceRepository attendanceRepository;
+    private final ReportRepository reportRepository;
+    private final BanRepository banRepository;
 
     @Override
     @Transactional
@@ -83,6 +87,10 @@ public class MemberServiceImpl implements MemberService {
 
         if (MemberStatus.INACTIVE.equals(member.getStatus())) {
             member.setStatus(MemberStatus.ACTIVE);
+        }
+
+        if (banRepository.existsByMemberAndReleaseDateAfter(member, LocalDate.now())) {
+            throw new BadRequestException("이용정지 처분을 받은 계정입니다.");
         }
 
         LocalDateTime now = LocalDateTime.now();
@@ -246,5 +254,89 @@ public class MemberServiceImpl implements MemberService {
         Member me = SecurityManager.getCurrentMember();
         List<Member> memberList = memberRepository.findAllByNicknameLikeIgnoreCase(memberSearchRequestDTO.getNickname() + "%");
         return memberList.stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public void sueMember(MemberSueRequestDTO memberSueRequestDTO) {
+        Member me = SecurityManager.getCurrentMember();
+        Member target = memberRepository.findById(memberSueRequestDTO.getId())
+                .orElseThrow(() -> new BadRequestException("회원 정보를 조회할 수 없습니다."));
+
+        Report report = Report.builder()
+                .reporter(me)
+                .target(target)
+                .description(memberSueRequestDTO.getDescription())
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        reportRepository.save(report);
+    }
+
+    @Override
+    @Transactional
+    public List<MemberReportResponseDTO> getMemberReport(MemberReportRequestDTO memberReportRequestDTO) {
+        List<Report> result;
+        if (memberReportRequestDTO.getReporterId() != null && memberReportRequestDTO.getTargetId() != null) {
+            Member reporter = memberRepository.findById(memberReportRequestDTO.getReporterId())
+                    .orElseThrow(() -> new BadRequestException("신고한 사람의 계정이 존재하지 않습니다."));
+            Member target = memberRepository.findById(memberReportRequestDTO.getTargetId())
+                    .orElseThrow(() -> new BadRequestException("신고당한 사람의 계정이 존재하지 않습니다."));
+            result = reportRepository.findAllByReporterAndTarget(reporter, target);
+        } else if (memberReportRequestDTO.getReporterId() != null) {
+            Member reporter = memberRepository.findById(memberReportRequestDTO.getReporterId())
+                    .orElseThrow(() -> new BadRequestException("신고한 사람의 계정이 존재하지 않습니다."));
+            result = reportRepository.findAllByReporter(reporter);
+        } else if (memberReportRequestDTO.getTargetId() != null) {
+            Member target = memberRepository.findById(memberReportRequestDTO.getTargetId())
+                    .orElseThrow(() -> new BadRequestException("신고당한 사람의 계정이 존재하지 않습니다."));
+            result = reportRepository.findAllByTarget(target);
+        } else {
+            result = reportRepository.findAll();
+        }
+        List<MemberReportResponseDTO> body;
+        if (memberReportRequestDTO.getIsConclusion() != null && memberReportRequestDTO.getIsConclusion()) {
+            body = result.stream().filter((report) -> report.getConclusion() != null).map(MemberReportResponseDTO::toDTO).collect(Collectors.toList());
+        } else if (memberReportRequestDTO.getIsConclusion() != null) {
+            body = result.stream().filter((report) -> report.getConclusion() == null).map(MemberReportResponseDTO::toDTO).collect(Collectors.toList());
+        } else {
+            body = result.stream().map(MemberReportResponseDTO::toDTO).collect(Collectors.toList());
+        }
+        return body;
+    }
+
+    @Override
+    @Transactional
+    public List<MemberReportResponseDTO> processReport(MemberReportProcessRequestDTO memberReportProcessRequestDTO) {
+        Report report = reportRepository.findById(memberReportProcessRequestDTO.getId())
+                .orElseThrow(() -> new BadRequestException("해당 신고건을 찾을 수 없습니다."));
+
+        List<Report> reports = reportRepository.findAllByTargetAndConclusionIsNull(report.getTarget());
+        LocalDateTime now = LocalDateTime.now();
+
+        reports.forEach(r -> {
+            r.setConclusion(memberReportProcessRequestDTO.getConclusion());
+            r.setConfirmedAt(now);
+        });
+
+        reportRepository.saveAllAndFlush(reports);
+
+        if (memberReportProcessRequestDTO.getConclusion().ordinal() == 0) {
+            return getMemberReport(new MemberReportRequestDTO());
+        }
+
+        Ban ban = banRepository.findByMember(report.getTarget());
+
+        if (ban == null) {
+            ban = Ban.builder()
+                    .member(report.getTarget())
+                    .releaseDate(LocalDate.now().plusDays(memberReportProcessRequestDTO.getConclusion().ordinal()))
+                    .build();
+        } else {
+            ban.setReleaseDate(ban.getReleaseDate().plusDays(memberReportProcessRequestDTO.getConclusion().ordinal()));
+        }
+
+        banRepository.save(ban);
+
+        return getMemberReport(new MemberReportRequestDTO());
     }
 }

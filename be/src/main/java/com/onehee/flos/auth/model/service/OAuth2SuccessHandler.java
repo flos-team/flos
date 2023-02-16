@@ -4,6 +4,7 @@ package com.onehee.flos.auth.model.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onehee.flos.auth.model.dto.OAuth2UserDTO;
 import com.onehee.flos.auth.model.dto.TokenDTO;
+import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.entity.*;
 import com.onehee.flos.model.entity.type.MemberStatus;
 import com.onehee.flos.model.entity.type.MessageType;
@@ -24,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -41,6 +43,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final NotificationRepository notificationRepository;
     private final WeatherResourceRepository weatherResourceRepository;
     private final FlowerRepository flowerRepository;
+    private final BanRepository banRepository;
 
     @Override
     @Transactional
@@ -70,6 +73,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         TokenDTO tokenDTO = jwtTokenProvider.generateTokenByMember(loginMember);
         log.info("{}", tokenDTO);
+
+        if (banRepository.existsByMemberAndReleaseDateAfter(loginMember, LocalDate.now())) {
+            throw new BadRequestException("이용정지 처분을 받은 계정입니다.");
+        }
 
         LocalDateTime now = LocalDateTime.now();
 
