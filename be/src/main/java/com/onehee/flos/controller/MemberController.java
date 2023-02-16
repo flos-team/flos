@@ -4,18 +4,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.onehee.flos.auth.model.dto.MemberDetails;
 import com.onehee.flos.auth.model.dto.TokenDTO;
 import com.onehee.flos.auth.model.service.JwtTokenProvider;
+import com.onehee.flos.exception.BadRequestException;
 import com.onehee.flos.model.dto.LogoutDTO;
 import com.onehee.flos.model.dto.request.*;
 import com.onehee.flos.model.dto.response.MemberInfoResponseDTO;
+import com.onehee.flos.model.dto.response.MemberReportResponseDTO;
 import com.onehee.flos.model.dto.response.MemberResponseDTO;
 import com.onehee.flos.model.dto.response.StatisticsResponseDTO;
 import com.onehee.flos.model.dto.type.MemberRelation;
 import com.onehee.flos.model.entity.Member;
+import com.onehee.flos.model.entity.type.RoleType;
 import com.onehee.flos.model.service.MemberService;
 import com.onehee.flos.model.service.StatisticsService;
 import com.onehee.flos.util.CookieUtil;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -170,5 +174,39 @@ public class MemberController {
         List<MemberResponseDTO> body = memberService.getMemberListByNickname(memberSearchRequestDTO);
         HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
         return new ResponseEntity<List<MemberResponseDTO>>(body, httpStatus);
+    }
+
+    @Operation(summary = "회원 신고 메서드", description = "다른 회원을 신고합니다.", responses = {
+            @ApiResponse(responseCode = "201", description = "신고 성공")
+    })
+    @PostMapping("/sue")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> sueMember(@RequestBody MemberSueRequestDTO memberSueRequestDTO) {
+        memberService.sueMember(memberSueRequestDTO);
+        return new ResponseEntity<List<Void>>(HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "회원 신고 리스트 요청 메서드", description = "회원 신고리스트를 가져옵니다.", responses = {
+            @ApiResponse(responseCode = "200" ,description = "조회 성공", content = {@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MemberReportResponseDTO.class)))}),
+            @ApiResponse(responseCode = "204", description = "조회에는 성공했으나 빈리스트입니다.")
+    })
+    @GetMapping("/member-report")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> getMemberReport(MemberReportRequestDTO memberReportRequestDTO) {
+        List<MemberReportResponseDTO> body = memberService.getMemberReport(memberReportRequestDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberReportResponseDTO>>(body, httpStatus);
+    }
+
+    @Operation(summary = "회원 신고 처리 메서드", description = "회원 신고를 처리합니다. 관리자만 사용 가능합니다.", responses = {
+            @ApiResponse(responseCode = "200" ,description = "조회 성공", content = {@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MemberReportResponseDTO.class)))}),
+            @ApiResponse(responseCode = "204", description = "조회에는 성공했으나 빈리스트입니다.")
+    })
+    @PostMapping("/member-report")
+    @Tag(name = "멤버API")
+    public ResponseEntity<?> processMemberReport(@RequestBody MemberReportProcessRequestDTO memberReportProcessRequestDTO) {
+        List<MemberReportResponseDTO> body = memberService.processReport(memberReportProcessRequestDTO);
+        HttpStatus httpStatus = body.size() == 0 ? HttpStatus.NO_CONTENT : HttpStatus.OK;
+        return new ResponseEntity<List<MemberReportResponseDTO>>(body, httpStatus);
     }
 }
