@@ -339,4 +339,9 @@ public class MemberServiceImpl implements MemberService {
 
         return getMemberReport(new MemberReportRequestDTO());
     }
+
+    @Override
+    public List<MemberResponseDTO> getAllMember() {
+        return memberRepository.findAll().stream().map(MemberResponseDTO::toDto).collect(Collectors.toList());
+    }
 }

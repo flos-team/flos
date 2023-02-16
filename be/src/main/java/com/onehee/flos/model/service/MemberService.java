@@ -42,4 +42,6 @@ public interface MemberService {
 
     List<MemberReportResponseDTO> processReport(MemberReportProcessRequestDTO memberReportProcessRequestDTO);
 
+    List<MemberResponseDTO> getAllMember();
+
 }
