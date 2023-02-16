@@ -66,13 +66,15 @@
   height: 100%;
   border: none;
   outline: none;
-  line-height: 150%;
+  line-height: 125%;
   word-break: keep-all;
 }
 .letter-step2-component .letter-flower-name-div {
   width: 100%;
   height: 10%;
   /* Inside auto layout */
+  display: flex;
+  align-items: end;
   flex: none;
   order: 2;
   align-self: stretch;

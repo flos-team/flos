@@ -55,4 +55,14 @@
   display: none;
 }
 
+.clickMeText {
+  color: white;
+  font-weight: 500;
+}
+.clickMeText :hover {
+  color: gray;
+  font-weight: 500;
+}
+
+
 /*# sourceMappingURL=EndingPage.css.map */

@@ -56,6 +56,7 @@
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+  word-break: keep-all;
 }
 .letter-step1-component .end-result-text-container p {
   text-align: center;

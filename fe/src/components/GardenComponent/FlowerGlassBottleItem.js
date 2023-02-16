@@ -61,61 +61,61 @@ const COLORS = {
         main: "#FF5050EE",
         light: "#FF535088",
         strong: "#FF015022",
-        black: "#FF012000"
+        black: "#FF012011"
     },
     orange: {
          main: "#FF7F50EE",
-         light: "#FF5350EE",
-         strong: "#FF5350EE",
-         black: "#FF5350EE"
+         light: "#FF5F5088",
+         strong: "#FF2F5022",
+         black: "#FF0F5011"
     },
     purple: {
          main: "#C15AF4EE",
-         light: "#FF5350EE",
-         strong: "#FF5350EE",
-         black: "#FF5350EE"
+         light: "#C150F488",
+         strong: "#C12AF422",
+         black: "#C12AF411"
     },
     pink: {
-         main: "#FF8E9944",
-         light: "#f0b3d0EE",
-         strong: "#e297bf",
-         black: "#c3669b"
+         main: "#FF8E99EE",
+         light: "#FF8E9988",
+         strong: "#FF8E9922",
+         black: "#FF8E9911"
     },
     white: {
         main: "#FFF0F5EE",
-        light: "#FF5350EE",
-        strong: "FF5350EE",
-        black: "FF5350EE"
+        light: "#FFC0F588",
+        strong: "#FFB0F522",
+        black: "#FFA0F511"
     },
     green: {
         main: "#8EE1D2EE",
-        light: "#FF5350EE",
-        strong: "#FF5350EE",
-        black: "#FF5350EE"
+        light: "#8EC1D288",
+        strong: "#8B11D222",
+        black: "#8EA1D211"
     },
     yellow: {
          main: "#FFF56EEE",
-         light: "#FF535066",
-         strong: "FF535022",
-         black: "FF535000"
+         light: "#FFE52E88",
+         strong: "#FFE52E22",
+         black: "#FF122E00"
     },
     blue: {
         main: "#3AA0FFEE",
         light: "#3AFFFF22",
         strong: "#3AFFFF00",
-        black: "#3AA0FF00"
+        black: "#3AA0FF11"
     },
     mango: {
         main: "linear-gradient( to bottom,  #FFF56E, #FF7F50)",
-        light: "#FF5350EE",
-        strong: "#FF5350EE",
-        black: "#FF5350EE"
+        light: "linear-gradient( to bottom,  #FFF86E, #FF6F50)",
+        strong: "linear-gradient( to bottom,  #FFFE6E, #FF8F50)",
+        black: "linear-gradient( to bottom,  #FFFE6E, #FF9F50)"
     },
     grapefruit: {
         main: "linear-gradient( to bottom,  #FF8E99, #FF5050)",
-        light: "#FF5350EE",
-        strong: "#FF5350EE",
-        black: "#FF5350EE"
+        light: "linear-gradient( to bottom,  #FF6E99, #FF5250)",
+        strong: "linear-gradient( to bottom,  #FFAE99, #FF5350)",
+        black: "linear-gradient( to bottom,  #FFCE99, #FF5550)"
     },
   };
 

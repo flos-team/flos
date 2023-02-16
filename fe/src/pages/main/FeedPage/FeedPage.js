@@ -88,7 +88,7 @@ function Feed() {
       });
     }
 
-    const noPost = <div className="">팔로워 게시물이 없습니다.</div>;
+    const noPost = <div className="noPost">팔로워 게시물이 없습니다.</div>;
     const noFriend = (
       <div className="">
         팔로우한 사람이 없습니다. <br />
