@@ -1,0 +1,72 @@
+.main{
+  /* display: flex; */
+  /* flex-flow: row; */
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: max-content;
+}
+
+.searchcontainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .tablecontainer {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    justify-content: space-between;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid red;
+  }
+  .tablegap {
+    margin: 8px;
+  }
+  .pkTitle {
+    text-align: center;
+    width: 5%;
+  }
+  .pk {
+    text-align: center;
+    width: 5%;
+  }
+  
+  .reporterTitle {
+    text-align: center;
+    width: 10%;
+  }
+  .reporter {
+    text-align: center;
+    width: 10%;
+  }
+  .defendant {
+    text-align: center;
+    width: 50%;
+  }
+  
+  .confirmTitle {
+    text-align: center;
+  }
+  .confirmDiv {
+    justify-content: center;
+    /* border: 1px solid red; */
+  }
+  .confirm {
+    text-align: center;
+    padding: 8px;
+  }
+  
+  
+  
+  .footer{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20%;
+    padding-right: 20%;
+    width: 100%;
+    height: 110px;
+    top:0px;
+    position: absolute;
+  }
