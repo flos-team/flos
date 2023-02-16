@@ -38,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public NotificationResponseDTO getNotification() {
         Member member = SecurityManager.getCurrentMember();
-        List<Notification> notifications = notificationRepository.findAllByMemberAndCheckedAtIsNull(member);
+        List<Notification> notifications = notificationRepository.findAllByMemberAndCheckedAtIsNullOrderByCreatedAtDesc(member);
         return new NotificationResponseDTO(
                 notifications.stream()
                         .map(this::getNotificationDTO)
