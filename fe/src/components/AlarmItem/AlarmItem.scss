@@ -11,7 +11,8 @@
   gap: 4 * $rpx1;
   isolation: isolate;
   position: relative;
-  width: 340 * $rpx1;
+  // width: 340 * $rpx1;
+  width: 100%;
   min-height: 80 * $rpx1;
   height: max-content;
   background: $mono50;

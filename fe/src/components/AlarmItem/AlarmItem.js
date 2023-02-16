@@ -70,7 +70,7 @@ const AlarmItem = ({ AlarmImg, AlarmTextJSX, AlarmTimeLog, weather, id, render, 
 
   return (
     <div className="alarm-item">
-      <div onClick={goNotiSource}>
+      <div className="alram-div" onClick={goNotiSource}>
         <AlarmItemHeader AlarmImg={AlarmImg} AlarmTextJSX={AlarmTextJSX} AlarmTimeLog={AlarmTimeLog}></AlarmItemHeader>
       </div>
       <div className="close-btn">
