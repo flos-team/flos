@@ -73,7 +73,7 @@ const ProfileModifyPage = () => {
       //console.dir(res);
       let userData = {
         email: res.email,
-        profileURL: `https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`,
+        profileURL: `********${res.profileImage.saveName}`,
       };
       setNickname(res.nickname);
       setIntroduction(res.introduction);

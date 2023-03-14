@@ -74,7 +74,7 @@ function Feed() {
     if (friends) {
       friendList = friends.map((key) => {
         let url =
-          "https://i8b210.p.ssafy.io/api/file/" + key.profileImage.saveName;
+          "********" + key.profileImage.saveName;
         const result = (
           <div
             className="follower-info-item"

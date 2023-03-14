@@ -261,7 +261,7 @@ const xBtnAppear = () =>{
 
 
   // API
-  axios.defaults.baseURL = 'https://i8b210.p.ssafy.io'                                                                                                                                                                                                                                                           
+  axios.defaults.baseURL = '********'                                                                                                                                                                                                                                                           
 
   // 아이디 중복 확인 API
   const isSameId = () => {

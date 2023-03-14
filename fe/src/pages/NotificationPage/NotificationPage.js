@@ -23,7 +23,7 @@ const NotificationPage = () => {
   const [notiItemList, setNotiItemList] = useState();
   const navigate = useNavigate();
   const params = useParams();
-  const url = "https://i8b210.p.ssafy.io/api/file/";
+  const url = "********";
 
   useEffect(() => {
     // getNotification().then((res) => {

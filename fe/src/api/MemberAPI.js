@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
  */
 
 // 엑시오스 기본 세팅
-axios.defaults.baseURL = "https://i8b210.p.ssafy.io";
+axios.defaults.baseURL = "********";
 axios.defaults.withCredentials = true;
 
 /////////* GET *///////////////////

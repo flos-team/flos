@@ -13,7 +13,7 @@ import { getPriComment, deleteComment } from "../../../../api/CommentAPI";
 
 import "./PostDetailPage.css";
 
-const url = "https://i8b210.p.ssafy.io/api/file/";
+const url = "********";
 
 const SubCommentComponent = ({ parentId }) => {
   const user = useSelector((state) => state.user.userData);

@@ -24,7 +24,7 @@ import {
 import "./PostDetailPage.css";
 import "./CommentComponent.css";
 
-const url = "https://i8b210.p.ssafy.io/api/file/";
+const url = "********";
 
 const CommentComponent = ({
   comment,

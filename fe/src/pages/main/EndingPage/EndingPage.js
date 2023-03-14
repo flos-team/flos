@@ -236,7 +236,7 @@ const EndingPage = () => {
 
   useEffect(() => {
     let contributorIdx = 0;
-    let url = "https://i8b210.p.ssafy.io/api/";
+    let url = "********";
     endingPageInit().then(() => {
       contributorInterval = setInterval(() => {
         if (contributorIdx++ === contributorList.length) {

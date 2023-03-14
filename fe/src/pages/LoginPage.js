@@ -197,7 +197,7 @@ function Login() {
           <span className={styles.socialline}>소셜 로그인</span>
           <br></br>
           <div className={styles.socialbtn}>
-            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/kakao">
+            <a href="********">
               {/* <button onClick={onClickKakaoLogin} className={styles.kakaobtn}> */}
               <button onClick={onClickKakaoLogin} className={styles.kakaobtn}>
                 <img src={kakaologo} alt=""></img>
@@ -206,7 +206,7 @@ function Login() {
             </a>
           </div>
           <div className={styles.socialbtn}>
-            <a href="https://i8b210.p.ssafy.io/api/oauth2/authorization/naver">
+            <a href="********">
               {/* <button onClick={onClickNaverLogin} className={styles.naverbtn}> */}
               <button onClick={onClickNaverLogin} className={styles.naverbtn}>
                 <img src={naverlogo} alt=""></img>

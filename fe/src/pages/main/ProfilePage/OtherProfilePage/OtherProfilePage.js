@@ -176,7 +176,7 @@ const OtherProfilePage = ({ userNickName }) => {
         setPostList(res.content.map((e, i) => <PostItem key={i} post={e}></PostItem>));
       });
       // 사용자 이미지 렌더링
-      setUserImgURL(`https://i8b210.p.ssafy.io/api/file/${res.profileImage.saveName}`);
+      setUserImgURL(`********${res.profileImage.saveName}`);
     });
   }, []);
 

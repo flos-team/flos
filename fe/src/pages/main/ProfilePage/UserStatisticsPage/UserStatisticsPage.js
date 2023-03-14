@@ -191,11 +191,6 @@ const UserStatisticsPage = () => {
   //
 
   useEffect(() => {
-    /*
-flowers (arr)
-loginInfo {month: 2, lengthOfMonth: 28, loginCount: 0}
-postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloudy: 0.6, rainy: 0.1}}*/
-
     getGardenList().then((res) => {
       //console.dir(res);
       if (res && res.content && res.content.length) {
@@ -317,23 +312,7 @@ postInfo {postCount: 10, sunny: 3, cloudy: 6, rainy: 1, ratio {sunny: 0.3, cloud
             <div className="post-count">
               <p>{userData.postInfo.postCount > 999 ? "999+" : userData.postInfo.postCount}</p>
             </div>
-          </div>
-          {/* <div className="user-heart-share-div">
-            <div className="post-count-title">
-              <p>마음을 나눈 횟수</p>
-            </div>
-            <div className="post-count">
-              <p>999+</p>
-            </div>
-          </div>
-          <div className="user-heart-get-div">
-            <div className="post-count-title">
-              <p>마음을 받은 횟수</p>
-            </div>
-            <div className="post-count">
-              <p>999+</p>
-            </div>
-          </div> */}
+          </div>          
         </div>
       </div>
     </>

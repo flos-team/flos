@@ -34,7 +34,7 @@ import COLORS from "../../../../styles/colors";
 const PostDetailPage = () => {
   const user = useSelector((state) => state.user.userData);
   const params = useParams();
-  const url = "https://i8b210.p.ssafy.io/api/file/";
+  const url = "********";
 
   const [post, setPost] = useState([]);
   const [comments, setComments] = useState([]);

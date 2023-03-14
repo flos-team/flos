@@ -136,7 +136,7 @@ const ProfilePage = ({ setIsToast }) => {
         introduction: response.introduction,
       });
       setUserImgURL(
-        `https://i8b210.p.ssafy.io/api/file/${response.profileImage.saveName}`
+        `********${response.profileImage.saveName}`
       );
       let list = [
         response.followerCount,
