@@ -122,7 +122,7 @@ const UserInfoItem = ({ userInfo, paramId }) => {
     <div className="user-info-item" key={userInfo.id}>
       <div
         className="user-img"
-        style={{ backgroundImage: `url(${`https://i8b210.p.ssafy.io/api/file/${userInfo.profileImage.saveName}`})` }}
+        style={{ backgroundImage: `url(${`********/${userInfo.profileImage.saveName}`})` }}
         onClick={(e) => {
           moveOtherProfile();
         }}
