@@ -26,8 +26,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: joykst961@gmail.com
-    password: ebimbutyehtuznzn
+    username: *******************
+    password: ****************
     description: Flos 운영팀
     properties:
       transport:
@@ -44,14 +44,14 @@ spring:
     expire:
       verification: 300000
       approved: 1800000
-    reportfrom: tykimdream@gmail.com
+    reportfrom: ********************
   security:
     oauth2:
       client:
         registration:
           naver:
-            clientId: 'ei1n8STCPJrrxI3UNgGr'
-            clientSecret: 'gHn2Y4fRMn'
+            clientId: '*********************'
+            clientSecret: '**********'
             clientAuthenticationMethod: post
             authorizationGrantType: authorization_code
             scope:
@@ -60,8 +60,8 @@ spring:
               - profile_image
             clientName: Naver
           kakao:
-            clientId: 'cb5da587b3f7d9088117f3d2047ab046'
-            clientSecret: 'InzVyphLE29GIEBrGkEN71Cn5C6CxzMr'
+            clientId: '********************************'
+            clientSecret: '********************************'
             clientAuthenticationMethod: post
             authorizationGrantType: authorization_code
             scope:
@@ -92,8 +92,8 @@ file:
 
 sentiment:
   url: 'https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze'
-  client-id: '6mmuqwuyg8'
-  client-secret: '8qhOEjBiPkZOanHtiz0xZt59dYlHRUHEjIBjzpMy'
+  client-id: '**********'
+  client-secret: '****************************************'
 
 
 
