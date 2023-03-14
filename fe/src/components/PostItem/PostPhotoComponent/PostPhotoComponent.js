@@ -25,10 +25,10 @@ import "./PostPhotoComponent.css";
  */
 // userImg, userNickname, timeLog, weather, tagList
 const PostPhotoComponent = ({ imgURLList, testURL }) => {
-    const [imgBaseURL, setImgBaseURL] = useState("https://i8b210.p.ssafy.io/api/file/");
-    const [thumbImgURL, setThumbImgURL] = useState(`https://i8b210.p.ssafy.io/api/file/${imgURLList[0].saveName}`); // 수정
+    const [imgBaseURL, setImgBaseURL] = useState("********");
+    const [thumbImgURL, setThumbImgURL] = useState(`********${imgURLList[0].saveName}`); // 수정
     return (<>
-        <div className="post-img-container" style={{ backgroundImage: `url(https://i8b210.p.ssafy.io/api/file/${imgURLList[0].saveName})` }}>
+        <div className="post-img-container" style={{ backgroundImage: `url(********${imgURLList[0].saveName})` }}>
             
         </div>
     </>)
