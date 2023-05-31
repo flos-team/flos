@@ -157,7 +157,6 @@ https://guide-fin.ncloud-docs.com/docs/ko/naveropenapiv3-clovasentiment
 <img src="./assets/flos-post.jpg" width="360" height="800"/>
 <img src="./assets/flos-main.jpg" width="360" height="800"/>
 <img src="./assets/flos-profile.jpg" width="360" height="800"/>
-<br/>
 <img src="./assets/flos-like.jpg" width="360" height="800"/>
 <img src="./assets/flos-follow.jpg" width="360" height="800"/>
 <img src="./assets/flos-garden.jpg" width="360" height="800"/>
