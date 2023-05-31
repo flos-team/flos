@@ -2,7 +2,7 @@
 
 ![](assets/flos-landing.png)
 
-## FLOS 링크 : https://i8b210.p.ssafy.io
+## FLOS 링크 : 
 
 ## UCC 링크 : 
 
@@ -154,13 +154,11 @@ https://guide-fin.ncloud-docs.com/docs/ko/naveropenapiv3-clovasentiment
 
 ## 🌺 FLOS 서비스 화면
 
-||||
-|---|---|---|
-|`랜딩페이지`|`로그인 페이지`|`회원가입 페이지` |
-| <img src="https://user-images.githubusercontent.com/79094527/224473775-9e00d887-a35e-4eb4-b4b9-82909df3b9f8.png" width="360" height="800"/>| <img src="https://user-images.githubusercontent.com/79094527/224473791-b05d8852-8e22-42ff-b870-f614c009e577.png" width="360" height="800"/> | <img src="https://user-images.githubusercontent.com/79094527/224473792-15ecfffe-b0bf-4796-a914-2bf7137f3bb8.png" width="360" height="800"/>|
-|`포스트 작성하기` |`게시글 감정분석`|`포스트 상세보기` |
-| <img src="https://user-images.githubusercontent.com/79094527/224473794-4ae6d5b5-4b61-4d3e-8c1a-5363d7528237.png" width="360" height="800"/>| <img src="https://user-images.githubusercontent.com/79094527/224473796-269e526f-dc3d-4e91-b93e-567b85d4f660.png" width="360" height="800"/> | <img src="https://user-images.githubusercontent.com/79094527/224473798-f522e7e5-804d-40ae-92ea-f2a938eeffce.png" width="360" height="800"/>|
-|`서비스 이용내역 통계`|`이용가이드(튜토리얼)` |`가든페이지(정원)` |
-| <img src="https://user-images.githubusercontent.com/79094527/224473778-2a810744-d664-4934-a89c-ff404898b877.png" width="360" height="800"/>| <img src="https://user-images.githubusercontent.com/79094527/224473782-bc8d7d09-cd2e-49c7-92da-97216c022a34.png" width="360" height="800"/> | <img src="https://user-images.githubusercontent.com/79094527/224473785-2266db49-0444-48c8-8ebd-8092ac2edcaf.png" width="360" height="800"/>|
-|`프로필 페이지`|`팔로워 페이지`|`프로필 편집`|
-| <img src="https://user-images.githubusercontent.com/79094527/224473787-5e294f0f-769f-4d7d-8c17-329ce4df2463.png" width="360" height="800"/>| <img src="https://user-images.githubusercontent.com/79094527/224473788-360939a4-3b91-4e8d-8771-c49fd21e4e42.png" width="360" height="800"/> | <img src="https://user-images.githubusercontent.com/79094527/224473789-d7d026c3-c40f-4947-b666-11691285b208.png" width="360" height="800"/>|
+<img src="./assets/flos-post.jpg" width="360" height="800"/>
+<img src="./assets/flos-main.jpg" width="360" height="800"/>
+<img src="./assets/flos-profile.jpg" width="360" height="800"/>
+<br/>
+<img src="./assets/flos-like.jpg" width="360" height="800"/>
+<img src="./assets/flos-follow.jpg" width="360" height="800"/>
+<img src="./assets/flos-garden.jpg" width="360" height="800"/>
+<br/>
