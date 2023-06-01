@@ -2,7 +2,7 @@
 
 ![](assets/flos-concept.jpg)
 
-## UCC 링크 :
+## UCC 링크 : https://youtu.be/ZA29DBDswOw
 
 ## 🎬 프로젝트 기간
 
