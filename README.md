@@ -32,8 +32,7 @@ SSAFY 8기 2학기 공통프로젝트 - FLOS
 
 ### 1. 사용자가 작성한 텍스트를 분석한 결과를 쉽게 사용 가능한 인터페이스로 제공.
 
-- 네이버 CLOVA 에서 제공하는 Sentiment API를 사용하여 텍스트 분석에 대해 최소한의 신뢰성을 보장함.
-https://guide-fin.ncloud-docs.com/docs/ko/naveropenapiv3-clovasentiment
+- 네이버 CLOVA 에서 제공하는 Sentiment API를 사용하여 텍스트 분석에 대해 최소한의 신뢰성을 보장함. <br/> https://guide-fin.ncloud-docs.com/docs/ko/naveropenapiv3-clovasentiment
 
 ### 2. 다른 사람의 포스트에 댓글로 소통하며 상호 작용 할 수 있는 피드백 시스템
 
